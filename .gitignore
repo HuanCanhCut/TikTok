@@ -4,12 +4,15 @@
 /node_modules
 /.pnp
 .pnp.js
+.prettierrc
 
 # testing
 /coverage
 
 # production
 /build
+.prettierrc
+
 
 # misc
 .DS_Store
