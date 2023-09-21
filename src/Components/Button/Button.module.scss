@@ -19,6 +19,17 @@
     }
 }
 
+.icon + .title,
+.title + .icon {
+    margin-left: 8px;
+}
+
+.icon {
+    display: inline-block;
+    text-align: center;
+    min-width: 24px;
+}
+
 // Button type
 
 .rounded {

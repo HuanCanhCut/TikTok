@@ -95,3 +95,16 @@
         background-color: rgba(22, 24, 35, 0.06);
     }
 }
+
+.actions {
+    display: inline-flex;
+    align-items: center;
+}
+
+.more-btn {
+    font-size: 2rem;
+
+    padding: 4px 10px;
+    margin-left: 12px;
+    background-color: transparent;
+}
