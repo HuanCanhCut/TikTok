@@ -1,6 +1,7 @@
 import style from './Menu.module.scss'
 import classNames from 'classnames/bind'
 import Tippy from '@tippyjs/react/headless'
+import 'tippy.js/dist/tippy.css'
 
 import { Wrapper as PopperWrapper } from '~/Components/Popper'
 import Header from './Header'
@@ -41,8 +42,8 @@ function Menu({ children, items = [], onChange = defaultFn }) {
     return (
         <Tippy
             interactive
-            visible
             delay={[0, 400]}
+            offset={[12, 8]}
             placement="bottom-end"
             render={(attrs) => (
                 <div className={cx('menu-list')} tabIndex={-1} {...attrs}>
@@ -61,6 +62,11 @@ function Menu({ children, items = [], onChange = defaultFn }) {
                     </PopperWrapper>
                 </div>
             )}
+            onHide={() => {
+                setHistory((prev) => {
+                    return prev.slice(0, 1)
+                })
+            }}
         >
             {children}
         </Tippy>

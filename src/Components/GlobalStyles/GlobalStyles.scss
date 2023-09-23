@@ -5,7 +5,7 @@
     --primary: #fe2c55;
     --black: #000;
     --white: #fff;
-    --text-color: #333;
+    --text-color: #161823;
     // default layout
 
     --default-layout-header-height: 60px;
@@ -35,9 +35,23 @@ input,
 [tabindex] {
     outline: none;
     border: none;
+    background-color: transparent;
 }
 
 a[href] {
     color: var(--text-color);
     text-decoration: none;
+}
+
+body {
+    .tippy-box {
+        background-color: #434343;
+        border-radius: 8px;
+        font-weight: 600;
+        padding: 4px 8px;
+        font-size: 1.4rem;
+    }
+    .tippy-arrow {
+        color: #434343;
+    }
 }

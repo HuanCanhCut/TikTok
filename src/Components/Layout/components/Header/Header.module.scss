@@ -102,6 +102,28 @@
     align-items: center;
 }
 
+// actions
+.actions {
+    display: flex;
+    align-items: center;
+}
+
+.action-btn {
+    font-size: 2.2rem;
+    color: #161823;
+    padding: 4px 12px;
+    cursor: pointer;
+}
+
+.user-avatar {
+    height: 32px;
+    width: 32px;
+    object-fit: cover;
+    margin-left: 12px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
 .more-btn {
     font-size: 2rem;
     cursor: pointer;
