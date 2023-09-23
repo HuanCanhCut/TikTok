@@ -4,6 +4,7 @@ import Home from '~/pages/Home'
 import Following from '~/pages/Following'
 import Profile from '~/pages/Profile'
 import Upload from '~/pages/Upload'
+import Feedback from '~/pages/Feedback/Feedback'
 
 const publicRoutes = [
     {
@@ -17,6 +18,10 @@ const publicRoutes = [
     {
         path: '/profile',
         component: Profile,
+    },
+    {
+        path: '/feedback',
+        component: Feedback,
     },
     {
         path: '/upload',

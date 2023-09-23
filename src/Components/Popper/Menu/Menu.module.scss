@@ -8,6 +8,14 @@
     }
 }
 
+.menu-wrapper {
+    max-height: 590px;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
 .menu-popper {
     padding-bottom: 8px;
 }
@@ -16,8 +24,36 @@
     width: 100%;
     text-align: start;
     padding: 11px 16px;
-
+    line-height: 1.8rem;
     &:hover {
         background-color: rgba(22, 24, 35, 0.03);
     }
+}
+
+.header {
+    position: relative;
+    top: -8px;
+    width: 100%;
+    min-height: 50px;
+    height: 50px;
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.1);
+}
+
+.back-btn {
+    width: 50px;
+    height: 100%;
+    background-color: transparent;
+    cursor: pointer;
+    font-size: 1.8rem;
+
+    &:active {
+        opacity: rgba(255, 255, 255, 0.8);
+    }
+}
+
+.header-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }

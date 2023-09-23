@@ -17,9 +17,7 @@ function Button({
     className,
     leftIcon,
     children,
-
     onClick,
-
     ...passProps
 }) {
     let Component = 'button'

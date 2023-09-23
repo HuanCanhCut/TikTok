@@ -17,6 +17,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0 var(--default-layout-horizontal-spacer);
 }
 
 .search,
@@ -103,7 +104,7 @@
 
 .more-btn {
     font-size: 2rem;
-
+    cursor: pointer;
     padding: 4px 10px;
     margin-left: 12px;
     background-color: transparent;
