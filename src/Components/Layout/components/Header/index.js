@@ -9,7 +9,6 @@ import {
     faEarthAsia,
     faCircleQuestion,
     faKeyboard,
-    faCloudArrowUp,
     faCoins,
     faGear,
     faUser,
@@ -24,6 +23,8 @@ import Menu from '~/Components/Popper/Menu'
 import AccountItem from '~/Components/AccountItem'
 import style from './Header.module.scss'
 import images from '~/assets/images'
+import { UploadIcon, MessageIcon } from '~/Components/Icons'
+import Image from '~/Components/Images'
 
 const cx = classNames.bind(style)
 
@@ -133,11 +134,18 @@ function Header() {
                 </HeadlessTippy>
                 <div className={cx('actions')}>
                     {currentUser ? (
-                        <Tippy content="Upload Video">
-                            <button className={cx('action-btn')}>
-                                <FontAwesomeIcon icon={faCloudArrowUp} />
-                            </button>
-                        </Tippy>
+                        <>
+                            <Tippy content="Upload Video">
+                                <button className={cx('action-btn')}>
+                                    <UploadIcon />
+                                </button>
+                            </Tippy>
+                            <Tippy content="Messages">
+                                <button className={cx('action-btn')}>
+                                    <MessageIcon />
+                                </button>
+                            </Tippy>
+                        </>
                     ) : (
                         <>
                             <Button text>Upload</Button>
@@ -146,11 +154,12 @@ function Header() {
                     )}
                     <Menu items={currentUser ? userMenu : MENU_ITEM} onChange={handleMenuChange}>
                         {currentUser ? (
-                            <img
+                            <Image
                                 className={cx('user-avatar')}
-                                src="https://avatars.githubusercontent.com/u/107424860?v=4"
+                                src="https://avatars.githubusercontent.com/u/107424860?v=4s"
                                 alt="avatar"
-                            ></img>
+                                fallback="https://scontent.fhan5-2.fna.fbcdn.net/v/t39.30808-6/312642158_626141889234049_3437225901091098349_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=52f669&_nc_ohc=gsidQcBL8R0AX_2mdX9&_nc_ht=scontent.fhan5-2.fna&oh=00_AfCR3wsjjGD2GqHzclLE1zkznJfVwRjDIMOIxP638ysaoA&oe=65145261"
+                            />
                         ) : (
                             <button className={cx('more-btn')}>
                                 <FontAwesomeIcon icon={faEllipsisVertical}></FontAwesomeIcon>
