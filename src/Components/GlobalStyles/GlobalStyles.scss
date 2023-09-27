@@ -8,8 +8,9 @@
     // default layout
 
     --default-layout-header-height: 60px;
-    --default-layout-width: 1150px;
+    --default-layout-width: 100vw;
     --default-layout-horizontal-spacer: 24px;
+    --default-layout-content-width: 692px;
 }
 
 html {
@@ -35,6 +36,7 @@ input,
     outline: none;
     border: none;
     background-color: transparent;
+    font-family: ProximaNova, sans-serif;
 }
 
 a[href] {

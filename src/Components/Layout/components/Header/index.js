@@ -9,9 +9,12 @@ import {
     faGear,
     faUser,
     faSignOut,
+    faPlus,
 } from '@fortawesome/free-solid-svg-icons'
 import Tippy from '@tippyjs/react'
+import { Link } from 'react-router-dom'
 
+import routerConfig from '~/config/routes'
 import Button from '~/Components/Button'
 import Menu from '~/Components/Popper/Menu'
 import style from './Header.module.scss'
@@ -91,11 +94,17 @@ function Header() {
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
-                <img src={images.logo} alt="tiktok" />
+                <Link to={routerConfig.home} className={cx('logo-link')}>
+                    <img src={images.logo} alt="tiktok" />
+                </Link>
                 <Search />
                 <div className={cx('actions')}>
                     {currentUser ? (
                         <>
+                            <Button rounded leftIcon={<FontAwesomeIcon icon={faPlus} />}>
+                                Upload
+                            </Button>
+
                             <Tippy delay={[0, 50]} content="Upload Video">
                                 <button className={cx('action-btn')}>
                                     <UploadIcon />

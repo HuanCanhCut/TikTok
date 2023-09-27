@@ -20,14 +20,13 @@
     padding: 0 var(--default-layout-horizontal-spacer);
 }
 
-.actions {
-    display: inline-flex;
-    align-items: center;
+.logo-link {
+    display: flex;
 }
 
 // actions
 .actions {
-    display: flex;
+    display: inline-flex;
     align-items: center;
 }
 

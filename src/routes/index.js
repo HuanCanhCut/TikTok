@@ -1,30 +1,30 @@
 import { HeaderOnly } from '~/Components/Layout'
-
 import Home from '~/pages/Home'
 import Following from '~/pages/Following'
 import Profile from '~/pages/Profile'
 import Upload from '~/pages/Upload'
 import Feedback from '~/pages/Feedback/Feedback'
+import routerConfig from '~/config/routes'
 
 const publicRoutes = [
     {
-        path: '/',
+        path: routerConfig.home,
         component: Home,
     },
     {
-        path: '/following',
+        path: routerConfig.following,
         component: Following,
     },
     {
-        path: '/:nickname',
+        path: routerConfig.profile,
         component: Profile,
     },
     {
-        path: '/feedback',
+        path: routerConfig.search,
         component: Feedback,
     },
     {
-        path: '/upload',
+        path: routerConfig.upload,
         component: Upload,
         layout: HeaderOnly,
     },

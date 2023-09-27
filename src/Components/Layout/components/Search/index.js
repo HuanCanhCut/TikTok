@@ -30,15 +30,17 @@ function Search() {
         }
 
         ;(async function () {
-            setLoading(false)
+            try {
+                setLoading(true)
 
-            const result = await searchService.search(debounced)
-            setSearchResult(result)
+                const result = await searchService.search(debounced)
+                setSearchResult(result)
 
-            setLoading(true)
+                setLoading(false)
+            } catch (error) {
+                setLoading(false)
+            }
         })()
-
-        setLoading(true)
     }, [debounced])
 
     const handleClear = () => {
@@ -91,7 +93,12 @@ function Search() {
                 )}
 
                 {loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
-                <button className={cx('search-btn')}>
+                <button
+                    className={cx('search-btn')}
+                    onMouseDown={(e) => {
+                        e.preventDefault()
+                    }}
+                >
                     <SearchIcon />
                 </button>
             </div>

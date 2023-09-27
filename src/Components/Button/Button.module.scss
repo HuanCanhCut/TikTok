@@ -34,13 +34,12 @@
 // Button type
 
 .rounded {
-    border-radius: 999px;
-    box-shadow: 0 2px 8px rgba(0 0 0 /6%);
+    border-radius: 5px;
+
     border-color: rgba(22, 24, 35, 0.12);
 
     &:hover {
-        border-color: rgba(22, 24, 35, 0.2);
-        background-color: rgba(22, 24, 35, 0.3);
+        background-color: rgba(22, 24, 35, 0.03);
     }
 }
 
