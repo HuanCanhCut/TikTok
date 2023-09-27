@@ -14,16 +14,25 @@
 
 .menu-wrapper {
     max-height: 590px;
-    overflow-y: auto;
-    &::-webkit-scrollbar {
-        display: none;
-    }
 }
 
 .menu-popper {
     padding-bottom: 8px;
 }
 
+.menu-body {
+    width: 100%;
+    overflow-y: overlay;
+    display: flex;
+    flex-direction: column;
+}
+
+html *::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background-color: rgba(22, 24, 35, 0.06);
+}
+
+// MENU ITEMS
 .menu-item {
     width: 100%;
     text-align: start;
@@ -36,11 +45,11 @@
 
 .header {
     position: relative;
-    top: -8px;
     width: 100%;
     min-height: 50px;
     height: 50px;
-    border-bottom: 0.5px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 0.5px dashed rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
 }
 
 .back-btn {

@@ -8,10 +8,15 @@
     width: var(--default-layout-width);
     padding: 0 var(--default-layout-horizontal-spacer);
     display: flex;
+    margin-top: var(--default-layout-header-height);
 }
 
-.content {
+.content-wrapper {
     display: flex;
     justify-content: center;
     flex: 1;
+}
+
+.content {
+    width: var(--default-layout-content-width);
 }
