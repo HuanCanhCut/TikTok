@@ -14,12 +14,12 @@ import {
 import Tippy from '@tippyjs/react'
 import { Link } from 'react-router-dom'
 
-import routerConfig from '~/config/routes'
+import config from '~/config'
 import Button from '~/Components/Button'
 import Menu from '~/Components/Popper/Menu'
 import style from './Header.module.scss'
 import images from '~/assets/images'
-import { UploadIcon, MessageIcon, InboxIcon } from '~/Components/Icons'
+import { MessageIcon, InboxIcon } from '~/Components/Icons'
 import Search from '../Search'
 import Image from '~/Components/Images'
 
@@ -94,7 +94,7 @@ function Header() {
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
-                <Link to={routerConfig.home} className={cx('logo-link')}>
+                <Link to={config.routes.home} className={cx('logo-link')}>
                     <img src={images.logo} alt="tiktok" />
                 </Link>
                 <Search />
@@ -105,11 +105,6 @@ function Header() {
                                 Upload
                             </Button>
 
-                            <Tippy delay={[0, 50]} content="Upload Video">
-                                <button className={cx('action-btn')}>
-                                    <UploadIcon />
-                                </button>
-                            </Tippy>
                             <Tippy delay={[0, 50]} content="Messages">
                                 <button className={cx('action-btn')}>
                                     <MessageIcon />
