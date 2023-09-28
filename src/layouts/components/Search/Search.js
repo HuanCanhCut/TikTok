@@ -19,12 +19,12 @@ function Search() {
     const [showResult, setShowResult] = useState(true)
     const [loading, setLoading] = useState(false)
 
-    const debounced = useDebounce(searchValue, 500)
+    const debounceValue = useDebounce(searchValue, 500)
 
     const inputRef = useRef()
 
     useEffect(() => {
-        if (!debounced.trim()) {
+        if (!debounceValue.trim()) {
             setSearchResult([])
             return
         }
@@ -33,7 +33,7 @@ function Search() {
             try {
                 setLoading(true)
 
-                const result = await searchService.search(debounced)
+                const result = await searchService.search(debounceValue)
                 setSearchResult(result)
 
                 setLoading(false)
@@ -41,7 +41,7 @@ function Search() {
                 setLoading(false)
             }
         })()
-    }, [debounced])
+    }, [debounceValue])
 
     const handleClear = () => {
         setSearchValue('')

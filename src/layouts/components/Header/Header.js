@@ -1,6 +1,16 @@
 import classNames from 'classnames/bind'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEllipsisVertical, faEarthAsia, faCircleQuestion, faKeyboard, faCoins, faGear, faUser, faSignOut, faPlus } from '@fortawesome/free-solid-svg-icons'
+import {
+    faEllipsisVertical,
+    faEarthAsia,
+    faCircleQuestion,
+    faKeyboard,
+    faCoins,
+    faGear,
+    faUser,
+    faSignOut,
+    faPlus,
+} from '@fortawesome/free-solid-svg-icons'
 import Tippy from '@tippyjs/react'
 import { Link } from 'react-router-dom'
 
@@ -85,7 +95,7 @@ function Header() {
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
                 <Link to={config.routes.home} className={cx('logo-link')}>
-                    <img src={images.logo} alt="Tik Tok Logo" />
+                    <img src={images.logo} alt="Logo" />
                 </Link>
 
                 <Search />
@@ -115,7 +125,12 @@ function Header() {
                     )}
                     <Menu items={currentUser ? userMenu : MENU_ITEM} onChange={handleMenuChange}>
                         {currentUser ? (
-                            <Image className={cx('user-avatar')} src="https://avatars.githubusercontent.com/u/107424860?v=4s" alt="avatar" fallback="https://scontent.fhan5-2.fna.fbcdn.net/v/t39.30808-6/312642158_626141889234049_3437225901091098349_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=52f669&_nc_ohc=gsidQcBL8R0AX_2mdX9&_nc_ht=scontent.fhan5-2.fna&oh=00_AfCR3wsjjGD2GqHzclLE1zkznJfVwRjDIMOIxP638ysaoA&oe=65145261" />
+                            <Image
+                                className={cx('user-avatar')}
+                                src="https://avatars.githubusercontent.com/u/107424860?v=4s"
+                                alt="avatar"
+                                fallback="https://scontent.fhan5-2.fna.fbcdn.net/v/t39.30808-6/312642158_626141889234049_3437225901091098349_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=52f669&_nc_ohc=gsidQcBL8R0AX_2mdX9&_nc_ht=scontent.fhan5-2.fna&oh=00_AfCR3wsjjGD2GqHzclLE1zkznJfVwRjDIMOIxP638ysaoA&oe=65145261"
+                            />
                         ) : (
                             <button className={cx('more-btn')}>
                                 <FontAwesomeIcon icon={faEllipsisVertical}></FontAwesomeIcon>

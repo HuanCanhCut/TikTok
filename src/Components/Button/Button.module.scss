@@ -44,7 +44,9 @@
 }
 
 .primary {
-    color: #fff;
+    display: flex;
+    justify-content: center;
+    color: #fff !important;
     background-color: var(--primary);
     border: 4px;
     border-color: var(--primary);

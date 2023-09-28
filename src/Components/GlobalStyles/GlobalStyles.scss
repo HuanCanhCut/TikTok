@@ -28,19 +28,20 @@ body {
     font-family: ProximaNova, sans-serif;
     line-height: 1.5;
     text-rendering: optimizeSpeed;
-    overflow: overlay;
+    overflow-y: overlay;
 }
 
 // scroll bars
 
 html *::-webkit-scrollbar {
     border-radius: 0;
-    width: 6px;
+    width: 8px;
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
 html *::-webkit-scrollbar-thumb {
     border-radius: 4px;
-    background-color: rgba(22, 24, 35, 0.06);
+    background-color: rgba(255, 255, 255, 0.15);
 }
 
 html *::-webkit-scrollbar-track {
@@ -60,6 +61,7 @@ input,
 a[href] {
     color: var(--text-color);
     text-decoration: none;
+    line-height: 1;
 }
 
 // font emmbeded

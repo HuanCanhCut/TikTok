@@ -5,7 +5,22 @@ import { Link } from 'react-router-dom'
 
 const cx = classNames.bind(style)
 
-function Button({ to, href, primary = false, outline = false, small = false, large = false, text = false, disable = false, rounded = false, className, leftIcon, children, onClick, ...passProps }) {
+function Button({
+    to,
+    href,
+    primary = false,
+    outline = false,
+    small = false,
+    large = false,
+    text = false,
+    disable = false,
+    rounded = false,
+    className,
+    leftIcon,
+    children,
+    onClick,
+    ...passProps
+}) {
     let Component = 'button'
     const props = {
         onClick,
