@@ -8,10 +8,7 @@
     cursor: pointer;
     border: 1px solid transparent;
     background-color: var(--white);
-
-    + .wrapper {
-        margin-left: 8px;
-    }
+    margin: 0 8px;
 
     &.disable {
         pointer-events: none;

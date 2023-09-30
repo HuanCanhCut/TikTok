@@ -14,7 +14,17 @@
 
 .menu-wrapper {
     max-height: 590px;
+    // animation: fadeIn ease-in-out 0.15s;
 }
+
+// @keyframes fadeIn {
+//     from {
+//         opacity: 0;
+//     }
+//     to {
+//         opacity: 1;
+//     }
+// }
 
 .menu-popper {
     padding-bottom: 8px;
@@ -23,13 +33,9 @@
 .menu-body {
     width: 100%;
     overflow-y: overlay;
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
-}
-
-html *::-webkit-scrollbar-thumb {
-    border-radius: 2px;
-    background-color: rgba(22, 24, 35, 0.06);
 }
 
 // MENU ITEMS

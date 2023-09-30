@@ -21,7 +21,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 var(--default-layout-horizontal-spacer);
+    padding-right: var(--default-layout-horizontal-spacer);
+    padding-left: 16px;
 }
 
 .logo-link {

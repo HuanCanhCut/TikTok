@@ -12,6 +12,7 @@ import {
     faPlus,
 } from '@fortawesome/free-solid-svg-icons'
 import Tippy from '@tippyjs/react'
+import 'tippy.js/dist/tippy.css'
 import { Link } from 'react-router-dom'
 
 import config from '~/config'
@@ -46,7 +47,7 @@ const MENU_ITEM = [
     {
         icon: <FontAwesomeIcon icon={faCircleQuestion} />,
         title: 'Feedback and help',
-        to: '/feedback',
+        to: config.routes.feedback,
     },
     {
         icon: <FontAwesomeIcon icon={faKeyboard} />,

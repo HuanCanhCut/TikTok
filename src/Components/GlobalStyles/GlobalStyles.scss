@@ -85,6 +85,12 @@ a[href] {
 }
 
 @font-face {
+    font-family: ProximaNova;
+    src: url('/assets/fonts/Proxima-Nova-Bold.woff');
+    font-weight: 800;
+}
+
+@font-face {
     font-family: SofiaPro;
     src: url('/assets/fonts/sofiapro-bold.woff');
     font-weight: 700;
@@ -97,6 +103,7 @@ body {
         font-weight: 600;
         padding: 4px 8px;
         font-size: 1.4rem;
+        color: #fff;
     }
     .tippy-arrow {
         color: #434343;

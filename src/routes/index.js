@@ -3,7 +3,9 @@ import Home from '~/pages/Home'
 import Following from '~/pages/Following'
 import Profile from '~/pages/Profile'
 import Upload from '~/pages/Upload'
-import Feedback from '~/pages/Feedback/Feedback'
+import Feedback from '~/pages/Feedback'
+import Live from '~/pages/Live'
+
 import config from '~/config'
 
 const publicRoutes = [
@@ -22,6 +24,10 @@ const publicRoutes = [
     {
         path: config.routes.search,
         component: Feedback,
+    },
+    {
+        path: config.routes.live,
+        component: Live,
     },
     {
         path: config.routes.upload,

@@ -1,9 +1,10 @@
 const routerConfig = {
     home: '/',
     following: '/following',
-    profile: ':nickName',
-    search: 'feedBack',
-    upload: 'upload',
+    profile: '/:nickName',
+    search: '/feedBack',
+    upload: '/upload',
+    live: '/live',
 }
 
 export default routerConfig
