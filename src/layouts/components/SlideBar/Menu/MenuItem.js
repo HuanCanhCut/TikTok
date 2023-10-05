@@ -24,7 +24,7 @@ function MenuItem({ icon, to, title, activeIcon }) {
 
 MenuItem.propTypes = {
     icon: PropTypes.node.isRequired,
-    activeIcon: PropTypes.string.isRequired,
+    activeIcon: PropTypes.node.isRequired,
     to: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
 }

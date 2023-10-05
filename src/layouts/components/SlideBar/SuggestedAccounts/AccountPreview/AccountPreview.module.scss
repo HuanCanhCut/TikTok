@@ -1,0 +1,55 @@
+.preview {
+    width: 320px;
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.body {
+    flex: 1;
+}
+
+.info {
+    padding: 8px 0;
+}
+
+.nickname {
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+.icon {
+    font-size: 1.3rem;
+    margin-left: 4px;
+    color: rgb(32, 213, 236);
+}
+
+.name {
+    font-size: 1.3rem;
+    line-height: 1;
+    font-weight: 600;
+}
+
+.analytics {
+    flex: 1;
+    .value {
+        font-size: 1.6rem;
+    }
+
+    span {
+        padding: 0 4px;
+        margin-right: 8px;
+        color: rgba(22, 24, 35, 0.55);
+    }
+}

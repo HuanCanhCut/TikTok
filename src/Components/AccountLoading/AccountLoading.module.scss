@@ -1,0 +1,33 @@
+.account-loading {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    cursor: pointer;
+    .avatar {
+        width: 32px;
+        height: 32px;
+        margin-right: 12px;
+        border-radius: 50%;
+        background-color: var(--gray);
+        object-fit: cover;
+    }
+}
+
+.account-info {
+    flex: 1;
+}
+
+.nick-name {
+    width: 50px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: var(--gray);
+}
+
+.name {
+    margin-top: 3px;
+    width: 80px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: var(--gray);
+}

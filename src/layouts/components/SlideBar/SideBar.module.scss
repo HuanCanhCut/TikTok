@@ -1,4 +1,22 @@
 .wrapper {
-    width: 240px;
+    min-width: 240px;
     padding: 20px 8px 26px 8px;
+    height: calc(100vh - var(--default-layout-header-height));
+    overflow-y: overlay;
+}
+
+html *::-webkit-scrollbar {
+    border-radius: 0;
+    width: 8px;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+html *::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+html *::-webkit-scrollbar-track {
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, 0);
 }
