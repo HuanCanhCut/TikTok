@@ -1,0 +1,50 @@
+.wrapper {
+    width: 100%;
+    padding: 16px 8px 0 8px;
+}
+
+.create-effect {
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+    background-image: url('https://sf16-website-login.neutral.ttwstatic.com/obj/tiktok_web_login_static/tiktok/webapp/main/webapp-desktop/045b2fc7c278b9a30dd0.png');
+    background-position: center center;
+    border-radius: 10px;
+    height: 52px;
+    img {
+        max-width: 100%;
+        border-radius: 10px;
+        object-fit: cover;
+    }
+    color: rgba(22, 24, 35, 1);
+    font-weight: 600;
+    font-size: 1.6rem;
+    line-height: 21px;
+}
+
+.contact {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 12px;
+}
+
+.contact-item,
+.current-version {
+    font-size: 13px;
+    color: rgba(22, 24, 35, 0.5);
+    font-weight: 600;
+}
+
+.current-version {
+    margin-top: 16px;
+}
+
+.contact-item {
+    margin-right: 8px;
+    line-height: 28px;
+    &:hover {
+        text-decoration: underline;
+    }
+}

@@ -1,4 +1,7 @@
 import classNames from 'classnames/bind'
+import { useContext } from 'react'
+import { memo } from 'react'
+
 import styles from './SideBar.module.scss'
 import Menu, { MenuItem } from './Menu'
 import {
@@ -10,11 +13,16 @@ import {
     LiveActiveIcon,
 } from '~/Components/Icons'
 import SuggestedAccounts from './SuggestedAccounts'
+import FrameLoginSidebar from './FrameLoginSidebar'
+import FooterSidebar from './FooterSidebar'
 import config from '~/config'
+import { AuthUserContext } from '~/App'
 
 const cx = classNames.bind(styles)
 
 function Sidebar() {
+    const currentUser = useContext(AuthUserContext)
+
     return (
         <aside className={cx('wrapper')}>
             <Menu>
@@ -27,9 +35,10 @@ function Sidebar() {
                 />
                 <MenuItem title="LIVE" to={config.routes.live} icon={<LiveIcon />} activeIcon={<LiveActiveIcon />} />
             </Menu>
-            <SuggestedAccounts label="Suggested Accounts" />
+            {currentUser ? <SuggestedAccounts label="Suggested Accounts" /> : <FrameLoginSidebar />}
+            <FooterSidebar />
         </aside>
     )
 }
 
-export default Sidebar
+export default memo(Sidebar)

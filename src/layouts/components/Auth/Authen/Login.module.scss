@@ -1,0 +1,142 @@
+.wrapper {
+    width: 520px;
+    height: calc(100vh - var(--default-layout-header-height) * 2);
+    // position: absolute;
+    top: var(--default-layout-header-height);
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 10px;
+    z-index: 9999;
+    background-color: #fff;
+    text-align: center;
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.05);
+    transition: all 0.1s ease-in-out;
+    position: fixed;
+}
+
+.close {
+    background-color: #f1ff12;
+    border-radius: 50%;
+    width: 26px;
+    height: 26px;
+
+    cursor: pointer;
+    background-color: rgba(22, 24, 35, 0.03);
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    font-size: 1.8rem;
+    color: rgba(22, 24, 35, 0.75);
+}
+
+.header {
+    width: 100%;
+    padding: 0 60px;
+    margin: 48px 0 16px 0;
+    line-height: 1.5;
+    font-weight: 700;
+    font-size: 1.4rem;
+}
+
+.body {
+    padding: 0 60px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.forgot-password {
+    justify-content: flex-start;
+    font-size: 1.2rem;
+    line-height: 1;
+    color: rgba(22, 24, 35, 0.75);
+    font-weight: 600;
+    margin: 12px 0;
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline;
+        color: rgba(22, 24, 35, 0.95);
+    }
+}
+
+.login-btn {
+    position: relative;
+    min-height: 44px;
+}
+
+.login,
+.loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.loading {
+    animation: loading 0.5s infinite;
+}
+
+@keyframes loading {
+    from {
+        transform: translate(-50%, -50%) rotate(0);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+.invalid-password {
+    color: var(--primary);
+    font-size: 1.2rem;
+}
+
+.separator {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+}
+
+.separator-line {
+    flex: 1;
+    height: 1px;
+    background-color: rgba(22, 24, 35, 0.12);
+}
+
+.separator-content {
+    color: rgba(22, 24, 35, 0.5);
+    padding: 0 8px;
+    margin: 12px 0;
+    font-size: 1.3rem;
+}
+
+.policy {
+    color: rgba(22, 24, 35, 0.5);
+    padding: 10px 30px 20px 30px;
+    font-weight: 600;
+    width: 100%;
+    text-align: center;
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+.footer {
+    border-top: 0.5px solid rgba(22, 24, 35, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    height: 64px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.sign-up {
+    color: var(--primary);
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline;
+    }
+}

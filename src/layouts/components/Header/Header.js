@@ -14,7 +14,10 @@ import {
 import Tippy from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css'
 import { Link } from 'react-router-dom'
+import { useContext } from 'react'
+import { memo } from 'react'
 
+import { AuthUserContext } from '~/App'
 import config from '~/config'
 import Button from '~/Components/Button'
 import Menu from '~/Components/Popper/Menu'
@@ -55,8 +58,8 @@ const MENU_ITEM = [
     },
 ]
 
-function Header() {
-    const currentUser = false
+function Header({ onLogin }) {
+    const currentUser = useContext(AuthUserContext)
 
     const handleMenuChange = (menuItem) => {
         switch (menuItem.type) {
@@ -89,6 +92,7 @@ function Header() {
             icon: <FontAwesomeIcon icon={faSignOut} />,
             title: 'Log out',
             separate: true,
+            onLogOut: true,
         },
     ]
 
@@ -120,15 +124,20 @@ function Header() {
                         </>
                     ) : (
                         <>
-                            <Button text>Upload</Button>
-                            <Button primary>Log In</Button>
+                            <Button rounded onClick={onLogin} leftIcon={<FontAwesomeIcon icon={faPlus} />}>
+                                Upload
+                            </Button>
+                            <Button primary onClick={onLogin}>
+                                Log In
+                            </Button>
                         </>
                     )}
+
                     <Menu items={currentUser ? userMenu : MENU_ITEM} onChange={handleMenuChange}>
                         {currentUser ? (
                             <Image
                                 className={cx('user-avatar')}
-                                src="https://avatars.githubusercontent.com/u/107424860?v=4s"
+                                src={currentUser.data.avatar}
                                 alt="avatar"
                                 fallback="https://scontent.fhan5-2.fna.fbcdn.net/v/t39.30808-6/312642158_626141889234049_3437225901091098349_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=52f669&_nc_ohc=gsidQcBL8R0AX_2mdX9&_nc_ht=scontent.fhan5-2.fna&oh=00_AfCR3wsjjGD2GqHzclLE1zkznJfVwRjDIMOIxP638ysaoA&oe=65145261"
                             />
@@ -144,4 +153,4 @@ function Header() {
     )
 }
 
-export default Header
+export default memo(Header)

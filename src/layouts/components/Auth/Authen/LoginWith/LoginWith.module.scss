@@ -1,0 +1,34 @@
+.login-with {
+    width: 100%;
+    padding: 12px;
+    background-color: #f1f1f2;
+    border-radius: 10px;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: rgba(22, 24, 35);
+    position: relative;
+    cursor: no-drop;
+    .icon {
+        position: absolute;
+        left: 10px;
+        font-size: 1.8rem;
+    }
+    .facebook-icon {
+        color: blue;
+    }
+
+    .google-icon {
+        color: red;
+    }
+}
+
+.login-with + .login-with {
+    margin-top: 10px;
+}
+
+.more {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 8px 0;
+}

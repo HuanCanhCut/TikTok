@@ -1,0 +1,27 @@
+.wrapper {
+    width: 100%;
+    border-top: 1px solid #f4f4f4;
+    border-bottom: 1px solid #f4f4f4;
+    padding: 20px 8px 24px;
+    text-align: center;
+}
+
+.title {
+    line-height: 21px;
+    font-size: 1.6rem;
+    color: rgba(22, 24, 35, 0.5);
+}
+
+.login {
+    width: 100%;
+    margin: 0;
+    margin-top: 20px;
+    padding: 13px;
+    border-color: var(--primary);
+    color: var(--primary);
+    background-color: rgba(254, 44, 85, 0.06);
+    font-size: 1.6rem;
+    &:hover {
+        background-color: rgba(254, 44, 85, 0.06);
+    }
+}

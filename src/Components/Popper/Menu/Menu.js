@@ -27,7 +27,7 @@ function Menu({ children, items = [], hideOnClick = false, onChange = defaultFn 
     const renderItems = () => {
         return current.data.map((item, index) => {
             const isParent = Boolean(item.children)
-
+            const logOut = Boolean(item.onLogOut)
             return (
                 <MenuItem
                     key={index}
@@ -38,6 +38,11 @@ function Menu({ children, items = [], hideOnClick = false, onChange = defaultFn 
                             setHistory((prev) => {
                                 return [...prev, item.children]
                             })
+                        }
+                        // logout
+                        else if (logOut) {
+                            localStorage.removeItem('user')
+                            window.location.reload()
                         } else {
                             onChange(item)
                         }
@@ -74,7 +79,7 @@ function Menu({ children, items = [], hideOnClick = false, onChange = defaultFn 
 
     // trở về page menu đầu tiên khi menu bị hide
     const handleResetMenu = ({ unmount }) => {
-        scale.onChange((value) => {
+        scale.on('change', (value) => {
             if (value <= initialScale) {
                 unmount()
             }
@@ -92,7 +97,7 @@ function Menu({ children, items = [], hideOnClick = false, onChange = defaultFn 
         <Tippy
             animation={true}
             interactive
-            delay={[0, 400]}
+            delay={[100, 400]}
             offset={[4, 8]}
             // visible
             hideOnClick={hideOnClick}

@@ -15,6 +15,7 @@ function Button({
     text = false,
     disable = false,
     rounded = false,
+    login = false,
     className,
     leftIcon,
     children,
@@ -75,7 +76,6 @@ Button.propTypes = {
     rounded: PropTypes.bool,
     className: PropTypes.string,
     leftIcon: PropTypes.node,
-    children: PropTypes.node.isRequired,
     onClick: PropTypes.func,
 }
 

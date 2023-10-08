@@ -1,5 +1,6 @@
 .wrapper {
-    min-width: 240px;
+    min-width: var(--default-layout-sidebar-width);
+    max-width: var(--default-layout-sidebar-width);
     padding: 20px 8px 26px 8px;
     height: calc(100vh - var(--default-layout-header-height));
     overflow-y: overlay;
