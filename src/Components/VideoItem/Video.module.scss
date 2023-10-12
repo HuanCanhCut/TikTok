@@ -1,0 +1,20 @@
+.wrapper {
+    margin: 16px 0;
+    margin-left: 64px;
+    position: relative;
+    &.column {
+        max-width: 326px;
+        height: 583px;
+    }
+    &.row {
+        max-width: 520px;
+    }
+}
+
+.video-item {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    position: absolute;
+}

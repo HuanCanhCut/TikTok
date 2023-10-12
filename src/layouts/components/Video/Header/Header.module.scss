@@ -1,0 +1,60 @@
+.wrapper {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    // position: relative;
+}
+
+.avatar {
+    width: 56px;
+    height: 56px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.body {
+    margin-left: 12px;
+    max-width: 75%;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.nick-name {
+    font-weight: 700;
+    font-size: 1.8rem;
+    line-height: 28px;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.check-icon {
+    margin: 0 4px;
+}
+
+.name {
+    line-height: 28px;
+    font-size: 1.4rem;
+    margin-left: 4px;
+    font-weight: 500;
+}
+
+.description {
+    color: rgb(22, 24, 35);
+    font-weight: 600;
+    word-wrap: break-word !important; /* Cho phép chữ rụng xuống khi cần */
+    // overflow-wrap: break-word !important; /* Tùy chọn bổ sung cho sự hỗ trợ tốt hơn */
+    max-width: 100%;
+    line-height: 17px;
+    font-size: 1.4rem;
+}
+
+.follow {
+    position: absolute;
+    right: 0;
+    margin: 0;
+}

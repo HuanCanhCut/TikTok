@@ -2,9 +2,8 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames/bind'
 import style from './AccountItem.module.scss'
 import { Link } from 'react-router-dom'
-import { faCircleCheck } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Images from '~/Components/Images'
+import BlueTick from '../BlueTick/BlueTick'
 
 const cx = classNames.bind(style)
 
@@ -15,9 +14,9 @@ function AccountItem({ data }) {
             <div className={cx('Info')}>
                 <h4 className={cx('name')}>
                     <span>{data.full_name}</span>
-                    {data.tick && <FontAwesomeIcon className={cx('check')} icon={faCircleCheck} />}
+                    {data.tick && <BlueTick />}
                 </h4>
-                <span className={cx('usename')}>{data.nickname}</span>
+                <span className={cx('username')}>{data.nickname}</span>
             </div>
         </Link>
     )

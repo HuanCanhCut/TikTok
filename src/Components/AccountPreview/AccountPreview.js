@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types'
 import classNames from 'classnames/bind'
 import style from './AccountPreview.module.scss'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 
 import Button from '~/Components/Button'
+import BlueTick from '~/Components/BlueTick/BlueTick'
 import Image from '~/Components/Images'
 
 const cx = classNames.bind(style)
@@ -20,7 +19,7 @@ function AccountPreview({ data }) {
                 <div className={cx('info')}>
                     <p className={cx('nickname')}>
                         <strong>{data.nickname}</strong>
-                        <span className={cx('icon')}>{data.tick && <FontAwesomeIcon icon={faCheckCircle} />}</span>
+                        <span className={cx('icon')}>{data.tick && <BlueTick />}</span>
                     </p>
                     <p className={cx('name')}>{`${data.first_name} ${data.last_name}`}</p>
                 </div>

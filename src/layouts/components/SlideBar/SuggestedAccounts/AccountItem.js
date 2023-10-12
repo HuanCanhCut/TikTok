@@ -1,12 +1,11 @@
 import PropTypes from 'prop-types'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames/bind'
 import style from './SuggestedAccounts.module.scss'
-import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 import Tippy from '@tippyjs/react/headless'
 import { useSpring, motion } from 'framer-motion'
 
-import AccountPreview from './AccountPreview'
+import AccountPreview from '../../../../Components/AccountPreview'
+import BlueTick from '~/Components/BlueTick/BlueTick'
 import { Wrapper as PopperWrapper } from '~/Components/Popper'
 import Image from '~/Components/Images'
 
@@ -64,7 +63,7 @@ function AccountItem({ data }) {
                     <div className={cx('account-info')}>
                         <p className={cx('nickname')}>
                             <strong>{data.nickname}</strong>
-                            <span className={cx('icon')}>{data.tick && <FontAwesomeIcon icon={faCheckCircle} />}</span>
+                            <span className={cx('icon')}>{data.tick && <BlueTick />}</span>
                         </p>
                         <p className={cx('name')}>{`${data.first_name} ${data.last_name}`}</p>
                     </div>

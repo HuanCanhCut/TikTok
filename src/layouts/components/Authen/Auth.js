@@ -70,6 +70,7 @@ function Login({ onClose }) {
 
     const handleLoginOptions = () => {
         setSignUp(signUp ? false : true)
+        setIsValid(false)
     }
 
     return (

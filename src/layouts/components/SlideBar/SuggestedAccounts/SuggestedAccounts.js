@@ -33,7 +33,9 @@ function SuggestedAccounts({ label }) {
     }, [page])
 
     const onSeeMore = () => {
+        setLoading(false)
         setPage(page + 1)
+        setLoading(true)
     }
 
     return (

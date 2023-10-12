@@ -13,13 +13,3 @@ export const getSuggested = async function (page, perPage) {
         console.log(error)
     }
 }
-
-export const followAnUser = async ({ userID, accessToken }) => {
-    try {
-        return await request.post(`users/${userID}/follow`, [], {
-            Headers: `Bearer ${accessToken}`,
-        })
-    } catch (error) {
-        console.log(error)
-    }
-}

@@ -5,7 +5,7 @@ import { createContext, useCallback } from 'react'
 import Header from '~/layouts/components/Header'
 import SideBar from '../components/SlideBar'
 import style from './DefaultLayout.module.scss'
-import Login from '../components/Auth/Authen'
+import Login from '~/layouts/components/Authen'
 import { useState } from 'react'
 
 const cx = classNames.bind(style)

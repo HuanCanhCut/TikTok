@@ -1,10 +1,12 @@
 .wrapper {
     width: 520px;
-    height: calc(100vh - var(--default-layout-header-height) * 2);
+    padding-top: 20px;
+    padding-bottom: 60px;
+    max-height: calc(100vh - var(--default-layout-header-height) * 2);
     // position: absolute;
-    top: var(--default-layout-header-height);
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
     border-radius: 10px;
     z-index: 9999;
     background-color: #fff;
