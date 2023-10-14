@@ -16,6 +16,7 @@ function Home() {
     const [page, setPage] = useState(INIT_PAGE)
     const currentUser = useContext(AuthUserContext)
     const accessToken = currentUser && currentUser.meta.token
+
     useEffect(() => {
         ;(async () => {
             try {
@@ -38,7 +39,7 @@ function Home() {
         <div className={cx('wrapper')}>
             <Virtuoso
                 data={videos}
-                useWindowScroll={false}
+                useWindowScroll
                 endReached={() => {
                     setPage(page + 1)
                 }}

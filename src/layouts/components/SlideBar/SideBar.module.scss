@@ -1,7 +1,16 @@
 .wrapper {
-    min-width: var(--default-layout-sidebar-width);
-    max-width: var(--default-layout-sidebar-width);
-    padding: 20px 0px 26px 8px;
+    width: var(--default-layout-sidebar-width);
     height: calc(100vh - var(--default-layout-header-height));
+    overflow-y: visible;
+    position: fixed;
+    left: 0;
+    top: var(--default-layout-header-height);
+    z-index: 999999999999999999;
+}
+
+.container {
+    width: var(--default-layout-sidebar-width);
+    height: calc(100vh - var(--default-layout-header-height));
+    padding: 20px 0px 26px 8px;
     overflow-y: overlay;
 }

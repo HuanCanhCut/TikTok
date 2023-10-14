@@ -2,19 +2,54 @@
     margin: 16px 0;
     margin-left: 64px;
     position: relative;
+
     &.column {
         max-width: 326px;
         height: 583px;
     }
     &.row {
         max-width: 520px;
+        height: 300px;
     }
 }
 
-.video-item {
+.video-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.video {
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 10px;
     position: absolute;
+    cursor: pointer;
+}
+
+.toggle-play {
+    position: absolute;
+    bottom: 36px;
+    left: 30px;
+    z-index: 99;
+    width: 24px;
+    height: 24px;
+    opacity: 0;
+    transition: all linear 0.15s;
+    &:hover {
+        opacity: 1;
+    }
+}
+
+.video:hover ~ .toggle-play {
+    opacity: 1;
+}
+
+.play,
+.pause {
+    color: white;
+    position: absolute;
+    font-size: 2.2rem;
+    cursor: pointer;
 }

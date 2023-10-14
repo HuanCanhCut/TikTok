@@ -24,9 +24,10 @@
 }
 
 .nick-name {
-    font-weight: 700;
+    // font-weight: 700;
     font-size: 1.8rem;
     line-height: 28px;
+    font-family: SofiaPro, 'sans-serif';
     &:hover {
         text-decoration: underline;
     }
@@ -36,21 +37,14 @@
     margin: 0 4px;
 }
 
-.name {
-    line-height: 28px;
-    font-size: 1.4rem;
-    margin-left: 4px;
-    font-weight: 500;
-}
-
 .description {
     color: rgb(22, 24, 35);
     font-weight: 600;
-    word-wrap: break-word !important; /* Cho phép chữ rụng xuống khi cần */
-    // overflow-wrap: break-word !important; /* Tùy chọn bổ sung cho sự hỗ trợ tốt hơn */
-    max-width: 100%;
+    // word-wrap: break-word !important;
+    max-width: 95%;
+    min-width: 95%;
     line-height: 17px;
-    font-size: 1.4rem;
+    font-size: 1.6rem;
 }
 
 .follow {

@@ -11,6 +11,7 @@ import { useState } from 'react'
 const cx = classNames.bind(style)
 
 export const GlobalContext = createContext()
+export const ContentRef = createContext()
 
 function DefaultLayout({ children }) {
     const [close, setClose] = useState(false)
@@ -28,8 +29,8 @@ function DefaultLayout({ children }) {
             <div className={cx('wrapper')}>
                 {close && <div className={cx('overlay')}></div>}
                 <Header onLogin={handleDisplay} />
+                <SideBar />
                 <div className={cx('container')}>
-                    <SideBar />
                     <div className={cx('content-wrapper')}>
                         <div className={cx('content')}>{children}</div>
                     </div>
