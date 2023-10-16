@@ -14,20 +14,20 @@ export const GlobalContext = createContext()
 export const ContentRef = createContext()
 
 function DefaultLayout({ children }) {
-    const [close, setClose] = useState(false)
+    const [login, setLogin] = useState(false)
 
     const handleClose = useCallback(() => {
-        setClose(false)
+        setLogin(false)
     }, [])
 
     const handleDisplay = useCallback(() => {
-        setClose(true)
+        setLogin(true)
     }, [])
 
     return (
         <GlobalContext.Provider value={handleDisplay}>
             <div className={cx('wrapper')}>
-                {close && <div className={cx('overlay')}></div>}
+                {login && <div className={cx('overlay')}></div>}
                 <Header onLogin={handleDisplay} />
                 <SideBar />
                 <div className={cx('container')}>
@@ -35,7 +35,7 @@ function DefaultLayout({ children }) {
                         <div className={cx('content')}>{children}</div>
                     </div>
                 </div>
-                {close && <Login onClose={handleClose} />}
+                {login && <Login onClose={handleClose} />}
             </div>
         </GlobalContext.Provider>
     )

@@ -1,11 +1,10 @@
 .wrapper {
     width: var(--default-layout-sidebar-width);
     height: calc(100vh - var(--default-layout-header-height));
-    overflow-y: visible;
+    background-color: #fff;
     position: fixed;
     left: 0;
     top: var(--default-layout-header-height);
-    z-index: 999999999999999999;
 }
 
 .container {
