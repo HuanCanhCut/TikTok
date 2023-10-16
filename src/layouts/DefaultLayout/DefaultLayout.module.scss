@@ -9,7 +9,7 @@
     width: var(--default-layout-width);
     padding-right: var(--default-layout-horizontal-spacer);
     display: flex;
-    margin-top: var(--default-layout-header-height);
+    padding-top: var(--default-layout-header-height);
 }
 
 .content-wrapper {

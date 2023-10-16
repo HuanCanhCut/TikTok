@@ -37,7 +37,7 @@
     justify-content: center;
     align-items: center;
     bottom: 30px;
-    z-index: 99;
+    z-index: 20;
     opacity: 0;
     transition: all linear 0.15s;
     &:hover {
@@ -84,7 +84,6 @@
 .muted,
 .un-muted {
     cursor: pointer;
-
     position: absolute;
     color: white;
     font-size: 2.2rem;

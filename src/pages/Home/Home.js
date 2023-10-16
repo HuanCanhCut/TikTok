@@ -1,13 +1,15 @@
-import { memo, useEffect, useState } from 'react'
+import { memo, useEffect, useState, useRef } from 'react'
 import classNames from 'classnames/bind'
 import Modal from 'react-modal'
+import { faSpinner, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Virtuoso } from 'react-virtuoso'
 
 import style from './Home.module.scss'
 import Video from '~/layouts/components/Video'
 import * as videoService from '~/services/videoService'
-import { Virtuoso } from 'react-virtuoso'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSpinner, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { GoToTop } from '~/Components/Icons'
+
 const cx = classNames.bind(style)
 
 const INIT_PAGE = 1
@@ -15,6 +17,8 @@ function Home() {
     const [videos, setVideos] = useState([])
     const [page, setPage] = useState(INIT_PAGE)
     const [isOpen, setIsOpen] = useState(true)
+    const [goToTop, setGoToTop] = useState(false)
+    const headerIntoview = useRef()
 
     const overlayStyle = {
         position: 'fixed',
@@ -27,6 +31,13 @@ function Home() {
 
     const closeModal = () => {
         setIsOpen(false)
+    }
+
+    const handleGoToTop = () => {
+        headerIntoview.current.scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest',
+        })
     }
 
     useEffect(() => {
@@ -46,6 +57,19 @@ function Home() {
         })()
     }, [page])
 
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop
+            setGoToTop(scrollTop > 10)
+        }
+
+        window.addEventListener('scroll', handleScroll)
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll)
+        }
+    }, [])
+
     return (
         <div className={cx('wrapper')}>
             {isOpen || (
@@ -59,6 +83,9 @@ function Home() {
                         return <Video key={index} data={item} />
                     }}
                     components={{
+                        Header: () => {
+                            return <div className={cx('header-intoview')} ref={headerIntoview}></div>
+                        },
                         Footer: () => {
                             return (
                                 <button className={cx('load-more')}>
@@ -70,6 +97,12 @@ function Home() {
                 />
             )}
 
+            {goToTop && (
+                <button className={cx('go-to-top')} onClick={handleGoToTop}>
+                    <GoToTop width="16px" height="16px" />
+                </button>
+            )}
+
             {isOpen && (
                 <div style={overlayStyle}>
                     <Modal
@@ -77,6 +110,7 @@ function Home() {
                         onRequestClose={closeModal}
                         overlayClassName={cx('overlay')}
                         className={cx('ads')}
+                        ariaHideApp={false}
                     >
                         <button className={cx('des')}>
                             Do chính sách của google tắt mọi âm thanh khi web đc load mà chưa có tương tác của người
