@@ -8,7 +8,7 @@
         height: 32px;
         margin-right: 12px;
         border-radius: 50%;
-        background-color: var(--gray);
+        background-color: rgba(255, 255, 255, 0.2);
         object-fit: cover;
     }
 }
@@ -21,7 +21,7 @@
     width: 50px;
     height: 10px;
     border-radius: 5px;
-    background-color: var(--gray);
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
 .name {
@@ -29,5 +29,5 @@
     width: 80px;
     height: 10px;
     border-radius: 5px;
-    background-color: var(--gray);
+    background-color: rgba(255, 255, 255, 0.2);
 }

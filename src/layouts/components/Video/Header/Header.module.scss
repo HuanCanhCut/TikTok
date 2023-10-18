@@ -40,7 +40,7 @@
 .description {
     color: rgb(22, 24, 35);
     font-weight: 600;
-    // word-wrap: break-word !important;
+    color: var(--text-color);
     max-width: 95%;
     min-width: 95%;
     line-height: 17px;

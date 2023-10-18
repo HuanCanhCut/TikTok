@@ -1,7 +1,7 @@
 import { memo, useEffect, useState, useRef } from 'react'
 import classNames from 'classnames/bind'
 import Modal from 'react-modal'
-import { faSpinner, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Virtuoso } from 'react-virtuoso'
 
@@ -9,6 +9,7 @@ import style from './Home.module.scss'
 import Video from '~/layouts/components/Video'
 import * as videoService from '~/services/videoService'
 import { GoToTop } from '~/Components/Icons'
+import Notification from '~/layouts/components/Notification'
 
 const cx = classNames.bind(style)
 
@@ -112,14 +113,12 @@ function Home() {
                         className={cx('ads')}
                         ariaHideApp={false}
                     >
-                        <button className={cx('des')}>
-                            Do chính sách của google tắt mọi âm thanh khi web đc load mà chưa có tương tác của người
-                            dùng nên admin quyết định làm cái notification này để fix bug tạm thời, mong thí chủ thông
-                            cảm :))
-                        </button>
-                        <button className={cx('close')} onClick={closeModal}>
-                            <FontAwesomeIcon icon={faXmark} />
-                        </button>
+                        <Notification
+                            title="Tại sao lại có thông báo này ?"
+                            content="Chuyện kể rằng chính sách của google sẽ tắt mọi âm thanh tự động phát trước khi người dùng tương tác, và Dev thì chưa nghĩ ra được gì hay để giải quyết nên quyết định làm cái thông báo này để người dùng tương tác trước khi video được chạy, mong bạn thông cảm cho Dev cây nhà là vườn nhé ❤️"
+                            path="https://bizweb.dktcdn.net/100/438/408/files/meme-meo-cute-yody-vn-1.jpg?v=1690276113335"
+                            closeModal={closeModal}
+                        />
                     </Modal>
                 </div>
             )}

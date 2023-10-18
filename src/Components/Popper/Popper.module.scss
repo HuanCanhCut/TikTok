@@ -1,10 +1,12 @@
 .wrapper {
     width: 100%;
-    background-color: #1a1a1a;
+    padding: 4px 0;
+    background-color: #262626;
     box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 12px;
     border-radius: 8px;
     max-height: min(100vh - 96px - 60px, 760px);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    color: var(--text-color);
 }
