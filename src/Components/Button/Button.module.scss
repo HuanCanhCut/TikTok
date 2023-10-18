@@ -7,7 +7,7 @@
     font-family: ProximaNova, sans-serif;
     cursor: pointer;
     border: 1px solid transparent;
-    background-color: var(--white);
+    background-color: rgba(255, 255, 255, 0.08);
     margin: 0 8px;
 
     &.disable {
@@ -33,11 +33,10 @@
 
 .rounded {
     border-radius: 5px;
-
     border-color: rgba(22, 24, 35, 0.12);
 
     &:hover {
-        background-color: rgba(22, 24, 35, 0.03);
+        background-color: rgba(255, 255, 255, 0.04);
     }
 }
 
@@ -59,6 +58,7 @@
 .outline {
     color: var(--primary);
     border-color: currentColor;
+    background-color: transparent;
     &:hover {
         background-color: rgba(254, 44, 85, 0.08);
     }

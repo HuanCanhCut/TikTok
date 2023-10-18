@@ -1,6 +1,7 @@
 .wrapper {
     width: 100%;
     padding: 16px 8px 0 8px;
+    border-top: 1px solid #2f2f2f;
 }
 
 .create-effect {
@@ -44,6 +45,7 @@
 .contact-item {
     margin-right: 8px;
     line-height: 28px;
+    color: var(--text-color);
     &:hover {
         text-decoration: underline;
     }

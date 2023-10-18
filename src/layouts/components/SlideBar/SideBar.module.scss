@@ -1,7 +1,8 @@
 .wrapper {
     width: var(--default-layout-sidebar-width);
     height: calc(100vh - var(--default-layout-header-height));
-    background-color: #fff;
+    // background-color: #fff;
+    color: var(--text-color);
     position: fixed;
     left: 0;
     top: var(--default-layout-header-height);

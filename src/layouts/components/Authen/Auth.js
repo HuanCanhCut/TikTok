@@ -11,6 +11,7 @@ import Button from '~/Components/Button'
 import LoginWith from './LoginWith/LoginWith'
 import Policy from './Policy'
 import Input from './Input'
+import config from '~/config'
 
 const cx = classNames.bind(style)
 
@@ -58,23 +59,13 @@ function Login({ onClose }) {
         }
     }
 
-    const handleKeydown = (e) => {
-        switch (e.which) {
-            case 13:
-                handleSubmitLogin()
-                break
-            default:
-                break
-        }
-    }
-
     const handleLoginOptions = () => {
         setSignUp(signUp ? false : true)
         setIsValid(false)
     }
 
     return (
-        <div className={cx('wrapper')} onKeyDown={handleKeydown}>
+        <div className={cx('wrapper')}>
             <button className={cx('close')} onClick={onClose}>
                 <FontAwesomeIcon icon={faXmark} />
             </button>
@@ -92,7 +83,7 @@ function Login({ onClose }) {
 
                 <span className={cx('forgot-password')}>Forgot Password?</span>
 
-                <Button primary onClick={handleSubmitLogin} className={cx('login-btn')}>
+                <Button to={config.routes.home} primary onClick={handleSubmitLogin} className={cx('login-btn')}>
                     {loading || <span className={cx('login')}>Login</span>}
                     {loading && <FontAwesomeIcon icon={faSpinner} className={cx('loading')} />}
                 </Button>

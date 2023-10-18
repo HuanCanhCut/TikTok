@@ -107,10 +107,9 @@ function Header({ onLogin }) {
                 <div className={cx('actions')}>
                     {currentUser ? (
                         <>
-                            <Button rounded leftIcon={<FontAwesomeIcon icon={faPlus} />}>
+                            <Button to={config.routes.upload} rounded leftIcon={<FontAwesomeIcon icon={faPlus} />}>
                                 Upload
                             </Button>
-
                             <Tippy delay={[0, 50]} content="Messages">
                                 <button className={cx('action-btn')}>
                                     <MessageIcon />

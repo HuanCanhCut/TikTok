@@ -4,10 +4,11 @@
     --primary: #fe2c55;
     --black: #000;
     --white: #fff;
-    --text-color: #161823;
+    --text-color: #ffffffe6;
     --gray: #e6e6e6;
     // default layout
 
+    --default-layout-background: #121212;
     --default-layout-header-height: 60px;
     --default-layout-width: 100vw;
     --default-layout-horizontal-spacer: 24px;
@@ -108,6 +109,7 @@ body {
     .tippy-arrow {
         color: #434343;
     }
+    background-color: var(--default-layout-background);
 }
 
 .overlay {

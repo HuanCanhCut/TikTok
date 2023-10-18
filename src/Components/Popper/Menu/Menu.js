@@ -15,13 +15,14 @@ const cx = classNames.bind(style)
 const defaultFn = () => {}
 
 function Menu({ children, items = [], hideOnClick = false, onChange = defaultFn }) {
+    const [history, setHistory] = useState([{ data: items }])
+
     // define config framer-motion
     const springConfig = { damping: 15, stiffness: 300 }
     const initialScale = 0.5
     const opacity = useSpring(springConfig)
     const scale = useSpring(initialScale, springConfig)
 
-    const [history, setHistory] = useState([{ data: items }])
     const current = history[history.length - 1]
 
     const renderItems = () => {
