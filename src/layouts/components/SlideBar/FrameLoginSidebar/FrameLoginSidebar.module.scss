@@ -1,7 +1,7 @@
 .wrapper {
     width: 100%;
-    border-top: 1px solid #f4f4f4;
-    border-bottom: 1px solid #f4f4f4;
+    border-top: 1px solid #2a2a2a;
+    // border-bottom: 1px solid #2a2a2a;
     padding: 20px 8px 24px;
     text-align: center;
 }
@@ -9,7 +9,7 @@
 .title {
     line-height: 21px;
     font-size: 1.6rem;
-    color: rgba(22, 24, 35, 0.5);
+    color: var(--text-color);
 }
 
 .login {

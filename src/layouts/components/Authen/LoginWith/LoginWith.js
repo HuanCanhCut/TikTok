@@ -1,8 +1,7 @@
 import classNames from 'classnames/bind'
 import style from './LoginWith.module.scss'
 import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons'
+import { FacebookIcon, GoogleIcon } from '~/Components/Icons'
 
 const cx = classNames.bind(style)
 
@@ -10,11 +9,12 @@ function loginWith() {
     return (
         <React.Fragment>
             <button className={cx('login-with')}>
-                <FontAwesomeIcon icon={faFacebook} className={cx('icon', 'facebook-icon')} />
+                {/* <FontAwesomeIcon icon={faFacebook} className={cx('icon', 'facebook-icon')} /> */}
+                <FacebookIcon width="19px" height="19px" className={cx('icon')} />
                 <span>Continue with Facebook</span>
             </button>
             <button className={cx('login-with')}>
-                <FontAwesomeIcon icon={faGoogle} className={cx('icon', 'google-icon')} />
+                <GoogleIcon className={cx('icon')} width="19px" height="19px" />
                 <span>Continue with Google</span>
             </button>
             <div className={cx('more')}>

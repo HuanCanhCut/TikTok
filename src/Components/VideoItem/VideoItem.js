@@ -8,6 +8,7 @@ import { faPause, faPlay } from '@fortawesome/free-solid-svg-icons'
 import style from './Video.module.scss'
 import useElementOnScreen from '~/hooks/useElementOnScreen'
 import { Muted, UnMuted } from '../Icons'
+import VideoAction from './VideoAction'
 
 const cx = classNames.bind(style)
 
@@ -59,6 +60,7 @@ function VideoItem({ video }) {
                         ref={videoRef}
                         src={video.file_url}
                         poster={video.thumb_url}
+                        muted
                         className={cx('video')}
                         onPlay={() => {
                             setPlaying(true)
@@ -96,6 +98,7 @@ function VideoItem({ video }) {
                         </button>
                     )}
                 </div>
+                <VideoAction data={video} />
             </div>
         </div>
     )

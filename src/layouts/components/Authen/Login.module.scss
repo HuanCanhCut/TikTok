@@ -3,13 +3,12 @@
     padding-top: 20px;
     padding-bottom: 60px;
     max-height: calc(100vh - var(--default-layout-header-height) * 2);
-    // position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 10px;
     z-index: 99;
-    background-color: #fff;
+    background-color: #252525;
     text-align: center;
     box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.05);
     transition: all 0.1s ease-in-out;
@@ -17,18 +16,21 @@
 }
 
 .close {
+    color: rgba(255, 255, 255, 0.75);
     background-color: #f1ff12;
     border-radius: 50%;
     width: 26px;
     height: 26px;
-
     cursor: pointer;
     background-color: rgba(22, 24, 35, 0.03);
     position: absolute;
     right: 16px;
     top: 16px;
     font-size: 1.8rem;
-    color: rgba(22, 24, 35, 0.75);
+}
+
+.title {
+    color: var(--text-color);
 }
 
 .header {
@@ -48,16 +50,17 @@
 }
 
 .forgot-password {
+    color: rgba(255, 255, 255, 0.5);
+    width: 100%;
     justify-content: flex-start;
     font-size: 1.2rem;
     line-height: 1;
-    color: rgba(22, 24, 35, 0.75);
     font-weight: 600;
     margin: 12px 0;
     cursor: pointer;
     &:hover {
         text-decoration: underline;
-        color: rgba(22, 24, 35, 0.95);
+        color: rgba(255, 255, 255, 0.95);
     }
 }
 
@@ -103,18 +106,18 @@
 .separator-line {
     flex: 1;
     height: 1px;
-    background-color: rgba(22, 24, 35, 0.12);
+    background-color: rgba(255, 255, 255, 0.12);
 }
 
 .separator-content {
-    color: rgba(22, 24, 35, 0.5);
+    color: rgba(255, 255, 255, 0.5);
     padding: 0 8px;
     margin: 12px 0;
     font-size: 1.3rem;
 }
 
 .policy {
-    color: rgba(22, 24, 35, 0.5);
+    color: rgb(121, 121, 121);
     padding: 10px 30px 20px 30px;
     font-weight: 600;
     width: 100%;
@@ -124,6 +127,7 @@
 }
 
 .footer {
+    color: var(--text-color);
     border-top: 0.5px solid rgba(22, 24, 35, 0.12);
     display: flex;
     align-items: center;

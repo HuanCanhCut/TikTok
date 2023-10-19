@@ -1,0 +1,13 @@
+.wrapper {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.1s linear background-color;
+}
+
+.value {
+    font-size: 1.4rem;
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.75);
+}

@@ -1,25 +1,18 @@
 .login-with {
     width: 100%;
     padding: 12px;
-    background-color: #f1f1f2;
+    background-color: #3f3f3f;
     border-radius: 10px;
     font-size: 1.6rem;
     font-weight: 600;
-    color: rgba(22, 24, 35);
+    color: var(--text-color);
     position: relative;
     cursor: no-drop;
-    .icon {
-        position: absolute;
-        left: 10px;
-        font-size: 1.8rem;
-    }
-    .facebook-icon {
-        color: blue;
-    }
+}
 
-    .google-icon {
-        color: red;
-    }
+.icon {
+    position: absolute;
+    left: 10px;
 }
 
 .login-with + .login-with {
@@ -31,4 +24,5 @@
     display: flex;
     justify-content: center;
     padding: 8px 0;
+    color: var(--text-color);
 }
