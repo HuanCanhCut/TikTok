@@ -1,20 +1,28 @@
-import style from './FrameLoginSidebar.module.scss'
+import { useState } from 'react'
 import classNames from 'classnames/bind'
+import style from './FrameLoginSidebar.module.scss'
 import Button from '~/Components/Button'
-import { useContext } from 'react'
-import { GlobalContext } from '~/layouts/DefaultLayout/DefaultLayout'
+import Authen from '~/layouts/components/Authen'
 
 const cx = classNames.bind(style)
 
 function FrameLoginSidebar() {
-    const handleDisplay = useContext(GlobalContext)
+    const [modalIsOpen, setModalIsOpen] = useState(false)
 
+    const openModal = () => {
+        setModalIsOpen(true)
+    }
+
+    const closeModal = () => {
+        setModalIsOpen(false)
+    }
     return (
         <div className={cx('wrapper')}>
             <p className={cx('title')}>Log in to follow creators, like videos, and view comments.</p>
-            <Button rounded className={cx('login')} onClick={handleDisplay}>
+            <Button rounded className={cx('login')} onClick={openModal}>
                 Login
             </Button>
+            <Authen isOpen={modalIsOpen} onClose={closeModal} />
         </div>
     )
 }

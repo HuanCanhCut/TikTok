@@ -4,6 +4,7 @@ import style from './Login.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { memo } from 'react'
+import Modal from 'react-modal'
 
 import { useState } from 'react'
 import * as Auth from '~/services/authService'
@@ -15,7 +16,7 @@ import config from '~/config'
 
 const cx = classNames.bind(style)
 
-function Login({ onClose }) {
+function Authen({ onClose, isOpen }) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [isValid, setIsValid] = useState(false)
@@ -65,51 +66,60 @@ function Login({ onClose }) {
     }
 
     return (
-        <div className={cx('wrapper')}>
-            <button className={cx('close')} onClick={onClose}>
-                <FontAwesomeIcon icon={faXmark} />
-            </button>
-            <header className={cx('header')}>
-                <h1 className={cx('title')}>{signUp ? 'Sign up to TikTok' : 'Login to TikTok'}</h1>
-            </header>
+        <Modal
+            isOpen={isOpen}
+            onRequestClose={onClose}
+            overlayClassName={cx('overlay')}
+            ariaHideApp={false}
+            className={cx('modal')}
+        >
+            <div className={cx('wrapper')}>
+                <button className={cx('close')} onClick={onClose}>
+                    <FontAwesomeIcon icon={faXmark} />
+                </button>
+                <header className={cx('header')}>
+                    <h1 className={cx('title')}>{signUp ? 'Sign up to TikTok' : 'Login to TikTok'}</h1>
+                </header>
 
-            <div className={cx('body')}>
-                <Input setEmail={setEmail} setPassword={setPassword} />
+                <div className={cx('body')}>
+                    <Input setEmail={setEmail} setPassword={setPassword} />
 
-                <span className={cx('invalid-password')}>
-                    {isValid && !signUp && `Username or password doesn't match our records. Try again.`}
-                    {signUp && isValid && 'Sign up isValid. Try again'}
-                </span>
-
-                <span className={cx('forgot-password')}>Forgot Password?</span>
-
-                <Button to={config.routes.home} primary onClick={handleSubmitLogin} className={cx('login-btn')}>
-                    {loading || <span className={cx('login')}>Login</span>}
-                    {loading && <FontAwesomeIcon icon={faSpinner} className={cx('loading')} />}
-                </Button>
-
-                <div className={cx('separator')}>
-                    <span className={cx('separator-line')}></span>
-                    <span className={cx('separator-content')}>Or continue with</span>
-                    <span className={cx('separator-line')}></span>
-                </div>
-                <LoginWith />
-                <Policy />
-            </div>
-            <div className={cx('footer')}>
-                <p>
-                    {signUp ? 'Already have an account? ' : `Don't have an account? `}
-                    <span className={cx('sign-up')} onClick={handleLoginOptions}>
-                        {signUp ? 'Login' : 'Sign Up'}
+                    <span className={cx('invalid-password')}>
+                        {isValid && !signUp && `Username or password doesn't match our records. Try again.`}
+                        {signUp && isValid && 'Sign up isValid. Try again'}
                     </span>
-                </p>
+
+                    <span className={cx('forgot-password')}>Forgot Password?</span>
+
+                    <Button to={config.routes.home} primary onClick={handleSubmitLogin} className={cx('login-btn')}>
+                        {loading || <span className={cx('login')}>Login</span>}
+                        {loading && <FontAwesomeIcon icon={faSpinner} className={cx('loading')} />}
+                    </Button>
+
+                    <div className={cx('separator')}>
+                        <span className={cx('separator-line')}></span>
+                        <span className={cx('separator-content')}>Or continue with</span>
+                        <span className={cx('separator-line')}></span>
+                    </div>
+                    <LoginWith />
+                    <Policy />
+                </div>
+                <div className={cx('footer')}>
+                    <p>
+                        {signUp ? 'Already have an account? ' : `Don't have an account? `}
+                        <span className={cx('sign-up')} onClick={handleLoginOptions}>
+                            {signUp ? 'Login' : 'Sign Up'}
+                        </span>
+                    </p>
+                </div>
             </div>
-        </div>
+        </Modal>
     )
 }
 
-Login.propTypes = {
-    onClose: PropTypes.func,
+Authen.propTypes = {
+    onClose: PropTypes.func.isRequired,
+    isOpen: PropTypes.bool.isRequired,
 }
 
-export default memo(Login)
+export default memo(Authen)

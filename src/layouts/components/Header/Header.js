@@ -14,9 +14,9 @@ import {
 import Tippy from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css'
 import { Link } from 'react-router-dom'
-import { useContext } from 'react'
-import { memo } from 'react'
+import { useContext, useState, memo } from 'react'
 
+import Authen from '../Authen'
 import { AuthUserContext } from '~/App'
 import config from '~/config'
 import Button from '~/Components/Button'
@@ -58,8 +58,9 @@ const MENU_ITEM = [
     },
 ]
 
-function Header({ onLogin }) {
+function Header() {
     const currentUser = useContext(AuthUserContext)
+    const [modalIsOpen, setModalIsOpen] = useState(false)
 
     const handleMenuChange = (menuItem) => {
         switch (menuItem.type) {
@@ -96,6 +97,14 @@ function Header({ onLogin }) {
         },
     ]
 
+    const openModal = () => {
+        setModalIsOpen(true)
+    }
+
+    const closeModal = () => {
+        setModalIsOpen(false)
+    }
+
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
@@ -123,10 +132,10 @@ function Header({ onLogin }) {
                         </>
                     ) : (
                         <>
-                            <Button rounded onClick={onLogin} leftIcon={<FontAwesomeIcon icon={faPlus} />}>
+                            <Button rounded leftIcon={<FontAwesomeIcon icon={faPlus} />} onClick={openModal}>
                                 Upload
                             </Button>
-                            <Button primary onClick={onLogin}>
+                            <Button primary onClick={openModal}>
                                 Log In
                             </Button>
                         </>
@@ -143,6 +152,8 @@ function Header({ onLogin }) {
                     </Menu>
                 </div>
             </div>
+
+            <Authen isOpen={modalIsOpen} onClose={closeModal} />
         </header>
     )
 }
