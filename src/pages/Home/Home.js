@@ -1,6 +1,5 @@
 import { memo, useEffect, useState, useRef } from 'react'
 import classNames from 'classnames/bind'
-import Modal from 'react-modal'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Virtuoso } from 'react-virtuoso'

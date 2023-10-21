@@ -10,6 +10,7 @@ import {
     faUser,
     faSignOut,
     faPlus,
+    faMoon,
 } from '@fortawesome/free-solid-svg-icons'
 import Tippy from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css'
@@ -55,6 +56,11 @@ const MENU_ITEM = [
     {
         icon: <FontAwesomeIcon icon={faKeyboard} />,
         title: 'Keyboard shortcuts',
+    },
+    {
+        icon: <FontAwesomeIcon icon={faMoon} />,
+        title: 'Dark mode',
+        switch: true,
     },
 ]
 
