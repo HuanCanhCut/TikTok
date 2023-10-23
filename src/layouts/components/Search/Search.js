@@ -2,6 +2,8 @@ import HeadlessTippy from '@tippyjs/react/headless'
 import { useEffect, useState, useRef } from 'react'
 import { faCircleXmark, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useSelector } from 'react-redux'
+import { themeSelector } from '~/redux/selectors'
 
 import * as searchService from '~/services/searchService'
 import { Wrapper as PopperWrapper } from '~/Components/Popper'
@@ -18,6 +20,7 @@ function Search() {
     const [searchResult, setSearchResult] = useState([])
     const [showResult, setShowResult] = useState(true)
     const [loading, setLoading] = useState(false)
+    const darkMode = useSelector(themeSelector)
 
     const debounceValue = useDebounce(searchValue, 500)
 

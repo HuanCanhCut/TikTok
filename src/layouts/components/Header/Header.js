@@ -16,6 +16,8 @@ import Tippy from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css'
 import { Link } from 'react-router-dom'
 import { useContext, useState, memo } from 'react'
+import { useSelector } from 'react-redux'
+import { themeSelector } from '~/redux/selectors'
 
 import Authen from '../Authen'
 import { AuthUserContext } from '~/App'
@@ -67,6 +69,7 @@ const MENU_ITEM = [
 function Header() {
     const currentUser = useContext(AuthUserContext)
     const [modalIsOpen, setModalIsOpen] = useState(false)
+    const darkMode = useSelector(themeSelector)
 
     const handleMenuChange = (menuItem) => {
         switch (menuItem.type) {
@@ -112,10 +115,10 @@ function Header() {
     }
 
     return (
-        <header className={cx('wrapper')}>
+        <header className={cx('wrapper', { darkMode })}>
             <div className={cx('inner')}>
                 <Link to={config.routes.home} className={cx('logo-link')}>
-                    <img src={images.logo} alt="Logo" />
+                    <img src={darkMode ? images.lightLogo : images.darkLogo} alt="Logo" />
                 </Link>
 
                 <Search />
@@ -126,12 +129,12 @@ function Header() {
                                 Upload
                             </Button>
                             <Tippy delay={[0, 50]} content="Messages">
-                                <button className={cx('action-btn')}>
+                                <button className={cx('action-btn', { darkMode })}>
                                     <MessageIcon />
                                 </button>
                             </Tippy>
                             <Tippy delay={[0, 50]} content="Mail Box">
-                                <button className={cx('action-btn')}>
+                                <button className={cx('action-btn', { darkMode })}>
                                     <InboxIcon />
                                 </button>
                             </Tippy>

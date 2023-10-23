@@ -1,0 +1,36 @@
+// switch button
+.switch {
+    width: 44px;
+    height: 24px;
+    border-radius: 100px;
+    background-color: rgba(22, 24, 35, 0.12);
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-right: 2px;
+    padding-left: 3.5px;
+    &:hover {
+        background-color: rgba(20, 22, 35, 0.12);
+    }
+}
+
+.switch-core {
+    width: 19px;
+    height: 19px;
+    background-color: #fff;
+    border-radius: 50%;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px;
+}
+
+.switch[data-ison='true'] {
+    justify-content: flex-end;
+    background-color: rgb(11, 224, 155);
+}
+
+.switch[data-ison='false'] .switch-core {
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px;
+}

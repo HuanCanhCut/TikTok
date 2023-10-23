@@ -5,9 +5,16 @@
     --black: #000;
     --white: #fff;
     --text-color: #ffffffe6;
+    --text-light-color: rgba(255, 255, 255, 0.9);
+    --text-light-gray-color: rgba(255, 255, 255, 0.75);
+
+    --text-dark-gray-color: rgba(255, 255, 255, 0.75);
+    --text-dark-color: rgb(22, 24, 35);
+
     // default layout
 
-    --default-layout-background: #121212;
+    --default-layout-dark-background: #121212;
+    --default-layout-light-background: #fff;
     --default-layout-header-height: 60px;
     --default-layout-width: 100vw;
     --default-layout-horizontal-spacer: 24px;
@@ -32,6 +39,18 @@ body {
     text-rendering: optimizeSpeed;
     overflow-y: overlay;
     overflow-x: hidden;
+    .tippy-box {
+        background-color: #434343;
+        border-radius: 8px;
+        font-weight: 600;
+        padding: 4px 8px;
+        font-size: 1.4rem;
+        color: #fff;
+    }
+    .tippy-arrow {
+        color: #434343;
+    }
+    background-color: var(--default-layout-light-background);
 }
 
 // scroll bars
@@ -49,6 +68,7 @@ html *::-webkit-scrollbar-track {
     border-radius: 0;
     background-color: rgba(0, 0, 0, 0);
 }
+
 button,
 input,
 [tabindex] {
@@ -94,21 +114,6 @@ a[href] {
     font-family: SofiaPro;
     src: url('/assets/fonts/sofiapro-bold.woff');
     font-weight: 700;
-}
-
-body {
-    .tippy-box {
-        background-color: #434343;
-        border-radius: 8px;
-        font-weight: 600;
-        padding: 4px 8px;
-        font-size: 1.4rem;
-        color: #fff;
-    }
-    .tippy-arrow {
-        color: #434343;
-    }
-    background-color: var(--default-layout-background);
 }
 
 .overlay {

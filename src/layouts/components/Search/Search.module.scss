@@ -14,7 +14,7 @@
     position: relative;
     height: var(--search-height);
     display: flex;
-    background-color: rgba(255, 255, 255, 0.12);
+    background-color: rgba(22, 24, 35, 0.06);
     border-radius: var(--search-border-radius);
     padding-left: 16px;
     border: 1.5px solid transparent;
@@ -22,7 +22,7 @@
     input {
         flex: 1;
         font-size: 1.5rem;
-        color: var(--text-color);
+        color: var(--text-dark-color);
         background-color: transparent;
         height: 100%;
         caret-color: var(--primary);
@@ -40,11 +40,11 @@
         width: 1px;
         right: var(--search-button-width);
         height: calc(var(--search-height) - var(--search-top-spacer) * 2);
-        background-color: rgba(255, 255, 255, 0.34);
+        background-color: rgba(22, 24, 35, 0.1);
     }
 
     &:focus-within {
-        border-color: rgba(255, 255, 255, 0.2);
+        border-color: rgba(22, 24, 35, 0.2);
     }
 }
 
@@ -78,7 +78,7 @@
     background-color: transparent;
     cursor: pointer;
     font-size: 1.8rem;
-    color: rgba(255, 255, 255, 0.34);
+    color: rgba(22, 24, 35, 0.34);
 
     &:hover {
         background-color: rgba(255, 255, 255, 0.12);

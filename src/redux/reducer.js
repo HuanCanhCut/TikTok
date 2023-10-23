@@ -10,7 +10,7 @@ function reducer(state = initState, action) {
             return {
                 ...state,
                 theme: {
-                    darkMode: true,
+                    darkMode: action.payload,
                 },
             }
         default:

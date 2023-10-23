@@ -9,11 +9,15 @@
     top: 0;
     left: 0;
     height: var(--default-layout-header-height, 60px);
-    box-shadow: 0px 1px 1px rgb(255 255 255 / 12%);
+    box-shadow: 0px 1px 1px rgb(0 0 0 / 12%);
     display: flex;
-    background-color: var(--default-layout-background);
+    background-color: var(--default-layout-light-background);
     justify-content: center;
     z-index: 2;
+    &.darkMode {
+        background-color: var(--default-layout-dark-background);
+        box-shadow: 0px 1px 1px rgb(255 255 255 / 12%);
+    }
 }
 
 .inner {
@@ -38,10 +42,13 @@
 
 .action-btn {
     font-size: 2.2rem;
-    color: #e8e8e8;
+    color: var(--text-dark-color);
     height: 42px;
     padding: 0 12px;
     cursor: pointer;
+    &.darkMode {
+        color: var(--text-light-color);
+    }
 }
 
 .user-avatar {
@@ -59,4 +66,5 @@
     padding: 4px 10px;
     margin-left: 12px;
     background-color: transparent;
+    color: white;
 }

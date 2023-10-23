@@ -2,7 +2,7 @@ const routerConfig = {
     home: '/',
     following: '/following',
     profile: '/:nickName',
-    search: '/feedBack',
+    search: '/feedback',
     upload: '/upload',
     live: '/live',
 }

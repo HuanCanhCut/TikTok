@@ -27,12 +27,14 @@
 }
 
 // MENU ITEMS
+
 .menu-item {
     width: 100%;
     text-align: start;
     padding: 11px 16px;
     line-height: 1.8rem;
     background-color: transparent;
+    position: relative;
     color: var(--text-color);
     &:hover {
         background-color: #303030;
