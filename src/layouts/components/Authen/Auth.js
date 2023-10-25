@@ -13,6 +13,7 @@ import LoginWith from './LoginWith/LoginWith'
 import Policy from './Policy'
 import Input from './Input'
 import config from '~/config'
+import useDarkMode from '~/hooks/useDarkMode'
 
 const cx = classNames.bind(style)
 
@@ -73,7 +74,11 @@ function Authen({ onClose, isOpen }) {
             ariaHideApp={false}
             className={cx('modal')}
         >
-            <div className={cx('wrapper')}>
+            <div
+                className={cx('wrapper', {
+                    darkMode: useDarkMode(),
+                })}
+            >
                 <button className={cx('close')} onClick={onClose}>
                     <FontAwesomeIcon icon={faXmark} />
                 </button>

@@ -5,6 +5,7 @@ import style from './SuggestedAccounts.module.scss'
 import AccountItem from './AccountItem'
 import * as useService from '~/services/userService'
 import AccountLoading from '~/Components/AccountLoading'
+import useDarkMode from '~/hooks/useDarkMode'
 
 const cx = classNames.bind(style)
 
@@ -39,7 +40,11 @@ function SuggestedAccounts({ label }) {
     }
 
     return (
-        <div className={cx('wrapper')}>
+        <div
+            className={cx('wrapper', {
+                darkMode: useDarkMode(),
+            })}
+        >
             <p className={cx('label')}>{label}</p>
 
             {suggestedUser.map((account) => {

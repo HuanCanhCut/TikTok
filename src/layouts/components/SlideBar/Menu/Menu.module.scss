@@ -39,3 +39,23 @@
 .active-icon {
     display: none;
 }
+
+.menu-item {
+    &.darkMode {
+        color: var(--text-light-color);
+        &.active {
+            color: var(--primary);
+            .icon {
+                display: none;
+            }
+            .active-icon {
+                display: flex;
+            }
+        }
+
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.04);
+            border-radius: 5px;
+        }
+    }
+}

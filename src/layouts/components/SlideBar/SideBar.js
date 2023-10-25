@@ -17,6 +17,7 @@ import FrameLoginSidebar from './FrameLoginSidebar'
 import FooterSidebar from './FooterSidebar'
 import config from '~/config'
 import { AuthUserContext } from '~/App'
+import useDarkMode from '~/hooks/useDarkMode'
 
 const cx = classNames.bind(styles)
 
@@ -24,7 +25,11 @@ function Sidebar() {
     const currentUser = useContext(AuthUserContext)
 
     return (
-        <aside className={cx('wrapper')}>
+        <aside
+            className={cx('wrapper', {
+                darkMode: useDarkMode(),
+            })}
+        >
             <div className={cx('container')}>
                 <Menu>
                     <MenuItem

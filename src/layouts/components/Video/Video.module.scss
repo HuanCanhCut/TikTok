@@ -2,5 +2,9 @@
     position: relative;
     padding-top: 20px;
     padding-bottom: 12px;
-    border-bottom: 1px solid #2f2f2f;
+    border-bottom: 1px solid rgba(22, 24, 35, 0.2);
+
+    &.darkMode {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
 }

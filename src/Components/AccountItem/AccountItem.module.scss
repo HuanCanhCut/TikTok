@@ -26,9 +26,24 @@
 .name {
     font-size: 1.6rem;
     font-weight: 500;
+    color: var(--text-dark-color);
 }
 
 .username {
-    font-size: 1.4rem;
+    margin-top: 2px;
+    font-size: 1.3rem;
     color: rgba(22, 24, 35, 0.5);
+}
+
+.wrapper {
+    &.darkMode {
+        .username {
+            font-size: 1.3rem;
+            color: var(--text-light-gray-color);
+        }
+
+        .name {
+            color: var(--text-light-color);
+        }
+    }
 }

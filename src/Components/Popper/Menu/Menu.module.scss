@@ -35,9 +35,15 @@
     line-height: 1.8rem;
     background-color: transparent;
     position: relative;
-    color: var(--text-color);
+    color: var(--text-dark-color);
     &:hover {
-        background-color: #303030;
+        background-color: rgba(22, 24, 35, 0.03);
+    }
+
+    &.darkMode {
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.03);
+        }
     }
 }
 
@@ -67,4 +73,10 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.menu-item {
+    &.darkMode {
+        color: var(--text-color);
+    }
 }

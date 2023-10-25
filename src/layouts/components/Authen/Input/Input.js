@@ -4,6 +4,7 @@ import React from 'react'
 import { faEyeSlash, faEye } from '@fortawesome/free-regular-svg-icons'
 import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import useDarkMode from '~/hooks/useDarkMode'
 
 const cx = classNames.bind(style)
 
@@ -11,10 +12,14 @@ function Input({ ...props } = {}) {
     const [hidePassword, setHidePassword] = useState(true)
 
     return (
-        <React.Fragment>
+        <div
+            className={cx({
+                darkMode: useDarkMode(),
+            })}
+        >
             <input
                 type="text"
-                className={cx('email', 'email')}
+                className={cx('email')}
                 placeholder="Email"
                 onChange={(e) => {
                     props.setEmail(e.target.value)
@@ -24,7 +29,7 @@ function Input({ ...props } = {}) {
             <div className={cx('password-container')}>
                 <input
                     type={hidePassword ? 'password' : 'text'}
-                    className={cx('password', 'password')}
+                    className={cx('password')}
                     placeholder="Password"
                     onChange={(e) => {
                         props.setPassword(e.target.value)
@@ -51,7 +56,7 @@ function Input({ ...props } = {}) {
                     </span>
                 )}
             </div>
-        </React.Fragment>
+        </div>
     )
 }
 

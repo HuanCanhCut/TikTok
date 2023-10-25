@@ -4,12 +4,17 @@ import PropTypes from 'prop-types'
 import Header from '~/layouts/components/Header'
 import SideBar from '../components/SlideBar'
 import style from './DefaultLayout.module.scss'
+import useDarkMode from '~/hooks/useDarkMode'
 
 const cx = classNames.bind(style)
 
 function DefaultLayout({ children }) {
     return (
-        <div className={cx('wrapper')}>
+        <div
+            className={cx('wrapper', {
+                darkMode: useDarkMode(),
+            })}
+        >
             <Header />
             <SideBar />
             <div className={cx('container')}>

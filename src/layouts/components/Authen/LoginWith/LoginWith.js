@@ -2,12 +2,17 @@ import classNames from 'classnames/bind'
 import style from './LoginWith.module.scss'
 import React from 'react'
 import { FacebookIcon, GoogleIcon } from '~/Components/Icons'
+import useDarkMode from '~/hooks/useDarkMode'
 
 const cx = classNames.bind(style)
 
-function loginWith() {
+function LoginWith() {
     return (
-        <React.Fragment>
+        <div
+            className={cx({
+                darkMode: useDarkMode(),
+            })}
+        >
             <button className={cx('login-with')}>
                 {/* <FontAwesomeIcon icon={faFacebook} className={cx('icon', 'facebook-icon')} /> */}
                 <FacebookIcon width="19px" height="19px" className={cx('icon')} />
@@ -20,7 +25,7 @@ function loginWith() {
             <div className={cx('more')}>
                 <p>More</p>
             </div>
-        </React.Fragment>
+        </div>
     )
 }
-export default React.memo(loginWith)
+export default React.memo(LoginWith)

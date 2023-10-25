@@ -34,10 +34,11 @@
 
 .rounded {
     border-radius: 5px;
+    color: var(--text-dark-color);
     border-color: rgba(22, 24, 35, 0.12);
 
     &:hover {
-        background-color: rgba(255, 255, 255, 0.04);
+        background-color: rgba(22, 24, 35, 0.04);
     }
 }
 
@@ -88,4 +89,15 @@
     padding: 12px 0;
     margin-left: 0;
     background-color: #f1f1f2;
+}
+
+.wrapper {
+    &.darkMode {
+        &.rounded {
+            color: #fff;
+            &:hover {
+                background-color: rgba(29, 31, 43, 0.7);
+            }
+        }
+    }
 }

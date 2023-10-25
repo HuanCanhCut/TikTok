@@ -1,7 +1,7 @@
 .wrapper {
     width: 100%;
     padding: 16px 8px 0 8px;
-    border-top: 1px solid #2f2f2f;
+    border-top: 1px solid rgba(22, 24, 35, 0.12);
 }
 
 .create-effect {
@@ -29,13 +29,15 @@
     display: flex;
     flex-wrap: wrap;
     margin-top: 12px;
+    color: var(--text-dark-gray-color);
 }
 
 .contact-item,
 .current-version {
     font-size: 13px;
-    color: rgba(22, 24, 35, 0.5);
+    color: var(--text-dark-color);
     font-weight: 600;
+    cursor: pointer;
 }
 
 .current-version {
@@ -45,8 +47,18 @@
 .contact-item {
     margin-right: 8px;
     line-height: 28px;
-    color: var(--text-color);
     &:hover {
         text-decoration: underline;
+    }
+}
+
+.wrapper {
+    &.darkMode {
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+
+        .contact-item,
+        .current-version {
+            color: #ffffff80;
+        }
     }
 }

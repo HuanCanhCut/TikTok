@@ -5,12 +5,17 @@ import style from './AccountPreview.module.scss'
 import Button from '~/Components/Button'
 import BlueTick from '~/Components/BlueTick/BlueTick'
 import Image from '~/Components/Images'
+import useDarkMode from '~/hooks/useDarkMode'
 
 const cx = classNames.bind(style)
 
 function AccountPreview({ data }) {
     return (
-        <div className={cx('preview')}>
+        <div
+            className={cx('preview', {
+                darkMode: useDarkMode(),
+            })}
+        >
             <header className={cx('header')}>
                 <Image className={cx('avatar')} src={data.avatar} alt="" />
                 <Button primary>Follow</Button>
@@ -25,9 +30,9 @@ function AccountPreview({ data }) {
                 </div>
                 <p className={cx('analytics')}>
                     <strong className={cx('value')}>{data.followings_count}</strong>
-                    <span>Following</span>
+                    <span>Followers</span>
                     <strong className={cx('value')}>{data.followers_count}</strong>
-                    <span>Like</span>
+                    <span>Likes</span>
                 </p>
             </div>
         </div>

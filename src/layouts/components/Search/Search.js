@@ -2,8 +2,6 @@ import HeadlessTippy from '@tippyjs/react/headless'
 import { useEffect, useState, useRef } from 'react'
 import { faCircleXmark, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useSelector } from 'react-redux'
-import { themeSelector } from '~/redux/selectors'
 
 import * as searchService from '~/services/searchService'
 import { Wrapper as PopperWrapper } from '~/Components/Popper'
@@ -12,6 +10,7 @@ import style from './Search.module.scss'
 import classNames from 'classnames/bind'
 import { SearchIcon } from '~/Components/Icons'
 import useDebounce from '~/hooks/useDebounce'
+import useDarkMode from '~/hooks/useDarkMode'
 
 const cx = classNames.bind(style)
 
@@ -20,7 +19,6 @@ function Search() {
     const [searchResult, setSearchResult] = useState([])
     const [showResult, setShowResult] = useState(true)
     const [loading, setLoading] = useState(false)
-    const darkMode = useSelector(themeSelector)
 
     const debounceValue = useDebounce(searchValue, 500)
 
@@ -58,7 +56,7 @@ function Search() {
 
     return (
         //  Using a wrapper <div> tag around the reference element solves this by creating a new parentNode context.
-        <div>
+        <div className={cx({ darkMode: useDarkMode() })}>
             <HeadlessTippy
                 interactive
                 visible={showResult && searchResult.length > 0}
@@ -74,8 +72,13 @@ function Search() {
                 )}
                 onClickOutside={handleHideResult}
             >
-                <div className={cx('search')}>
+                <div
+                    className={cx('search', {
+                        darkMode: useDarkMode(),
+                    })}
+                >
                     <input
+                        className={cx({ darkMode: useDarkMode() })}
                         ref={inputRef}
                         placeholder="Search account and videos"
                         spellCheck={false}
@@ -95,13 +98,20 @@ function Search() {
                     )}
 
                     {loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
+                    <div
+                        className={cx('seperate', {
+                            darkMode: useDarkMode(),
+                        })}
+                    ></div>
                     <button
-                        className={cx('search-btn')}
+                        className={cx('search-btn', {
+                            darkMode: useDarkMode(),
+                        })}
                         onMouseDown={(e) => {
                             e.preventDefault()
                         }}
                     >
-                        <SearchIcon />
+                        <SearchIcon className={cx('search-btn-icon')} />
                     </button>
                 </div>
             </HeadlessTippy>

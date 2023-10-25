@@ -3,13 +3,13 @@
     padding: 16px 0;
     font-size: 1.4rem;
     font-weight: 600;
-    border-top: 1px solid #2f2f2f;
+    border-top: 1px solid rgba(22, 24, 35, 0.12);
 }
 
 .label {
     padding: 0 8px;
     margin-bottom: 8px;
-    color: rgba(255, 255, 255, 0.75);
+    color: rgba(22, 24, 35, 0.749);
 }
 
 // account item
@@ -36,6 +36,7 @@
 }
 
 .nickname {
+    color: var(--text-dark-color);
     font-size: 1.6rem;
     font-weight: 700;
 }
@@ -47,17 +48,39 @@
 }
 
 .name {
-    color: rgba(22, 24, 35, 0.55);
+    color: rgba(22, 24, 35, 0.749);
     font-size: 1.2rem;
     line-height: 1;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .see-more {
     font-size: 1.4rem;
-    color: var(--primary);
+    color: rgb(254, 44, 85);
     padding: 0 8px;
     margin-top: 8px;
     font-weight: 600;
     cursor: pointer;
+}
+
+.wrapper {
+    &.darkMode {
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+
+        .label {
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .nickname {
+            color: var(--text-color);
+        }
+
+        .name {
+            color: #ffffffbf;
+        }
+
+        .see-more {
+            color: var(--primary);
+        }
+    }
 }

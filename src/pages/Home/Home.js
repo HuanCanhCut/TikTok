@@ -8,6 +8,7 @@ import style from './Home.module.scss'
 import Video from '~/layouts/components/Video'
 import * as videoService from '~/services/videoService'
 import { GoToTop } from '~/Components/Icons'
+import useDarkMode from '~/hooks/useDarkMode'
 
 const cx = classNames.bind(style)
 
@@ -56,7 +57,11 @@ function Home() {
     }, [])
 
     return (
-        <div className={cx('wrapper')}>
+        <div
+            className={cx('wrapper', {
+                darkMode: useDarkMode(),
+            })}
+        >
             <Virtuoso
                 data={videos}
                 useWindowScroll

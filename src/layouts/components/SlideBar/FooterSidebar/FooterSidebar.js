@@ -3,6 +3,7 @@ import style from './FooterSidebar.module.scss'
 import Button from '~/Components/Button'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHurricane } from '@fortawesome/free-solid-svg-icons'
+import useDarkMode from '~/hooks/useDarkMode'
 
 const cx = classNames.bind(style)
 
@@ -31,7 +32,11 @@ function FooterSidebar() {
     const Year = date.getFullYear()
 
     return (
-        <div className={cx('wrapper')}>
+        <div
+            className={cx('wrapper', {
+                darkMode: useDarkMode(),
+            })}
+        >
             <Button
                 className={cx('create-effect')}
                 leftIcon={<FontAwesomeIcon icon={faHurricane} />}
