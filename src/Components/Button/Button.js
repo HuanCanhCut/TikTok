@@ -2,7 +2,6 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames/bind'
 import style from './Button.module.scss'
 import { Link } from 'react-router-dom'
-import useDarkMode from '~/hooks/useDarkMode'
 
 const cx = classNames.bind(style)
 
@@ -48,7 +47,6 @@ function Button({
 
     const classes = cx('wrapper', {
         [className]: className,
-        darkMode: useDarkMode(),
         primary,
         outline,
         small,

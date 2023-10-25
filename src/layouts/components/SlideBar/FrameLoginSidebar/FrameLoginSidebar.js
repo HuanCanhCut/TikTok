@@ -3,7 +3,6 @@ import classNames from 'classnames/bind'
 import style from './FrameLoginSidebar.module.scss'
 import Button from '~/Components/Button'
 import Authen from '~/layouts/components/Authen'
-import useDarkMode from '~/hooks/useDarkMode'
 
 const cx = classNames.bind(style)
 
@@ -18,11 +17,7 @@ function FrameLoginSidebar() {
         setModalIsOpen(false)
     }
     return (
-        <div
-            className={cx('wrapper', {
-                darkMode: useDarkMode(),
-            })}
-        >
+        <div className={cx('wrapper')}>
             <p className={cx('title')}>Log in to follow creators, like videos, and view comments.</p>
             <Button rounded className={cx('login')} onClick={openModal}>
                 Login

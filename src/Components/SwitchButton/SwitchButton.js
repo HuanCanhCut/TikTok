@@ -9,7 +9,7 @@ const cx = classNames.bind(style)
 
 function SwitchButton() {
     const dispatch = useDispatch()
-    const [isOn, setIsOn] = useState(JSON.parse(localStorage.getItem('darkMode') || false))
+    const [isOn, setIsOn] = useState(JSON.parse(localStorage.getItem('da  ') || false))
 
     const spring = {
         type: 'spring',
@@ -24,7 +24,7 @@ function SwitchButton() {
     }
 
     useEffect(() => {
-        dispatch(actions.darkMode(isOn))
+        dispatch(actions.da(isOn))
     }, [isOn])
 
     return (

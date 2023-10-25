@@ -22,7 +22,7 @@
 
 .info {
     padding: 8px 0;
-    color: var(--text-dark-color);
+    color: var(--text-color);
 }
 
 .nickname {
@@ -46,30 +46,13 @@
     flex: 1;
     .value {
         font-size: 1.6rem;
-        color: var(--text-dark-color);
+        color: var(--text-color);
     }
 
     span {
         padding: 0 4px;
         font-weight: 600;
         margin-right: 8px;
-        color: rgba(22, 24, 35, 0.75);
-    }
-}
-
-.preview {
-    &.darkMode {
-        .info {
-            color: var(--text-light-color);
-        }
-        .analytics {
-            .value {
-                color: var(--text-light-color);
-            }
-
-            span {
-                color: rgba(255, 255, 255, 0.75);
-            }
-        }
+        color: var(--text-color-secondary);
     }
 }

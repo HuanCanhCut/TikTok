@@ -7,7 +7,7 @@
     transition: 0.1s linear all;
     border-radius: 5px;
     &:hover {
-        background-color: rgba(22, 24, 35, 0.03);
+        background-color: var(--text-color-opacity-03);
     }
 }
 
@@ -25,25 +25,13 @@
 
 .name {
     font-size: 1.6rem;
-    font-weight: 500;
-    color: var(--text-dark-color);
+    font-weight: 600;
+    color: var(--text-color-secondary);
 }
 
 .username {
     margin-top: 2px;
     font-size: 1.3rem;
-    color: rgba(22, 24, 35, 0.5);
-}
-
-.wrapper {
-    &.darkMode {
-        .username {
-            font-size: 1.3rem;
-            color: var(--text-light-gray-color);
-        }
-
-        .name {
-            color: var(--text-light-color);
-        }
-    }
+    font-weight: 600;
+    color: var(--text-color-tertiary);
 }

@@ -10,7 +10,6 @@ import BlueTick from '~/Components/BlueTick/BlueTick'
 import Button from '~/Components/Button'
 import { Wrapper as PopperWrapper } from '~/Components/Popper'
 import AccountPreview from '~/Components/AccountPreview'
-import useDarkMode from '~/hooks/useDarkMode'
 
 const cx = classNames.bind(style)
 
@@ -49,11 +48,7 @@ function Header({ data }) {
     }
 
     return (
-        <div
-            className={cx('wrapper', {
-                darkMode: useDarkMode(),
-            })}
-        >
+        <div className={cx('wrapper')}>
             <Tippy
                 animation={true}
                 interactive

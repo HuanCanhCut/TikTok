@@ -4,22 +4,54 @@
     --primary: #fe2c55;
     --black: #000;
     --white: #fff;
-    --text-color: #ffffffe6;
-    --text-light-color: rgba(255, 255, 255, 0.9);
-    --text-light-gray-color: rgba(255, 255, 255, 0.75);
+    // default layout size
 
-    --text-dark-gray-color: rgba(22, 24, 35, 0.75);
-    --text-dark-color: rgb(22, 24, 35);
-
-    // default layout
-
-    --default-layout-dark-background: #121212;
-    --default-layout-light-background: #fff;
     --default-layout-header-height: 60px;
     --default-layout-width: 100vw;
     --default-layout-horizontal-spacer: 24px;
     --default-layout-content-width: 692px;
     --default-layout-sidebar-width: 240px;
+    --text-dark-color: rgba(22, 24, 35);
+    --text-light-color: rgba(255, 255, 255, 0.9);
+}
+
+.App[data-darkmode='false'] {
+    --default-layout-background: #fff;
+    --popper-background: #fff;
+    --text-color-opacity-03: rgba(22, 24, 35, 0.03);
+    --text-color-opacity-04: rgba(22, 24, 35, 0.04);
+    --text-color-opacity-05: rgba(22, 24, 35, 0.05);
+    --text-color-opacity-06: rgba(22, 24, 35, 0.06);
+    --text-color-opacity-08: rgba(22, 24, 35, 0.08);
+    --text-color-opacity-12: rgba(22, 24, 35, 0.12);
+    --text-color-opacity-34: rgba(22, 24, 35, 0.34);
+    --text-color-opacity-10: rgba(22, 24, 35, 0.1);
+    --text-color-opacity-20: rgba(22, 24, 35, 0.2);
+    --text-color-tertiary: rgba(22, 24, 35, 0.5);
+    --text-color-secondary: rgba(22, 24, 35, 0.75);
+    --button-rounded-hover: rgba(22, 24, 35, 0.03);
+    --box-shadow-header: rgb(0 0 0 / 12%);
+    --text-color: rgb(22, 24, 35);
+    --seperator-color: ;
+}
+
+.App[data-darkmode='true'] {
+    --default-layout-background: #121212;
+    --popper-background: rgba(37, 37, 37);
+    --text-color-opacity-03: rgba(255, 255, 255, 0.03);
+    --text-color-opacity-04: rgba(255, 255, 255, 0.04);
+    --text-color-opacity-05: rgba(255, 255, 255, 0.05);
+    --text-color-opacity-06: rgba(255, 255, 255, 0.06);
+    --text-color-opacity-08: rgba(255, 255, 255, 0.08);
+    --text-color-opacity-12: rgba(255, 255, 255, 0.12);
+    --text-color-opacity-34: rgba(255, 255, 255, 0.34);
+    --text-color-opacity-10: rgba(255, 255, 255, 0.1);
+    --text-color-opacity-20: rgba(255, 255, 255, 0.2);
+    --text-color-tertiary: rgba(255, 255, 255, 0.5);
+    --text-color-secondary: rgba(255, 255, 255, 0.75);
+    --button-rounded-hover: rgba(255, 255, 255, 0.1);
+    --box-shadow-header: rgb(255 255 255 / 12%);
+    --text-color: rgba(255, 255, 255, 0.9);
 }
 
 html {
@@ -39,7 +71,7 @@ body {
     text-rendering: optimizeSpeed;
     overflow-y: overlay;
     overflow-x: hidden;
-    background-color: var(--default-layout-light-background);
+    background-color: var(--default-layout-background);
     .tippy-box {
         background-color: #434343;
         border-radius: 8px;
@@ -83,7 +115,7 @@ input,
 }
 
 a[href] {
-    color: var(--text-dark-color);
+    color: var(--text-color);
     text-decoration: none;
     line-height: 1;
 }

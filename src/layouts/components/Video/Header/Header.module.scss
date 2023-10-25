@@ -37,7 +37,7 @@
 }
 
 .description {
-    color: var(--text-dark-color);
+    color: var(--text-color);
     font-weight: 500;
     max-width: 95%;
     min-width: 95%;
@@ -49,15 +49,4 @@
     position: absolute;
     right: 0;
     margin: 0;
-}
-
-.wrapper {
-    &.darkMode {
-        .nick-name {
-            color: rgba(255, 255, 255, 0.9);
-        }
-        .description {
-            color: rgba(255, 255, 255, 0.9);
-        }
-    }
 }

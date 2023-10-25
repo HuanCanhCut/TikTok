@@ -3,13 +3,13 @@
     padding: 16px 0;
     font-size: 1.4rem;
     font-weight: 600;
-    border-top: 1px solid rgba(22, 24, 35, 0.12);
+    border-top: 1px solid var(--text-color-opacity-12);
 }
 
 .label {
     padding: 0 8px;
     margin-bottom: 8px;
-    color: rgba(22, 24, 35, 0.749);
+    color: var(--text-color-tertiary);
 }
 
 // account item
@@ -17,7 +17,6 @@
     display: flex;
     align-items: center;
     padding: 8px;
-    transition: all 0.15s linear;
     cursor: pointer;
     .avatar {
         width: 32px;
@@ -27,7 +26,7 @@
         object-fit: cover;
     }
     &:hover {
-        background-color: rgba(22, 24, 35, 0.03);
+        background-color: var(--text-color-opacity-03);
     }
 }
 
@@ -36,7 +35,7 @@
 }
 
 .nickname {
-    color: var(--text-dark-color);
+    color: var(--text-color);
     font-size: 1.6rem;
     font-weight: 700;
 }
@@ -48,7 +47,7 @@
 }
 
 .name {
-    color: rgba(22, 24, 35, 0.749);
+    color: var(--text-color-secondary);
     font-size: 1.2rem;
     line-height: 1;
     font-weight: 600;
@@ -61,26 +60,4 @@
     margin-top: 8px;
     font-weight: 600;
     cursor: pointer;
-}
-
-.wrapper {
-    &.darkMode {
-        border-top: 1px solid rgba(255, 255, 255, 0.12);
-
-        .label {
-            color: rgba(255, 255, 255, 0.75);
-        }
-
-        .nickname {
-            color: var(--text-color);
-        }
-
-        .name {
-            color: #ffffffbf;
-        }
-
-        .see-more {
-            color: var(--primary);
-        }
-    }
 }

@@ -29,13 +29,13 @@
     display: flex;
     flex-wrap: wrap;
     margin-top: 12px;
-    color: var(--text-dark-gray-color);
+    color: var(--text-color-tertiary);
 }
 
 .contact-item,
 .current-version {
     font-size: 13px;
-    color: var(--text-dark-color);
+    color: var(--text-color-tertiary);
     font-weight: 600;
     cursor: pointer;
 }
@@ -49,16 +49,5 @@
     line-height: 28px;
     &:hover {
         text-decoration: underline;
-    }
-}
-
-.wrapper {
-    &.darkMode {
-        border-top: 1px solid rgba(255, 255, 255, 0.12);
-
-        .contact-item,
-        .current-version {
-            color: #ffffff80;
-        }
     }
 }

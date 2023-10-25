@@ -4,18 +4,12 @@ import style from './AccountItem.module.scss'
 import { Link } from 'react-router-dom'
 import Images from '~/Components/Images'
 import BlueTick from '../BlueTick/BlueTick'
-import useDarkMode from '~/hooks/useDarkMode'
 
 const cx = classNames.bind(style)
 
 function AccountItem({ data }) {
     return (
-        <Link
-            to={`/@${data.nickname}`}
-            className={cx('wrapper', {
-                darkMode: useDarkMode(),
-            })}
-        >
+        <Link to={`/@${data.nickname}`} className={cx('wrapper')}>
             <Images className={cx('avatar')} src={data.avatar} alt="" />
             <div className={cx('Info')}>
                 <h4 className={cx('name')}>

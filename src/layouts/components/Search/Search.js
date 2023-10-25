@@ -10,7 +10,6 @@ import style from './Search.module.scss'
 import classNames from 'classnames/bind'
 import { SearchIcon } from '~/Components/Icons'
 import useDebounce from '~/hooks/useDebounce'
-import useDarkMode from '~/hooks/useDarkMode'
 
 const cx = classNames.bind(style)
 
@@ -56,7 +55,7 @@ function Search() {
 
     return (
         //  Using a wrapper <div> tag around the reference element solves this by creating a new parentNode context.
-        <div className={cx({ darkMode: useDarkMode() })}>
+        <div>
             <HeadlessTippy
                 interactive
                 visible={showResult && searchResult.length > 0}
@@ -72,13 +71,8 @@ function Search() {
                 )}
                 onClickOutside={handleHideResult}
             >
-                <div
-                    className={cx('search', {
-                        darkMode: useDarkMode(),
-                    })}
-                >
+                <div className={cx('search')}>
                     <input
-                        className={cx({ darkMode: useDarkMode() })}
                         ref={inputRef}
                         placeholder="Search account and videos"
                         spellCheck={false}
@@ -98,15 +92,9 @@ function Search() {
                     )}
 
                     {loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
-                    <div
-                        className={cx('seperate', {
-                            darkMode: useDarkMode(),
-                        })}
-                    ></div>
+                    <div className={cx('seperate')}></div>
                     <button
-                        className={cx('search-btn', {
-                            darkMode: useDarkMode(),
-                        })}
+                        className={cx('search-btn')}
                         onMouseDown={(e) => {
                             e.preventDefault()
                         }}

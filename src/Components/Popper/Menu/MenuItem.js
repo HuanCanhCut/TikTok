@@ -4,14 +4,12 @@ import classNames from 'classnames/bind'
 import Button from '~/Components/Button'
 import SwitchButton from '~/Components/SwitchButton'
 import style from './Menu.module.scss'
-import useDarkMode from '~/hooks/useDarkMode'
 
 const cx = classNames.bind(style)
 
 function MenuItem({ data, onClick }) {
     const classes = cx('menu-item', {
         separate: data.separate,
-        darkMode: useDarkMode(),
     })
 
     return (

@@ -1,3 +1,3 @@
 export const themeSelector = (state) => {
-    return state.theme.darkMode
+    return state.theme.da
 }
