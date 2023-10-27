@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { publicRoutes } from '~/routes'
 import { DefaultLayout } from './layouts'
 import { createContext } from 'react'
+import { useEffect } from 'react'
 import useDarkMode from './hooks/useDarkMode'
 import './Components/GlobalStyles/GlobalStyles.scss'
 
@@ -10,6 +11,18 @@ export const AuthUserContext = createContext()
 
 function App() {
     const authUser = JSON.parse(localStorage.getItem('user'))
+
+    useEffect(() => {
+        const handleUnload = () => {
+            localStorage.removeItem('firstNotification')
+        }
+
+        window.addEventListener('beforeunload', handleUnload)
+
+        return () => {
+            window.removeEventListener('beforeunload', handleUnload)
+        }
+    }, [])
 
     return (
         <AuthUserContext.Provider value={authUser}>

@@ -59,7 +59,6 @@ function VideoItem({ video }) {
                     <video
                         ref={videoRef}
                         src={video.file_url}
-                        muted
                         poster={video.thumb_url}
                         className={cx('video')}
                         onPlay={() => {

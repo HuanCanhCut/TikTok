@@ -3,6 +3,10 @@
     right: -70px;
     bottom: 0;
     text-align: center;
+    max-height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
 }
 
 .video-active-icon {
