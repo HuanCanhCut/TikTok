@@ -39,6 +39,7 @@
 .darkMode {
     .email,
     .password {
+        color: var(--text-light-color);
         background-color: rgba(255, 255, 255, 0.12);
     }
     .email,

@@ -3,14 +3,15 @@
     align-items: center;
     padding: 8px;
     cursor: pointer;
-    .avatar {
-        width: 32px;
-        height: 32px;
-        margin-right: 12px;
-        border-radius: 50%;
-        background-color: rgba(255, 255, 255, 0.2);
-        object-fit: cover;
-    }
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    margin-right: 12px;
+    border-radius: 50%;
+    background-color: var(--text-color-opacity-20);
+    object-fit: cover;
 }
 
 .account-info {
@@ -21,7 +22,7 @@
     width: 50px;
     height: 10px;
     border-radius: 5px;
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: var(--text-color-opacity-20);
 }
 
 .name {
@@ -29,5 +30,24 @@
     width: 80px;
     height: 10px;
     border-radius: 5px;
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: var(--text-color-opacity-20);
+}
+
+.account-loading {
+    &.big {
+        .avatar {
+            width: 40px;
+            height: 40px;
+        }
+
+        .nick-name {
+            width: 200px;
+            height: 14px;
+        }
+
+        .name {
+            width: 320px;
+            height: 14px;
+        }
+    }
 }

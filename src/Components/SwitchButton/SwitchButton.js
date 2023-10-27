@@ -9,7 +9,7 @@ const cx = classNames.bind(style)
 
 function SwitchButton() {
     const dispatch = useDispatch()
-    const [isOn, setIsOn] = useState(JSON.parse(localStorage.getItem('da  ') || false))
+    const [isOn, setIsOn] = useState(JSON.parse(localStorage.getItem('darkMode') || false))
 
     const spring = {
         type: 'spring',

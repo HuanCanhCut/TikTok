@@ -22,7 +22,7 @@ function Notification({ title, content, author = 'Trọng Huấn', path, closeMo
                 <Image src={path} alt="" className={cx('image')} />
             </div>
             <p className={cx('author')}>
-                <span className={cx('upload-by')}>Đăng bởi</span> {`${author}`}
+                <span className={cx('upload-by')}>Đăng bởi:</span> {`${author}`}
                 <BlueTick className={cx('check-icon')} />
             </p>
             <button className={cx('close')} onClick={closeModal}>

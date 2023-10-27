@@ -1,13 +1,15 @@
 import { memo, useEffect, useState, useRef } from 'react'
 import classNames from 'classnames/bind'
-import { faSpinner } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Virtuoso } from 'react-virtuoso'
+import Modal from 'react-modal'
+import images from '~/assets/images'
 
 import style from './Home.module.scss'
 import Video from '~/layouts/components/Video'
 import * as videoService from '~/services/videoService'
 import { GoToTop } from '~/Components/Icons'
+import AccountLoading from '~/Components/AccountLoading'
+import Notification from '~/Components/Notification'
 
 const cx = classNames.bind(style)
 
@@ -16,6 +18,7 @@ function Home() {
     const [videos, setVideos] = useState([])
     const [page, setPage] = useState(INIT_PAGE)
     const [goToTop, setGoToTop] = useState(false)
+    const [modalIsOpen, setModalIsOpen] = useState(true)
     const headerIntoview = useRef()
 
     const handleGoToTop = () => {
@@ -23,6 +26,17 @@ function Home() {
             behavior: 'smooth',
             block: 'nearest',
         })
+    }
+
+    const closeModal = () => {
+        setModalIsOpen(false)
+    }
+
+    const notificationProps = {
+        title: 'Tại sao có thông báo này',
+        content:
+            'Chuyện kể rằng, do chính sách của google tắt mọi âm thanh tự phát khi mà chưa có tương tác của người dùng, mà admin lại chưa nghĩ ra ý tưởng để pass qua cái đó, nên admin quyết định làm cái thông báo này để người dùng tương tác trước, thí chủ thông cảm. Cảm ơn thí chủ đã kiên nhẫn đọc',
+        path: images.notificationCat,
     }
 
     useEffect(() => {
@@ -71,20 +85,31 @@ function Home() {
                         return <div className={cx('header-intoview')} ref={headerIntoview}></div>
                     },
                     Footer: () => {
-                        return (
-                            <button className={cx('load-more')}>
-                                <FontAwesomeIcon icon={faSpinner} />
-                            </button>
-                        )
+                        return <AccountLoading big />
                     },
                 }}
             />
-
             {goToTop && (
                 <button className={cx('go-to-top')} onClick={handleGoToTop}>
                     <GoToTop width="16px" height="16px" />
                 </button>
             )}
+            (
+            <Modal
+                isOpen={modalIsOpen}
+                onRequestClose={closeModal}
+                overlayClassName={cx('overlay')}
+                ariaHideApp={false}
+                className={cx('modal')}
+            >
+                <Notification
+                    closeModal={closeModal}
+                    content={notificationProps.content}
+                    title={notificationProps.title}
+                    path={notificationProps.path}
+                />
+            </Modal>
+            )
         </div>
     )
 }

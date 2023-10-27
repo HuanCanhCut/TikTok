@@ -24,38 +24,3 @@
     position: absolute;
     margin-top: -100px;
 }
-
-.load-more {
-    color: rgba(22, 24, 35, 0.5);
-    animation: loading 0.3s infinite;
-    position: absolute;
-    left: 50%;
-    font-size: 2rem;
-    margin-top: 10px;
-}
-
-@keyframes loading {
-    from {
-        transform: translateX(-50%);
-        transform: rotate(0);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-.ads {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #1e1e1e;
-    border-radius: 10px;
-    width: 55%;
-    height: calc(100vh - var(--default-layout-header-height) * 2);
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999999;
-}

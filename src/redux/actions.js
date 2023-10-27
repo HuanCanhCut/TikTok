@@ -1,5 +1,5 @@
 export const da = (payload) => {
-    localStorage.setItem('da  ', JSON.stringify(payload))
+    localStorage.setItem('darkMode', JSON.stringify(payload))
     return {
         type: 'dark-mode',
         payload,

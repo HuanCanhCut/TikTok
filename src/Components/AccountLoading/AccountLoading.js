@@ -3,9 +3,13 @@ import style from './AccountLoading.module.scss'
 
 const cx = classNames.bind(style)
 
-function AccountLoading() {
+function AccountLoading({ big = false }) {
+    const classes = {
+        big,
+    }
+
     return (
-        <div className={cx('account-loading')}>
+        <div className={cx('account-loading', classes)}>
             <div className={cx('avatar')}></div>
             <div className={cx('account-info')}>
                 <div className={cx('nick-name')}> </div>

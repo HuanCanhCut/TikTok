@@ -32,7 +32,6 @@
     --button-rounded-hover: rgba(22, 24, 35, 0.03);
     --box-shadow-header: rgb(0 0 0 / 12%);
     --text-color: rgb(22, 24, 35);
-    --seperator-color: ;
 }
 
 .App[data-darkmode='true'] {
@@ -158,6 +157,15 @@ a[href] {
     right: 0;
     left: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.4);
     z-index: 99;
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    z-index: 9999999;
 }
