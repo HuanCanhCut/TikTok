@@ -8,8 +8,9 @@ import AccountLoading from '~/Components/AccountLoading'
 
 const cx = classNames.bind(style)
 
-const INIT_PAGE = 1
 const PER_PAGE = 6
+const maxPage = 41
+const INIT_PAGE = Math.floor(Math.random() * maxPage)
 
 function SuggestedAccounts({ label }) {
     const [suggestedUser, setSuggestedUser] = useState([])
@@ -34,7 +35,11 @@ function SuggestedAccounts({ label }) {
 
     const onSeeMore = () => {
         setLoading(false)
-        setPage(page + 1)
+        setPage((prev) => {
+            do {
+                return Math.floor(Math.random() * maxPage)
+            } while (prev === Math.floor(Math.random() * maxPage))
+        })
         setLoading(true)
     }
 
