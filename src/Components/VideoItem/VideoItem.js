@@ -61,7 +61,7 @@ function VideoItem({ video }) {
                         src={video.file_url}
                         poster={video.thumb_url}
                         className={cx('video')}
-                        onPlay={() => {
+                        onPlayingCapture={() => {
                             setPlaying(true)
                         }}
                         onPause={() => {

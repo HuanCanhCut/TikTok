@@ -87,11 +87,6 @@ function Header() {
             to: '/@penguindev',
         },
         {
-            icon: <FontAwesomeIcon icon={faCoins} />,
-            title: 'Get coins',
-            to: '/coins',
-        },
-        {
             icon: <FontAwesomeIcon icon={faGear} />,
             title: 'Settings',
             to: '/settings',

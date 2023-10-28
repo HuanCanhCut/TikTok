@@ -36,7 +36,7 @@ function Home() {
     const notificationProps = {
         title: 'Tại sao có thông báo này',
         content:
-            'Chuyện kể rằng, do chính sách của google tắt mọi âm thanh tự phát khi mà chưa có tương tác của người dùng, mà admin lại chưa nghĩ ra ý tưởng để pass qua cái đó, nên admin quyết định làm cái thông báo này để người dùng tương tác trước, thí chủ thông cảm. Cảm ơn thí chủ đã kiên nhẫn đọc',
+            'Chuyện kể rằng, do chính sách của google tắt mọi âm thanh tự phát khi mà chưa có tương tác của người dùng, mà admin lại chưa nghĩ ra ý tưởng để pass qua cái đó, nên admin quyết định làm cái thông báo này để người dùng tương tác trước, mong thí chủ thông cảm cho Dev.',
         path: images.notificationCat,
     }
 
