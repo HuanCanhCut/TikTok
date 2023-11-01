@@ -9,8 +9,9 @@ import AccountLoading from '~/Components/AccountLoading'
 const cx = classNames.bind(style)
 
 const PER_PAGE = 6
-const maxPage = 41
-const INIT_PAGE = Math.floor(Math.random() * maxPage)
+const SUGGESTED_PAGES_KEY = 'SuggestedAccountsPage'
+const TOTAL_SUGGESTED_ACCOUNT_PAGES = JSON.parse(localStorage.getItem(SUGGESTED_PAGES_KEY))
+const INIT_PAGE = Math.floor(Math.random() * TOTAL_SUGGESTED_ACCOUNT_PAGES) || 1
 
 function SuggestedAccounts({ label }) {
     const [suggestedUser, setSuggestedUser] = useState([])
@@ -23,8 +24,10 @@ function SuggestedAccounts({ label }) {
             try {
                 const response = await useService.getSuggested(page, PER_PAGE)
 
+                localStorage.setItem(SUGGESTED_PAGES_KEY, JSON.stringify(response.meta.pagination.total_pages))
+
                 setSuggestedUser((prevUser) => {
-                    return [...prevUser, ...response]
+                    return [...prevUser, ...response.data]
                 })
                 setLoading(false)
             } catch (e) {
@@ -37,8 +40,8 @@ function SuggestedAccounts({ label }) {
         setLoading(false)
         setPage((prev) => {
             do {
-                return Math.floor(Math.random() * maxPage)
-            } while (prev === Math.floor(Math.random() * maxPage))
+                return Math.floor(Math.random() * TOTAL_SUGGESTED_ACCOUNT_PAGES)
+            } while (prev === Math.floor(Math.random() * TOTAL_SUGGESTED_ACCOUNT_PAGES))
         })
         setLoading(true)
     }

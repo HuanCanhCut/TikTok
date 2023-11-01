@@ -8,7 +8,7 @@ export const getSuggested = async function (page, perPage) {
                 per_page: perPage,
             },
         })
-        return result.data
+        return result
     } catch (error) {
         console.log(error)
     }

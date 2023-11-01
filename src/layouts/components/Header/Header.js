@@ -5,7 +5,6 @@ import {
     faEarthAsia,
     faCircleQuestion,
     faKeyboard,
-    faCoins,
     faGear,
     faUser,
     faSignOut,
@@ -18,6 +17,7 @@ import { Link } from 'react-router-dom'
 import { useContext, useState, memo } from 'react'
 import { useSelector } from 'react-redux'
 import { themeSelector } from '~/redux/selectors'
+import Modal from 'react-modal'
 
 import Authen from '../Authen'
 import { AuthUserContext } from '~/App'
@@ -29,6 +29,7 @@ import images from '~/assets/images'
 import { MessageIcon, InboxIcon } from '~/Components/Icons'
 import Search from '../Search'
 import Image from '~/Components/Images'
+import KeyboardShortcuts from './KeyboardShorcuts'
 
 const cx = classNames.bind(style)
 
@@ -56,6 +57,7 @@ const MENU_ITEM = [
         to: config.routes.feedback,
     },
     {
+        type: 'keyboard-shortcuts',
         icon: <FontAwesomeIcon icon={faKeyboard} />,
         title: 'Keyboard shortcuts',
     },
@@ -69,11 +71,21 @@ const MENU_ITEM = [
 function Header() {
     const currentUser = useContext(AuthUserContext)
     const [modalIsOpen, setModalIsOpen] = useState(false)
+    const [shortcutsIsOpen, setShortcutsIsOpen] = useState(false)
     const darkMode = useSelector(themeSelector)
+
+    const openKeyboardShortCuts = () => {
+        setShortcutsIsOpen(true)
+    }
+
+    const closeKeyboardShortCuts = () => {
+        setShortcutsIsOpen(false)
+    }
 
     const handleMenuChange = (menuItem) => {
         switch (menuItem.type) {
-            case 'language':
+            case 'keyboard-shortcuts':
+                openKeyboardShortCuts()
                 break
             default:
                 break
@@ -107,6 +119,10 @@ function Header() {
 
     const closeModal = () => {
         setModalIsOpen(false)
+    }
+
+    const closeKeyboardModal = () => {
+        setShortcutsIsOpen(false)
     }
 
     return (
@@ -158,6 +174,18 @@ function Header() {
             </div>
 
             <Authen isOpen={modalIsOpen} onClose={closeModal} />
+
+            {shortcutsIsOpen && (
+                <Modal
+                    isOpen={shortcutsIsOpen}
+                    onRequestClose={closeKeyboardShortCuts}
+                    overlayClassName={cx('overlay')}
+                    ariaHideApp={false}
+                    className={cx('modal')}
+                >
+                    <KeyboardShortcuts onClose={closeKeyboardModal} />
+                </Modal>
+            )}
         </header>
     )
 }

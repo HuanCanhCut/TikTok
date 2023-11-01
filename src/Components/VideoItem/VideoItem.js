@@ -13,7 +13,7 @@ import VideoAction from './VideoAction'
 const cx = classNames.bind(style)
 
 function VideoItem({ video }) {
-    const videoRef = useRef()
+    const videoRef = useRef(null)
     const [playing, setPlaying] = useState(false)
     const [muted, setMuted] = useState(false)
 
@@ -21,7 +21,7 @@ function VideoItem({ video }) {
     const resolutionY = video.meta.video.resolution_y
     const videoSize = resolutionX > resolutionY ? 'row' : 'column'
 
-    const options = { root: null, rootMargin: '0px', threshold: 0.5 }
+    const options = { root: null, rootMargin: '0px', threshold: 0.8 }
     const isVisible = useElementOnScreen(options, videoRef)
 
     useEffect(() => {
@@ -61,7 +61,7 @@ function VideoItem({ video }) {
                         src={video.file_url}
                         poster={video.thumb_url}
                         className={cx('video')}
-                        onPlayingCapture={() => {
+                        onPlaying={() => {
                             setPlaying(true)
                         }}
                         onPause={() => {

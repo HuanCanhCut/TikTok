@@ -13,7 +13,10 @@ import Notification from '~/Components/Notification'
 
 const cx = classNames.bind(style)
 
-const INIT_PAGE = Math.floor(Math.random() * 37)
+const TOTAL_PAGES_KEY = 'totalVideoPages'
+const TOTAL_PAGES_VIDEO = JSON.parse(localStorage.getItem(TOTAL_PAGES_KEY))
+const INIT_PAGE = Math.floor(Math.random() * TOTAL_PAGES_VIDEO) || 1
+
 function Home() {
     const [videos, setVideos] = useState([])
     const [page, setPage] = useState(INIT_PAGE)
@@ -48,6 +51,8 @@ function Home() {
                     page: page,
                 })
 
+                localStorage.setItem(TOTAL_PAGES_KEY, JSON.stringify(response.meta.pagination.total_pages))
+
                 setVideos((prev) => {
                     return [...prev, ...response.data]
                 })
@@ -80,8 +85,8 @@ function Home() {
                         endReached={() => {
                             setPage((prev) => {
                                 do {
-                                    return Math.floor(Math.random() * 37)
-                                } while (prev === Math.floor(Math.random() * 37))
+                                    return Math.floor(Math.random() * TOTAL_PAGES_VIDEO)
+                                } while (prev === Math.floor(Math.random() * TOTAL_PAGES_VIDEO))
                             })
                         }}
                         itemContent={(index, item) => {

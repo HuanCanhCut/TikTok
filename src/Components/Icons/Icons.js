@@ -287,3 +287,85 @@ export const GoogleIcon = ({ width = '32', height = '32', className }) => (
         ></path>
     </svg>
 )
+
+export const LKeyboard = ({ width = '24', height = '24', className }) => (
+    <svg
+        width={width}
+        height={height}
+        className={className}
+        viewBox="0 0 48 48"
+        fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg"
+    >
+        <path d="M31.5 33C31.5 33.5523 31.0523 34 30.5 34H20.5C19.3954 34 18.5 33.1046 18.5 32V15C18.5 14.4477 18.9477 14 19.5 14H21.5C22.0523 14 22.5 14.4477 22.5 15V30H30.5C31.0523 30 31.5 30.4477 31.5 31V33Z"></path>
+        <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M3 11C3 6.58172 6.58172 3 11 3H37C41.4183 3 45 6.58172 45 11V37C45 41.4183 41.4183 45 37 45H11C6.58172 45 3 41.4183 3 37V11ZM11 7H37C39.2091 7 41 8.79086 41 11V37C41 39.2091 39.2091 41 37 41H11C8.79086 41 7 39.2091 7 37V11C7 8.79086 8.79086 7 11 7Z"
+        ></path>
+    </svg>
+)
+
+export const MKeyboard = ({ width = '24', height = '24', className }) => (
+    <svg
+        width={width}
+        height={height}
+        className={className}
+        viewBox="0 0 48 48"
+        fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg"
+    >
+        <path d="M15 14C14.4477 14 14 14.4478 14 15V33C14 33.5523 14.4477 34 15 34H17C17.5523 34 18 33.5523 18 33V21L21.9562 33.3061C22.0891 33.7196 22.4738 34 22.9082 34H25.0911C25.5255 34 25.9102 33.7196 26.0431 33.3061L30 21V33C30 33.5523 30.4477 34 31 34H33C33.5523 34 34 33.5523 34 33V15C34 14.4477 33.5523 14 33 14L29.7129 14.0001C29.2863 14.0001 28.9067 14.2707 28.7676 14.6741L24 28.5L19.2324 14.6741C19.0933 14.2707 18.7137 14.0001 18.287 14.0001L15 14Z"></path>
+        <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M3 11C3 6.58172 6.58172 3 11 3H37C41.4183 3 45 6.58172 45 11V37C45 41.4183 41.4183 45 37 45H11C6.58172 45 3 41.4183 3 37V11ZM11 7H37C39.2091 7 41 8.79086 41 11V37C41 39.2091 39.2091 41 37 41H11C8.79086 41 7 39.2091 7 37V11C7 8.79086 8.79086 7 11 7Z"
+        ></path>
+    </svg>
+)
+
+export const SpaceKeyboard = ({ width = '24', height = '24', className }) => (
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor"
+        width={width}
+        height={height}
+        className={className}
+        viewBox="0 0 24 24"
+        enableBackground="new 0 0 24 24"
+    >
+        <path d="M21,9c-0.6,0-1,0.4-1,1v3H4v-3c0-0.6-0.4-1-1-1s-1,0.4-1,1v4c0,0.6,0.4,1,1,1h18c0.6,0,1-0.4,1-1v-4C22,9.4,21.6,9,21,9z" />
+    </svg>
+)
+
+export const ShiftKeyboard = ({ width = '18', height = '18', className }) => (
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        // xmlns:xlink="http://www.w3.org/1999/xlink"
+        fill="currentColor"
+        height={height}
+        width={width}
+        version="1.1"
+        id="Capa_1"
+        className={className}
+        viewBox="0 0 490 490"
+        // xml:space="preserve"
+    >
+        <g id="SVGRepo_bgCarrier" strokeWidth="0" />
+
+        <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round" />
+
+        <g id="SVGRepo_iconCarrier">
+            {' '}
+            <g>
+                {' '}
+                <g>
+                    {' '}
+                    <path d="M15.806,244.992L474.194,490V0L15.806,244.992z M241.24,244.995l129.986-69.473v138.951L241.24,244.995z" />{' '}
+                </g>{' '}
+                <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g>{' '}
+                <g> </g> <g> </g> <g> </g> <g> </g>{' '}
+            </g>{' '}
+        </g>
+    </svg>
+)

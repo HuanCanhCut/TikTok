@@ -24,7 +24,7 @@ function SwitchButton() {
     }
 
     useEffect(() => {
-        dispatch(actions.da(isOn))
+        dispatch(actions.darkMode(isOn))
     }, [isOn])
 
     return (
