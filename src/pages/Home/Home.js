@@ -1,4 +1,4 @@
-import { memo, useEffect, useState, useRef } from 'react'
+import { memo, useEffect, useState } from 'react'
 import classNames from 'classnames/bind'
 import { Virtuoso } from 'react-virtuoso'
 import Modal from 'react-modal'
@@ -7,7 +7,6 @@ import images from '~/assets/images'
 import style from './Home.module.scss'
 import Video from '~/layouts/components/Video'
 import * as videoService from '~/services/videoService'
-import { GoToTop } from '~/Components/Icons'
 import AccountLoading from '~/Components/AccountLoading'
 import Notification from '~/Components/Notification'
 
@@ -20,16 +19,8 @@ const INIT_PAGE = Math.floor(Math.random() * TOTAL_PAGES_VIDEO) || 1
 function Home() {
     const [videos, setVideos] = useState([])
     const [page, setPage] = useState(INIT_PAGE)
-    const [goToTop, setGoToTop] = useState(false)
     const [modalIsOpen, setModalIsOpen] = useState(JSON.parse(localStorage.getItem('firstNotification')) ?? true)
-    const headerIntoview = useRef()
-
-    const handleGoToTop = () => {
-        headerIntoview.current.scrollIntoView({
-            behavior: 'smooth',
-            block: 'nearest',
-        })
-    }
+    const [pageIndexes, setPageIndexes] = useState(JSON.parse(localStorage.getItem('pageIndexes')) ?? [])
 
     const closeModal = () => {
         localStorage.setItem('firstNotification', JSON.stringify(false))
@@ -56,24 +47,19 @@ function Home() {
                 setVideos((prev) => {
                     return [...prev, ...response.data]
                 })
+
+                setPageIndexes((prev) => {
+                    return [...prev, page]
+                })
+
+                localStorage.setItem('pageIndexes', JSON.stringify(pageIndexes))
             } catch (error) {
                 console.log(error)
             }
         })()
     }, [page])
 
-    useEffect(() => {
-        const handleScroll = () => {
-            const scrollTop = window.scrollY || document.documentElement.scrollTop
-            setGoToTop(scrollTop > 10)
-        }
-
-        window.addEventListener('scroll', handleScroll)
-
-        return () => {
-            window.removeEventListener('scroll', handleScroll)
-        }
-    }, [])
+    console.log('re-render')
 
     return (
         <>
@@ -83,45 +69,39 @@ function Home() {
                         data={videos}
                         useWindowScroll
                         endReached={() => {
-                            setPage((prev) => {
+                            setPage(() => {
                                 do {
                                     return Math.floor(Math.random() * TOTAL_PAGES_VIDEO)
-                                } while (prev === Math.floor(Math.random() * TOTAL_PAGES_VIDEO))
+                                } while (pageIndexes.includes(Math.floor(Math.random() * TOTAL_PAGES_VIDEO)))
                             })
                         }}
                         itemContent={(index, item) => {
                             return <Video key={index} data={item} />
                         }}
                         components={{
-                            Header: () => {
-                                return <div className={cx('header-intoview')} ref={headerIntoview}></div>
-                            },
                             Footer: () => {
                                 return <AccountLoading big />
                             },
                         }}
                     />
-                    {goToTop && (
-                        <button className={cx('go-to-top')} onClick={handleGoToTop}>
-                            <GoToTop width="16px" height="16px" />
-                        </button>
-                    )}
                 </div>
             )}
-            <Modal
-                isOpen={modalIsOpen}
-                onRequestClose={closeModal}
-                overlayClassName={cx('overlay')}
-                ariaHideApp={false}
-                className={cx('modal')}
-            >
-                <Notification
-                    closeModal={closeModal}
-                    content={notificationProps.content}
-                    title={notificationProps.title}
-                    path={notificationProps.path}
-                />
-            </Modal>
+            {modalIsOpen && (
+                <Modal
+                    isOpen={modalIsOpen}
+                    onRequestClose={closeModal}
+                    overlayClassName={cx('overlay')}
+                    ariaHideApp={false}
+                    className={cx('modal')}
+                >
+                    <Notification
+                        closeModal={closeModal}
+                        content={notificationProps.content}
+                        title={notificationProps.title}
+                        path={notificationProps.path}
+                    />
+                </Modal>
+            )}
         </>
     )
 }

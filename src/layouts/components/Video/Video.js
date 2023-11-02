@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import classNames from 'classnames/bind'
+import { memo } from 'react'
 
 import style from './Video.module.scss'
 import Header from './Header'
@@ -20,4 +21,4 @@ Video.propTypes = {
     data: PropTypes.object.isRequired,
 }
 
-export default Video
+export default memo(Video)

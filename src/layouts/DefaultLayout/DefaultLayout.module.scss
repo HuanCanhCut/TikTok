@@ -18,11 +18,8 @@
     display: flex;
     justify-content: center;
     margin-left: var(--default-layout-sidebar-width);
+    align-items: center;
     flex: 1;
-}
-
-.content {
-    width: var(--default-layout-content-width);
 }
 
 .wrapper {

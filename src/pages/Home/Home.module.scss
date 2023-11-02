@@ -1,5 +1,5 @@
 .wrapper {
-    width: 100%;
+    width: var(--default-layout-content-width);
     height: 100%;
     position: relative;
 }
