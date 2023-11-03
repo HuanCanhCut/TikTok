@@ -214,7 +214,7 @@ export const Muted = ({ width = '32', height = '32', className }) => (
     </svg>
 )
 
-export const GoToTop = ({ width = '32', height = '32', className }) => (
+export const GoToTop = ({ width = '18', height = '18', className }) => (
     <svg
         width={width}
         height={height}

@@ -22,11 +22,11 @@ const shortcutsItems = [
     },
     {
         title: 'Like video',
-        icon: <MKeyboard />,
+        icon: <LKeyboard />,
     },
     {
         title: 'Mute / unMute video',
-        icon: <LKeyboard />,
+        icon: <MKeyboard />,
     },
 ]
 

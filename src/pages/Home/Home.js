@@ -28,7 +28,7 @@ function Home() {
     }
 
     const notificationProps = {
-        title: 'Tại sao có thông báo này',
+        title: 'Hello, Admin đây!',
         content:
             'Chuyện kể rằng, do chính sách của google tắt mọi âm thanh tự phát khi mà chưa có tương tác của người dùng, mà admin lại chưa nghĩ ra ý tưởng để pass qua cái đó, nên admin quyết định làm cái thông báo này để người dùng tương tác trước, mong thí chủ thông cảm cho Dev.',
         path: images.notificationCat,
@@ -57,9 +57,8 @@ function Home() {
                 console.log(error)
             }
         })()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page])
-
-    console.log('re-render')
 
     return (
         <>

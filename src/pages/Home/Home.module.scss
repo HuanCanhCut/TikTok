@@ -7,20 +7,3 @@
 .wrapper *::-webkit-scrollbar {
     display: none;
 }
-
-.go-to-top {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    position: fixed;
-    right: 35px;
-    bottom: 10px;
-    background-color: var(--primary);
-    cursor: pointer;
-    color: white;
-}
-
-.header-intoview {
-    position: absolute;
-    margin-top: -100px;
-}
