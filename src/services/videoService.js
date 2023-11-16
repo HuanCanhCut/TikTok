@@ -3,7 +3,7 @@ import * as request from '~/utils/httpRequest'
 export const getVideo = async ({ type = 'for-you', page, accessToken = '' }) => {
     try {
         return await request.get('videos', {
-            Headers: {
+            headers: {
                 Authorization: `Bearer ${accessToken}`,
             },
             params: {

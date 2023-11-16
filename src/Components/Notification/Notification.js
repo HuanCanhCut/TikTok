@@ -6,12 +6,18 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import style from './Notification.module.scss'
 import Image from '~/Components/Images/Image'
 import BlueTick from '~/Components/BlueTick/BlueTick'
+import useDarkMode from '~/hooks/useDarkMode'
+import { Wrapper as PopperWrapper } from '../Popper'
 
 const cx = classNames.bind(style)
 
 function Notification({ title, content, author = 'Trọng Huấn', path, closeModal }) {
     return (
-        <div className={cx('wrapper')}>
+        <PopperWrapper
+            className={cx('wrapper', {
+                darkMode: useDarkMode(),
+            })}
+        >
             <h1 className={cx('heading')}>Notification</h1>
             <div className={cx('body')}>
                 <p className={cx('title')}>
@@ -28,7 +34,7 @@ function Notification({ title, content, author = 'Trọng Huấn', path, closeMo
             <button className={cx('close')} onClick={closeModal}>
                 <FontAwesomeIcon icon={faXmark} />
             </button>
-        </div>
+        </PopperWrapper>
     )
 }
 

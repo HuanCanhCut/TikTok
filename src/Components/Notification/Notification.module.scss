@@ -1,10 +1,10 @@
 .wrapper {
-    background-image: linear-gradient(to right bottom, rgb(22, 22, 85), rgb(152, 40, 152));
+    background-color: #fff;
     border-radius: inherit;
     padding: 16px 40px;
     position: relative;
-    box-shadow: 5px 5px 10px rgb(25, 25, 25);
-    color: #fff;
+    // box-shadow: 5px 5px 10px rgb(25, 25, 25);
+    color: #000;
 }
 
 .heading {
@@ -32,16 +32,16 @@
 
 .content {
     margin: 16px 0;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 1.5rem;
-    color: #bebebe;
+    color: #7b7b7b;
 }
 
 .image {
     width: 100%;
     aspect-ratio: 17 / 9;
     object-fit: cover;
-    border-radius: 10px;
+    border-radius: 6px;
 }
 
 .upload-by {
@@ -73,4 +73,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.wrapper {
+    &.darkMode {
+        background-color: rgb(45, 45, 45);
+        color: #fff;
+
+        .content {
+            color: #bebebe;
+        }
+    }
 }

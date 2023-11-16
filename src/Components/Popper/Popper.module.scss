@@ -14,5 +14,6 @@
 .wrapper {
     &.darkMode {
         background-color: rgba(37, 37, 37);
+        box-shadow: rgba(255, 255, 255, 0.12) 0px 2px 12px;
     }
 }

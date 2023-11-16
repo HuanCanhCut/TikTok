@@ -7,9 +7,9 @@ import { useSpring, motion } from 'framer-motion'
 import style from './Header.module.scss'
 import Image from '~/Components/Images/Image'
 import BlueTick from '~/Components/BlueTick/BlueTick'
-import Button from '~/Components/Button'
 import { Wrapper as PopperWrapper } from '~/Components/Popper'
 import AccountPreview from '~/Components/AccountPreview'
+import FollowAnUser from './FollowAnUser'
 
 const cx = classNames.bind(style)
 
@@ -73,9 +73,7 @@ function Header({ data }) {
                 <p className={cx('description')}>{data.description}</p>
             </div>
 
-            <Button outline className={cx('follow')}>
-                Follow
-            </Button>
+            <FollowAnUser data={dataUser} />
         </div>
     )
 }
