@@ -4,6 +4,7 @@ import classNames from 'classnames/bind'
 import Tippy from '@tippyjs/react/headless'
 import 'tippy.js/dist/tippy.css'
 import { useSpring, motion } from 'framer-motion'
+import { useCallback } from 'react'
 
 import { Wrapper as PopperWrapper } from '~/Components/Popper'
 import Header from './Header'
@@ -25,6 +26,22 @@ function Menu({ children, items = [], hideOnClick = false, onChange = defaultFn 
 
     const current = history[history.length - 1]
 
+    const handleChose = useCallback((isParent, logOut, item) => {
+        // next menu page
+        if (isParent) {
+            setHistory((prev) => {
+                return [...prev, item.children]
+            })
+        }
+        // logout
+        else if (logOut) {
+            localStorage.removeItem('user')
+            window.location.reload()
+        } else {
+            onChange(item)
+        }
+    }, [])
+
     const renderItems = () => {
         return current.data.map((item, index) => {
             const isParent = Boolean(item.children)
@@ -34,19 +51,7 @@ function Menu({ children, items = [], hideOnClick = false, onChange = defaultFn 
                     key={index}
                     data={item}
                     onClick={() => {
-                        // next menu page
-                        if (isParent) {
-                            setHistory((prev) => {
-                                return [...prev, item.children]
-                            })
-                        }
-                        // logout
-                        else if (logOut) {
-                            localStorage.removeItem('user')
-                            window.location.reload()
-                        } else {
-                            onChange(item)
-                        }
+                        handleChose(isParent, logOut, item)
                     }}
                 />
             )

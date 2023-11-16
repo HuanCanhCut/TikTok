@@ -1,5 +1,6 @@
 import classNames from 'classnames/bind'
 import style from './FooterSidebar.module.scss'
+import { memo } from 'react'
 import Button from '~/Components/Button'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHurricane } from '@fortawesome/free-solid-svg-icons'
@@ -59,4 +60,4 @@ function FooterSidebar() {
     )
 }
 
-export default FooterSidebar
+export default memo(FooterSidebar)

@@ -1,5 +1,5 @@
 import HeadlessTippy from '@tippyjs/react/headless'
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, memo } from 'react'
 import { faCircleXmark, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -107,4 +107,4 @@ function Search() {
     )
 }
 
-export default Search
+export default memo(Search)

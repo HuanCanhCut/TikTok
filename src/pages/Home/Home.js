@@ -3,6 +3,7 @@ import classNames from 'classnames/bind'
 import { Virtuoso } from 'react-virtuoso'
 import Modal from 'react-modal'
 import images from '~/assets/images'
+import { useCallback } from 'react'
 
 import style from './Home.module.scss'
 import Video from '~/layouts/components/Video'
@@ -22,10 +23,10 @@ function Home() {
     const [modalIsOpen, setModalIsOpen] = useState(JSON.parse(localStorage.getItem('firstNotification')) ?? true)
     const [pageIndexes, setPageIndexes] = useState(JSON.parse(localStorage.getItem('pageIndexes')) ?? [])
 
-    const closeModal = () => {
+    const closeModal = useCallback(() => {
         localStorage.setItem('firstNotification', JSON.stringify(false))
         setModalIsOpen(false)
-    }
+    }, [])
 
     const notificationProps = {
         title: 'Hello, Admin đây!',

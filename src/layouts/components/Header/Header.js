@@ -14,7 +14,7 @@ import {
 import Tippy from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css'
 import { Link } from 'react-router-dom'
-import { useContext, useState, memo } from 'react'
+import { useContext, useState, useCallback, memo } from 'react'
 import { useSelector } from 'react-redux'
 import { themeSelector } from '~/redux/selectors'
 import Modal from 'react-modal'
@@ -113,9 +113,9 @@ function Header() {
         },
     ]
 
-    const openModal = () => {
+    const openModal = useCallback(() => {
         setModalIsOpen(true)
-    }
+    }, [])
 
     const closeModal = () => {
         setModalIsOpen(false)

@@ -4,7 +4,7 @@ import style from './SuggestedAccounts.module.scss'
 import Tippy from '@tippyjs/react/headless'
 import { useSpring, motion } from 'framer-motion'
 
-import AccountPreview from '../../../../Components/AccountPreview'
+import AccountPreview from '~/Components/AccountPreview'
 import BlueTick from '~/Components/BlueTick/BlueTick'
 import { Wrapper as PopperWrapper } from '~/Components/Popper'
 import Image from '~/Components/Images'

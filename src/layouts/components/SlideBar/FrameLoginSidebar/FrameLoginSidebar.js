@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import classNames from 'classnames/bind'
 import style from './FrameLoginSidebar.module.scss'
 import Button from '~/Components/Button'
@@ -9,9 +9,9 @@ const cx = classNames.bind(style)
 function FrameLoginSidebar() {
     const [modalIsOpen, setModalIsOpen] = useState(false)
 
-    const openModal = () => {
+    const openModal = useCallback(() => {
         setModalIsOpen(true)
-    }
+    }, [])
 
     const closeModal = () => {
         setModalIsOpen(false)

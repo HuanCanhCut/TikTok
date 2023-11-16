@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { useCallback } from 'react'
 
 import Button from '~/Components/Button'
 import * as userService from '~/services/userService'
@@ -12,19 +13,19 @@ function FollowButton({ data }) {
     const userId = data.id
     const accessToken = currentUser && currentUser.meta.token
 
-    const handleFollow = async () => {
+    const handleFollow = useCallback(async () => {
         const response = await userService.followAnUser({ userId, accessToken })
         if (response) {
             setIsFollow(true)
         }
-    }
+    }, [userId, accessToken])
 
-    const handleUnFollow = async () => {
+    const handleUnFollow = useCallback(async () => {
         const response = await userService.unFollowUser({ userId, accessToken })
         if (response) {
             setIsFollow(false)
         }
-    }
+    }, [userId, accessToken])
 
     return (
         <>

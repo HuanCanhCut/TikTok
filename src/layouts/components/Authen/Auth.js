@@ -3,7 +3,7 @@ import classNames from 'classnames/bind'
 import style from './Login.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark, faSpinner } from '@fortawesome/free-solid-svg-icons'
-import { memo } from 'react'
+import { useCallback, memo } from 'react'
 import Modal from 'react-modal'
 
 import { useState } from 'react'
@@ -97,7 +97,7 @@ function Authen({ onClose, isOpen }) {
                 </header>
 
                 <div className={cx('body')}>
-                    <Input setEmail={setEmail} setPassword={setPassword} />
+                    <Input setEmail={setEmail} setPassword={setPassword} email={email} password={password} />
 
                     <span className={cx('invalid-password')}>
                         {isValid && !signUp && `Username or password doesn't match our records. Try again.`}

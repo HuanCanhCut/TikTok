@@ -21,6 +21,7 @@ function Input({ ...props } = {}) {
                 type="text"
                 className={cx('email')}
                 placeholder="Email"
+                value={props.email}
                 onChange={(e) => {
                     props.setEmail(e.target.value)
                 }}
@@ -31,6 +32,7 @@ function Input({ ...props } = {}) {
                     type={hidePassword ? 'password' : 'text'}
                     className={cx('password')}
                     placeholder="Password"
+                    value={props.password}
                     onChange={(e) => {
                         props.setPassword(e.target.value)
                     }}
