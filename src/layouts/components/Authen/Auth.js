@@ -61,6 +61,15 @@ function Authen({ onClose, isOpen }) {
         }
     }
 
+    const handleKeyDown = (e) => {
+        switch (e.key) {
+            case 'Enter':
+                handleSubmitLogin()
+                break
+            default:
+        }
+    }
+
     const handleLoginOptions = () => {
         setSignUp(signUp ? false : true)
         setIsValid(false)
@@ -78,6 +87,7 @@ function Authen({ onClose, isOpen }) {
                 className={cx('wrapper', {
                     darkMode: useDarkMode(),
                 })}
+                onKeyDown={handleKeyDown}
             >
                 <button className={cx('close')} onClick={onClose}>
                     <FontAwesomeIcon icon={faXmark} />

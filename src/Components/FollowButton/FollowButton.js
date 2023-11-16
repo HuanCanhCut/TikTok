@@ -1,15 +1,12 @@
 import React from 'react'
-import classNames from 'classnames/bind'
-import style from './FollowAnUser.module.scss'
+import PropTypes from 'prop-types'
 
 import Button from '~/Components/Button'
 import * as userService from '~/services/userService'
 import { AuthUserContext } from '~/App'
 import { useState, useContext } from 'react'
 
-const cx = classNames.bind(style)
-
-function FollowAnUser({ data }) {
+function FollowButton({ data }) {
     const [isFollow, setIsFollow] = useState(data.is_followed)
     const currentUser = useContext(AuthUserContext)
     const userId = data.id
@@ -32,11 +29,11 @@ function FollowAnUser({ data }) {
     return (
         <>
             {isFollow ? (
-                <Button rounded className={cx('follow')} onClick={handleUnFollow}>
+                <Button rounded onClick={handleUnFollow}>
                     Following
                 </Button>
             ) : (
-                <Button outline className={cx('follow')} onClick={handleFollow}>
+                <Button outline onClick={handleFollow}>
                     Follow
                 </Button>
             )}
@@ -44,4 +41,8 @@ function FollowAnUser({ data }) {
     )
 }
 
-export default React.memo(FollowAnUser)
+FollowButton.propTypes = {
+    data: PropTypes.object.isRequired,
+}
+
+export default React.memo(FollowButton)
