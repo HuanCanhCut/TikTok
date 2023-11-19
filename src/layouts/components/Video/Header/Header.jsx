@@ -3,18 +3,21 @@ import classNames from 'classnames/bind'
 import { Link } from 'react-router-dom'
 import Tippy from '@tippyjs/react/headless'
 import { useSpring, motion } from 'framer-motion'
+import { useState } from 'react'
 
 import style from './Header.module.scss'
 import Image from '~/Components/Images/Image'
 import BlueTick from '~/Components/BlueTick/BlueTick'
 import { Wrapper as PopperWrapper } from '~/Components/Popper'
 import AccountPreview from '~/Components/AccountPreview'
+import Button from '~/Components/Button'
 
 const cx = classNames.bind(style)
 
 function Header({ data }) {
-    console.log({ data })
     const dataUser = data.user
+    const [isFollow, setIsFollow] = useState(data.user.is_followed)
+
     const springConfig = { damping: 15, stiffness: 300 }
     const initialScale = 0.5
     const opacity = useSpring(springConfig)
@@ -71,6 +74,8 @@ function Header({ data }) {
                 </Link>
                 <p className={cx('description')}>{data.description}</p>
             </div>
+
+            {data.user.is_followed ? <Button></Button> : <Button></Button>}
         </div>
     )
 }

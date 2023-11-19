@@ -25,7 +25,7 @@ function SwitchButton() {
 
     useEffect(() => {
         dispatch(actions.darkMode(isOn))
-    }, [isOn])
+    }, [dispatch, isOn])
 
     return (
         <span className={cx('switch')} onClick={handleToggleSwitch} data-ison={isOn}>
