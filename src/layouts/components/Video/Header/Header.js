@@ -9,13 +9,12 @@ import Image from '~/Components/Images/Image'
 import BlueTick from '~/Components/BlueTick/BlueTick'
 import { Wrapper as PopperWrapper } from '~/Components/Popper'
 import AccountPreview from '~/Components/AccountPreview'
-import FollowAnUser from '~/Components/FollowButton'
 
 const cx = classNames.bind(style)
 
 function Header({ data }) {
+    console.log({ data })
     const dataUser = data.user
-
     const springConfig = { damping: 15, stiffness: 300 }
     const initialScale = 0.5
     const opacity = useSpring(springConfig)
@@ -25,7 +24,7 @@ function Header({ data }) {
         return (
             <motion.div style={{ scale, opacity }} tabIndex="-1" {...attrs}>
                 <PopperWrapper>
-                    <AccountPreview data={dataUser} />
+                    <AccountPreview data={data} />
                 </PopperWrapper>
             </motion.div>
         )
@@ -72,8 +71,6 @@ function Header({ data }) {
                 </Link>
                 <p className={cx('description')}>{data.description}</p>
             </div>
-
-            <FollowAnUser data={dataUser} />
         </div>
     )
 }

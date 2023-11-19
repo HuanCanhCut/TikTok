@@ -12,7 +12,7 @@ import {
     LiveIcon,
     LiveActiveIcon,
 } from '~/Components/Icons'
-import SuggestedAccounts from './SuggestedAccounts'
+import SuggestedAccounts from './FollowingAccounts'
 import FrameLoginSidebar from './FrameLoginSidebar'
 import FooterSidebar from './FooterSidebar'
 import config from '~/config'
@@ -51,7 +51,7 @@ function Sidebar() {
                         activeIcon={<LiveActiveIcon />}
                     />
                 </Menu>
-                {currentUser ? <SuggestedAccounts label="Suggested Accounts" /> : <FrameLoginSidebar />}
+                {currentUser ? <SuggestedAccounts label="Following Accounts" /> : <FrameLoginSidebar />}
                 <FooterSidebar />
             </div>
         </aside>

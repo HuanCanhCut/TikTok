@@ -3,7 +3,7 @@ import classNames from 'classnames/bind'
 import style from './Login.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark, faSpinner } from '@fortawesome/free-solid-svg-icons'
-import { useCallback, memo } from 'react'
+import { memo } from 'react'
 import Modal from 'react-modal'
 
 import { useState } from 'react'

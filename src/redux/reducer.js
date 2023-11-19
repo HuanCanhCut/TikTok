@@ -1,6 +1,6 @@
 const initState = {
     theme: {
-        da: false,
+        darkMode: false,
     },
 }
 
@@ -10,7 +10,7 @@ function reducer(state = initState, action) {
             return {
                 ...state,
                 theme: {
-                    da: action.payload,
+                    darkMode: action.payload,
                 },
             }
         default:

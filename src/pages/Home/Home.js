@@ -63,7 +63,22 @@ function Home() {
 
     return (
         <>
-            {modalIsOpen || (
+            {modalIsOpen ? (
+                <Modal
+                    isOpen={modalIsOpen}
+                    onRequestClose={closeModal}
+                    overlayClassName={cx('overlay')}
+                    ariaHideApp={false}
+                    className={cx('modal')}
+                >
+                    <Notification
+                        closeModal={closeModal}
+                        content={notificationProps.content}
+                        title={notificationProps.title}
+                        path={notificationProps.path}
+                    />
+                </Modal>
+            ) : (
                 <div className={cx('wrapper')}>
                     <Virtuoso
                         data={videos}
@@ -85,22 +100,6 @@ function Home() {
                         }}
                     />
                 </div>
-            )}
-            {modalIsOpen && (
-                <Modal
-                    isOpen={modalIsOpen}
-                    onRequestClose={closeModal}
-                    overlayClassName={cx('overlay')}
-                    ariaHideApp={false}
-                    className={cx('modal')}
-                >
-                    <Notification
-                        closeModal={closeModal}
-                        content={notificationProps.content}
-                        title={notificationProps.title}
-                        path={notificationProps.path}
-                    />
-                </Modal>
             )}
         </>
     )

@@ -1,30 +1,25 @@
 import PropTypes from 'prop-types'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
+import style from './FollowingAccounts.module.scss'
 import classNames from 'classnames/bind'
-import style from './SuggestedAccounts.module.scss'
 import AccountItem from './AccountItem'
 import * as useService from '~/services/userService'
 import AccountLoading from '~/Components/AccountLoading'
+import { AuthUserContext } from '~/App'
 
 const cx = classNames.bind(style)
 
-const PER_PAGE = 6
-const SUGGESTED_PAGES_KEY = 'SuggestedAccountsPage'
-const TOTAL_SUGGESTED_ACCOUNT_PAGES = JSON.parse(localStorage.getItem(SUGGESTED_PAGES_KEY))
-const INIT_PAGE = Math.floor(Math.random() * TOTAL_SUGGESTED_ACCOUNT_PAGES) || 1
-
 function SuggestedAccounts({ label }) {
+    const currentUser = useContext(AuthUserContext)
     const [suggestedUser, setSuggestedUser] = useState([])
-    const [page, setPage] = useState(INIT_PAGE)
+    const [page, setPage] = useState(1)
 
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         ;(async () => {
             try {
-                const response = await useService.getSuggested(page, PER_PAGE)
-
-                localStorage.setItem(SUGGESTED_PAGES_KEY, JSON.stringify(response.meta.pagination.total_pages))
+                const response = await useService.getFollowingAccounts(page, currentUser.meta.token)
 
                 setSuggestedUser((prevUser) => {
                     return [...prevUser, ...response.data]
@@ -38,11 +33,7 @@ function SuggestedAccounts({ label }) {
 
     const onSeeMore = () => {
         setLoading(false)
-        setPage((prev) => {
-            do {
-                return Math.floor(Math.random() * TOTAL_SUGGESTED_ACCOUNT_PAGES)
-            } while (prev === Math.floor(Math.random() * TOTAL_SUGGESTED_ACCOUNT_PAGES))
-        })
+        setPage(page + 1)
         setLoading(true)
     }
 

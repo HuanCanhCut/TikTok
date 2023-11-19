@@ -33,10 +33,10 @@
 // Button type
 
 .rounded {
-    border-radius: 5px;
+    border-radius: 4px;
     color: var(--text-color);
     border-color: rgba(22, 24, 35, 0.12);
-
+    background-color: rgba(255, 255, 255, 0.08);
     &:hover {
         background-color: var(--button-rounded-hover);
     }
@@ -52,7 +52,6 @@
     border-color: var(--primary);
     &:hover {
         border-color: var(--primary);
-
         background: linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)), #fe2c55;
     }
 }

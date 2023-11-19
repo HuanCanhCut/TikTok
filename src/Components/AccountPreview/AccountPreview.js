@@ -2,7 +2,6 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames/bind'
 import style from './AccountPreview.module.scss'
 
-import FollowButton from '../FollowButton'
 import BlueTick from '~/Components/BlueTick/BlueTick'
 import Image from '~/Components/Images'
 import useDarkMode from '~/hooks/useDarkMode'
@@ -17,21 +16,20 @@ function AccountPreview({ data }) {
             })}
         >
             <header className={cx('header')}>
-                <Image className={cx('avatar')} src={data.avatar} alt="" />
-                <FollowButton data={data} />
+                <Image className={cx('avatar')} src={data.user.avatar} alt="" />
             </header>
             <div className={cx('body')}>
                 <div className={cx('info')}>
                     <p className={cx('nickname')}>
-                        <strong>{data.nickname}</strong>
-                        <span className={cx('icon')}>{data.tick && <BlueTick />}</span>
+                        <strong>{data.user.nickname}</strong>
+                        <span className={cx('icon')}>{data.user.tick && <BlueTick />}</span>
                     </p>
-                    <p className={cx('name')}>{`${data.first_name} ${data.last_name}`}</p>
+                    <p className={cx('name')}>{`${data.user.first_name} ${data.user.last_name}`}</p>
                 </div>
                 <p className={cx('analytics')}>
-                    <strong className={cx('value')}>{data.followings_count}</strong>
+                    <strong className={cx('value')}>{data.user.followings_count}</strong>
                     <span>Followers</span>
-                    <strong className={cx('value')}>{data.followers_count}</strong>
+                    <strong className={cx('value')}>{data.user.followers_count}</strong>
                     <span>Likes</span>
                 </p>
             </div>

@@ -70,6 +70,7 @@ const MENU_ITEM = [
 
 function Header() {
     const currentUser = useContext(AuthUserContext)
+    const profile = currentUser && currentUser.data.nickname
     const [modalIsOpen, setModalIsOpen] = useState(false)
     const [shortcutsIsOpen, setShortcutsIsOpen] = useState(false)
     const darkMode = useSelector(themeSelector)
@@ -96,7 +97,7 @@ function Header() {
         {
             icon: <FontAwesomeIcon icon={faUser} />,
             title: 'View frofile',
-            to: '/@penguindev',
+            to: `/@${profile}`,
         },
         {
             icon: <FontAwesomeIcon icon={faGear} />,
