@@ -40,7 +40,7 @@ function Home() {
             try {
                 const response = await videoService.getVideo({
                     type: 'for-you',
-                    page: page,
+                    page: 1,
                 })
 
                 localStorage.setItem(TOTAL_PAGES_KEY, JSON.stringify(response.meta.pagination.total_pages))
@@ -80,7 +80,7 @@ function Home() {
                 </Modal>
             ) : (
                 <div className={cx('wrapper')}>
-                    <Virtuoso
+                    {/* <Virtuoso
                         data={videos}
                         useWindowScroll
                         endReached={() => {
@@ -98,7 +98,11 @@ function Home() {
                                 return <AccountLoading big />
                             },
                         }}
-                    />
+                    /> */}
+
+                    {videos.map((item, index) => {
+                        return <Video key={index} data={item} />
+                    })}
                 </div>
             )}
         </>

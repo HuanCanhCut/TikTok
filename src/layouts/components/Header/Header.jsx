@@ -20,7 +20,7 @@ import { themeSelector } from '~/redux/selectors'
 import Modal from 'react-modal'
 
 import Authen from '../Authen'
-import { AuthUserContext } from '~/App'
+import { currentUserData } from '~/App'
 import config from '~/config'
 import Button from '~/Components/Button'
 import Menu from '~/Components/Popper/Menu'
@@ -30,6 +30,7 @@ import { MessageIcon, InboxIcon } from '~/Components/Icons'
 import Search from '../Search'
 import Image from '~/Components/Images'
 import KeyboardShortcuts from './KeyboardShorcuts'
+import * as authService from '~/services/authService'
 
 const cx = classNames.bind(style)
 
@@ -69,7 +70,7 @@ const MENU_ITEM = [
 ]
 
 function Header() {
-    const currentUser = useContext(AuthUserContext)
+    const currentUser = useContext(currentUserData)
     const profile = currentUser && currentUser.data.nickname
     const [modalIsOpen, setModalIsOpen] = useState(false)
     const [shortcutsIsOpen, setShortcutsIsOpen] = useState(false)
@@ -83,13 +84,16 @@ function Header() {
         setShortcutsIsOpen(false)
     }
 
-    const handleMenuChange = (menuItem) => {
-        switch (menuItem.type) {
-            case 'keyboard-shortcuts':
-                openKeyboardShortCuts()
-                break
-            default:
-                break
+    const handleLogOut = async () => {
+        try {
+            const response = await authService.logout({
+                accessToken: currentUser.meta.token,
+            })
+            localStorage.removeItem('user')
+            window.location.reload()
+            return response
+        } catch (error) {
+            console.log(error)
         }
     }
 
@@ -107,12 +111,25 @@ function Header() {
 
         ...MENU_ITEM,
         {
+            type: 'log-out',
             icon: <FontAwesomeIcon icon={faSignOut} />,
             title: 'Log out',
             separate: true,
-            onLogOut: true,
         },
     ]
+
+    const handleMenuChange = (menuItem) => {
+        switch (menuItem.type) {
+            case 'keyboard-shortcuts':
+                openKeyboardShortCuts()
+                break
+            case 'log-out':
+                handleLogOut()
+                break
+            default:
+                break
+        }
+    }
 
     const openModal = useCallback(() => {
         setModalIsOpen(true)

@@ -7,7 +7,7 @@ import { useEffect } from 'react'
 import useDarkMode from './hooks/useDarkMode'
 import './Components/GlobalStyles/GlobalStyles.scss'
 
-export const AuthUserContext = createContext()
+export const currentUserData = createContext()
 
 function App() {
     const authUser = JSON.parse(localStorage.getItem('user'))
@@ -25,7 +25,7 @@ function App() {
     }, [])
 
     return (
-        <AuthUserContext.Provider value={authUser}>
+        <currentUserData.Provider value={authUser}>
             <Router>
                 <div className="App" data-darkmode={useDarkMode()}>
                     <Routes>
@@ -55,7 +55,7 @@ function App() {
                     </Routes>
                 </div>
             </Router>
-        </AuthUserContext.Provider>
+        </currentUserData.Provider>
     )
 }
 

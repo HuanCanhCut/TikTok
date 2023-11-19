@@ -16,13 +16,13 @@ import SuggestedAccounts from './FollowingAccounts'
 import FrameLoginSidebar from './FrameLoginSidebar'
 import FooterSidebar from './FooterSidebar'
 import config from '~/config'
-import { AuthUserContext } from '~/App'
+import { currentUserData } from '~/App'
 import useDarkMode from '~/hooks/useDarkMode'
 
 const cx = classNames.bind(styles)
 
 function Sidebar() {
-    const currentUser = useContext(AuthUserContext)
+    const currentUser = useContext(currentUserData)
 
     return (
         <aside

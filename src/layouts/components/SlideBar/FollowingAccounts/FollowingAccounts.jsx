@@ -5,12 +5,12 @@ import classNames from 'classnames/bind'
 import AccountItem from './AccountItem'
 import * as useService from '~/services/userService'
 import AccountLoading from '~/Components/AccountLoading'
-import { AuthUserContext } from '~/App'
+import { currentUserData } from '~/App'
 
 const cx = classNames.bind(style)
 
 function SuggestedAccounts({ label }) {
-    const currentUser = useContext(AuthUserContext)
+    const currentUser = useContext(currentUserData)
     const [suggestedUser, setSuggestedUser] = useState([])
     const [page, setPage] = useState(1)
 

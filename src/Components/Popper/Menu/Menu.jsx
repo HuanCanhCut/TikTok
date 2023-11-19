@@ -26,17 +26,12 @@ function Menu({ children, items = [], hideOnClick = false, onChange = defaultFn 
 
     const current = history[history.length - 1]
 
-    const handleChose = useCallback((isParent, logOut, item) => {
+    const handleChose = useCallback((isParent, item) => {
         // next menu page
         if (isParent) {
             setHistory((prev) => {
                 return [...prev, item.children]
             })
-        }
-        // logout
-        else if (logOut) {
-            localStorage.removeItem('user')
-            window.location.reload()
         } else {
             onChange(item)
         }
@@ -45,13 +40,12 @@ function Menu({ children, items = [], hideOnClick = false, onChange = defaultFn 
     const renderItems = () => {
         return current.data.map((item, index) => {
             const isParent = Boolean(item.children)
-            const logOut = Boolean(item.onLogOut)
             return (
                 <MenuItem
                     key={index}
                     data={item}
                     onClick={() => {
-                        handleChose(isParent, logOut, item)
+                        handleChose(isParent, item)
                     }}
                 />
             )

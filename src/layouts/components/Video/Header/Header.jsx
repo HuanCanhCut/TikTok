@@ -3,25 +3,48 @@ import classNames from 'classnames/bind'
 import { Link } from 'react-router-dom'
 import Tippy from '@tippyjs/react/headless'
 import { useSpring, motion } from 'framer-motion'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 
+import { currentUserData } from '~/App'
 import style from './Header.module.scss'
 import Image from '~/Components/Images/Image'
 import BlueTick from '~/Components/BlueTick/BlueTick'
 import { Wrapper as PopperWrapper } from '~/Components/Popper'
 import AccountPreview from '~/Components/AccountPreview'
 import Button from '~/Components/Button'
+import { followAnUser, unFollowUser } from '~/services/userService'
 
 const cx = classNames.bind(style)
 
 function Header({ data }) {
     const dataUser = data.user
     const [isFollow, setIsFollow] = useState(data.user.is_followed)
+    const currentUser = useContext(currentUserData)
+    const accessToken = currentUser && currentUser.meta.token
 
     const springConfig = { damping: 15, stiffness: 300 }
     const initialScale = 0.5
     const opacity = useSpring(springConfig)
     const scale = useSpring(initialScale, springConfig)
+
+    const handleFollow = async () => {
+        try {
+            const response = await followAnUser({
+                userId: data.id,
+                accessToken,
+            })
+
+            console.log(response)
+
+            if (response.data.is_followed) {
+                setIsFollow(true)
+            }
+
+            return response
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     const renderPreview = (attrs) => {
         return (
@@ -75,7 +98,13 @@ function Header({ data }) {
                 <p className={cx('description')}>{data.description}</p>
             </div>
 
-            {data.user.is_followed ? <Button></Button> : <Button></Button>}
+            {data.user.is_followed || isFollow ? (
+                <Button rounded>Following</Button>
+            ) : (
+                <Button outline onClick={handleFollow}>
+                    Follow
+                </Button>
+            )}
         </div>
     )
 }
