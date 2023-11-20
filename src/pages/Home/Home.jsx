@@ -80,7 +80,7 @@ function Home() {
                 </Modal>
             ) : (
                 <div className={cx('wrapper')}>
-                    {/* <Virtuoso
+                    <Virtuoso
                         data={videos}
                         useWindowScroll
                         endReached={() => {
@@ -98,11 +98,7 @@ function Home() {
                                 return <AccountLoading big />
                             },
                         }}
-                    /> */}
-
-                    {videos.map((item, index) => {
-                        return <Video key={index} data={item} />
-                    })}
+                    />
                 </div>
             )}
         </>

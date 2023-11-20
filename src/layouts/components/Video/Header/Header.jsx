@@ -3,7 +3,7 @@ import classNames from 'classnames/bind'
 import { Link } from 'react-router-dom'
 import Tippy from '@tippyjs/react/headless'
 import { useSpring, motion } from 'framer-motion'
-import { useState, useContext } from 'react'
+import { useContext } from 'react'
 
 import { currentUserData } from '~/App'
 import style from './Header.module.scss'
@@ -18,7 +18,6 @@ const cx = classNames.bind(style)
 
 function Header({ data }) {
     const dataUser = data.user
-    const [isFollow, setIsFollow] = useState(data.user.is_followed)
     const currentUser = useContext(currentUserData)
     const accessToken = currentUser && currentUser.meta.token
 
@@ -35,12 +34,6 @@ function Header({ data }) {
             })
 
             console.log(response)
-
-            if (response.data.is_followed) {
-                setIsFollow(true)
-            }
-
-            return response
         } catch (error) {
             console.log(error)
         }
@@ -98,7 +91,7 @@ function Header({ data }) {
                 <p className={cx('description')}>{data.description}</p>
             </div>
 
-            {data.user.is_followed || isFollow ? (
+            {data.user.is_followed ? (
                 <Button rounded>Following</Button>
             ) : (
                 <Button outline onClick={handleFollow}>
