@@ -63,34 +63,6 @@ function Home() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page])
 
-    const scrollToIndex = (index) => {
-        virtuosoRef.current.scrollToIndex({ index: index, align: 'center', behavior: 'smooth' })
-    }
-
-    useEffect(() => {
-        const handleClickKeys = (e) => {
-            if (e.key === 'ArrowDown' && focusedIndex < videos.length - 1) {
-                e.preventDefault()
-                const nextIndex = focusedIndex + 1
-                setFocusedIndex(nextIndex)
-                scrollToIndex(nextIndex)
-            }
-
-            if (e.key === 'ArrowUp' && focusedIndex !== 0) {
-                e.preventDefault()
-                const prevIndex = focusedIndex - 1
-                setFocusedIndex(prevIndex)
-                scrollToIndex(prevIndex)
-            }
-        }
-
-        window.addEventListener('keydown', handleClickKeys)
-
-        return () => {
-            window.removeEventListener('keydown', handleClickKeys)
-        }
-    }, [focusedIndex, videos.length])
-
     return (
         <>
             {modalIsOpen ? (
@@ -122,7 +94,16 @@ function Home() {
                             })
                         }}
                         itemContent={(index, item) => {
-                            return <Video key={index} data={item} />
+                            return (
+                                <Video
+                                    key={index}
+                                    data={item}
+                                    videos={videos}
+                                    virtuosoRef={virtuosoRef}
+                                    setFocusedIndex={setFocusedIndex}
+                                    focusedIndex={focusedIndex}
+                                />
+                            )
                         }}
                         components={{
                             Footer: () => {
