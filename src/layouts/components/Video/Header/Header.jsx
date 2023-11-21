@@ -12,7 +12,7 @@ import BlueTick from '~/Components/BlueTick/BlueTick'
 import { Wrapper as PopperWrapper } from '~/Components/Popper'
 import AccountPreview from '~/Components/AccountPreview'
 import Button from '~/Components/Button'
-import { followAnUser, unFollowUser } from '~/services/userService'
+import { followAnUser } from '~/services/userService'
 
 const cx = classNames.bind(style)
 

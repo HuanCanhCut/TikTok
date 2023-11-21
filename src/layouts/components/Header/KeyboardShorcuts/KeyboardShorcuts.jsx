@@ -6,19 +6,18 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { Wrapper as PopperWrapper } from '~/Components/Popper'
 import style from './KeyboardShorcuts.module.scss'
 import useDarkMode from '~/hooks/useDarkMode'
-import { LKeyboard, MKeyboard, SpaceKeyboard, ShiftKeyboard } from '~/Components/Icons'
+import { LKeyboard, MKeyboard, ArrowUp, ArrowDown } from '~/Components/Icons'
 
 const cx = classNames.bind(style)
 
 const shortcutsItems = [
     {
-        title: 'Prev Video : Shift + Space',
-        icon: <SpaceKeyboard />,
-        leftIcon: <ShiftKeyboard />,
+        title: 'Go to previous video',
+        icon: <ArrowUp />,
     },
     {
-        title: 'Next Video : Space',
-        icon: <SpaceKeyboard />,
+        title: 'Go to next video',
+        icon: <ArrowDown />,
     },
     {
         title: 'Like video',
@@ -50,7 +49,6 @@ function KeyboardShortcuts({ onClose }) {
                         <div className={cx('shortcuts-item')} key={index}>
                             <p>{shortcutsItem.title}</p>
                             <div className={cx('icon-wrapper')}>
-                                <p className={cx('left-icon')}>{shortcutsItem.leftIcon}</p>
                                 <p>{shortcutsItem.icon}</p>
                             </div>
                         </div>

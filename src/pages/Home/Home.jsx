@@ -1,9 +1,8 @@
-import { memo, useEffect, useState } from 'react'
+import { memo, useEffect, useState, useCallback, useRef } from 'react'
 import classNames from 'classnames/bind'
 import { Virtuoso } from 'react-virtuoso'
 import Modal from 'react-modal'
 import images from '~/assets/images'
-import { useCallback } from 'react'
 
 import style from './Home.module.scss'
 import Video from '~/layouts/components/Video'
@@ -20,6 +19,9 @@ const INIT_PAGE = Math.floor(Math.random() * TOTAL_PAGES_VIDEO) || 1
 function Home() {
     const [videos, setVideos] = useState([])
     const [page, setPage] = useState(INIT_PAGE)
+    const [focusedIndex, setFocusedIndex] = useState(0)
+    const virtuosoRef = useRef()
+
     const [modalIsOpen, setModalIsOpen] = useState(JSON.parse(localStorage.getItem('firstNotification')) ?? true)
     const [pageIndexes, setPageIndexes] = useState(JSON.parse(localStorage.getItem('pageIndexes')) ?? [])
 
@@ -40,7 +42,7 @@ function Home() {
             try {
                 const response = await videoService.getVideo({
                     type: 'for-you',
-                    page: 1,
+                    page: page,
                 })
 
                 localStorage.setItem(TOTAL_PAGES_KEY, JSON.stringify(response.meta.pagination.total_pages))
@@ -61,6 +63,34 @@ function Home() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page])
 
+    const scrollToIndex = (index) => {
+        virtuosoRef.current.scrollToIndex({ index: index, align: 'center', behavior: 'smooth' })
+    }
+
+    useEffect(() => {
+        const handleClickKeys = (e) => {
+            if (e.key === 'ArrowDown' && focusedIndex < videos.length - 1) {
+                e.preventDefault()
+                const nextIndex = focusedIndex + 1
+                setFocusedIndex(nextIndex)
+                scrollToIndex(nextIndex)
+            }
+
+            if (e.key === 'ArrowUp' && focusedIndex !== 0) {
+                e.preventDefault()
+                const prevIndex = focusedIndex - 1
+                setFocusedIndex(prevIndex)
+                scrollToIndex(prevIndex)
+            }
+        }
+
+        window.addEventListener('keydown', handleClickKeys)
+
+        return () => {
+            window.removeEventListener('keydown', handleClickKeys)
+        }
+    }, [focusedIndex, videos.length])
+
     return (
         <>
             {modalIsOpen ? (
@@ -79,8 +109,9 @@ function Home() {
                     />
                 </Modal>
             ) : (
-                <div className={cx('wrapper')}>
+                <div className={cx('wrapper')} tabIndex={10}>
                     <Virtuoso
+                        ref={virtuosoRef}
                         data={videos}
                         useWindowScroll
                         endReached={() => {

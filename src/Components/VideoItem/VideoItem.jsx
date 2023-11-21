@@ -30,11 +30,11 @@ function VideoItem({ video }) {
                 if (!playing) {
                     await videoRef.current
                     videoRef.current.currentTime = 0
-                    videoRef.current && videoRef.current.play()
+                    ;(await videoRef.current) && videoRef.current.play()
                 }
             } else {
                 if (playing) {
-                    videoRef.current.pause()
+                    await videoRef.current.pause()
                 }
             }
         })()
@@ -64,7 +64,7 @@ function VideoItem({ video }) {
                         src={video.file_url}
                         poster={video.thumb_url}
                         className={cx('video')}
-                        onPlaying={() => {
+                        onPlay={() => {
                             setPlaying(true)
                         }}
                         onPause={() => {
