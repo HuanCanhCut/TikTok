@@ -341,6 +341,7 @@ export const ArrowUp = ({ width = '24', height = '24', className }) => (
         ></path>
     </svg>
 )
+
 export const ArrowDown = ({ width = '24', height = '24', className }) => (
     <svg
         width={width}

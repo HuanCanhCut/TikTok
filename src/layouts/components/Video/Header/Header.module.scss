@@ -41,6 +41,25 @@
     width: 1000px;
     font-weight: 500;
     max-width: 95%;
-    line-height: 17px;
+    line-height: 20px;
     font-size: 1.6rem;
+}
+
+.music-name {
+    margin-top: 4px;
+    margin-left: 2px;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    color: var(--text-color-secondary);
+    font-size: 1.4rem;
+    line-height: 1;
+}
+
+.music-icon {
+    line-height: 0;
+    font-size: 1rem;
+    color: var(--text-color);
+    padding-right: 4px;
 }

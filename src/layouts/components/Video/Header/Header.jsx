@@ -13,6 +13,8 @@ import { Wrapper as PopperWrapper } from '~/Components/Popper'
 import AccountPreview from '~/Components/AccountPreview'
 import Button from '~/Components/Button'
 import { followAnUser } from '~/services/userService'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMusic } from '@fortawesome/free-solid-svg-icons'
 
 const cx = classNames.bind(style)
 
@@ -89,6 +91,13 @@ function Header({ data }) {
                     {dataUser.check && <BlueTick />}
                 </Link>
                 <p className={cx('description')}>{data.description}</p>
+                {data.music && (
+                    <p className={cx('music-name')}>
+                        <FontAwesomeIcon icon={faMusic} className={cx('music-icon')} />
+                        {data.music}
+                    </p>
+                )}
+                <p></p>
             </div>
 
             {data.user.is_followed ? (
