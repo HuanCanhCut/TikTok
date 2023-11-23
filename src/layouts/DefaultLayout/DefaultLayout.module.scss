@@ -35,10 +35,30 @@
     border-radius: 50%;
     position: fixed;
     right: 35px;
-    bottom: 15px;
     background-color: var(--primary);
     cursor: pointer;
     color: white;
+    bottom: 20px;
+    transform: translateY(70px);
+    animation: fadeOut 0.2s ease-in-out forwards;
+    &.isDisplay {
+        animation: fadeIn 0.2s ease-in-out forwards;
+    }
+}
+
+@keyframes fadeIn {
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(70px);
+    }
 }
 
 .wrapper {

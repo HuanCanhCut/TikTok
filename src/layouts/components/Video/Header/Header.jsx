@@ -3,43 +3,25 @@ import classNames from 'classnames/bind'
 import { Link } from 'react-router-dom'
 import Tippy from '@tippyjs/react/headless'
 import { useSpring, motion } from 'framer-motion'
-import { useContext } from 'react'
+import { faMusic } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import { currentUserData } from '~/App'
 import style from './Header.module.scss'
 import Image from '~/Components/Images/Image'
 import BlueTick from '~/Components/BlueTick/BlueTick'
 import { Wrapper as PopperWrapper } from '~/Components/Popper'
 import AccountPreview from '~/Components/AccountPreview'
-import Button from '~/Components/Button'
-import { followAnUser } from '~/services/userService'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMusic } from '@fortawesome/free-solid-svg-icons'
+import Follow from '~/Components/Follow'
 
 const cx = classNames.bind(style)
 
 function Header({ data }) {
     const dataUser = data.user
-    const currentUser = useContext(currentUserData)
-    const accessToken = currentUser && currentUser.meta.token
 
     const springConfig = { damping: 15, stiffness: 300 }
     const initialScale = 0.5
     const opacity = useSpring(springConfig)
     const scale = useSpring(initialScale, springConfig)
-
-    const handleFollow = async () => {
-        try {
-            const response = await followAnUser({
-                userId: data.id,
-                accessToken,
-            })
-
-            console.log(response)
-        } catch (error) {
-            console.log(error)
-        }
-    }
 
     const renderPreview = (attrs) => {
         return (
@@ -85,9 +67,12 @@ function Header({ data }) {
             </Tippy>
             <div className={cx('body')}>
                 <Link to={`@${dataUser.nickname}`} className={cx('user-info')}>
-                    <strong>
-                        <h3 className={cx('nick-name')}>{dataUser.nickname}</h3>
-                    </strong>
+                    <div className={cx('nick-name')}>
+                        <strong>
+                            <h3 className={cx('nick-name')}>{dataUser.nickname}</h3>
+                        </strong>
+                    </div>
+                    <div className={cx('full-name')}>{`${data.user.first_name} ${data.user.last_name}`}</div>
                     {dataUser.check && <BlueTick />}
                 </Link>
                 <p className={cx('description')}>{data.description}</p>
@@ -97,16 +82,8 @@ function Header({ data }) {
                         {data.music}
                     </p>
                 )}
-                <p></p>
             </div>
-
-            {data.user.is_followed ? (
-                <Button rounded>Following</Button>
-            ) : (
-                <Button outline onClick={handleFollow}>
-                    Follow
-                </Button>
-            )}
+            <Follow data={data} />
         </div>
     )
 }

@@ -45,11 +45,14 @@ function DefaultLayout({ children }) {
             <SideBar />
             <div className={cx('container')}>
                 <div className={cx('content-wrapper')}>{children}</div>
-                {goToTop && (
-                    <button className={cx('go-to-top')} onClick={handleIntoView}>
-                        <GoToTop />
-                    </button>
-                )}
+                <button
+                    className={cx('go-to-top', {
+                        isDisplay: goToTop,
+                    })}
+                    onClick={handleIntoView}
+                >
+                    <GoToTop />
+                </button>
             </div>
         </div>
     )

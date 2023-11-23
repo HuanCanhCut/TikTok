@@ -15,6 +15,7 @@ function App() {
     useEffect(() => {
         const handleUnload = () => {
             localStorage.removeItem('firstNotification')
+            localStorage.removeItem('pageIndexes')
         }
 
         window.addEventListener('beforeunload', handleUnload)

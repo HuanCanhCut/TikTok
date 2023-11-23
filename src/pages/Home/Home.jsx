@@ -1,14 +1,17 @@
-import { memo, useEffect, useState, useCallback, useRef } from 'react'
+import { memo, useEffect, useState, useCallback, useRef, useContext, createContext } from 'react'
 import classNames from 'classnames/bind'
-import { Virtuoso } from 'react-virtuoso'
 import Modal from 'react-modal'
 import images from '~/assets/images'
+import { currentUserData } from '~/App'
+import { Virtuoso } from 'react-virtuoso'
 
+import AccountLoading from '~/Components/AccountLoading'
 import style from './Home.module.scss'
 import Video from '~/layouts/components/Video'
 import * as videoService from '~/services/videoService'
-import AccountLoading from '~/Components/AccountLoading'
 import Notification from '~/Components/Notification'
+
+export const updateContext = createContext()
 
 const cx = classNames.bind(style)
 
@@ -17,8 +20,13 @@ const TOTAL_PAGES_VIDEO = JSON.parse(localStorage.getItem(TOTAL_PAGES_KEY))
 const INIT_PAGE = Math.floor(Math.random() * TOTAL_PAGES_VIDEO) || 1
 
 function Home() {
+    const currentUser = useContext(currentUserData)
+    const accessToken = currentUser && currentUser.meta.token
+
     const [videos, setVideos] = useState([])
     const [page, setPage] = useState(INIT_PAGE)
+    const [followed, setFollowed] = useState(JSON.parse(localStorage.getItem('followed')) ?? [])
+    const [unFollowed, setUnFollowed] = useState(JSON.parse(localStorage.getItem('unFollowed')) ?? [])
     const [focusedIndex, setFocusedIndex] = useState(0)
     const virtuosoRef = useRef()
 
@@ -29,6 +37,30 @@ function Home() {
         localStorage.setItem('firstNotification', JSON.stringify(false))
         setModalIsOpen(false)
     }, [])
+
+    const temporaryFollow = (item) => {
+        setFollowed((prev) => [...prev, item])
+    }
+
+    const temporaryUnFollow = (item) => {
+        setUnFollowed((prev) => [...prev, item])
+    }
+
+    useEffect(() => {
+        localStorage.setItem('followed', JSON.stringify(followed))
+    }, [followed])
+
+    useEffect(() => {
+        localStorage.setItem('unFollowed', JSON.stringify(unFollowed))
+    }, [unFollowed])
+
+    const handleUpdatePage = () => {
+        setPage(() => {
+            do {
+                return Math.floor(Math.random() * TOTAL_PAGES_VIDEO)
+            } while (pageIndexes.includes(Math.floor(Math.random() * TOTAL_PAGES_VIDEO)))
+        })
+    }
 
     const notificationProps = {
         title: 'Hello, Admin đây!',
@@ -43,6 +75,7 @@ function Home() {
                 const response = await videoService.getVideo({
                     type: 'for-you',
                     page: page,
+                    accessToken,
                 })
 
                 localStorage.setItem(TOTAL_PAGES_KEY, JSON.stringify(response.meta.pagination.total_pages))
@@ -81,37 +114,37 @@ function Home() {
                     />
                 </Modal>
             ) : (
-                <div className={cx('wrapper')} tabIndex={10}>
-                    <Virtuoso
-                        ref={virtuosoRef}
-                        data={videos}
-                        useWindowScroll
-                        endReached={() => {
-                            setPage(() => {
-                                do {
-                                    return Math.floor(Math.random() * TOTAL_PAGES_VIDEO)
-                                } while (pageIndexes.includes(Math.floor(Math.random() * TOTAL_PAGES_VIDEO)))
-                            })
-                        }}
-                        itemContent={(index, item) => {
-                            return (
-                                <Video
-                                    key={index}
-                                    data={item}
-                                    videos={videos}
-                                    virtuosoRef={virtuosoRef}
-                                    setFocusedIndex={setFocusedIndex}
-                                    focusedIndex={focusedIndex}
-                                />
-                            )
-                        }}
-                        components={{
-                            Footer: () => {
-                                return <AccountLoading big />
-                            },
-                        }}
-                    />
-                </div>
+                <updateContext.Provider value={{ temporaryFollow, followed, temporaryUnFollow }}>
+                    <div className={cx('wrapper')} tabIndex={10}>
+                        <Virtuoso
+                            ref={virtuosoRef}
+                            data={videos}
+                            useWindowScroll
+                            endReached={handleUpdatePage}
+                            itemContent={(index, item) => {
+                                return (
+                                    <Video
+                                        key={index}
+                                        data={item}
+                                        videos={videos}
+                                        virtuosoRef={virtuosoRef}
+                                        setFocusedIndex={setFocusedIndex}
+                                        focusedIndex={focusedIndex}
+                                    />
+                                )
+                            }}
+                            components={{
+                                Footer: () => {
+                                    return <AccountLoading big />
+                                },
+                            }}
+                        />
+
+                        {/* {videos.map((item, index) => {
+                            return <Video key={index} data={item} />
+                        })} */}
+                    </div>
+                </updateContext.Provider>
             )}
         </>
     )

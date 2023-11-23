@@ -25,10 +25,11 @@ export const getFollowingAccounts = async (page, accessToken) => {
         console.log(error)
     }
 }
-
-export const getAnUser = async ({ nickname }) => {
+export const getAnUser = async ({ nickname, accessToken = '' }) => {
     try {
-        return await request.get(`users/@${nickname}`)
+        return await request.get(`users/@${nickname}`, {
+            headers: { Authorization: `Bearer ${accessToken}` },
+        })
     } catch (error) {
         console.log(error)
     }

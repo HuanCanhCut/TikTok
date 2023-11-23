@@ -22,10 +22,22 @@
     align-items: center;
 }
 
+.full-name {
+    margin-left: 4px;
+}
+
+.nick-name,
+.full-name {
+    height: 20px;
+    margin-top: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
 .nick-name {
-    // font-weight: 700;
+    font-weight: 700;
     font-size: 1.8rem;
-    line-height: 28px;
     font-family: SofiaPro, 'sans-serif';
     &:hover {
         text-decoration: underline;
@@ -43,6 +55,7 @@
     max-width: 95%;
     line-height: 20px;
     font-size: 1.6rem;
+    margin-top: 4px;
 }
 
 .music-name {
