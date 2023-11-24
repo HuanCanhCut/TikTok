@@ -1,4 +1,4 @@
-import { memo, useEffect, useState, useCallback, useRef, useContext, createContext } from 'react'
+import { memo, useEffect, useState, useCallback, useRef, useContext } from 'react'
 import classNames from 'classnames/bind'
 import Modal from 'react-modal'
 import images from '~/assets/images'
@@ -10,8 +10,7 @@ import style from './Home.module.scss'
 import Video from '~/layouts/components/Video'
 import * as videoService from '~/services/videoService'
 import Notification from '~/Components/Notification'
-
-export const updateContext = createContext()
+import Wrapper from '../Wrapper'
 
 const cx = classNames.bind(style)
 
@@ -20,13 +19,13 @@ const TOTAL_PAGES_VIDEO = JSON.parse(localStorage.getItem(TOTAL_PAGES_KEY))
 const INIT_PAGE = Math.floor(Math.random() * TOTAL_PAGES_VIDEO) || 1
 
 function Home() {
+    console.log('re-render')
     const currentUser = useContext(currentUserData)
     const accessToken = currentUser && currentUser.meta.token
 
     const [videos, setVideos] = useState([])
     const [page, setPage] = useState(INIT_PAGE)
-    const [followed, setFollowed] = useState([])
-    const [unFollowed, setUnFollowed] = useState([])
+
     const [focusedIndex, setFocusedIndex] = useState(0)
     const virtuosoRef = useRef()
 
@@ -37,18 +36,6 @@ function Home() {
         localStorage.setItem('firstNotification', JSON.stringify(false))
         setModalIsOpen(false)
     }, [])
-
-    const temporaryFollow = (item) => {
-        setFollowed((prev) => [...prev, item])
-    }
-
-    const temporaryUnFollow = (item) => {
-        setUnFollowed((prev) => {
-            if (prev !== item) {
-                return [...prev, item]
-            }
-        })
-    }
 
     const handleUpdatePage = () => {
         setPage(() => {
@@ -93,7 +80,7 @@ function Home() {
     }, [page])
 
     return (
-        <>
+        <Wrapper>
             {modalIsOpen ? (
                 <Modal
                     isOpen={modalIsOpen}
@@ -110,35 +97,33 @@ function Home() {
                     />
                 </Modal>
             ) : (
-                <updateContext.Provider value={{ temporaryFollow, followed, temporaryUnFollow, unFollowed }}>
-                    <div className={cx('wrapper')} tabIndex={10}>
-                        <Virtuoso
-                            ref={virtuosoRef}
-                            data={videos}
-                            useWindowScroll
-                            endReached={handleUpdatePage}
-                            itemContent={(index, item) => {
-                                return (
-                                    <Video
-                                        key={index}
-                                        data={item}
-                                        videos={videos}
-                                        virtuosoRef={virtuosoRef}
-                                        setFocusedIndex={setFocusedIndex}
-                                        focusedIndex={focusedIndex}
-                                    />
-                                )
-                            }}
-                            components={{
-                                Footer: () => {
-                                    return <AccountLoading big />
-                                },
-                            }}
-                        />
-                    </div>
-                </updateContext.Provider>
+                <div className={cx('wrapper')} tabIndex={10}>
+                    <Virtuoso
+                        ref={virtuosoRef}
+                        data={videos}
+                        useWindowScroll
+                        endReached={handleUpdatePage}
+                        itemContent={(index, item) => {
+                            return (
+                                <Video
+                                    key={index}
+                                    data={item}
+                                    videos={videos}
+                                    virtuosoRef={virtuosoRef}
+                                    setFocusedIndex={setFocusedIndex}
+                                    focusedIndex={focusedIndex}
+                                />
+                            )
+                        }}
+                        components={{
+                            Footer: () => {
+                                return <AccountLoading big />
+                            },
+                        }}
+                    />
+                </div>
             )}
-        </>
+        </Wrapper>
     )
 }
 
