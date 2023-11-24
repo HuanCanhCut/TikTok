@@ -1,12 +1,12 @@
 import Button from '../Button'
-import { useState, useContext, memo, useEffect } from 'react'
+import { useContext, memo, useState } from 'react'
 import { currentUserData } from '~/App'
-import { followAnUser, unFollowUser, getAnUser } from '~/services/userService'
+import { followAnUser, unFollowUser } from '~/services/userService'
 import { updateContext } from '~/pages/Home/Home'
 
 function Follow({ data }) {
-    const update = useContext(updateContext)
     const [isFollow, setIsFollow] = useState(data.user.is_followed)
+    const update = useContext(updateContext)
     const currentUser = useContext(currentUserData)
     const accessToken = currentUser && currentUser.meta.token
 
@@ -17,8 +17,18 @@ function Follow({ data }) {
                 accessToken,
             })
 
-            setIsFollow(true)
-            update.temporaryFollow(response.data.id)
+            if (update.unFollowed.includes(response.data.id)) {
+                const responseId = response.data.id
+                const indexToRemove = update.unFollowed.indexOf(responseId)
+                if (indexToRemove !== -1) {
+                    update.unFollowed.splice(indexToRemove, 1)
+                }
+                localStorage.setItem('unFollowed', JSON.stringify(update.unFollowed))
+            }
+
+            if (!update.unFollowed.includes(response.data.id)) {
+                update.temporaryFollow(response.data.id)
+            }
 
             return response
         } catch (error) {
@@ -33,10 +43,6 @@ function Follow({ data }) {
                 accessToken,
             })
 
-            if (response) {
-                setIsFollow(false)
-            }
-
             if (update.followed.includes(response.data.id)) {
                 const responseId = response.data.id
                 const indexToRemove = update.followed.indexOf(responseId)
@@ -44,7 +50,9 @@ function Follow({ data }) {
                     update.followed.splice(indexToRemove, 1)
                 }
                 localStorage.setItem('followed', JSON.stringify(update.followed))
+            } else {
             }
+
             update.temporaryUnFollow(response.data.id)
         } catch (error) {
             console.log(error)
@@ -53,12 +61,16 @@ function Follow({ data }) {
 
     return (
         <>
-            {data.user.is_followed ||
-            isFollow ||
-            (update.followed.includes(data.user.id) && update.followed.includes(data.user.id)) ? (
-                <Button rounded onClick={handleUnFollow}>
-                    Following
-                </Button>
+            {isFollow || update.followed.includes(data.user.id) ? (
+                update.unFollowed.includes(data.user.id) ? (
+                    <Button outline onClick={handleFollow}>
+                        Follow
+                    </Button>
+                ) : (
+                    <Button rounded onClick={handleUnFollow}>
+                        Following
+                    </Button>
+                )
             ) : (
                 <Button outline onClick={handleFollow}>
                     Follow

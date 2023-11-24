@@ -43,7 +43,11 @@ function Home() {
     }
 
     const temporaryUnFollow = (item) => {
-        setUnFollowed((prev) => [...prev, item])
+        setUnFollowed((prev) => {
+            if (prev !== item) {
+                return [...prev, item]
+            }
+        })
     }
 
     useEffect(() => {
@@ -74,7 +78,7 @@ function Home() {
             try {
                 const response = await videoService.getVideo({
                     type: 'for-you',
-                    page: page,
+                    page: 1,
                     accessToken,
                 })
 
@@ -114,7 +118,7 @@ function Home() {
                     />
                 </Modal>
             ) : (
-                <updateContext.Provider value={{ temporaryFollow, followed, temporaryUnFollow }}>
+                <updateContext.Provider value={{ temporaryFollow, followed, temporaryUnFollow, unFollowed }}>
                     <div className={cx('wrapper')} tabIndex={10}>
                         <Virtuoso
                             ref={virtuosoRef}

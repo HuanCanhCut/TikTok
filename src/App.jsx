@@ -16,6 +16,8 @@ function App() {
         const handleUnload = () => {
             localStorage.removeItem('firstNotification')
             localStorage.removeItem('pageIndexes')
+            localStorage.removeItem('followed')
+            localStorage.removeItem('unFollowed')
         }
 
         window.addEventListener('beforeunload', handleUnload)
