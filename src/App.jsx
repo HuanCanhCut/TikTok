@@ -5,7 +5,6 @@ import { DefaultLayout } from './layouts'
 import { createContext } from 'react'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { actions } from './redux'
 
 import './Components/GlobalStyles/GlobalStyles.scss'
 import useDarkMode from './hooks/useDarkMode'
@@ -20,10 +19,6 @@ function App() {
         const handleUnload = () => {
             localStorage.removeItem('firstNotification')
             localStorage.removeItem('pageIndexes')
-
-            // reset danh sách followed tạm thời
-            dispatch(actions.followList([]))
-            dispatch(actions.unFollowList([]))
         }
 
         window.addEventListener('beforeunload', handleUnload)

@@ -4,8 +4,6 @@ import Modal from 'react-modal'
 import images from '~/assets/images'
 import { currentUserData } from '~/App'
 import { Virtuoso } from 'react-virtuoso'
-import { useDispatch } from 'react-redux'
-import { actions } from '~/redux'
 
 import AccountLoading from '~/Components/AccountLoading'
 import style from './Home.module.scss'
@@ -22,7 +20,6 @@ const TOTAL_PAGES_VIDEO = JSON.parse(localStorage.getItem(TOTAL_PAGES_KEY))
 const INIT_PAGE = Math.floor(Math.random() * TOTAL_PAGES_VIDEO) || 1
 
 function Home() {
-    const dispatch = useDispatch()
     const currentUser = useContext(currentUserData)
     const accessToken = currentUser && currentUser.meta.token
 
@@ -53,15 +50,6 @@ function Home() {
         })
     }
 
-    useEffect(() => {
-        dispatch(actions.followList(followed))
-    }, [dispatch, followed])
-
-    useEffect(() => {
-        // localStorage.setItem('unFollowed', JSON.stringify(unFollowed))
-        dispatch(actions.unFollowList(unFollowed))
-    }, [dispatch, unFollowed])
-
     const handleUpdatePage = () => {
         setPage(() => {
             do {
@@ -82,7 +70,7 @@ function Home() {
             try {
                 const response = await videoService.getVideo({
                     type: 'for-you',
-                    page: 1,
+                    page: page,
                     accessToken,
                 })
 

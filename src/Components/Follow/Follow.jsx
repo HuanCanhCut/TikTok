@@ -26,7 +26,6 @@ function Follow({ data }) {
                 if (indexToRemove !== -1) {
                     update.unFollowed.splice(indexToRemove, 1)
                 }
-                dispatch(actions.unFollowList(update.unFollowed))
             }
 
             if (!update.unFollowed.includes(response.data.id)) {
@@ -53,7 +52,6 @@ function Follow({ data }) {
                 if (indexToRemove !== -1) {
                     update.followed.splice(indexToRemove, 1)
                 }
-                dispatch(actions.followList(update.followed))
             } else {
             }
 
