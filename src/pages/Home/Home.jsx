@@ -4,6 +4,8 @@ import Modal from 'react-modal'
 import images from '~/assets/images'
 import { currentUserData } from '~/App'
 import { Virtuoso } from 'react-virtuoso'
+import { useDispatch } from 'react-redux'
+import { actions } from '~/redux'
 
 import AccountLoading from '~/Components/AccountLoading'
 import style from './Home.module.scss'
@@ -20,13 +22,14 @@ const TOTAL_PAGES_VIDEO = JSON.parse(localStorage.getItem(TOTAL_PAGES_KEY))
 const INIT_PAGE = Math.floor(Math.random() * TOTAL_PAGES_VIDEO) || 1
 
 function Home() {
+    const dispatch = useDispatch()
     const currentUser = useContext(currentUserData)
     const accessToken = currentUser && currentUser.meta.token
 
     const [videos, setVideos] = useState([])
     const [page, setPage] = useState(INIT_PAGE)
-    const [followed, setFollowed] = useState(JSON.parse(localStorage.getItem('followed')) ?? [])
-    const [unFollowed, setUnFollowed] = useState(JSON.parse(localStorage.getItem('unFollowed')) ?? [])
+    const [followed, setFollowed] = useState([])
+    const [unFollowed, setUnFollowed] = useState([])
     const [focusedIndex, setFocusedIndex] = useState(0)
     const virtuosoRef = useRef()
 
@@ -51,12 +54,13 @@ function Home() {
     }
 
     useEffect(() => {
-        localStorage.setItem('followed', JSON.stringify(followed))
-    }, [followed])
+        dispatch(actions.followList(followed))
+    }, [dispatch, followed])
 
     useEffect(() => {
-        localStorage.setItem('unFollowed', JSON.stringify(unFollowed))
-    }, [unFollowed])
+        // localStorage.setItem('unFollowed', JSON.stringify(unFollowed))
+        dispatch(actions.unFollowList(unFollowed))
+    }, [dispatch, unFollowed])
 
     const handleUpdatePage = () => {
         setPage(() => {
@@ -69,7 +73,7 @@ function Home() {
     const notificationProps = {
         title: 'Hello, Admin đây!',
         content:
-            'Chuyện kể rằng, do chính sách của google tắt mọi âm thanh tự phát khi mà chưa có tương tác của người dùng, mà admin lại chưa nghĩ ra ý tưởng để pass qua cái đó, nên admin quyết định làm cái thông báo này để người dùng tương tác trước, mong thí chủ thông cảm cho Dev.',
+            'Chuyện kể rằng, do chính sách của google tắt mọi âm thanh tự phát khi mà chưa có tương tác của người dùng, mà admin lại chưa nghĩ ra ý tưởng để pass qua cái đó, nên admin quyết định làm cái thông báo này để người dùng tương tác trước, mong thí chủ thông cảm cho Admin.',
         path: images.notificationCat,
     }
 
@@ -143,10 +147,6 @@ function Home() {
                                 },
                             }}
                         />
-
-                        {/* {videos.map((item, index) => {
-                            return <Video key={index} data={item} />
-                        })} */}
                     </div>
                 </updateContext.Provider>
             )}

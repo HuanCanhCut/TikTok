@@ -4,20 +4,26 @@ import { publicRoutes } from '~/routes'
 import { DefaultLayout } from './layouts'
 import { createContext } from 'react'
 import { useEffect } from 'react'
-import useDarkMode from './hooks/useDarkMode'
+import { useDispatch } from 'react-redux'
+import { actions } from './redux'
+
 import './Components/GlobalStyles/GlobalStyles.scss'
+import useDarkMode from './hooks/useDarkMode'
 
 export const currentUserData = createContext()
 
 function App() {
+    const dispatch = useDispatch()
     const authUser = JSON.parse(localStorage.getItem('user'))
 
     useEffect(() => {
         const handleUnload = () => {
             localStorage.removeItem('firstNotification')
             localStorage.removeItem('pageIndexes')
-            localStorage.removeItem('followed')
-            localStorage.removeItem('unFollowed')
+
+            // reset danh sách followed tạm thời
+            dispatch(actions.followList([]))
+            dispatch(actions.unFollowList([]))
         }
 
         window.addEventListener('beforeunload', handleUnload)
@@ -25,7 +31,7 @@ function App() {
         return () => {
             window.removeEventListener('beforeunload', handleUnload)
         }
-    }, [])
+    }, [dispatch])
 
     return (
         <currentUserData.Provider value={authUser}>

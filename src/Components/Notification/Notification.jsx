@@ -18,7 +18,7 @@ function Notification({ title, content, author = 'Trọng Huấn', path, closeMo
                 darkMode: useDarkMode(),
             })}
         >
-            <h1 className={cx('heading')}>Notification</h1>
+            <h1 className={cx('heading')}>Thông báo</h1>
             <div className={cx('body')}>
                 <p className={cx('title')}>
                     <span className={cx('hashtag')}>#</span>
