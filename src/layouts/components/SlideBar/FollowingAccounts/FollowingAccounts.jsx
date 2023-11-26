@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import { useEffect, useState, useContext } from 'react'
 import style from './FollowingAccounts.module.scss'
 import classNames from 'classnames/bind'
-import AccountItem from './AccountItem'
+import AccountItem from '~/Components/AccountItem'
 import * as useService from '~/services/userService'
 import AccountLoading from '~/Components/AccountLoading'
 import { currentUserData } from '~/App'
@@ -16,13 +16,14 @@ function SuggestedAccounts({ label }) {
 
     const [loading, setLoading] = useState(true)
 
+    // call api when clicked see more
     useEffect(() => {
         ;(async () => {
             try {
                 const response = await useService.getFollowingAccounts(page, currentUser.meta.token)
 
-                setSuggestedUser((prevUser) => {
-                    return [...prevUser, ...response.data]
+                setSuggestedUser((prev) => {
+                    return [...prev, ...response.data]
                 })
                 setLoading(false)
             } catch (e) {

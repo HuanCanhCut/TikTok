@@ -1,20 +1,42 @@
 import Button from '../Button'
-import { useContext, memo } from 'react'
+import { useContext, memo, useState } from 'react'
 import { currentUserData } from '~/App'
 import { followAnUser, unFollowUser } from '~/services/userService'
 import { updateContext } from '~/pages/Wrapper/Wrapper'
+import Authen from '~/layouts/components/Authen'
+import { useDispatch } from 'react-redux'
+import { actions } from '~/redux'
 
 function Follow({ data }) {
+    const dispatch = useDispatch()
+
     const updateFollowed = useContext(updateContext)
+    const [modalIsOpen, setModalIsOpen] = useState(false)
+    const [isFollow, setIsFollow] = useState(false)
     const currentUser = useContext(currentUserData)
     const accessToken = currentUser && currentUser.meta.token
 
+    const handleClose = () => {
+        setModalIsOpen(false)
+    }
+
     const handleFollow = async () => {
         try {
+            if (!accessToken && !currentUser) {
+                setModalIsOpen(true)
+                return
+            }
+
             const response = await followAnUser({
                 userId: data.user.id,
                 accessToken,
             })
+
+            setIsFollow(true)
+
+            if (response) {
+                dispatch(actions.followList(Math.random()))
+            }
 
             // khi follow thì sẽ xóa id của người vừa được follow ra khỏi danh sách unFollowed temporary
             if (updateFollowed.unFollowed.includes(response.data.id)) {
@@ -42,6 +64,11 @@ function Follow({ data }) {
                 accessToken,
             })
 
+            setIsFollow(false)
+            if (response) {
+                dispatch(actions.followList(Math.random()))
+            }
+
             // khi unFollow thì sẽ xóa id của người vừa được unFollow ra khỏi danh sách Followed temporary
             if (updateFollowed.followed.includes(response.data.id)) {
                 const responseId = response.data.id
@@ -49,7 +76,6 @@ function Follow({ data }) {
                 if (indexToRemove !== -1) {
                     updateFollowed.followed.splice(indexToRemove, 1)
                 }
-            } else {
             }
 
             updateFollowed.temporaryUnFollow(response.data.id)
@@ -60,7 +86,8 @@ function Follow({ data }) {
 
     return (
         <>
-            {data.user.is_followed || updateFollowed.followed.includes(data.user.id) ? (
+            <Authen isOpen={modalIsOpen} onClose={handleClose} />
+            {isFollow || data.user.is_followed || updateFollowed.followed.includes(data.user.id) ? (
                 updateFollowed.unFollowed.includes(data.user.id) ? (
                     <Button outline onClick={handleFollow}>
                         Follow

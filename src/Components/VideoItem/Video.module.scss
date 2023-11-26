@@ -4,12 +4,12 @@
     position: relative;
 
     &.column {
-        max-width: 326px;
-        height: 583px;
+        max-width: 350px;
+        aspect-ratio: 9 / 16;
     }
     &.row {
         max-width: 550px;
-        height: 350px;
+        aspect-ratio: 16 / 9;
     }
 }
 

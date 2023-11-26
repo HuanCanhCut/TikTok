@@ -5,6 +5,7 @@ import Tippy from '@tippyjs/react/headless'
 import { useSpring, motion } from 'framer-motion'
 import { faMusic } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useEffect, useState } from 'react'
 
 import style from './Header.module.scss'
 import Image from '~/Components/Images/Image'
@@ -16,6 +17,36 @@ import Follow from '~/Components/Follow'
 const cx = classNames.bind(style)
 
 function Header({ data }) {
+    const [highlightedDescription, setHighlightedDescription] = useState('')
+
+    useEffect(() => {
+        if (data.description.includes('#')) {
+            const hashTag = data.description.split(' ')
+            // eslint-disable-next-line array-callback-return
+            const highlightedHashtag = hashTag.map((item, index) => {
+                if (item.startsWith('#')) {
+                    return <p key={index} style={{ color: 'rgb(143, 190, 233)', fontWeight: 700 }}>{`${item}`}</p>
+                } else {
+                    const chars = item.split('')
+                    if (chars.includes('#')) {
+                        const hashTagIndex = chars.indexOf('#')
+                        const hashTag = chars.slice(0, hashTagIndex)
+                        hashTag.map((item, index) => {
+                            return (
+                                <p key={index} style={{ color: 'rgb(143, 190, 233)', fontWeight: 700 }}>{`${item}`}</p>
+                            )
+                        })
+                    } else {
+                        return <p key={index}>{item}</p>
+                    }
+                }
+            })
+            setHighlightedDescription(highlightedHashtag)
+        } else {
+            setHighlightedDescription(data.description)
+        }
+    }, [data.description])
+
     const dataUser = data.user
 
     const springConfig = { damping: 15, stiffness: 300 }
@@ -75,7 +106,7 @@ function Header({ data }) {
                     <div className={cx('full-name')}>{`${data.user.first_name} ${data.user.last_name}`}</div>
                     {dataUser.check && <BlueTick />}
                 </Link>
-                <p className={cx('description')}>{data.description}</p>
+                <div className={cx('description')}>{highlightedDescription}</div>
                 {data.music && (
                     <p className={cx('music-name')}>
                         <FontAwesomeIcon icon={faMusic} className={cx('music-icon')} />

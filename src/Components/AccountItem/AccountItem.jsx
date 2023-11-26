@@ -13,7 +13,7 @@ function AccountItem({ data }) {
             <Images className={cx('avatar')} src={data.avatar} alt="" />
             <div className={cx('Info')}>
                 <h4 className={cx('name')}>
-                    <span>{data.full_name}</span>
+                    <span>{`${data.first_name} ${data.last_name}`}</span>
                     {data.tick && <BlueTick />}
                 </h4>
                 <span className={cx('username')}>{data.nickname}</span>

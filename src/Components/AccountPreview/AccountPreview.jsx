@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import classNames from 'classnames/bind'
 import style from './AccountPreview.module.scss'
+import Follow from '../Follow'
 
 import BlueTick from '~/Components/BlueTick/BlueTick'
 import Image from '~/Components/Images'
@@ -17,6 +18,7 @@ function AccountPreview({ data }) {
         >
             <header className={cx('header')}>
                 <Image className={cx('avatar')} src={data.user.avatar} alt="" />
+                <Follow data={data} />
             </header>
             <div className={cx('body')}>
                 <div className={cx('info')}>

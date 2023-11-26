@@ -30,7 +30,7 @@ function DefaultLayout({ children }) {
     const handleIntoView = () => {
         hederIntoviewRef.current.scrollIntoView({
             behavior: 'smooth',
-            block: 'nearest',
+            block: 'start',
         })
     }
 

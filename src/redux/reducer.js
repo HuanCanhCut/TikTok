@@ -2,6 +2,7 @@ const initState = {
     theme: {
         darkMode: false,
     },
+    updateFollowList: 0,
 }
 
 function reducer(state = initState, action) {
@@ -13,7 +14,11 @@ function reducer(state = initState, action) {
                     darkMode: action.payload,
                 },
             }
-
+        case 'follow-list':
+            return {
+                ...state,
+                updateFollowList: action.payload,
+            }
         default:
             return state
     }

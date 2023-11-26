@@ -19,7 +19,6 @@ const TOTAL_PAGES_VIDEO = JSON.parse(localStorage.getItem(TOTAL_PAGES_KEY))
 const INIT_PAGE = Math.floor(Math.random() * TOTAL_PAGES_VIDEO) || 1
 
 function Home() {
-    console.log('re-render')
     const currentUser = useContext(currentUserData)
     const accessToken = currentUser && currentUser.meta.token
 
@@ -36,14 +35,6 @@ function Home() {
         localStorage.setItem('firstNotification', JSON.stringify(false))
         setModalIsOpen(false)
     }, [])
-
-    const handleUpdatePage = () => {
-        setPage(() => {
-            do {
-                return Math.floor(Math.random() * TOTAL_PAGES_VIDEO)
-            } while (pageIndexes.includes(Math.floor(Math.random() * TOTAL_PAGES_VIDEO)))
-        })
-    }
 
     const notificationProps = {
         title: 'Hello, Admin đây!',
@@ -102,7 +93,13 @@ function Home() {
                         ref={virtuosoRef}
                         data={videos}
                         useWindowScroll
-                        endReached={handleUpdatePage}
+                        endReached={() => {
+                            setPage(() => {
+                                do {
+                                    return Math.floor(Math.random() * TOTAL_PAGES_VIDEO)
+                                } while (pageIndexes.includes(Math.floor(Math.random() * TOTAL_PAGES_VIDEO)))
+                            })
+                        }}
                         itemContent={(index, item) => {
                             return (
                                 <Video

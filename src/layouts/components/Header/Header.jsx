@@ -170,7 +170,12 @@ function Header() {
                         </>
                     ) : (
                         <>
-                            <Button rounded leftIcon={<FontAwesomeIcon icon={faPlus} />} onClick={openModal}>
+                            <Button
+                                rounded
+                                leftIcon={<FontAwesomeIcon icon={faPlus} />}
+                                onClick={openModal}
+                                className={cx('upload')}
+                            >
                                 Upload
                             </Button>
                             <Button primary onClick={openModal}>

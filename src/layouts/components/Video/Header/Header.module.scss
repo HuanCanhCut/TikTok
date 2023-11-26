@@ -55,7 +55,10 @@
     max-width: 95%;
     line-height: 20px;
     font-size: 1.6rem;
-    margin-top: 4px;
+    margin-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    line-height: 2.2rem;
 }
 
 .music-name {

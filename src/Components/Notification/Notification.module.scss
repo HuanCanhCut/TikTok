@@ -3,7 +3,6 @@
     border-radius: inherit;
     padding: 24px 50px;
     position: relative;
-    // box-shadow: 5px 5px 10px rgb(25, 25, 25);
     color: #000;
 }
 
@@ -45,7 +44,7 @@
 }
 
 .author {
-    margin-top: 1rem;
+    margin-top: 1.5rem;
     color: #ff8361;
     font-weight: 600;
     font-style: italic;
@@ -70,10 +69,11 @@
     font-size: 2.4rem;
     cursor: pointer;
     width: 3rem;
-    height: 3rem;
+    aspect-ratio: 1;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 50%;
 }
 
 .wrapper {
