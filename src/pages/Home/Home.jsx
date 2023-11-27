@@ -22,14 +22,12 @@ function Home() {
     const currentUser = useContext(currentUserData)
     const accessToken = currentUser && currentUser.meta.token
 
+    const virtuosoRef = useRef()
     const [videos, setVideos] = useState([])
     const [page, setPage] = useState(INIT_PAGE)
-
-    const [focusedIndex, setFocusedIndex] = useState(0)
-    const virtuosoRef = useRef()
-
     const [modalIsOpen, setModalIsOpen] = useState(JSON.parse(localStorage.getItem('firstNotification')) ?? true)
     const [pageIndexes, setPageIndexes] = useState(JSON.parse(localStorage.getItem('pageIndexes')) ?? [])
+    const [focusedIndex, setFocusedIndex] = useState(0)
 
     const closeModal = useCallback(() => {
         localStorage.setItem('firstNotification', JSON.stringify(false))
@@ -69,6 +67,22 @@ function Home() {
         })()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page])
+
+    const handleScroll = () => {
+        if (window.scrollY + window.innerHeight >= document.body.offsetHeight) {
+            setPage(() => {
+                do {
+                    return Math.floor(Math.random() * TOTAL_PAGES_VIDEO)
+                } while (pageIndexes.includes(Math.floor(Math.random() * TOTAL_PAGES_VIDEO)))
+            })
+        }
+    }
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll)
+        return () => window.removeEventListener('scroll', handleScroll)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <Wrapper>

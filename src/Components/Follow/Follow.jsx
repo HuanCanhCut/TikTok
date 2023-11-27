@@ -87,20 +87,24 @@ function Follow({ data }) {
     return (
         <>
             <Authen isOpen={modalIsOpen} onClose={handleClose} />
-            {isFollow || data.user.is_followed || updateFollowed.followed.includes(data.user.id) ? (
-                updateFollowed.unFollowed.includes(data.user.id) ? (
-                    <Button outline onClick={handleFollow}>
-                        Follow
-                    </Button>
-                ) : (
-                    <Button rounded onClick={handleUnFollow}>
-                        Following
-                    </Button>
-                )
-            ) : (
-                <Button outline onClick={handleFollow}>
-                    Follow
-                </Button>
+            {data.user.id !== currentUser.data.id && (
+                <>
+                    {isFollow || data.user.is_followed || updateFollowed.followed.includes(data.user.id) ? (
+                        updateFollowed.unFollowed.includes(data.user.id) ? (
+                            <Button outline onClick={handleFollow}>
+                                Follow
+                            </Button>
+                        ) : (
+                            <Button rounded onClick={handleUnFollow}>
+                                Following
+                            </Button>
+                        )
+                    ) : (
+                        <Button outline onClick={handleFollow}>
+                            Follow
+                        </Button>
+                    )}
+                </>
             )}
         </>
     )
