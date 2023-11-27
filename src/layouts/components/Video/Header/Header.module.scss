@@ -61,6 +61,15 @@
     line-height: 2.2rem;
 }
 
+.hashtag {
+    color: rgb(143, 190, 233);
+    cursor: 'pointer';
+    font-weight: 700;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
 .music-name {
     margin-top: 4px;
     margin-left: 2px;

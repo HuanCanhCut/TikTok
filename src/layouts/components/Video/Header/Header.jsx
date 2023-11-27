@@ -25,16 +25,14 @@ function Header({ data }) {
             // eslint-disable-next-line array-callback-return
             const highlightedHashtag = hashTag.map((item, index) => {
                 if (item.startsWith('#')) {
-                    return <p key={index} style={{ color: 'rgb(143, 190, 233)', fontWeight: 700 }}>{`${item}`}</p>
+                    return <p key={index} className={cx('hashtag')}>{` ${item}`}</p>
                 } else {
                     const chars = item.split('')
                     if (chars.includes('#')) {
                         const hashTagIndex = chars.indexOf('#')
                         const hashTag = chars.slice(0, hashTagIndex)
                         hashTag.map((item, index) => {
-                            return (
-                                <p key={index} style={{ color: 'rgb(143, 190, 233)', fontWeight: 700 }}>{`${item}`}</p>
-                            )
+                            return <p key={index} className={cx('hashtag')}>{` ${item}`}</p>
                         })
                     } else {
                         return <p key={index}>{item}</p>

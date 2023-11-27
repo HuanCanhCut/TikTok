@@ -2,6 +2,6 @@ export const themeSelector = (state) => {
     return state.theme.darkMode
 }
 
-export const updateFollowList = (state) => {
+export const updateFollowListSelector = (state) => {
     return state.updateFollowList
 }

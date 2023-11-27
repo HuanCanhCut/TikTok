@@ -19,7 +19,7 @@ function FrameLoginSidebar() {
     return (
         <div className={cx('wrapper')}>
             <p className={cx('title')}>Log in to follow creators, like videos, and view comments.</p>
-            <Button rounded className={cx('login')} onClick={openModal}>
+            <Button outline className={cx('login')} onClick={openModal}>
                 Login
             </Button>
             <Authen isOpen={modalIsOpen} onClose={closeModal} />

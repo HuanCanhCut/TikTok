@@ -6,24 +6,31 @@ import AccountItem from '~/Components/AccountItem'
 import * as useService from '~/services/userService'
 import AccountLoading from '~/Components/AccountLoading'
 import { currentUserData } from '~/App'
+import { useSelector } from 'react-redux'
+import { updateFollowListSelector } from '~/redux/selectors'
 
 const cx = classNames.bind(style)
 
-function SuggestedAccounts({ label }) {
+function FollowingAccounts({ label }) {
+    const updateFollowList = useSelector(updateFollowListSelector)
     const currentUser = useContext(currentUserData)
     const [suggestedUser, setSuggestedUser] = useState([])
     const [page, setPage] = useState(1)
+    const [prevPage, setPrevPage] = useState(page)
 
     const [loading, setLoading] = useState(true)
 
-    // call api when clicked see more
     useEffect(() => {
         ;(async () => {
             try {
                 const response = await useService.getFollowingAccounts(page, currentUser.meta.token)
 
-                setSuggestedUser((prev) => {
-                    return [...prev, ...response.data]
+                setSuggestedUser((prevUser) => {
+                    if (page === prevPage) {
+                        return [...response.data]
+                    } else {
+                        return [...prevUser, ...response.data]
+                    }
                 })
                 setLoading(false)
             } catch (e) {
@@ -31,11 +38,14 @@ function SuggestedAccounts({ label }) {
             }
         })()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [page])
+    }, [page, updateFollowList])
 
     const onSeeMore = () => {
         setLoading(false)
-        setPage(page + 1)
+        setPage((prev) => {
+            setPrevPage(prev)
+            return prev + 1
+        })
         setLoading(true)
     }
 
@@ -55,9 +65,8 @@ function SuggestedAccounts({ label }) {
     )
 }
 
-SuggestedAccounts.propTypes = {
+FollowingAccounts.propTypes = {
     label: PropTypes.string.isRequired,
-    data: PropTypes.array,
 }
 
-export default SuggestedAccounts
+export default FollowingAccounts
