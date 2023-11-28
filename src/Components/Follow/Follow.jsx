@@ -32,9 +32,8 @@ function Follow({ data }) {
                 accessToken,
             })
 
-            setIsFollow(true)
-
             if (response) {
+                setIsFollow(true)
                 dispatch(actions.followList(Math.random()))
             }
 
@@ -64,8 +63,8 @@ function Follow({ data }) {
                 accessToken,
             })
 
-            setIsFollow(false)
             if (response) {
+                setIsFollow(false)
                 dispatch(actions.followList(Math.random()))
             }
 

@@ -25,19 +25,16 @@ function VideoItem({ video }) {
     const isVisible = useElementOnScreen(options, videoRef)
 
     useEffect(() => {
-        ;(async () => {
-            if (isVisible && videoRef.current) {
-                if (!playing) {
-                    await videoRef.current
-                    videoRef.current.currentTime = 0
-                    ;(await videoRef.current) && videoRef.current.play()
-                }
-            } else {
-                if (playing) {
-                    await videoRef.current.pause()
-                }
+        if (isVisible && videoRef.current) {
+            if (!playing) {
+                videoRef.current.currentTime = 0
+                videoRef.current.play()
             }
-        })()
+        } else {
+            if (playing) {
+                videoRef.current.pause()
+            }
+        }
     }, [isVisible])
 
     const handleTogglePlay = () => {
@@ -100,6 +97,7 @@ function VideoItem({ video }) {
                         </button>
                     )}
                 </div>
+
                 <VideoAction data={video} />
             </div>
         </div>

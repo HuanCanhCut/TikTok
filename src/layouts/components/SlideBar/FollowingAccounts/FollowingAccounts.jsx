@@ -12,13 +12,14 @@ import { updateFollowListSelector } from '~/redux/selectors'
 const cx = classNames.bind(style)
 
 function FollowingAccounts({ label }) {
+    console.log('re-rendering')
     const updateFollowList = useSelector(updateFollowListSelector)
     const currentUser = useContext(currentUserData)
     const [suggestedUser, setSuggestedUser] = useState([])
     const [page, setPage] = useState(1)
     const [prevPage, setPrevPage] = useState(page)
-
     const [loading, setLoading] = useState(true)
+    const [totalPages, setTotalPages] = useState(0)
 
     useEffect(() => {
         ;(async () => {
@@ -26,12 +27,13 @@ function FollowingAccounts({ label }) {
                 const response = await useService.getFollowingAccounts(page, currentUser.meta.token)
 
                 setSuggestedUser((prevUser) => {
-                    if (page === prevPage) {
+                    if (page === prevPage || page === 1) {
                         return [...response.data]
                     } else {
                         return [...prevUser, ...response.data]
                     }
                 })
+                setTotalPages(response.meta.pagination.total_pages)
                 setLoading(false)
             } catch (e) {
                 console.log(e)
@@ -49,6 +51,10 @@ function FollowingAccounts({ label }) {
         setLoading(true)
     }
 
+    const onSeeLess = () => {
+        setPage(1)
+    }
+
     return (
         <div className={cx('wrapper')}>
             <p className={cx('label')}>{label}</p>
@@ -58,9 +64,15 @@ function FollowingAccounts({ label }) {
             })}
 
             {loading && <AccountLoading />}
-            <p className={cx('see-more')} onClick={onSeeMore}>
-                See more
-            </p>
+            {totalPages === page ? (
+                <p className={cx('see-more')} onClick={onSeeLess}>
+                    See less
+                </p>
+            ) : (
+                <p className={cx('see-more')} onClick={onSeeMore}>
+                    See more
+                </p>
+            )}
         </div>
     )
 }
