@@ -1,6 +1,6 @@
 import * as request from '~/utils/httpRequest'
 
-export const getSuggested = async (page, perPage) => {
+export const getSuggestedAccounts = async ({ page, perPage }) => {
     try {
         return await request.get(`users/suggested?`, {
             params: {
@@ -25,6 +25,7 @@ export const getFollowingAccounts = async (page, accessToken) => {
         console.log(error)
     }
 }
+
 export const getAnUser = async ({ nickname, accessToken = '' }) => {
     try {
         return await request.get(`users/@${nickname}`, {

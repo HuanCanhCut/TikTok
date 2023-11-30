@@ -2,7 +2,7 @@ import classNames from 'classnames/bind'
 import { useContext } from 'react'
 import { memo } from 'react'
 
-import styles from './SideBar.module.scss'
+import styles from './Sidebar.module.scss'
 import Menu, { MenuItem } from './Menu'
 import {
     HomeIcon,
@@ -12,7 +12,7 @@ import {
     LiveIcon,
     LiveActiveIcon,
 } from '~/Components/Icons'
-import FollowingAccounts from './FollowingAccounts/FollowingAccounts'
+import SuggestedAccount from './SuggestedAccounts/SuggesteAccounts'
 import FrameLoginSidebar from './FrameLoginSidebar'
 import FooterSidebar from './FooterSidebar'
 import config from '~/config'
@@ -51,7 +51,7 @@ function Sidebar() {
                         activeIcon={<LiveActiveIcon />}
                     />
                 </Menu>
-                {currentUser ? <FollowingAccounts label="Following Accounts" /> : <FrameLoginSidebar />}
+                {currentUser ? <SuggestedAccount label="Suggested Accounts" /> : <FrameLoginSidebar />}
                 <FooterSidebar />
             </div>
         </aside>

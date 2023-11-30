@@ -21,7 +21,6 @@
     .avatar {
         width: 32px;
         height: 32px;
-        margin-right: 12px;
         border-radius: 50%;
         object-fit: cover;
     }
@@ -32,6 +31,11 @@
 
 .account-info {
     flex: 1;
+    margin-left: 12px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
 }
 
 .nickname {

@@ -14,11 +14,6 @@ function reducer(state = initState, action) {
                     darkMode: action.payload,
                 },
             }
-        case 'follow-list':
-            return {
-                ...state,
-                updateFollowList: action.payload,
-            }
         default:
             return state
     }

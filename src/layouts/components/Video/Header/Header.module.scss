@@ -65,13 +65,10 @@
     color: rgb(143, 190, 233);
     cursor: 'pointer';
     font-weight: 700;
+    margin: 0 3px;
     &:hover {
         text-decoration: underline;
     }
-}
-
-.hashtag + .hashtag {
-    margin: 0 3px;
 }
 
 .music-name {

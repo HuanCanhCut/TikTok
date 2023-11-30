@@ -5,10 +5,3 @@ export const darkMode = (payload) => {
         payload,
     }
 }
-
-export const followList = (payload) => {
-    return {
-        type: 'follow-list',
-        payload,
-    }
-}

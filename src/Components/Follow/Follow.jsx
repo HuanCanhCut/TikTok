@@ -4,15 +4,10 @@ import { currentUserData } from '~/App'
 import { followAnUser, unFollowUser } from '~/services/userService'
 import { updateContext } from '~/pages/Wrapper/Wrapper'
 import Authen from '~/layouts/components/Authen'
-import { useDispatch } from 'react-redux'
-import { actions } from '~/redux'
 
 function Follow({ data }) {
-    const dispatch = useDispatch()
-
     const updateFollowed = useContext(updateContext)
     const [modalIsOpen, setModalIsOpen] = useState(false)
-    const [isFollow, setIsFollow] = useState(false)
     const currentUser = useContext(currentUserData)
     const accessToken = currentUser && currentUser.meta.token
 
@@ -28,14 +23,9 @@ function Follow({ data }) {
             }
 
             const response = await followAnUser({
-                userId: data.user.id,
+                userId: data.id,
                 accessToken,
             })
-
-            if (response) {
-                setIsFollow(true)
-                dispatch(actions.followList(Math.random()))
-            }
 
             // khi follow thì sẽ xóa id của người vừa được follow ra khỏi danh sách unFollowed temporary
             if (updateFollowed.unFollowed.includes(response.data.id)) {
@@ -59,14 +49,9 @@ function Follow({ data }) {
     const handleUnFollow = async () => {
         try {
             const response = await unFollowUser({
-                userId: data.user.id,
+                userId: data.id,
                 accessToken,
             })
-
-            if (response) {
-                setIsFollow(false)
-                dispatch(actions.followList(Math.random()))
-            }
 
             // khi unFollow thì sẽ xóa id của người vừa được unFollow ra khỏi danh sách Followed temporary
             if (updateFollowed.followed.includes(response.data.id)) {
@@ -86,10 +71,10 @@ function Follow({ data }) {
     return (
         <>
             <Authen isOpen={modalIsOpen} onClose={handleClose} />
-            {data.user.id !== currentUser.data.id && (
+            {data.id !== currentUser.id && (
                 <>
-                    {isFollow || data.user.is_followed || updateFollowed.followed.includes(data.user.id) ? (
-                        updateFollowed.unFollowed.includes(data.user.id) ? (
+                    {data.is_followed || updateFollowed.followed.includes(data.id) ? (
+                        updateFollowed.unFollowed.includes(data.id) ? (
                             <Button outline onClick={handleFollow}>
                                 Follow
                             </Button>

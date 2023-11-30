@@ -56,7 +56,7 @@ function Header({ data }) {
         return (
             <motion.div style={{ scale, opacity }} tabIndex="-1" {...attrs}>
                 <PopperWrapper>
-                    <AccountPreview data={data} />
+                    <AccountPreview data={data.user} />
                 </PopperWrapper>
             </motion.div>
         )
@@ -112,7 +112,7 @@ function Header({ data }) {
                     </p>
                 )}
             </div>
-            <Follow data={data} />
+            <Follow data={data.user} />
         </div>
     )
 }
