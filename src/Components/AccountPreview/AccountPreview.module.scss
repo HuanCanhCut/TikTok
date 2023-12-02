@@ -25,9 +25,23 @@
     color: var(--text-color);
 }
 
+.avatar,
+.nickname,
+.name {
+    cursor: pointer;
+}
+
+.nickname,
+.name {
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
 .nickname {
     font-size: 1.6rem;
     font-weight: 700;
+    line-height: 22px;
 }
 
 .icon {

@@ -1,13 +1,14 @@
 import PropTypes from 'prop-types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames/bind'
-import style from './SuggestedAccounts.module.scss'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 import Tippy from '@tippyjs/react/headless'
 import { useSpring, motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 
-import AccountPreview from '~/Components/AccountPreview'
 import { Wrapper as PopperWrapper } from '~/Components/Popper'
+import AccountPreview from '~/Components/AccountPreview'
+import style from './SuggestedAccounts.module.scss'
 import Image from '~/Components/Images'
 
 const cx = classNames.bind(style)
@@ -52,23 +53,27 @@ function AccountItem({ data }) {
             <Tippy
                 animation={true}
                 interactive
-                delay={[800, 50]}
+                delay={[800, 30]}
                 placement="bottom"
                 render={renderPreview}
                 onHide={onHide}
                 onMount={onMount}
                 hideOnClick={false}
             >
-                <div className={cx('account-item')}>
-                    <Image className={cx('avatar')} src={data.avatar} alt="" />
-                    <div className={cx('account-info')}>
-                        <p className={cx('nickname')}>
-                            <strong>{data.nickname}</strong>
-                            <span className={cx('icon')}>{data.tick && <FontAwesomeIcon icon={faCheckCircle} />}</span>
-                        </p>
-                        <p className={cx('name')}>{`${data.first_name} ${data.last_name}`}</p>
+                <Link to={`/@${data.nickname}`}>
+                    <div className={cx('account-item')}>
+                        <Image className={cx('avatar')} src={data.avatar} alt="" />
+                        <div className={cx('account-info')}>
+                            <p className={cx('nickname')}>
+                                <strong>{data.nickname}</strong>
+                                <span className={cx('icon')}>
+                                    {data.tick && <FontAwesomeIcon icon={faCheckCircle} />}
+                                </span>
+                            </p>
+                            <p className={cx('name')}>{`${data.first_name} ${data.last_name}`}</p>
+                        </div>
                     </div>
-                </div>
+                </Link>
             </Tippy>
         </div>
     )

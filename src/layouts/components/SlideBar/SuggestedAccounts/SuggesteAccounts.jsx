@@ -5,7 +5,6 @@ import style from './SuggestedAccounts.module.scss'
 import AccountItem from './AccountItem'
 import * as useService from '~/services/userService'
 import AccountLoading from '~/Components/AccountLoading'
-import Wrapper from '~/pages/Wrapper'
 
 const cx = classNames.bind(style)
 
@@ -38,20 +37,18 @@ function SuggestedAccounts({ label }) {
     }
 
     return (
-        <Wrapper>
-            <div className={cx('wrapper')}>
-                <p className={cx('label')}>{label}</p>
-                {suggestedUser.map((account) => {
-                    return <AccountItem data={account} key={account.id} />
-                })}
+        <div className={cx('wrapper')}>
+            <p className={cx('label')}>{label}</p>
+            {suggestedUser.map((account) => {
+                return <AccountItem data={account} key={account.id} />
+            })}
 
-                {loading && <AccountLoading />}
+            {loading && <AccountLoading />}
 
-                <p className={cx('see-more')} onClick={onSeeMore}>
-                    See more
-                </p>
-            </div>
-        </Wrapper>
+            <p className={cx('see-more')} onClick={onSeeMore}>
+                See more
+            </p>
+        </div>
     )
 }
 SuggestedAccounts.propTypes = {

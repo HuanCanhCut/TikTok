@@ -5,3 +5,17 @@ export const darkMode = (payload) => {
         payload,
     }
 }
+
+export const temporaryFollowed = (payload) => {
+    return {
+        type: 'temporary-followed',
+        payload,
+    }
+}
+
+export const temporaryUnFollowed = (payload) => {
+    return {
+        type: 'temporary-unFollowed',
+        payload,
+    }
+}

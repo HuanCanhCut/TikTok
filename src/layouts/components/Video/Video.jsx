@@ -28,6 +28,10 @@ function Video({ data, videos, virtuosoRef, setFocusedIndex, focusedIndex }) {
                 setFocusedIndex(prevIndex)
                 scrollToIndex(prevIndex)
             }
+
+            if (e.key === 'End' || e.key === 'Home' || e.which === 32 || e.which === 33 || e.which === 34) {
+                e.preventDefault()
+            }
         }
 
         window.addEventListener('keydown', handleClickKeys)

@@ -62,10 +62,11 @@
 }
 
 .hashtag {
-    color: rgb(143, 190, 233);
+    color: var(--hashtag-color);
     cursor: 'pointer';
     font-weight: 700;
     margin: 0 3px;
+    cursor: pointer;
     &:hover {
         text-decoration: underline;
     }

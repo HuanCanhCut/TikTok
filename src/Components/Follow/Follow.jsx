@@ -1,12 +1,19 @@
 import Button from '../Button'
 import { useContext, memo, useState } from 'react'
-import { currentUserData } from '~/App'
+import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+
 import { followAnUser, unFollowUser } from '~/services/userService'
-import { updateContext } from '~/pages/Wrapper/Wrapper'
 import Authen from '~/layouts/components/Authen'
+import { currentUserData } from '~/App'
+import { temporaryFollowed, temporaryUnFollowed } from '~/redux/selectors'
+import { actions } from '~/redux'
 
 function Follow({ data }) {
-    const updateFollowed = useContext(updateContext)
+    const dispatch = useDispatch()
+    const temporaryFollowedList = useSelector(temporaryFollowed)
+    const temporaryUnFollowedList = useSelector(temporaryUnFollowed)
+
     const [modalIsOpen, setModalIsOpen] = useState(false)
     const currentUser = useContext(currentUserData)
     const accessToken = currentUser && currentUser.meta.token
@@ -28,16 +35,17 @@ function Follow({ data }) {
             })
 
             // khi follow thì sẽ xóa id của người vừa được follow ra khỏi danh sách unFollowed temporary
-            if (updateFollowed.unFollowed.includes(response.data.id)) {
+            if (temporaryUnFollowedList.includes(response.data.id)) {
                 const responseId = response.data.id
-                const indexToRemove = updateFollowed.unFollowed.indexOf(responseId)
+                const indexToRemove = temporaryUnFollowedList.indexOf(responseId)
                 if (indexToRemove !== -1) {
-                    updateFollowed.unFollowed.splice(indexToRemove, 1)
+                    temporaryUnFollowedList.splice(indexToRemove, 1)
                 }
             }
 
-            if (!updateFollowed.unFollowed.includes(response.data.id)) {
-                updateFollowed.temporaryFollow(response.data.id)
+            if (!temporaryUnFollowedList.includes(response.data.id)) {
+                // updateFollowed.temporaryFollow(response.data.id)
+                dispatch(actions.temporaryFollowed(response.data.id))
             }
 
             return response
@@ -54,15 +62,16 @@ function Follow({ data }) {
             })
 
             // khi unFollow thì sẽ xóa id của người vừa được unFollow ra khỏi danh sách Followed temporary
-            if (updateFollowed.followed.includes(response.data.id)) {
+            if (temporaryFollowedList.includes(response.data.id)) {
                 const responseId = response.data.id
-                const indexToRemove = updateFollowed.followed.indexOf(responseId)
+                const indexToRemove = temporaryFollowedList.indexOf(responseId)
                 if (indexToRemove !== -1) {
-                    updateFollowed.followed.splice(indexToRemove, 1)
+                    temporaryFollowedList.splice(indexToRemove, 1)
                 }
             }
 
-            updateFollowed.temporaryUnFollow(response.data.id)
+            // updateFollowed.temporaryUnFollow(response.data.id)
+            dispatch(actions.temporaryUnFollowed(response.data.id))
         } catch (error) {
             console.log(error)
         }
@@ -71,23 +80,32 @@ function Follow({ data }) {
     return (
         <>
             <Authen isOpen={modalIsOpen} onClose={handleClose} />
-            {data.id !== currentUser.id && (
-                <>
-                    {data.is_followed || updateFollowed.followed.includes(data.id) ? (
-                        updateFollowed.unFollowed.includes(data.id) ? (
+
+            {currentUser || accessToken ? (
+                data.id !== currentUser.id && (
+                    <>
+                        {data.is_followed || temporaryFollowedList.includes(data.id) ? (
+                            temporaryUnFollowedList.includes(data.id) ? (
+                                <Button outline onClick={handleFollow}>
+                                    Follow
+                                </Button>
+                            ) : (
+                                <Button rounded onClick={handleUnFollow}>
+                                    Following
+                                </Button>
+                            )
+                        ) : (
                             <Button outline onClick={handleFollow}>
                                 Follow
                             </Button>
-                        ) : (
-                            <Button rounded onClick={handleUnFollow}>
-                                Following
-                            </Button>
-                        )
-                    ) : (
-                        <Button outline onClick={handleFollow}>
-                            Follow
-                        </Button>
-                    )}
+                        )}
+                    </>
+                )
+            ) : (
+                <>
+                    <Button outline onClick={handleFollow}>
+                        Follow
+                    </Button>
                 </>
             )}
         </>

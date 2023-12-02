@@ -4,27 +4,30 @@ import Modal from 'react-modal'
 import images from '~/assets/images'
 import { currentUserData } from '~/App'
 import { Virtuoso } from 'react-virtuoso'
+import { useDispatch } from 'react-redux'
 
+import { actions } from '~/redux'
 import AccountLoading from '~/Components/AccountLoading'
 import style from './Home.module.scss'
 import Video from '~/layouts/components/Video'
 import * as videoService from '~/services/videoService'
 import Notification from '~/Components/Notification'
-import Wrapper from '../Wrapper'
 
 const cx = classNames.bind(style)
 
 const TOTAL_PAGES_KEY = 'totalVideoPages'
 const TOTAL_PAGES_VIDEO = JSON.parse(localStorage.getItem(TOTAL_PAGES_KEY))
-const INIT_PAGE = Math.floor(Math.random() * TOTAL_PAGES_VIDEO) || 1
 
 function Home() {
+    const dispatch = useDispatch()
     const currentUser = useContext(currentUserData)
     const accessToken = currentUser && currentUser.meta.token
 
     const virtuosoRef = useRef()
     const [videos, setVideos] = useState([])
-    const [page, setPage] = useState(INIT_PAGE)
+    const [page, setPage] = useState(() => {
+        return Math.floor(Math.random() * TOTAL_PAGES_VIDEO)
+    })
     const [modalIsOpen, setModalIsOpen] = useState(JSON.parse(localStorage.getItem('firstNotification')) ?? true)
     const [pageIndexes, setPageIndexes] = useState(JSON.parse(localStorage.getItem('pageIndexes')) ?? [])
     const [focusedIndex, setFocusedIndex] = useState(0)
@@ -60,6 +63,9 @@ function Home() {
                     return [...prev, page]
                 })
 
+                dispatch(actions.temporaryFollowed([]))
+                dispatch(actions.temporaryUnFollowed([]))
+
                 localStorage.setItem('pageIndexes', JSON.stringify(pageIndexes))
             } catch (error) {
                 console.log(error)
@@ -85,7 +91,7 @@ function Home() {
     }, [])
 
     return (
-        <Wrapper>
+        <>
             {modalIsOpen ? (
                 <Modal
                     isOpen={modalIsOpen}
@@ -134,7 +140,7 @@ function Home() {
                     />
                 </div>
             )}
-        </Wrapper>
+        </>
     )
 }
 

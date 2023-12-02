@@ -2,7 +2,8 @@ const initState = {
     theme: {
         darkMode: false,
     },
-    updateFollowList: 0,
+    temporaryFollowed: [],
+    temporaryUnFollowed: [],
 }
 
 function reducer(state = initState, action) {
@@ -13,6 +14,16 @@ function reducer(state = initState, action) {
                 theme: {
                     darkMode: action.payload,
                 },
+            }
+        case 'temporary-followed':
+            return {
+                ...state,
+                temporaryFollowed: [...state.temporaryFollowed, action.payload],
+            }
+        case 'temporary-unFollowed':
+            return {
+                ...state,
+                temporaryUnFollowed: [...state.temporaryUnFollowed, action.payload],
             }
         default:
             return state
