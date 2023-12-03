@@ -9,3 +9,7 @@ export const temporaryFollowed = (state) => {
 export const temporaryUnFollowed = (state) => {
     return state.temporaryUnFollowed
 }
+
+export const mutedVideo = (state) => {
+    return state.mutedVideos
+}

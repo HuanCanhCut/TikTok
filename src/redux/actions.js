@@ -19,3 +19,10 @@ export const temporaryUnFollowed = (payload) => {
         payload,
     }
 }
+
+export const mutedVideo = (payload) => {
+    return {
+        type: 'muted-video',
+        payload,
+    }
+}

@@ -4,12 +4,10 @@
     position: relative;
 
     &.column {
-        // max-width: 350px;
         max-height: 580px;
         aspect-ratio: 9 / 16;
     }
     &.row {
-        // max-width: 550px;
         max-height: 370px;
         aspect-ratio: 16 / 9;
     }
@@ -33,9 +31,9 @@
 
 .toggle-play,
 .toggle-muted {
+    position: absolute;
     width: 40px;
     height: 40px;
-    position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -57,7 +55,7 @@
 
 .toggle-muted {
     right: 2rem;
-    &:hover + .toggle-play {
+    &:hover ~ .toggle-muted {
         opacity: 1;
     }
 }

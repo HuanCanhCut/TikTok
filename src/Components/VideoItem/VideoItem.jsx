@@ -4,7 +4,10 @@ import classNames from 'classnames/bind'
 import { memo, useRef, useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPause, faPlay } from '@fortawesome/free-solid-svg-icons'
+import { useDispatch, useSelector } from 'react-redux'
 
+import { mutedVideo } from '~/redux/selectors'
+import { actions } from '~/redux'
 import style from './Video.module.scss'
 import useElementOnScreen from '~/hooks/useElementOnScreen'
 import { Muted, UnMuted } from '../Icons'
@@ -13,9 +16,10 @@ import VideoAction from './VideoAction'
 const cx = classNames.bind(style)
 
 function VideoItem({ video }) {
+    const dispatch = useDispatch()
+    const mutedVideos = useSelector(mutedVideo)
     const videoRef = useRef(null)
     const [playing, setPlaying] = useState(false)
-    const [muted, setMuted] = useState(false)
 
     const resolutionX = video.meta.video.resolution_x
     const resolutionY = video.meta.video.resolution_y
@@ -42,10 +46,7 @@ function VideoItem({ video }) {
     }
 
     const handleToggleMuted = () => {
-        videoRef.current.muted = !videoRef.current.muted
-        setMuted((prev) => {
-            return !prev
-        })
+        dispatch(actions.mutedVideo(!mutedVideos))
     }
 
     const handleEnded = () => {
@@ -59,6 +60,7 @@ function VideoItem({ video }) {
                     <video
                         ref={videoRef}
                         src={video.file_url}
+                        muted={mutedVideos}
                         poster={video.thumb_url}
                         className={cx('video')}
                         onPlay={() => {
@@ -86,16 +88,11 @@ function VideoItem({ video }) {
                         </button>
                     )}
                 </div>
+
                 <div className={cx('toggle-muted')} onClick={handleToggleMuted}>
-                    {muted ? (
-                        <button className={cx('muted')}>
-                            <Muted width="24px" height="24px" />
-                        </button>
-                    ) : (
-                        <button className={cx('un-muted')}>
-                            <UnMuted width="24px" height="24px" />
-                        </button>
-                    )}
+                    <button className={cx('muted')}>
+                        {mutedVideos ? <Muted width="26px" height="26px" /> : <UnMuted width="26px" height="26px" />}
+                    </button>
                 </div>
 
                 <VideoAction data={video} />

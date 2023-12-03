@@ -4,6 +4,7 @@ const initState = {
     },
     temporaryFollowed: [],
     temporaryUnFollowed: [],
+    mutedVideos: false,
 }
 
 function reducer(state = initState, action) {
@@ -24,6 +25,11 @@ function reducer(state = initState, action) {
             return {
                 ...state,
                 temporaryUnFollowed: [...state.temporaryUnFollowed, action.payload],
+            }
+        case 'muted-video':
+            return {
+                ...state,
+                mutedVideos: action.payload,
             }
         default:
             return state
