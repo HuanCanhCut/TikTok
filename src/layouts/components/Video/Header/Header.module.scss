@@ -22,12 +22,9 @@
     align-items: center;
 }
 
-.full-name {
-    margin-left: 4px;
-}
-
 .nick-name,
 .full-name {
+    font-family: SofiaPro, 'sans-serif';
     height: 20px;
     margin-top: 4px;
     display: flex;
@@ -38,10 +35,13 @@
 .nick-name {
     font-weight: 700;
     font-size: 1.8rem;
-    font-family: SofiaPro, 'sans-serif';
     &:hover {
         text-decoration: underline;
     }
+}
+
+.full-name {
+    margin-left: 4px;
 }
 
 .check-icon {

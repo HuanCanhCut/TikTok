@@ -8,9 +8,9 @@
     color: var(--text-color);
 }
 
-.header-into-view {
-    position: absolute;
-    top: 0;
+.target-into-view {
+    // position: absolute;
+    // top: 0;
 }
 
 .container {
@@ -27,38 +27,6 @@
     margin-left: var(--default-layout-sidebar-width);
     align-items: center;
     flex: 1;
-}
-
-.go-to-top {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    position: fixed;
-    right: 35px;
-    background-color: var(--primary);
-    cursor: pointer;
-    color: white;
-    bottom: 20px;
-    transform: translateY(70px);
-    animation: fadeOut 0.2s ease-in-out forwards;
-    &.isDisplay {
-        animation: fadeIn 0.2s ease-in-out forwards;
-    }
-}
-
-@keyframes fadeIn {
-    to {
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeOut {
-    from {
-        transform: translateY(0);
-    }
-    to {
-        transform: translateY(70px);
-    }
 }
 
 .wrapper {

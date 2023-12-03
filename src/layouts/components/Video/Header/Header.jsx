@@ -101,7 +101,7 @@ function Header({ data }) {
                             <h3 className={cx('nick-name')}>{dataUser.nickname}</h3>
                         </strong>
                     </div>
-                    <div className={cx('full-name')}>{`${data.user.first_name} ${data.user.last_name}`}</div>
+
                     {dataUser.check && <BlueTick />}
                 </Link>
                 <div className={cx('description')}>{highlightedDescription}</div>
