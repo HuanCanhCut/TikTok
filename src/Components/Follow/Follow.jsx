@@ -82,7 +82,7 @@ function Follow({ data }) {
             <Authen isOpen={modalIsOpen} onClose={handleClose} />
 
             {currentUser || accessToken ? (
-                data.id !== currentUser.id && (
+                data.id !== currentUser.data.id && (
                     <>
                         {data.is_followed || temporaryFollowedList.includes(data.id) ? (
                             temporaryUnFollowedList.includes(data.id) ? (

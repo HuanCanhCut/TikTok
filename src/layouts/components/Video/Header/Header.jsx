@@ -96,8 +96,11 @@ function Header({ data }) {
             </Tippy>
             <div className={cx('body')}>
                 <Link to={`@${dataUser.nickname}`} className={cx('user-info')}>
-                    <h3 className={cx('nick-name')}>{dataUser.nickname}</h3>
-                    {dataUser.check && <BlueTick />}
+                    <h3 className={cx('nick-name')}>
+                        {dataUser.nickname}
+                        {dataUser.tick && <BlueTick />}
+                    </h3>
+
                     <h4 className={cx('full-name')}>{`${dataUser.first_name} ${dataUser.last_name}`}</h4>
                 </Link>
                 <div className={cx('description')}>{highlightedDescription}</div>

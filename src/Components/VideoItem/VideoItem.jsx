@@ -29,16 +29,18 @@ function VideoItem({ video }) {
     const isVisible = useElementOnScreen(options, videoRef)
 
     useEffect(() => {
-        if (isVisible && videoRef.current) {
-            if (!playing) {
-                videoRef.current.currentTime = 0
-                videoRef.current.play()
-            }
-        } else {
-            if (playing) {
+        const playVideo = async () => {
+            if (isVisible && videoRef.current) {
+                try {
+                    videoRef.current.currentTime = 0
+                    await videoRef.current.play()
+                } catch (e) {}
+            } else {
                 videoRef.current.pause()
             }
         }
+
+        playVideo()
     }, [isVisible])
 
     const handleTogglePlay = () => {
