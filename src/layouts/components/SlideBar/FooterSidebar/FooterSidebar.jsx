@@ -4,6 +4,7 @@ import { memo } from 'react'
 import Button from '~/Components/Button'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHurricane } from '@fortawesome/free-solid-svg-icons'
+import useDarkMode from '~/hooks/useDarkMode'
 
 const cx = classNames.bind(style)
 
@@ -34,7 +35,9 @@ function FooterSidebar() {
     return (
         <div className={cx('wrapper')}>
             <Button
-                className={cx('create-effect')}
+                className={cx('create-effect', {
+                    darkMode: useDarkMode(),
+                })}
                 leftIcon={<FontAwesomeIcon icon={faHurricane} />}
                 target="_blank"
                 onClick={() => {

@@ -110,33 +110,31 @@ function Video({ type }) {
     }, [focusedIndex, videos.length])
 
     return (
-        <div className={cx('wrapper')}>
-            <Virtuoso
-                ref={virtuosoRef}
-                data={videos}
-                useWindowScroll
-                endReached={() => {
-                    setPage(() => {
-                        do {
-                            return Math.floor(Math.random() * TOTAL_PAGES_VIDEO)
-                        } while (pageIndexes.includes(Math.floor(Math.random() * TOTAL_PAGES_VIDEO)))
-                    })
-                }}
-                itemContent={(index, item) => {
-                    return (
-                        <div key={index}>
-                            <Header data={item} />
-                            <VideoItem video={item} />
-                        </div>
-                    )
-                }}
-                components={{
-                    Footer: () => {
-                        return <AccountLoading big />
-                    },
-                }}
-            />
-        </div>
+        <Virtuoso
+            ref={virtuosoRef}
+            data={videos}
+            useWindowScroll
+            endReached={() => {
+                setPage(() => {
+                    do {
+                        return Math.floor(Math.random() * TOTAL_PAGES_VIDEO)
+                    } while (pageIndexes.includes(Math.floor(Math.random() * TOTAL_PAGES_VIDEO)))
+                })
+            }}
+            itemContent={(index, item) => {
+                return (
+                    <div className={cx('video-content')}>
+                        <Header data={item} />
+                        <VideoItem video={item} />
+                    </div>
+                )
+            }}
+            components={{
+                Footer: () => {
+                    return <AccountLoading big />
+                },
+            }}
+        />
     )
 }
 

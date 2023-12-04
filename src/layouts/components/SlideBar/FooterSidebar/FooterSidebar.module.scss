@@ -5,7 +5,9 @@
 }
 
 .create-effect {
+    transition: all 0.15s linear;
     width: 100%;
+    font-size: 1.6rem;
     max-width: 100%;
     padding: 0;
     margin: 0;
@@ -13,16 +15,21 @@
     background-position: center center;
     border-radius: 10px;
     height: 52px;
-
+    &:hover {
+        // transform: scale(105%);
+        font-size: 1.7rem;
+    }
     img {
         max-width: 100%;
         border-radius: 10px;
         object-fit: cover;
     }
-    color: rgba(22, 24, 35, 1);
+    color: var(--text-color);
     font-weight: 600;
-    font-size: 1.6rem;
     line-height: 21px;
+    &.darkMode {
+        background-image: url('https://sf16-website-login.neutral.ttwstatic.com/obj/tiktok_web_login_static/tiktok/webapp/main/webapp-desktop/d8db931296c3e5645b1e.png');
+    }
 }
 
 .contact {

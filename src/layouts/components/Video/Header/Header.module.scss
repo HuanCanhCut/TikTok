@@ -18,30 +18,28 @@
 }
 
 .user-info {
-    display: flex;
-    align-items: center;
-}
-
-.nick-name,
-.full-name {
-    font-family: SofiaPro, 'sans-serif';
-    height: 20px;
-    margin-top: 4px;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
+    display: inline-flex;
 }
 
 .nick-name {
-    font-weight: 700;
-    font-size: 1.8rem;
+    // font-family: SofiaPro, 'sans-serif';
+    // font-weight: 400;
+    font-size: 18px;
+    line-height: 23px;
+    display: inline-block;
+    margin-right: 6px;
     &:hover {
         text-decoration: underline;
     }
 }
 
 .full-name {
-    margin-left: 4px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    &:hover {
+        text-decoration: underline;
+    }
 }
 
 .check-icon {
@@ -55,7 +53,6 @@
     max-width: 95%;
     line-height: 20px;
     font-size: 1.6rem;
-    margin-top: 8px;
     display: flex;
     flex-wrap: wrap;
     line-height: 2.2rem;

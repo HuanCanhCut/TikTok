@@ -157,16 +157,21 @@ function Header() {
                             <Button to={config.routes.upload} rounded leftIcon={<FontAwesomeIcon icon={faPlus} />}>
                                 Upload
                             </Button>
-                            <Tippy delay={[0, 50]} content="Messages">
-                                <button className={cx('action-btn', { darkMode })}>
-                                    <MessageIcon />
-                                </button>
-                            </Tippy>
-                            <Tippy delay={[0, 50]} content="Mail Box">
-                                <button className={cx('action-btn', { darkMode })}>
-                                    <InboxIcon />
-                                </button>
-                            </Tippy>
+                            {/* Interactive tippy element may not be accessible via keyboard navigation because it is not directly after the reference element in the DOM source order. Using a wrapper <div> or <span> tag around the reference element solves this by creating a new parentNode context. Specifying `appendTo: document.body` silences this warning, but it assumes you are using a focus management solution to handle keyboard navigation.  */}
+                            <div>
+                                <Tippy delay={[0, 50]} content="Messages" interactive>
+                                    <button className={cx('action-btn', { darkMode })}>
+                                        <MessageIcon />
+                                    </button>
+                                </Tippy>
+                            </div>
+                            <div>
+                                <Tippy delay={[0, 50]} content="Mail Box" interactive>
+                                    <button className={cx('action-btn', { darkMode })}>
+                                        <InboxIcon />
+                                    </button>
+                                </Tippy>
+                            </div>
                         </>
                     ) : (
                         <>
