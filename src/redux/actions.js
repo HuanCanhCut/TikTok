@@ -26,3 +26,17 @@ export const mutedVideo = (payload) => {
         payload,
     }
 }
+
+export const temporaryLiked = (payload) => {
+    return {
+        type: 'temporary-liked',
+        payload,
+    }
+}
+
+export const temporaryUnLiked = (payload) => {
+    return {
+        type: 'temporary-unLiked',
+        payload,
+    }
+}

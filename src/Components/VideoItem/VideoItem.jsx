@@ -25,7 +25,7 @@ function VideoItem({ video }) {
     const resolutionY = video.meta.video.resolution_y
     const videoSize = resolutionX > resolutionY ? 'row' : 'column'
 
-    const options = { root: null, rootMargin: '0px', threshold: 0.95 }
+    const options = { root: null, rootMargin: '0px', threshold: 0.93 }
     const isVisible = useElementOnScreen(options, videoRef)
 
     useEffect(() => {

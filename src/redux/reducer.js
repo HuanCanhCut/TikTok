@@ -4,6 +4,10 @@ const initState = {
     },
     temporaryFollowed: [],
     temporaryUnFollowed: [],
+
+    temporaryLiked: [],
+    temporaryUnLiked: [],
+
     mutedVideos: false,
 }
 
@@ -26,11 +30,22 @@ function reducer(state = initState, action) {
                 ...state,
                 temporaryUnFollowed: [...state.temporaryUnFollowed, action.payload],
             }
+        case 'temporary-liked':
+            return {
+                ...state,
+                temporaryLiked: [...state.temporaryLiked, action.payload],
+            }
+        case 'temporary-unLiked':
+            return {
+                ...state,
+                temporaryUnLiked: [...state.temporaryUnLiked, action.payload],
+            }
         case 'muted-video':
             return {
                 ...state,
                 mutedVideos: action.payload,
             }
+
         default:
             return state
     }

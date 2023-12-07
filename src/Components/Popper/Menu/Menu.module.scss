@@ -36,6 +36,7 @@
     background-color: transparent;
     position: relative;
     color: var(--text-color);
+    border-radius: 0;
     &:hover {
         background-color: var(--text-color-opacity-04);
     }

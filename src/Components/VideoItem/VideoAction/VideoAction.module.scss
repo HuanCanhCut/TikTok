@@ -8,17 +8,3 @@
     flex-direction: column;
     align-content: space-between;
 }
-
-.video-active-icon {
-    color: var(--text-color);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 6px 0;
-    font-size: 2.2rem;
-    background-color: var(--text-color-opacity-12);
-    transition: background-color 0.15s linear;
-    &:hover {
-        background-color: var(--text-color-opacity-08);
-    }
-}

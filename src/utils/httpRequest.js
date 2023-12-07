@@ -5,7 +5,7 @@ const request = axios.create({
 })
 
 export const get = async (path, options = {}) => {
-    const response = await request.get(path, options) // call api
+    const response = await request.get(path, options)
     return response.data
 }
 

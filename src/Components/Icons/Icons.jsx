@@ -359,3 +359,20 @@ export const ArrowDown = ({ width = '24', height = '24', className }) => (
         ></path>
     </svg>
 )
+
+export const CommentVideo = ({ width = '24', height = '24', className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width={width} className={className} height={height} fill="currentColor">
+        <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" id="Bubble_Ellipsis_Right_Fill-a497dc09">
+            <path d="M3.5 21.44C3.5 11.47 13.04 4 24 4s20.5 7.47 20.5 17.44c0 5.85-2.93 10.69-6.47 14.37a41.67 41.67 0 0 1-11.06 7.97A2.05 2.05 0 0 1 24 41.95v-3.08c-10.96 0-20.5-7.47-20.5-17.43Zm11.79 3.07a2.56 2.56 0 1 0 0-5.12 2.56 2.56 0 0 0 0 5.12Zm8.71 0a2.56 2.56 0 1 0 0-5.12 2.56 2.56 0 0 0 0 5.12Zm11.27-2.56a2.56 2.56 0 1 0-5.12 0 2.56 2.56 0 0 0 5.12 0Z"></path>
+        </symbol>
+    </svg>
+)
+
+export const FavoriteVideo = ({ width = '30', height = '30' }, props) => (
+    <svg width={width} height={height} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" {...props}>
+        <path
+            fill="CurrentColor"
+            d="M6 19.5V5.615q0-.69.463-1.152Q6.925 4 7.615 4h8.77q.69 0 1.152.463q.463.462.463 1.152V19.5l-6-2.577L6 19.5Z"
+        ></path>
+    </svg>
+)

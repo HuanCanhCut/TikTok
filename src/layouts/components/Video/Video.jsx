@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types'
 import classNames from 'classnames/bind'
 import { memo, useEffect, useRef, useContext, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { actions } from '~/redux'
 import { Virtuoso } from 'react-virtuoso'
 
 import { currentUserData } from '~/App'
@@ -17,7 +15,6 @@ const cx = classNames.bind(style)
 const TOTAL_PAGES_KEY = 'totalVideoPages'
 const TOTAL_PAGES_VIDEO = JSON.parse(localStorage.getItem(TOTAL_PAGES_KEY))
 function Video({ type }) {
-    const dispatch = useDispatch()
     const currentUser = useContext(currentUserData)
     const accessToken = currentUser && currentUser.meta.token
 
@@ -27,7 +24,7 @@ function Video({ type }) {
     const [page, setPage] = useState(() => {
         return Math.floor(Math.random() * TOTAL_PAGES_VIDEO)
     })
-    const [pageIndexes, setPageIndexes] = useState(JSON.parse(localStorage.getItem('pageIndexes')) ?? [])
+    const [pageIndexes, setPageIndexes] = useState(JSON.parse(localStorage.getItem('pageVideoIndexes')) ?? [])
     const [focusedIndex, setFocusedIndex] = useState(0)
 
     const scrollToIndex = (index) => {
@@ -36,10 +33,11 @@ function Video({ type }) {
 
     const handleScroll = () => {
         if (window.scrollY + window.innerHeight >= document.body.offsetHeight) {
+            const randomPage = Math.floor(Math.random() * TOTAL_PAGES_VIDEO)
             setPage(() => {
                 do {
-                    return Math.floor(Math.random() * TOTAL_PAGES_VIDEO)
-                } while (pageIndexes.includes(Math.floor(Math.random() * TOTAL_PAGES_VIDEO)))
+                    return randomPage
+                } while (pageIndexes.includes(randomPage))
             })
         }
     }
@@ -69,10 +67,7 @@ function Video({ type }) {
                     return [...prev, page]
                 })
 
-                dispatch(actions.temporaryFollowed([]))
-                dispatch(actions.temporaryUnFollowed([]))
-
-                localStorage.setItem('pageIndexes', JSON.stringify(pageIndexes))
+                localStorage.setItem('pageVideoIndexes', JSON.stringify(pageIndexes))
             } catch (error) {
                 console.log(error)
             }
