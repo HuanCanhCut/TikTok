@@ -45,6 +45,7 @@ function VideoActionItem({ item, data, onChose = defaultFN }) {
             ) : (
                 <>
                     <button
+                        disabled={item.disabled}
                         className={cx('wrapper', classes)}
                         onClick={() => {
                             onChose(item.type)

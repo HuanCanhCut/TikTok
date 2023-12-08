@@ -12,6 +12,7 @@
     font-size: 2.2rem;
     background-color: var(--text-color-opacity-12);
     transition: background-color 0.15s linear;
+    transition: color 0.15s ease-in-out;
     &.isLike[type='like'] {
         color: var(--primary);
     }

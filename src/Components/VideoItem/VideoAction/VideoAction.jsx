@@ -19,38 +19,50 @@ function VideoAction({ data }) {
     const dispatch = useDispatch()
     const temporaryLikeList = useSelector(temporaryLiked)
     const temporaryUnLikeList = useSelector(temporaryUnLiked)
-    const [isLiked, setIsLiked] = useState(data.is_liked)
+    const [isCallingApi, setIsCallingApi] = useState(false)
 
     const currentUser = useContext(currentUserData)
     const accessToken = currentUser && currentUser.meta.token
 
     const handleLikeVideo = async () => {
-        const response = await videoService.likeVideo({
-            videoID: data.id,
-            accessToken,
-        })
+        try {
+            const response = await videoService.likeVideo({
+                videoID: data.id,
+                accessToken,
+            })
 
-        response && setIsLiked((prev) => prev + 1)
+            removeDuplicate(temporaryUnLikeList, response.data.id)
+            if (response) {
+                if (!temporaryUnLikeList.includes(response.data.id)) {
+                    dispatch(actions.temporaryLiked(response.data.id))
+                }
+            }
 
-        removeDuplicate(temporaryUnLikeList, response.data.id)
-        if (!temporaryUnLikeList.includes(response.data.id)) {
-            dispatch(actions.temporaryLiked(response.data.id))
+            return response
+        } catch (error) {
+            console.log(error)
+        } finally {
+            setIsCallingApi(false)
         }
-
-        return response
     }
 
     const handleUnLikeVideo = async () => {
-        const response = await videoService.unLikeVideo({
-            videoID: data.id,
-            accessToken,
-        })
+        try {
+            const response = await videoService.unLikeVideo({
+                videoID: data.id,
+                accessToken,
+            })
 
-        response && setIsLiked((prev) => prev - 1)
-
-        removeDuplicate(temporaryLikeList, response.data.id)
-        dispatch(actions.temporaryUnLiked(response.data.id))
-        return response
+            if (response) {
+                removeDuplicate(temporaryLikeList, response.data.id)
+                dispatch(actions.temporaryUnLiked(response.data.id))
+            }
+            return response
+        } catch (error) {
+            console.log(error)
+        } finally {
+            setIsCallingApi(false)
+        }
     }
 
     const handleToggleLike = () => {
@@ -58,18 +70,20 @@ function VideoAction({ data }) {
             alert('Please login')
             return
         }
-        try {
-            if (data.is_liked || temporaryLikeList.includes(data.id)) {
-                if (temporaryUnLikeList.includes(data.id)) {
-                    handleLikeVideo()
-                } else {
-                    handleUnLikeVideo()
-                }
-            } else {
+        if (isCallingApi) {
+            return
+        }
+
+        setIsCallingApi(true)
+
+        if (data.is_liked || temporaryLikeList.includes(data.id)) {
+            if (temporaryUnLikeList.includes(data.id)) {
                 handleLikeVideo()
+            } else {
+                handleUnLikeVideo()
             }
-        } catch (error) {
-            console.log(error)
+        } else {
+            handleLikeVideo()
         }
     }
 
@@ -83,11 +97,20 @@ function VideoAction({ data }) {
         }
     }
 
+    const likes_count = () => {
+        if (temporaryLikeList.includes(data.id)) {
+            return data.likes_count + 1
+        } else {
+            return data.likes_count
+        }
+    }
+
     const items = [
         {
             type: 'like',
-            value: isLiked ? data.likes_count + 1 : data.likes_count,
+            value: likes_count(),
             icon: <FontAwesomeIcon icon={faHeart} />,
+            disabled: isCallingApi,
         },
         {
             type: 'comment',

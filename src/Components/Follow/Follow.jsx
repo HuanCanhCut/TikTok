@@ -14,6 +14,7 @@ function Follow({ data }) {
     const dispatch = useDispatch()
     let temporaryFollowedList = useSelector(temporaryFollowed)
     const temporaryUnFollowedList = useSelector(temporaryUnFollowed)
+    const [isCallingApi, setIsCallingApi] = useState(false)
 
     const [modalIsOpen, setModalIsOpen] = useState(false)
     const currentUser = useContext(currentUserData)
@@ -24,6 +25,12 @@ function Follow({ data }) {
     }
 
     const handleFollow = async () => {
+        if (isCallingApi) {
+            return
+        }
+
+        setIsCallingApi(true)
+
         try {
             if (!accessToken && !currentUser) {
                 setModalIsOpen(true)
@@ -36,20 +43,28 @@ function Follow({ data }) {
             })
 
             // khi follow thì sẽ xóa id của người vừa được follow ra khỏi danh sách unFollowed temporary
-
-            removeDuplicate(temporaryUnFollowedList, response.data.id)
-
-            if (!temporaryUnFollowedList.includes(response.data.id)) {
-                dispatch(actions.temporaryFollowed(response.data.id))
+            if (response) {
+                removeDuplicate(temporaryUnFollowedList, response.data.id)
+                if (!temporaryUnFollowedList.includes(response.data.id)) {
+                    dispatch(actions.temporaryFollowed(response.data.id))
+                }
             }
 
             return response
         } catch (error) {
             console.log(error)
+        } finally {
+            setIsCallingApi(false)
         }
     }
 
     const handleUnFollow = async () => {
+        if (isCallingApi) {
+            return
+        }
+
+        setIsCallingApi(true)
+
         try {
             const response = await unFollowUser({
                 userId: data.id,
@@ -57,12 +72,14 @@ function Follow({ data }) {
             })
 
             // khi unFollow thì sẽ xóa id của người vừa được unFollow ra khỏi danh sách Followed temporary
-
-            removeDuplicate(temporaryFollowedList, response.data.id)
-
-            dispatch(actions.temporaryUnFollowed(response.data.id))
+            if (response) {
+                removeDuplicate(temporaryFollowedList, response.data.id)
+                dispatch(actions.temporaryUnFollowed(response.data.id))
+            }
         } catch (error) {
             console.log(error)
+        } finally {
+            setIsCallingApi(false)
         }
     }
 

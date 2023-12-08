@@ -1,8 +1,10 @@
 export const removeDuplicate = (duplicateStore, duplicateValue) => {
     if (duplicateStore.includes(duplicateValue)) {
-        const indexToRemove = duplicateStore.indexOf(duplicateValue)
-        if (indexToRemove !== -1) {
-            duplicateStore.splice(indexToRemove, 1)
+        for (var i = duplicateStore.length - 1; i >= 0; i--) {
+            if (duplicateStore[i] === duplicateValue) {
+                duplicateStore.splice(i, 1)
+            }
         }
     }
+    return duplicateStore
 }
