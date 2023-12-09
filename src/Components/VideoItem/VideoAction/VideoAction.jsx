@@ -1,10 +1,11 @@
 import classNames from 'classnames/bind'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCommentDots, faHeart, faShare } from '@fortawesome/free-solid-svg-icons'
-import { useContext, useState } from 'react'
+import { useContext, useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { actions } from '~/redux'
 import { removeDuplicate } from '~/hooks/removeDuplicate'
+import useElementOnScreen from '~/hooks/useElementOnScreen'
 
 import { FavoriteVideo } from '~/Components/Icons'
 import { temporaryLiked, temporaryUnLiked } from '~/redux/selectors'
@@ -15,19 +16,24 @@ import VideoActionItem from './VideoActionItem'
 
 const cx = classNames.bind(style)
 
-function VideoAction({ data }) {
+function VideoAction({ data, videoRef }) {
+    const currentUser = useContext(currentUserData)
+    const accessToken = currentUser && currentUser.meta.token
+    const likeRef = useRef()
+
+    const options = { root: null, rootMargin: '0px', threshold: 0.93 }
+    const isVisible = useElementOnScreen(options, videoRef)
+
     const dispatch = useDispatch()
     const temporaryLikeList = useSelector(temporaryLiked)
     const temporaryUnLikeList = useSelector(temporaryUnLiked)
+
     const [isCallingApi, setIsCallingApi] = useState(false)
 
-    const currentUser = useContext(currentUserData)
-    const accessToken = currentUser && currentUser.meta.token
-
-    const handleLikeVideo = async () => {
+    const handleLikeVideo = async (id) => {
         try {
             const response = await videoService.likeVideo({
-                videoID: data.id,
+                videoID: id || data.id,
                 accessToken,
             })
 
@@ -46,10 +52,10 @@ function VideoAction({ data }) {
         }
     }
 
-    const handleUnLikeVideo = async () => {
+    const handleUnLikeVideo = async (id) => {
         try {
             const response = await videoService.unLikeVideo({
-                videoID: data.id,
+                videoID: id || data.id,
                 accessToken,
             })
 
@@ -80,12 +86,31 @@ function VideoAction({ data }) {
             if (temporaryUnLikeList.includes(data.id)) {
                 handleLikeVideo()
             } else {
-                handleUnLikeVideo()
+                handleUnLikeVideo(videoRef.current.dataid)
             }
         } else {
             handleLikeVideo()
         }
     }
+
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            switch (e.which) {
+                case 76:
+                    if (isVisible) {
+                        handleToggleLike(videoRef.current.dataset.index)
+                    }
+                    break
+                default:
+                    break
+            }
+        }
+        window.addEventListener('keydown', handleKeyDown)
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown)
+        }
+    })
 
     const handleChose = (type) => {
         switch (type) {
@@ -111,6 +136,7 @@ function VideoAction({ data }) {
             value: likes_count(),
             icon: <FontAwesomeIcon icon={faHeart} />,
             disabled: isCallingApi,
+            ref: likeRef,
         },
         {
             type: 'comment',

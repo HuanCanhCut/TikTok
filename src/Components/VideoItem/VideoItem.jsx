@@ -51,6 +51,24 @@ function VideoItem({ video }) {
         dispatch(actions.mutedVideo(!mutedVideos))
     }
 
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            switch (e.which) {
+                case 77:
+                    handleToggleMuted()
+                    break
+                default:
+                    break
+            }
+        }
+
+        window.addEventListener('keydown', handleKeyDown)
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown)
+        }
+    }, [mutedVideos])
+
     const handleEnded = () => {
         videoRef.current.play()
     }
@@ -61,6 +79,7 @@ function VideoItem({ video }) {
                 {video.file_url ? (
                     <video
                         ref={videoRef}
+                        data-index={video.id}
                         src={video.file_url}
                         muted={mutedVideos}
                         poster={video.thumb_url}
@@ -97,7 +116,7 @@ function VideoItem({ video }) {
                     </button>
                 </div>
 
-                <VideoAction data={video} />
+                <VideoAction data={video} videoRef={videoRef} />
             </div>
         </div>
     )
