@@ -73,7 +73,7 @@ function VideoAction({ data, videoRef }) {
 
     const handleToggleLike = () => {
         if (!currentUser || !accessToken) {
-            alert('Please login')
+            dispatch(actions.openAuth(true))
             return
         }
         if (isCallingApi) {

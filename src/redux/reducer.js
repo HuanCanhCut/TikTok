@@ -9,6 +9,7 @@ const initState = {
     temporaryUnLiked: [],
 
     mutedVideos: false,
+    openAuth: false,
 }
 
 function reducer(state = initState, action) {
@@ -44,6 +45,11 @@ function reducer(state = initState, action) {
             return {
                 ...state,
                 mutedVideos: action.payload,
+            }
+        case 'open-auth':
+            return {
+                ...state,
+                openAuth: action.payload,
             }
 
         default:

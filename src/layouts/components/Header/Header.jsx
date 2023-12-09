@@ -14,10 +14,11 @@ import {
 import Tippy from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css'
 import { Link } from 'react-router-dom'
-import { useContext, useState, useCallback, memo } from 'react'
-import { useSelector } from 'react-redux'
+import { useContext, useState, memo } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { themeSelector } from '~/redux/selectors'
 import Modal from 'react-modal'
+import { actions } from '~/redux'
 
 import Authen from '../Authen'
 import { currentUserData } from '~/App'
@@ -70,9 +71,9 @@ const MENU_ITEM = [
 ]
 
 function Header() {
+    const dispatch = useDispatch()
     const currentUser = useContext(currentUserData)
     const profile = currentUser && currentUser.data.nickname
-    const [modalIsOpen, setModalIsOpen] = useState(false)
     const [shortcutsIsOpen, setShortcutsIsOpen] = useState(false)
     const darkMode = useSelector(themeSelector)
 
@@ -131,14 +132,6 @@ function Header() {
         }
     }
 
-    const openModal = useCallback(() => {
-        setModalIsOpen(true)
-    }, [])
-
-    const closeModal = () => {
-        setModalIsOpen(false)
-    }
-
     const closeKeyboardModal = () => {
         setShortcutsIsOpen(false)
     }
@@ -178,12 +171,19 @@ function Header() {
                             <Button
                                 rounded
                                 leftIcon={<FontAwesomeIcon icon={faPlus} />}
-                                onClick={openModal}
+                                onClick={() => {
+                                    dispatch(actions.openAuth(true))
+                                }}
                                 className={cx('upload')}
                             >
                                 Upload
                             </Button>
-                            <Button primary onClick={openModal}>
+                            <Button
+                                primary
+                                onClick={() => {
+                                    dispatch(actions.openAuth(true))
+                                }}
+                            >
                                 Log In
                             </Button>
                         </>
@@ -201,7 +201,7 @@ function Header() {
                 </div>
             </div>
 
-            <Authen isOpen={modalIsOpen} onClose={closeModal} />
+            <Authen />
 
             {shortcutsIsOpen && (
                 <Modal

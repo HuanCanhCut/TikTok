@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import classNames from 'classnames/bind'
 import style from './Login.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -6,6 +5,10 @@ import { faXmark, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { memo } from 'react'
 import Modal from 'react-modal'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useSelector } from 'react-redux'
+import { openAuth } from '~/redux/selectors'
+import { useDispatch } from 'react-redux'
+import { actions } from '~/redux'
 
 import { useState } from 'react'
 import * as Auth from '~/services/authService'
@@ -18,12 +21,15 @@ import useDarkMode from '~/hooks/useDarkMode'
 
 const cx = classNames.bind(style)
 
-function Authen({ onClose, isOpen }) {
+function Authen() {
+    const dispatch = useDispatch()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [isValid, setIsValid] = useState(false)
     const [loading, setLoading] = useState(false)
     const [signUp, setSignUp] = useState(false)
+
+    const modalIsOpen = useSelector(openAuth)
 
     const setLocalStorage = (key, value) => {
         const Action = localStorage.setItem(key, JSON.stringify(value))
@@ -79,11 +85,13 @@ function Authen({ onClose, isOpen }) {
     return (
         <AnimatePresence>
             <Modal
-                isOpen={isOpen}
-                onRequestClose={onClose}
-                overlayClassName={cx('overlay')}
+                isOpen={modalIsOpen}
+                onRequestClose={() => {
+                    dispatch(actions.openAuth(false))
+                }}
+                overlayClassName={'overlay'}
                 ariaHideApp={false}
-                className={cx('modal')}
+                className={'modal'}
             >
                 <motion.div
                     initial={{ opacity: 0, y: '-100%' }}
@@ -97,7 +105,12 @@ function Authen({ onClose, isOpen }) {
                         })}
                         onKeyDown={handleKeyDown}
                     >
-                        <button className={cx('close')} onClick={onClose}>
+                        <button
+                            className={cx('close')}
+                            onClick={() => {
+                                dispatch(actions.openAuth(false))
+                            }}
+                        >
                             <FontAwesomeIcon className={cx('close-icon')} icon={faXmark} />
                         </button>
                         <header className={cx('header')}>
@@ -145,11 +158,6 @@ function Authen({ onClose, isOpen }) {
             </Modal>
         </AnimatePresence>
     )
-}
-
-Authen.propTypes = {
-    onClose: PropTypes.func.isRequired,
-    isOpen: PropTypes.bool.isRequired,
 }
 
 export default memo(Authen)

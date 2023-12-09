@@ -5,7 +5,6 @@ import { useDispatch } from 'react-redux'
 import { removeDuplicate } from '~/hooks/removeDuplicate'
 
 import { followAnUser, unFollowUser } from '~/services/userService'
-import Authen from '~/layouts/components/Authen'
 import { currentUserData } from '~/App'
 import { temporaryFollowed, temporaryUnFollowed } from '~/redux/selectors'
 import { actions } from '~/redux'
@@ -16,13 +15,8 @@ function Follow({ data }) {
     const temporaryUnFollowedList = useSelector(temporaryUnFollowed)
     const [isCallingApi, setIsCallingApi] = useState(false)
 
-    const [modalIsOpen, setModalIsOpen] = useState(false)
     const currentUser = useContext(currentUserData)
     const accessToken = currentUser && currentUser.meta.token
-
-    const handleClose = () => {
-        setModalIsOpen(false)
-    }
 
     const handleFollow = async () => {
         if (isCallingApi) {
@@ -33,7 +27,7 @@ function Follow({ data }) {
 
         try {
             if (!accessToken && !currentUser) {
-                setModalIsOpen(true)
+                dispatch(actions.openAuth(true))
                 return
             }
 
@@ -85,8 +79,6 @@ function Follow({ data }) {
 
     return (
         <>
-            <Authen isOpen={modalIsOpen} onClose={handleClose} />
-
             {currentUser || accessToken ? (
                 data.id !== currentUser.data.id && (
                     <>

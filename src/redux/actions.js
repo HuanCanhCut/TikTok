@@ -40,3 +40,10 @@ export const temporaryUnLiked = (payload) => {
         payload,
     }
 }
+
+export const openAuth = (payload) => {
+    return {
+        type: 'open-auth',
+        payload,
+    }
+}

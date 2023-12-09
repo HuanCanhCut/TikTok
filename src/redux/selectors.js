@@ -21,3 +21,7 @@ export const temporaryUnLiked = (state) => {
 export const mutedVideo = (state) => {
     return state.mutedVideos
 }
+
+export const openAuth = (state) => {
+    return state.openAuth
+}
