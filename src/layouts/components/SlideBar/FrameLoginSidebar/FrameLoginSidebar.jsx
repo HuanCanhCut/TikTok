@@ -1,4 +1,3 @@
-import { useState, useCallback } from 'react'
 import classNames from 'classnames/bind'
 import style from './FrameLoginSidebar.module.scss'
 import Button from '~/Components/Button'
