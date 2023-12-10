@@ -36,53 +36,6 @@
     }
 }
 
-.forgot-password {
-    color: rgba(22, 24, 35, 0.5);
-    width: 100%;
-    justify-content: flex-start;
-    font-size: 1rem;
-    line-height: 2.2;
-    font-weight: 600;
-    cursor: pointer;
-    &:hover {
-        text-decoration: underline;
-        color: rgba(22, 24, 35, 0.8);
-    }
-}
-
-.invalid-password {
-    margin-top: 12px;
-    color: var(--primary);
-    font-size: 1.2rem;
-    font-weight: 600;
-}
-
-.login-btn {
-    position: relative;
-    min-height: 44px;
-}
-
-.login,
-.loading {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.loading {
-    animation: loading 0.5s infinite;
-}
-
-@keyframes loading {
-    from {
-        transform: translate(-50%, -50%) rotate(0);
-    }
-    to {
-        transform: translate(-50%, -50%) rotate(360deg);
-    }
-}
-
 .darkMode {
     .email,
     .password {
@@ -97,12 +50,5 @@
     .hide-password,
     .display-password {
         color: var(--text-light-color);
-    }
-
-    .forgot-password {
-        color: rgba(255, 255, 255, 0.5);
-        &:hover {
-            color: rgba(255, 255, 255, 0.7);
-        }
     }
 }
