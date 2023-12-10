@@ -17,7 +17,7 @@
 
 .App[data-darkmode='false'] {
     --default-layout-background: #fff;
-    --popper-background: #fff;
+    --background-upload: rgba(244, 244, 244);
     --text-color-opacity-03: rgba(22, 24, 35, 0.03);
     --text-color-opacity-04: rgba(22, 24, 35, 0.04);
     --text-color-opacity-05: rgba(22, 24, 35, 0.05);
@@ -31,13 +31,14 @@
     --text-color-secondary: rgba(22, 24, 35, 0.75);
     --button-rounded-hover: rgba(22, 24, 35, 0.03);
     --box-shadow-header: rgb(0 0 0 / 12%);
+    --box-shadow-06: rgba(0, 0, 0, 0.06);
     --text-color: rgb(22, 24, 35);
     --hashtag-color: rgb(43, 93, 185);
 }
 
 .App[data-darkmode='true'] {
     --default-layout-background: #121212;
-    --popper-background: rgba(37, 37, 37);
+    --background-upload: rgb(22, 22, 22);
     --text-color-opacity-03: rgba(255, 255, 255, 0.03);
     --text-color-opacity-04: rgba(255, 255, 255, 0.04);
     --text-color-opacity-05: rgba(255, 255, 255, 0.05);
@@ -51,6 +52,7 @@
     --text-color-secondary: rgba(255, 255, 255, 0.75);
     --button-rounded-hover: rgba(255, 255, 255, 0.1);
     --box-shadow-header: rgb(255 255 255 / 12%);
+    --box-shadow-06: rgba(255, 255, 255, 0.06);
     --text-color: rgba(255, 255, 255, 0.9);
     --hashtag-color: rgb(143, 190, 233);
 }

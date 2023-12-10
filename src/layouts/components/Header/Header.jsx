@@ -19,6 +19,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { themeSelector } from '~/redux/selectors'
 import Modal from 'react-modal'
 import { actions } from '~/redux'
+import { openAuth } from '~/redux/selectors'
 
 import Authen from '../Authen'
 import { currentUserData } from '~/App'
@@ -76,6 +77,7 @@ function Header() {
     const profile = currentUser && currentUser.data.nickname
     const [shortcutsIsOpen, setShortcutsIsOpen] = useState(false)
     const darkMode = useSelector(themeSelector)
+    const isOpenAuth = useSelector(openAuth)
 
     const openKeyboardShortCuts = () => {
         setShortcutsIsOpen(true)
@@ -201,7 +203,7 @@ function Header() {
                 </div>
             </div>
 
-            <Authen />
+            {isOpenAuth && <Authen />}
 
             {shortcutsIsOpen && (
                 <Modal
