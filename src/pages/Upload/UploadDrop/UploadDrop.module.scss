@@ -1,5 +1,5 @@
 .upload-wrapper {
-    max-width: 1080px;
+    max-width: var(--max-layout-upload-width);
     width: 100%;
     max-height: min(100vh - 96px - 60px, 760px);
     box-shadow: 0 2px 8px var(--box-shadow-06);
@@ -64,6 +64,7 @@
     background-color: var(--primary);
     border-color: var(--primary);
     padding: 8px 0;
+    cursor: pointer;
     &:hover {
         background: linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)), #fe2c55;
     }

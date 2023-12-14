@@ -1,0 +1,80 @@
+.wrapper {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    border: 0.5px dashed var(--text-color-opacity-34);
+    padding: var(--padding-container);
+    position: relative;
+    height: var(--default-layout-content-header);
+}
+
+.split-body {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    white-space: nowrap;
+    line-height: 1.5;
+    color: var(--text-color-opacity-34);
+    font-weight: 400;
+    font-size: 1.2rem;
+}
+
+.increment {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    margin-top: 4px;
+}
+
+.minus,
+.plus {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    height: 32px;
+    color: var(--text-color-opacity-34);
+    border: 1px solid var(--text-color-opacity-12);
+    cursor: pointer;
+}
+
+.minus {
+    border-radius: 2px 0 0 2px;
+}
+
+.plus {
+    border-radius: 0 2px 2px 0;
+}
+
+.increment-num {
+    width: 48px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    border: 1px solid var(--text-color-opacity-12);
+    border-left: 0;
+    border-right: 0;
+}
+
+.increment-value {
+    width: 100%;
+    text-align: center;
+    color: var(--text-color);
+}
+
+.split-btn {
+    border-color: var(--text-color-opacity-12);
+    color: var(--text-color-secondary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .icon {
+        line-height: 0;
+    }
+
+    &:hover {
+        background-color: var(--text-color-opacity-03);
+    }
+}

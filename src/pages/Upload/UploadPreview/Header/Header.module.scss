@@ -1,0 +1,13 @@
+.wrapper {
+    --padding-container: 15px;
+    padding: 16px 24px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--default-layout-background);
+    box-shadow: 0 2px 8px var(--box-shadow-06);
+    margin-bottom: 12px;
+    gap: 12px;
+    border-radius: 8px;
+}

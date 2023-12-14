@@ -1,12 +1,14 @@
 import classNames from 'classnames/bind'
 import style from './Upload.module.scss'
-import { memo, useState } from 'react'
+import { memo, useState, createContext } from 'react'
 import UploadDrop from './UploadDrop'
 import UploadPreview from './UploadPreview'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 const cx = classNames.bind(style)
+
+export const fileUploadContext = createContext()
 
 function Upload() {
     const [file, setFile] = useState(null)
@@ -27,13 +29,13 @@ function Upload() {
 
     const handleSetFile = (e) => {
         if (Array.from(e.dataTransfer.files).length > 1) {
-            showToast('Unsupported file. Use Mp4 or WebM instead.')
+            showToast('Please select only one file.')
         } else {
             const fileType = Array.from(e.dataTransfer.files)[0].type
             if (fileType === 'video/mp4' || fileType === 'video/webm') {
                 setFile(Array.from(e.dataTransfer.files)[0])
             } else {
-                showToast('Please select only one file.')
+                showToast('Unsupported file. Use Mp4 or WebM instead.')
             }
         }
     }
@@ -45,7 +47,13 @@ function Upload() {
 
     return (
         <div className={cx('wrapper')}>
-            {file ? <UploadPreview /> : <UploadDrop handleDrop={handleDrop} showToast={showToast} setFile={setFile} />}
+            {file ? (
+                <fileUploadContext.Provider value={{ file }}>
+                    <UploadPreview file={file} />
+                </fileUploadContext.Provider>
+            ) : (
+                <UploadDrop handleDrop={handleDrop} showToast={showToast} setFile={setFile} />
+            )}
             <ToastContainer />
         </div>
     )
