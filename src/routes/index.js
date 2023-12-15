@@ -5,13 +5,19 @@ import Profile from '~/pages/Profile'
 import Upload from '~/pages/Upload'
 import Feedback from '~/pages/Feedback'
 import Live from '~/pages/Live'
+import Login from '~/pages/Login'
 
 import config from '~/config'
 
-const publicRoutes = [
+const allRoutes = [
     {
         path: config.routes.home,
         component: Home,
+    },
+    {
+        path: config.routes.login,
+        component: Login,
+        layout: null,
     },
     {
         path: config.routes.following,
@@ -33,9 +39,9 @@ const publicRoutes = [
         path: config.routes.upload,
         component: Upload,
         layout: HeaderOnly,
+        private: true,
+        redirectTo: config.routes.login,
     },
 ]
 
-const privateRoutes = []
-
-export { publicRoutes, privateRoutes }
+export { allRoutes }

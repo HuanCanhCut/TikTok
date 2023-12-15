@@ -1,30 +1,34 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames/bind'
 import { Link } from 'react-router-dom'
+import { forwardRef } from 'react'
 
 import style from './Button.module.scss'
 import useDarkMode from '~/hooks/useDarkMode'
 
 const cx = classNames.bind(style)
 
-function Button({
-    to,
-    href,
-    primary = false,
-    outline = false,
-    small = false,
-    large = false,
-    text = false,
-    disable = false,
-    rounded = false,
-    login = false,
-    className,
-    leftIcon,
-    children,
-    onClick,
-    ...passProps
-}) {
+function Button(
+    {
+        to,
+        href,
+        primary = false,
+        outline = false,
+        small = false,
+        large = false,
+        text = false,
+        disable = false,
+        rounded = false,
+        login = false,
+        className,
+        leftIcon,
+        children,
+        onClick,
+
+        ...passProps
+    },
+    ref
+) {
     let Component = 'button'
     const props = {
         onClick,
@@ -61,26 +65,11 @@ function Button({
     })
 
     return (
-        <Component className={classes} {...props}>
+        <Component className={classes} {...props} ref={ref}>
             {leftIcon && <span className={cx('icon')}>{leftIcon}</span>}
             <span className={cx('title')}>{children}</span>
         </Component>
     )
 }
 
-Button.propTypes = {
-    to: PropTypes.string,
-    href: PropTypes.string,
-    primary: PropTypes.bool,
-    outline: PropTypes.bool,
-    small: PropTypes.bool,
-    large: PropTypes.bool,
-    text: PropTypes.bool,
-    disable: PropTypes.string,
-    rounded: PropTypes.bool,
-    className: PropTypes.string,
-    leftIcon: PropTypes.node,
-    onClick: PropTypes.func,
-}
-
-export default React.memo(Button)
+export default React.memo(forwardRef(Button))

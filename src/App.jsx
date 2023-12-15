@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { publicRoutes } from '~/routes'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { allRoutes } from '~/routes'
 import { DefaultLayout } from './layouts'
 import { useEffect, createContext } from 'react'
 import { useDispatch } from 'react-redux'
@@ -32,7 +32,7 @@ function App() {
             <Router>
                 <div className="App" data-darkmode={useDarkMode()}>
                     <Routes>
-                        {publicRoutes.map((route, index) => {
+                        {allRoutes.map((route, index) => {
                             const Page = route.component
 
                             let Layout = DefaultLayout
@@ -49,7 +49,16 @@ function App() {
                                     path={route.path}
                                     element={
                                         <Layout>
-                                            <Page />
+                                            {/* If it is privateRoutes, it will check if you are not logged in and route to the login page */}
+                                            {route.private ? (
+                                                !!authUser ? (
+                                                    <Page />
+                                                ) : (
+                                                    <Navigate to={route.redirectTo} />
+                                                )
+                                            ) : (
+                                                <Page />
+                                            )}
                                         </Layout>
                                     }
                                 />

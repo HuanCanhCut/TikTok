@@ -33,6 +33,7 @@ import Search from '../../../Components/Search'
 import Image from '~/Components/Images'
 import KeyboardShortcuts from './KeyboardShorcuts'
 import * as authService from '~/services/authService'
+import { useNavigate } from 'react-router-dom'
 
 const cx = classNames.bind(style)
 
@@ -72,6 +73,7 @@ const MENU_ITEM = [
 ]
 
 function Header() {
+    const navigate = useNavigate()
     const dispatch = useDispatch()
     const currentUser = useContext(currentUserData)
     const profile = currentUser && currentUser.data.nickname
@@ -83,6 +85,8 @@ function Header() {
         setShortcutsIsOpen(true)
     }
 
+    const modalIsOpen = useSelector(openAuth)
+
     const closeKeyboardShortCuts = () => {
         setShortcutsIsOpen(false)
     }
@@ -93,6 +97,7 @@ function Header() {
                 accessToken: currentUser.meta.token,
             })
             localStorage.removeItem('user')
+            navigate(config.routes.home)
             window.location.reload()
             return response
         } catch (error) {
@@ -203,7 +208,20 @@ function Header() {
                 </div>
             </div>
 
-            {isOpenAuth && <Authen />}
+            {isOpenAuth && (
+                <Modal
+                    isOpen={modalIsOpen}
+                    onRequestClose={() => {
+                        dispatch(actions.openAuth(false))
+                    }}
+                    overlayClassName={'overlay'}
+                    ariaHideApp={false}
+                    className={'modal'}
+                >
+                    {' '}
+                    <Authen />
+                </Modal>
+            )}
 
             {shortcutsIsOpen && (
                 <Modal

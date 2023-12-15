@@ -1,5 +1,6 @@
 const routerConfig = {
     home: '/',
+    login: '/login',
     following: '/following',
     profile: '/:nickName',
     search: '/feedback',
