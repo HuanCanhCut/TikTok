@@ -1,0 +1,28 @@
+.wrapper {
+    width: 100%;
+    padding: 24px 40px;
+    box-shadow: 0 2px 8px var(--box-shadow-06);
+    border-radius: var(--border-radius-wrapper);
+    background-color: var(--default-layout-background);
+}
+
+.heading {
+    color: var(--text-color);
+}
+
+.title {
+    box-sizing: border-box;
+    margin-block: 0px;
+    font-size: 1.8rem;
+    line-height: 1.5;
+    font-family: var(--tux-fontFamilyParagraph);
+    font-weight: 400;
+    color: var(--text-color-tertiary);
+}
+
+.body {
+    margin-top: 24px;
+    margin-bottom: 130px;
+    height: 100%;
+    display: flex;
+}

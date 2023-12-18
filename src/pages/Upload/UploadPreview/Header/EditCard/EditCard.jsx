@@ -8,7 +8,6 @@ import { Cut } from '~/Components/Icons'
 const cx = classNames.bind(style)
 
 function EditCard() {
-    console.log('re-render')
     const { file } = useContext(fileUploadContext)
 
     return (

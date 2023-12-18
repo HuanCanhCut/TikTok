@@ -9,5 +9,5 @@
     box-shadow: 0 2px 8px var(--box-shadow-06);
     margin-bottom: 12px;
     gap: 12px;
-    border-radius: 8px;
+    border-radius: var(--border-radius-wrapper);
 }

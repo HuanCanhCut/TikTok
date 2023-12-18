@@ -8,7 +8,7 @@ const cx = classNames.bind(style)
 function BlueTick({ className }) {
     return (
         <span className={cx(style.wrapper, className)}>
-            <FontAwesomeIcon icon={faCircleCheck} className={cx('icon')} />
+            <FontAwesomeIcon icon={faCircleCheck} className={cx('icon', className)} />
         </span>
     )
 }

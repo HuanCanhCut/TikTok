@@ -4,6 +4,7 @@ const images = {
     noImage: require('~/assets/images/no-image.jpg'),
     createEffect: require('~/assets/images/create-effect.png'),
     notificationCat: require('~/assets/images/cat.jpg'),
+    mobilePreview: require('~/assets/images/mobilePreview.png'),
 }
 
 export default images

@@ -1,9 +1,8 @@
 .wrapper {
+    --border-radius-wrapper: 8px;
+    width: 100%;
     padding: 0 35px;
-    padding-top: var(--default-layout-header-height);
-    min-height: calc(100vh);
     background-color: var(--background-upload);
     display: flex;
     justify-content: center;
-    align-items: center;
 }
