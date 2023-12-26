@@ -5,6 +5,7 @@ const images = {
     createEffect: require('~/assets/images/create-effect.png'),
     notificationCat: require('~/assets/images/cat.jpg'),
     mobilePreview: require('~/assets/images/mobilePreview.png'),
+    appTab: require('~/assets/images/app-tab.png'),
 }
 
 export default images

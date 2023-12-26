@@ -1,0 +1,50 @@
+.wrapper {
+    position: absolute;
+    padding: 8px;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    user-select: none;
+    opacity: 0.9;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.user-avatar,
+.user-avatar-rotate {
+    margin: 20px 0;
+}
+
+.user-avatar-rotate {
+    width: 40px;
+    height: 40px;
+    border: 8px solid rgba(38, 33, 33, 0.75);
+    border-radius: 100%;
+    animation: rotateAnimation 6s linear infinite;
+}
+
+.rotate-animation-paused {
+    animation-play-state: paused;
+}
+
+.rotate-item {
+    width: 100%;
+    border-radius: 100%;
+    object-fit: cover;
+}
+
+@keyframes rotateAnimation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

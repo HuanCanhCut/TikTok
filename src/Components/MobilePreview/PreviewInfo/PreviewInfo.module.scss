@@ -1,0 +1,64 @@
+.wrapper {
+    width: 100%;
+    position: absolute;
+    bottom: 8px;
+    left: 0;
+    max-width: calc(100% - 80px);
+    padding: 12px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    user-select: none;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.user-name {
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.description {
+    font-size: 1.2rem;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.music-container {
+    display: flex;
+    align-items: center;
+}
+
+.music-icon {
+    font-size: 1.2rem;
+    line-height: 0;
+    padding-right: 8px;
+}
+
+.marquee-container {
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.marquee {
+    font-size: 1.2rem;
+    font-weight: 600;
+    display: inline-block;
+    animation: marqueeAnimation 10s linear infinite;
+}
+
+.marquee-paused {
+    animation-play-state: paused;
+}
+
+@keyframes marqueeAnimation {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
