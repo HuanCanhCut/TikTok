@@ -8,6 +8,7 @@ import Live from '~/pages/Live'
 import Login from '~/pages/Login'
 
 import config from '~/config'
+import NotFound from '~/pages/NotFound'
 
 const allRoutes = [
     {
@@ -34,6 +35,15 @@ const allRoutes = [
     {
         path: config.routes.live,
         component: Live,
+    },
+    {
+        path: config.routes.notfound,
+        component: NotFound,
+        layout: null,
+    },
+    {
+        path: config.routes.notfound,
+        component: NotFound,
     },
     {
         path: config.routes.upload,

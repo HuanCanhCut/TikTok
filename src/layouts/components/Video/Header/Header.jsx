@@ -90,12 +90,12 @@ function Header({ data }) {
                 render={renderPreview}
                 appendTo={document.body}
             >
-                <Link to={`@${dataUser.nickname}`}>
+                <Link to={`/user/@${dataUser.nickname}`}>
                     <Image className={cx('avatar')} src={dataUser.avatar} alt="" />
                 </Link>
             </Tippy>
             <div className={cx('body')}>
-                <Link to={`@${dataUser.nickname}`} className={cx('user-info')}>
+                <Link to={`/user/@${dataUser.nickname}`} className={cx('user-info')}>
                     <h3 className={cx('nick-name')}>
                         {dataUser.nickname}
                         {dataUser.tick && <BlueTick />}

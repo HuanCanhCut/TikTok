@@ -109,7 +109,7 @@ function Header() {
         {
             icon: <FontAwesomeIcon icon={faUser} />,
             title: 'View frofile',
-            to: `/@${profile}`,
+            to: `/user/@${profile}`,
         },
         {
             icon: <FontAwesomeIcon icon={faGear} />,

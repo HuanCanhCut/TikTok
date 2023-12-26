@@ -60,7 +60,7 @@ function AccountItem({ data }) {
                 onMount={onMount}
                 hideOnClick={false}
             >
-                <Link to={`/@${data.nickname}`}>
+                <Link to={`/user/@${data.nickname}`}>
                     <div className={cx('account-item')}>
                         <Image className={cx('avatar')} src={data.avatar} alt="" />
                         <div className={cx('account-info')}>

@@ -18,14 +18,14 @@ function AccountPreview({ data }) {
             })}
         >
             <header className={cx('header')}>
-                <Link to={`/@${data.nickname}`}>
+                <Link to={`/user/@${data.nickname}`}>
                     <Image className={cx('avatar')} src={data.avatar} alt="" />
                 </Link>
                 <Follow data={data} />
             </header>
             <div className={cx('body')}>
                 <div className={cx('info')}>
-                    <Link to={`/@${data.nickname}`}>
+                    <Link to={`/user/@${data.nickname}`}>
                         <p className={cx('nickname')}>
                             <strong>{data.nickname}</strong>
                             <span className={cx('icon')}>{data.tick && <BlueTick />}</span>
