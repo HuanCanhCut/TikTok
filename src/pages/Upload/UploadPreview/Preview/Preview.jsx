@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind'
 import style from './Preview.module.scss'
-import MobilePreview from '~/Components/MobilePreview'
+import MobilePreview from '../MobilePreview'
 
 const cx = classNames.bind(style)
 

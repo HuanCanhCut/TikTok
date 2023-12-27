@@ -2,13 +2,13 @@ import classNames from 'classnames/bind'
 import style from './MobilePreview.module.scss'
 import { useContext, useEffect } from 'react'
 import { fileUploadContext } from '~/pages/Upload/Upload'
-import VideoPreview from './VideoPreview'
 
 import images from '~/assets/images'
 import Image from '~/Components/Images/Image'
-import BlueTick from '../BlueTick/BlueTick'
-import Button from '../Button'
-import { MobileLive, MobileSearch } from '../Icons'
+import BlueTick from '../../../../Components/BlueTick/BlueTick'
+import Button from '../../../../Components/Button'
+import { MobileLive, MobileSearch } from '../../../../Components/Icons'
+import VideoPreview from './VideoPreview'
 
 const cx = classNames.bind(style)
 

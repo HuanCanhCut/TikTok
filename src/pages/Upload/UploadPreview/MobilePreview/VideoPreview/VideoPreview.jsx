@@ -10,7 +10,6 @@ import SidebarPreview from '../SidebarPreview'
 const cx = classNames.bind(style)
 
 function VideoPreview() {
-    console.log('re-render')
     const currentFile = useContext(fileUploadContext)
     const videoRef = useRef()
     const [videoRatio, setVideoRatio] = useState()
