@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import classNames from 'classnames/bind'
 import style from './SidebarPreview.module.scss'
 import { useContext } from 'react'
@@ -23,6 +24,10 @@ function SidebarPreview({ isPlay }) {
             </div>
         </div>
     )
+}
+
+SidebarPreview.propTypes = {
+    isPlay: PropTypes.bool.isRequired,
 }
 
 export default SidebarPreview

@@ -218,7 +218,6 @@ function Header() {
                     ariaHideApp={false}
                     className={'modal'}
                 >
-                    {' '}
                     <Authen />
                 </Modal>
             )}

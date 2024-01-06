@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import classNames from 'classnames/bind'
 import style from './PreviewInfo.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -41,6 +42,10 @@ function PreviewInfo({ isPlay }) {
             </div>
         </div>
     )
+}
+
+PreviewInfo.propTypes = {
+    isPlay: PropTypes.bool.isRequired,
 }
 
 export default memo(PreviewInfo)

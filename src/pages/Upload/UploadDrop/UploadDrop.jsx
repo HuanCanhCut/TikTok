@@ -1,15 +1,50 @@
+import PropTypes from 'prop-types'
 import classNames from 'classnames/bind'
 import style from './UploadDrop.module.scss'
 import { UploadVideo } from '~/Components/Icons'
 import { useRef } from 'react'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const cx = classNames.bind(style)
 
-function UploadDrop({ handleDrop, showToast, setFile }) {
+function UploadDrop({ setFile, className, small = false }) {
     const inputRef = useRef()
 
     const handleDragOver = (e) => {
         e.preventDefault()
+    }
+
+    const showToast = (message) => {
+        return toast.error(message, {
+            className: 'custom-toast',
+            position: 'top-center',
+            autoClose: 2500,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'colored',
+        })
+    }
+
+    const handleSetFile = (e) => {
+        if (Array.from(e.dataTransfer.files).length > 1) {
+            showToast('Please select only one file.')
+        } else {
+            const fileType = Array.from(e.dataTransfer.files)[0].type
+            if (fileType === 'video/mp4' || fileType === 'video/webm') {
+                setFile(Array.from(e.dataTransfer.files)[0])
+            } else {
+                showToast('Unsupported file. Use Mp4 or WebM instead.')
+            }
+        }
+    }
+
+    const handleDrop = (e) => {
+        e.preventDefault()
+        handleSetFile(e)
     }
 
     const handleChoseFile = (e) => {
@@ -22,8 +57,13 @@ function UploadDrop({ handleDrop, showToast, setFile }) {
         }
     }
 
+    const classes = cx('wrapper', {
+        small,
+        [className]: className,
+    })
+
     return (
-        <div className={cx('wrapper')}>
+        <div className={cx(classes)}>
             <div className={cx('upload-wrapper')}>
                 <label
                     htmlFor="upload-file"
@@ -56,6 +96,11 @@ function UploadDrop({ handleDrop, showToast, setFile }) {
             </div>
         </div>
     )
+}
+
+UploadDrop.propTypes = {
+    setFile: PropTypes.func.isRequired,
+    className: PropTypes.string,
 }
 
 export default UploadDrop

@@ -1,12 +1,13 @@
 import classNames from 'classnames/bind'
 import style from './MobilePreview.module.scss'
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState, useCallback } from 'react'
 import { fileUploadContext } from '~/pages/Upload/Upload'
 
+import BlueTick from '~/Components/BlueTick/BlueTick'
+import Button from '~/Components/Button'
+import Modal from '~/Components/Modal'
 import images from '~/assets/images'
 import Image from '~/Components/Images/Image'
-import BlueTick from '../../../../Components/BlueTick/BlueTick'
-import Button from '../../../../Components/Button'
 import { MobileLive, MobileSearch } from '../../../../Components/Icons'
 import VideoPreview from './VideoPreview'
 
@@ -22,6 +23,22 @@ function MobilePreview() {
             currentFile.file.preview && URL.revokeObjectURL(currentFile.file)
         }
     }, [currentFile])
+
+    const [isOpen, setIsOpen] = useState(false)
+
+    const closeModal = () => {
+        setIsOpen(false)
+    }
+
+    const openModal = useCallback(() => {
+        setIsOpen(true)
+    }, [])
+
+    const confirmChange = useCallback(() => {
+        currentFile.setFile(null)
+        closeModal()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <div className={cx('wrapper')}>
@@ -41,11 +58,21 @@ function MobilePreview() {
             <div className={cx('change-video')}>
                 <div className={cx('change-text')}>
                     <BlueTick className={cx('check-icon')} />
-                    <span className={cx('description')}>Watch trending videos for you _ TikTok</span>
+                    <span className={cx('description')}>{currentFile.file.name}</span>
                 </div>
-                <Button text className={cx('change-video-btn')}>
+                <Button text className={cx('change-video-btn')} onClick={openModal}>
                     Change video
                 </Button>
+                {isOpen && (
+                    <Modal
+                        isOpen={isOpen}
+                        closeModal={closeModal}
+                        title="Replace this video?"
+                        description="Caption and video settings will still be saved."
+                        allow="Change"
+                        onAllow={confirmChange}
+                    />
+                )}
             </div>
         </div>
     )

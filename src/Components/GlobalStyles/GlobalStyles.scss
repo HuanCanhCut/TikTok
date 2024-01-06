@@ -77,8 +77,6 @@ body {
     font-family: ProximaNova, sans-serif;
     line-height: 1.5;
     text-rendering: optimizeSpeed;
-    overflow-y: overlay;
-    overflow-x: hidden;
     background-color: var(--default-layout-background);
     .tippy-box {
         background-color: #434343;
@@ -91,6 +89,10 @@ body {
     .tippy-arrow {
         color: #434343;
     }
+}
+
+body[class='ReactModal__Body--open'] {
+    overflow: hidden;
 }
 
 body::-webkit-scrollbar {
