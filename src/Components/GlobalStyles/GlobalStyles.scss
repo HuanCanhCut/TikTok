@@ -78,6 +78,9 @@ body {
     line-height: 1.5;
     text-rendering: optimizeSpeed;
     background-color: var(--default-layout-background);
+    &::-webkit-scrollbar {
+        display: none;
+    }
     .tippy-box {
         background-color: #434343;
         border-radius: 8px;
@@ -93,10 +96,6 @@ body {
 
 body[class='ReactModal__Body--open'] {
     overflow: hidden;
-}
-
-body::-webkit-scrollbar {
-    display: none;
 }
 
 // scroll bars

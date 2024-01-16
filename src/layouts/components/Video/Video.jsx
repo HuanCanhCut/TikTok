@@ -91,7 +91,7 @@ function Video({ type }) {
                 scrollToIndex(prevIndex)
             }
 
-            if (e.key === 'End' || e.key === 'Home' || e.which === 32 || e.which === 33 || e.which === 34) {
+            if (e.key === 'End' || e.key === 'Home' || e.which === 33 || e.which === 34) {
                 e.preventDefault()
             }
         }

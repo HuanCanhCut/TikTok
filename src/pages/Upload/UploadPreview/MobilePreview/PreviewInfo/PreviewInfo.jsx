@@ -3,20 +3,20 @@ import classNames from 'classnames/bind'
 import style from './PreviewInfo.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useContext, memo } from 'react'
-import { fileUploadContext } from '~/pages/Upload/Upload'
 import { currentUserData } from '~/App'
 import { faMusic } from '@fortawesome/free-solid-svg-icons'
+import { fileNameContext } from '../../UploadPreview'
 
 const cx = classNames.bind(style)
 
 function PreviewInfo({ isPlay }) {
-    const currentFile = useContext(fileUploadContext)
+    const { fileName } = useContext(fileNameContext)
     const currentUser = useContext(currentUserData)
 
     return (
         <div className={cx('wrapper')}>
             <span className={cx('user-name')}>{`@ ${currentUser.data.first_name} ${currentUser.data.last_name}`}</span>
-            <span className={cx('description')}>{currentFile.file.name}</span>
+            <span className={cx('description')}>{fileName}</span>
             <div className={cx('music-container')}>
                 <span className={cx('music-icon')}>
                     <FontAwesomeIcon icon={faMusic} />

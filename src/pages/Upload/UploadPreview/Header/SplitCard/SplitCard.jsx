@@ -31,7 +31,7 @@ function SplitCard() {
     return (
         <div className={cx('wrapper')}>
             <div className={cx('split-body')}>
-                <span className={cx('content')}>Split into multiple parts to get more exposure</span>
+                <span className={cx('content')}>Adjust thumbnail for video</span>
                 <div className={cx('increment')}>
                     <span className={cx('minus')} onClick={handleDecrease}>
                         <Minus />

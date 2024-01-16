@@ -1,6 +1,7 @@
 .wrapper {
     width: 284px;
     --app-tab-height: 54px;
+    margin-right: 16px;
 }
 
 .mobile-container {
@@ -66,42 +67,4 @@
 .page-icon {
     width: 1.8rem;
     opacity: 0.7;
-}
-
-.change-video {
-    margin-top: 16px;
-    border: 1px solid var(--text-color-opacity-12);
-    border-radius: 12px;
-    padding: 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.change-text {
-    flex: 1;
-    -webkit-line-clamp: 1;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.description {
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 17px;
-    color: var(--text-color-secondary);
-}
-
-.check-icon {
-    color: var(--text-color-secondary);
-    margin-right: 4px;
-}
-
-.change-video-btn {
-    padding: 0;
-    background-color: transparent;
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: var(--text-color-opacity-90);
 }

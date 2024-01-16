@@ -4,11 +4,12 @@ import { fileUploadContext } from '~/pages/Upload/Upload'
 import style from './EditCard.module.scss'
 import Button from '~/Components/Button'
 import { Cut } from '~/Components/Icons'
+import { fileNameContext } from '../../UploadPreview'
 
 const cx = classNames.bind(style)
 
 function EditCard() {
-    const { file } = useContext(fileUploadContext)
+    const { fileName } = useContext(fileNameContext)
 
     return (
         <div className={cx('wrapper')}>
@@ -18,7 +19,7 @@ function EditCard() {
                 </div>
 
                 <div className={cx('video-basic')}>
-                    <span className={cx('caption')}>{file.name}</span>
+                    <span className={cx('caption')}>{fileName}</span>
                 </div>
             </div>
             <div className={cx('action-btn')}>

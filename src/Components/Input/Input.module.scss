@@ -1,0 +1,33 @@
+.wrapper {
+    min-width: 300px;
+    border-radius: 2px;
+    border: 1px solid var(--text-color-opacity-12);
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input {
+    flex-grow: 1;
+    padding: 0 8px;
+    color: var(--text-color);
+    font-size: 1.5rem;
+}
+
+.left-icon,
+.right-icon {
+    line-height: 1;
+    font-size: 1.4rem;
+}
+
+.left-icon {
+    margin-left: 8px;
+}
+
+.right-icon {
+    margin-right: 16px;
+    padding-left: 12px;
+    & > * {
+        cursor: pointer;
+    }
+}

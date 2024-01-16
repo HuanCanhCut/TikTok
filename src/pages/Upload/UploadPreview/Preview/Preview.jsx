@@ -2,14 +2,14 @@ import classNames from 'classnames/bind'
 import style from './Preview.module.scss'
 import MobilePreview from '../MobilePreview'
 import UploadDrop from '../../UploadDrop'
-import { useContext } from 'react'
+import { useContext, memo } from 'react'
 import { fileUploadContext } from '../../Upload'
+import FormControl from '../FormControl'
 
 const cx = classNames.bind(style)
 
 function Preview() {
     const currentFile = useContext(fileUploadContext)
-    console.log(currentFile.file)
 
     return (
         <div className={cx('wrapper')}>
@@ -19,9 +19,11 @@ function Preview() {
             </header>
             <div className={cx('body')}>
                 {currentFile.file ? <MobilePreview /> : <UploadDrop small setFile={currentFile.setFile} />}
+                <FormControl></FormControl>
             </div>
         </div>
     )
 }
 
-export default Preview
+// Use memo to avoid re-rendering every time the file name is changed
+export default memo(Preview)

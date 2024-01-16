@@ -34,32 +34,21 @@ function Authen() {
         return Action
     }
 
+    const callApi = async (options) => {
+        setLoading(true)
+        const response = await Auth[options](email, password)
+        setLoading(false)
+        if (response && response.meta.token) {
+            setIsValid(false)
+            setLocalStorage('user', response)
+        } else {
+            setIsValid(true)
+        }
+    }
+
     const handleSubmitLogin = async () => {
         try {
-            // call API when signUp
-            if (signUp) {
-                setLoading(true)
-                const response = await Auth.signUp(email, password)
-                setLoading(false)
-                if (response.meta && response.meta.token) {
-                    setIsValid(false)
-                    setLocalStorage('user', response)
-                } else {
-                    setIsValid(true)
-                }
-            }
-            // call API  when log in
-            else {
-                setLoading(true)
-                const response = await Auth.login(email, password)
-                setLoading(false)
-                if (response.meta && response.meta.token) {
-                    setIsValid(false)
-                    setLocalStorage('user', response)
-                } else {
-                    setIsValid(true)
-                }
-            }
+            signUp ? callApi('signUp') : callApi('login')
         } catch (error) {
             setIsValid(true)
         }
