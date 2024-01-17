@@ -1,12 +1,13 @@
 import * as request from '~/utils/httpRequest'
 
-export const getSuggestedAccounts = async ({ page, perPage }) => {
+export const getSuggestedAccounts = async ({ page, perPage, accessToken }) => {
     try {
         return await request.get(`users/suggested?`, {
             params: {
                 page,
                 per_page: perPage,
             },
+            headers: { Authorization: `Bearer ${accessToken}` },
         })
     } catch (error) {
         console.log(error)

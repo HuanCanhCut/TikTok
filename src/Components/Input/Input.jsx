@@ -18,7 +18,6 @@ function Input(
     },
     ref
 ) {
-    console.log('re-render')
     const classes = cx('wrapper', {
         [className]: className,
     })
