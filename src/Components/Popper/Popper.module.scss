@@ -10,11 +10,13 @@
     flex-direction: column;
     align-items: flex-start;
     color: var(--text-color);
+    border: 1px solid rgba(169, 169, 169, 0.61);
 }
 
 .wrapper {
     &.darkMode {
         background-color: rgba(37, 37, 37);
         box-shadow: rgba(255, 255, 255, 0.12) 0px 2px 12px;
+        border: 1px solid rgba(64, 64, 64, 0.54);
     }
 }

@@ -1,6 +1,5 @@
 import classNames from 'classnames/bind'
 import { useContext } from 'react'
-import { fileUploadContext } from '~/pages/Upload/Upload'
 import style from './EditCard.module.scss'
 import Button from '~/Components/Button'
 import { Cut } from '~/Components/Icons'
@@ -22,11 +21,9 @@ function EditCard() {
                     <span className={cx('caption')}>{fileName}</span>
                 </div>
             </div>
-            <div className={cx('action-btn')}>
-                <Button primary leftIcon={<Cut />} className={cx('edit-video')}>
-                    Edit video
-                </Button>
-            </div>
+            <Button primary leftIcon={<Cut />} className={cx('edit-video')}>
+                Edit video
+            </Button>
         </div>
     )
 }

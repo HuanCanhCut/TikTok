@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind'
 import style from './MobilePreview.module.scss'
-import { useContext, useEffect, useState, useCallback } from 'react'
+import { useContext, useEffect } from 'react'
 import { fileUploadContext } from '~/pages/Upload/Upload'
 
 import images from '~/assets/images'
@@ -18,25 +18,9 @@ function MobilePreview() {
 
     useEffect(() => {
         return () => {
-            currentFile.file.preview && URL.revokeObjectURL(currentFile.file)
+            currentFile.file.preview && URL.revokeObjectURL(currentFile.file.preview)
         }
     }, [currentFile])
-
-    const [isOpen, setIsOpen] = useState(false)
-
-    const closeModal = () => {
-        setIsOpen(false)
-    }
-
-    const openModal = useCallback(() => {
-        setIsOpen(true)
-    }, [])
-
-    const confirmChange = useCallback(() => {
-        currentFile.setFile(null)
-        closeModal()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
 
     return (
         <div className={cx('wrapper')}>

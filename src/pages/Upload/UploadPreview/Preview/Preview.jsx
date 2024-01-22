@@ -1,8 +1,9 @@
 import classNames from 'classnames/bind'
 import style from './Preview.module.scss'
+import { useContext, memo } from 'react'
+
 import MobilePreview from '../MobilePreview'
 import UploadDrop from '../../UploadDrop'
-import { useContext, memo } from 'react'
 import { fileUploadContext } from '../../Upload'
 import FormControl from '../FormControl'
 
@@ -14,7 +15,7 @@ function Preview() {
     return (
         <div className={cx('wrapper')}>
             <header>
-                <h1 className={cx('heding')}>Upload video</h1>
+                <h1 className={cx('heading')}>Upload video</h1>
                 <span className={cx('title')}>Post a video to your account</span>
             </header>
             <div className={cx('body')}>
