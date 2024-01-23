@@ -1,11 +1,12 @@
 import classNames from 'classnames/bind'
 import style from './Caption.module.scss'
-import { useContext, useRef, useEffect, useState, useCallback } from 'react'
+import { useContext, useRef, useEffect, useState, useCallback, memo } from 'react'
 import useDarkMode from '~/hooks/useDarkMode'
 import Tippy from '@tippyjs/react/headless'
 
 import { currentUserData } from '~/App'
 import { fileNameContext } from '../../UploadPreview'
+import { fileUploadContext } from '~/pages/Upload/Upload'
 import { HashTag, Tag } from '~/Components/Icons'
 import Input from '~/Components/Input'
 import AccountItem from '~/Components/AccountItem'
@@ -17,9 +18,11 @@ import { faX } from '@fortawesome/free-solid-svg-icons'
 const cx = classNames.bind(style)
 const maxLength = 2200
 
-function FormControl() {
+function Caption() {
     const currentUser = useContext(currentUserData)
     const { fileName, setFileName } = useContext(fileNameContext)
+    const { file } = useContext(fileUploadContext)
+
     const inputRef = useRef(null)
     const scrollItemRef = useRef(null)
     const accessToken = currentUser && currentUser.meta.token
@@ -138,7 +141,7 @@ function FormControl() {
                 <div className={cx('input-wrapper')}>
                     <Input
                         ref={inputRef}
-                        value={fileName}
+                        value={file ? fileName : ''}
                         onChange={(e) => {
                             setFileName(e.target.value)
                         }}
@@ -165,4 +168,4 @@ function FormControl() {
     )
 }
 
-export default FormControl
+export default memo(Caption)

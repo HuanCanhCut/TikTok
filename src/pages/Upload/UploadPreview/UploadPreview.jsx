@@ -18,6 +18,17 @@ function UploadPreview({ file }) {
         }
     }, [file])
 
+    if (file) {
+        file.preview = URL.createObjectURL(file)
+    }
+
+    useEffect(() => {
+        return () => {
+            file.preview && URL.revokeObjectURL(file.preview)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
     return (
         <fileNameContext.Provider value={{ fileName, setFileName }}>
             <div className={cx('wrapper')}>

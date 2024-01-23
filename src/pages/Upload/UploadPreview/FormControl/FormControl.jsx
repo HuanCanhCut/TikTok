@@ -9,7 +9,7 @@ import useDarkMode from '~/hooks/useDarkMode'
 
 const cx = classNames.bind(style)
 
-function FormControl() {
+function FormControl({ captureImages, slideQuantity }) {
     const { file } = useContext(fileUploadContext)
 
     return (
@@ -21,7 +21,9 @@ function FormControl() {
             <div className={cx('header')}>
                 <Caption></Caption>
             </div>
-            {file && <Cover />}
+            {file && captureImages.length === slideQuantity && (
+                <Cover captureImages={captureImages} slideQuantity={slideQuantity} />
+            )}
         </div>
     )
 }

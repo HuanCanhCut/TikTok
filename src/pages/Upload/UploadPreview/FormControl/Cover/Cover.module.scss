@@ -48,16 +48,6 @@
     object-fit: cover;
 }
 
-#canvas {
-    display: none;
-    user-select: none;
-}
-
-.capture-image {
-    height: 100%;
-    object-fit: cover;
-}
-
 .cover-frame {
     &.darkMode {
         border-color: rgb(56, 56, 56);
