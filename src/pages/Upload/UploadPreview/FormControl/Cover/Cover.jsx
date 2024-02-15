@@ -3,6 +3,7 @@ import style from './Cover.module.scss'
 import { useRef, useContext } from 'react'
 import Tippy from '@tippyjs/react'
 import useDarkMode from '~/hooks/useDarkMode'
+import { motion } from 'framer-motion'
 
 import { fileUploadContext } from '~/pages/Upload/Upload'
 import { CircleInfo } from '~/Components/Icons'
@@ -73,8 +74,11 @@ function Cover({ captureImages, slideQuantity }) {
             >
                 {captureImages.map((item, index) => {
                     return (
-                        <img
+                        <motion.img
                             src={item}
+                            initial={{ opacity: 0, y: 20, filter: 'blur(2px)' }}
+                            animate={{ opacity: 1, y: 0, blur: 0, filter: 'blur(0px)' }}
+                            transition={{ duration: 0.7, delay: index * 0.18 }}
                             alt=""
                             key={index}
                             className={cx('capture-image')}

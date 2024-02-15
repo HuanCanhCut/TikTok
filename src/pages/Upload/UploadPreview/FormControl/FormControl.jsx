@@ -8,7 +8,6 @@ import { fileUploadContext } from '../../Upload'
 import useDarkMode from '~/hooks/useDarkMode'
 
 const cx = classNames.bind(style)
-
 function FormControl({ captureImages, slideQuantity }) {
     const { file } = useContext(fileUploadContext)
 

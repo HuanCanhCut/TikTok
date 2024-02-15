@@ -31,14 +31,14 @@
 .cover-thumb {
     width: 15%;
     height: 110%;
-    border: 6px solid #e7e7e7;
+    border: 6px solid rgb(245, 245, 245);
     border-radius: 4px;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     cursor: grab;
     left: 0;
-    box-shadow: rgba(34, 90, 89, 0.2) 2px 4px 20px;
+    box-shadow: rgba(34, 90, 89, 0.5) 2px 4px 20px;
     display: flex;
 }
 

@@ -1,7 +1,7 @@
 .change-video {
     margin-top: 16px;
     border: 1px solid var(--text-color-opacity-12);
-    border-radius: 12px;
+    border-radius: 8px;
     padding: 6px 4px;
     display: flex;
     justify-content: space-between;
@@ -10,12 +10,11 @@
 
 .change-text {
     flex: 1 1;
-    -webkit-line-clamp: 1;
+    display: flex;
+    padding: 6px 0 6px 4px;
     align-items: center;
-    padding: 4px 0;
     overflow: hidden;
     text-overflow: ellipsis;
-    display: inline-block;
     white-space: nowrap;
 }
 
@@ -24,6 +23,12 @@
     font-size: 12px;
     line-height: 17px;
     color: var(--text-color-secondary);
+    display: block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    white-space: nowrap;
 }
 
 .check-icon {

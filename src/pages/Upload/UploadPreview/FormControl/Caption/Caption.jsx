@@ -64,6 +64,7 @@ function Caption() {
     }
 
     const tagAccount = () => {
+        inputRef.current.focus()
         showAccounts ? setShowAccounts(false) : setShowAccounts(true)
     }
 
@@ -109,11 +110,24 @@ function Caption() {
         }
     }
 
+    const handleKeyDown = (e) => {
+        switch (e.key) {
+            case 'Escape':
+                setShowAccounts(false)
+                break
+            default:
+                break
+        }
+    }
+
     return (
         <div
             className={cx('wrapper', {
                 darkMode: useDarkMode(),
             })}
+            onKeyDown={(e) => {
+                handleKeyDown(e)
+            }}
         >
             <div className={cx('caption')}>
                 <span className={cx('caption-title')}>{showAccounts ? '@Friends' : 'Caption'}</span>

@@ -6,6 +6,7 @@
 
 .mobile-container {
     width: 100%;
+    min-width: 284px;
     position: relative;
     height: 600px;
 }
@@ -67,46 +68,4 @@
 .page-icon {
     width: 1.8rem;
     opacity: 0.7;
-}
-.change-video {
-    margin-top: 16px;
-    border: 1px solid var(--text-color-opacity-12);
-    border-radius: 12px;
-    padding: 6px 4px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.change-text {
-    flex: 1 1;
-    -webkit-line-clamp: 1;
-    align-items: center;
-    padding: 4px 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: inline-block;
-    white-space: nowrap;
-}
-
-.description {
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 17px;
-    color: var(--text-color-secondary);
-}
-
-.check-icon {
-    color: var(--text-color-secondary);
-    margin-right: 4px;
-}
-
-.change-video-btn {
-    padding: 0;
-    background-color: transparent;
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: var(--text-color-opacity-90);
-    margin: 0;
-    margin-left: 4px;
 }
