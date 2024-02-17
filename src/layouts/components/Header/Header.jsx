@@ -144,7 +144,7 @@ function Header() {
     }
 
     return (
-        <header className={cx('wrapper', { darkMode })}>
+        <header className={cx('wrapper')}>
             <div className={cx('inner')}>
                 <Link to={config.routes.home} className={cx('logo-link')}>
                     <img src={darkMode ? images.lightLogo : images.darkLogo} alt="Logo" />
@@ -160,14 +160,14 @@ function Header() {
                             {/* Using a wrapper <div> or <span> tag around the reference element solves this by creating a new parentNode context*/}
                             <div>
                                 <Tippy delay={[0, 50]} content="Messages" interactive>
-                                    <button className={cx('action-btn', { darkMode })}>
+                                    <button className={cx('action-btn')}>
                                         <MessageIcon />
                                     </button>
                                 </Tippy>
                             </div>
                             <div>
                                 <Tippy delay={[0, 50]} content="Mail Box" interactive>
-                                    <button className={cx('action-btn', { darkMode })}>
+                                    <button className={cx('action-btn')}>
                                         <InboxIcon />
                                     </button>
                                 </Tippy>

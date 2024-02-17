@@ -42,11 +42,7 @@ function Caption() {
     }, [fileName])
 
     const updateFileName = (value) => {
-        if (fileName.length >= maxLength) {
-            return
-        }
-
-        if (apiCalling) {
+        if (fileName.length >= maxLength || apiCalling) {
             return
         }
 

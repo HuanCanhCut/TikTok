@@ -39,7 +39,6 @@ function VideoItem({ video }) {
                 videoRef.current.pause()
             }
         }
-
         playVideo()
     }, [isVisible])
 

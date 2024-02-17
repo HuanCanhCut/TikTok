@@ -29,7 +29,8 @@ function TogglePlay({ videoRef }) {
     useEffect(() => {
         const handleResetVideo = () => {
             videoRef.current.currentTime = 0
-            setIsPlaying(false)
+            videoRef.current.play()
+            setIsPlaying(true)
         }
 
         if (videoRef.current) {
@@ -46,8 +47,8 @@ function TogglePlay({ videoRef }) {
                     <FontAwesomeIcon icon={faPlay} className={cx('play-icon')} />
                 )}
             </div>
-            <PreviewInfo isPlay={true} />
-            <SidebarPreview isPlay={true} />
+            <PreviewInfo isPlay={isPlaying && isPlaying} />
+            <SidebarPreview isPlay={isPlaying && isPlaying} />
         </>
     )
 }

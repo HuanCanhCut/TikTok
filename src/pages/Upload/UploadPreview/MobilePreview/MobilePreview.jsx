@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import classNames from 'classnames/bind'
 import style from './MobilePreview.module.scss'
 
@@ -32,6 +33,12 @@ function MobilePreview({ setCaptureImages, captureImagesRef, setIsIntervalActive
             ></ChangeVideo>
         </div>
     )
+}
+
+MobilePreview.propType = {
+    setCaptureImages: PropTypes.func,
+    captureImagesRef: PropTypes.node,
+    setIsIntervalActive: PropTypes.func,
 }
 
 export default MobilePreview

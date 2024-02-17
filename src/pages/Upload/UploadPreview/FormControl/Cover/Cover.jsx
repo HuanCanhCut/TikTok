@@ -52,7 +52,7 @@ function Cover({ captureImages, slideQuantity }) {
     }
 
     return (
-        <>
+        <div>
             <div className={cx('cover')}>
                 <span className={cx('title')}>Cover</span>
                 <Tippy
@@ -90,7 +90,7 @@ function Cover({ captureImages, slideQuantity }) {
                     <video src={file.preview} className={cx('video')} ref={videoRef}></video>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 

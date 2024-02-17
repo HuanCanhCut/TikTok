@@ -27,7 +27,7 @@ function SidebarPreview({ isPlay }) {
 }
 
 SidebarPreview.propTypes = {
-    isPlay: PropTypes.bool.isRequired,
+    isPlay: PropTypes.bool,
 }
 
 export default SidebarPreview

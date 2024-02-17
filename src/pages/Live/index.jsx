@@ -1,4 +1,8 @@
 import { memo } from 'react'
+import classNames from 'classnames/bind'
+import style from './Live.module.scss'
+
+const cx = classNames.bind(style)
 
 function Live() {
     return (
@@ -13,7 +17,7 @@ function Live() {
                 paddingRight: 50,
             }}
         >
-            <h1 style={{ fontSize: '70px' }}>The API don't support live viewing.</h1>
+            <h1 className={cx('heading')}>The API don't support live viewing.</h1>
         </div>
     )
 }

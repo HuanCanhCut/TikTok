@@ -5,24 +5,23 @@ import { useContext } from 'react'
 import Caption from './Caption'
 import Cover from './Cover'
 import { fileUploadContext } from '../../Upload'
-import useDarkMode from '~/hooks/useDarkMode'
+import AllowUser from './AllowUser'
 
 const cx = classNames.bind(style)
+
 function FormControl({ captureImages, slideQuantity }) {
     const { file } = useContext(fileUploadContext)
 
     return (
-        <div
-            className={cx('wrapper', {
-                darkMode: useDarkMode(),
-            })}
-        >
+        <div className={cx('wrapper')}>
             <div className={cx('header')}>
                 <Caption></Caption>
             </div>
             {file && captureImages.length === slideQuantity && (
                 <Cover captureImages={captureImages} slideQuantity={slideQuantity} />
             )}
+
+            <AllowUser />
         </div>
     )
 }

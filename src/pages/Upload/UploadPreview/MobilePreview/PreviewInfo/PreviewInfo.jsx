@@ -45,7 +45,7 @@ function PreviewInfo({ isPlay }) {
 }
 
 PreviewInfo.propTypes = {
-    isPlay: PropTypes.bool.isRequired,
+    isPlay: PropTypes.bool,
 }
 
 export default memo(PreviewInfo)

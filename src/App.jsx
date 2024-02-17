@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { allRoutes } from '~/routes'
 import { DefaultLayout } from './layouts'
 import { useEffect, createContext } from 'react'
-import { useDispatch } from 'react-redux'
 
 import './Components/GlobalStyles/GlobalStyles.scss'
 import useDarkMode from './hooks/useDarkMode'
@@ -11,12 +10,10 @@ import useDarkMode from './hooks/useDarkMode'
 export const currentUserData = createContext()
 
 function App() {
-    const dispatch = useDispatch()
     const authUser = JSON.parse(localStorage.getItem('user'))
 
     useEffect(() => {
         const handleUnload = () => {
-            // localStorage.removeItem('firstNotification')
             localStorage.removeItem('pageSuggestedIndexes')
             localStorage.removeItem('pageVideoIndexes')
         }
@@ -26,7 +23,7 @@ function App() {
         return () => {
             window.removeEventListener('beforeunload', handleUnload)
         }
-    }, [dispatch])
+    }, [])
 
     return (
         <currentUserData.Provider value={authUser}>
