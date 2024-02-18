@@ -1,37 +1,31 @@
+import PropTypes from 'prop-types'
 import classNames from 'classnames/bind'
 import style from './SwitchButton.module.scss'
 import { motion } from 'framer-motion'
-import { actions } from '~/redux'
-import { useDispatch } from 'react-redux'
-import { useState, useEffect } from 'react'
 
 const cx = classNames.bind(style)
 
-function SwitchButton() {
-    const dispatch = useDispatch()
-    const [isOn, setIsOn] = useState(JSON.parse(localStorage.getItem('darkMode') || false))
-
+function SwitchButton({ isOn, onClick, className, ...props }) {
     const spring = {
         type: 'spring',
         stiffness: 700,
         damping: 30,
     }
 
-    const handleToggleSwitch = () => {
-        setIsOn((prev) => {
-            return !prev
-        })
-    }
-
-    useEffect(() => {
-        dispatch(actions.darkMode(isOn))
-    }, [dispatch, isOn])
+    const classes = cx('switch', {
+        [className]: className,
+    })
 
     return (
-        <span className={cx('switch')} onClick={handleToggleSwitch} data-ison={isOn}>
+        <span className={classes} onClick={onClick} data-ison={isOn} {...props}>
             <motion.span className={cx('switch-core')} layout transition={spring}></motion.span>
         </span>
     )
+}
+
+SwitchButton.propTypes = {
+    isOn: PropTypes.bool.isRequired,
+    onClick: PropTypes.func,
 }
 
 export default SwitchButton

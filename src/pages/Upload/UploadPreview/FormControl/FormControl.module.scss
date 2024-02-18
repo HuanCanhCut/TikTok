@@ -6,7 +6,23 @@
     gap: 30px;
 }
 
+.upload-btn-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 .header {
     display: flex;
     flex-direction: column;
+}
+
+.discard {
+    border-color: var(--text-color-opacity-12);
+    color: var(--text-color);
+    font-weight: 500;
+
+    &:hover {
+        background-color: var(--text-color-opacity-03);
+    }
 }

@@ -3,19 +3,16 @@
     width: 44px;
     height: 24px;
     border-radius: 100px;
-    background-color: rgba(22, 24, 35, 0.12);
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
+    background-color: var(--text-color-opacity-12);
     display: flex;
     justify-content: flex-start;
     align-items: center;
     padding-right: 2px;
     padding-left: 3.5px;
     margin: 1px;
+    cursor: pointer;
     &:hover {
-        background-color: rgba(20, 22, 35, 0.12);
+        opacity: 0.9;
     }
 }
 
