@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind'
 import style from './Cover.module.scss'
-import { useRef, useContext } from 'react'
+import { useRef, useContext, forwardRef, useImperativeHandle } from 'react'
 import Tippy from '@tippyjs/react'
 import useDarkMode from '~/hooks/useDarkMode'
 import { motion } from 'framer-motion'
@@ -10,12 +10,20 @@ import { CircleInfo } from '~/Components/Icons'
 
 const cx = classNames.bind(style)
 
-function Cover({ captureImages, slideQuantity }) {
+function Cover({ captureImages, slideQuantity }, ref) {
     const { file } = useContext(fileUploadContext)
 
     const sliderRef = useRef(null)
     const thumbRef = useRef(null)
     const videoRef = useRef(null)
+
+    useImperativeHandle(ref, () => ({
+        thumbnailTime: () => {
+            if (videoRef.current && videoRef.current.duration) {
+                return videoRef.current.currentTime
+            }
+        },
+    }))
 
     const startDrag = (e) => {
         e.preventDefault()
@@ -94,4 +102,4 @@ function Cover({ captureImages, slideQuantity }) {
     )
 }
 
-export default Cover
+export default forwardRef(Cover)

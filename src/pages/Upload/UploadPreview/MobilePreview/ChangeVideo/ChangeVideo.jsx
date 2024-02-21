@@ -3,16 +3,15 @@ import style from './ChangeVideo.module.scss'
 
 import { useContext, useState, useCallback } from 'react'
 import { fileNameContext } from '../../UploadPreview'
-import { fileUploadContext } from '~/pages/Upload/Upload'
 import BlueTick from '~/Components/BlueTick/BlueTick'
 import Button from '~/Components/Button'
 import Modal from '~/Components/Modal'
+import { sendEvent } from '~/helpers/event'
 
 const cx = classNames.bind(style)
 
-function ChangeVideo({ setCaptureImages, captureImagesRef, setIsIntervalActive }) {
+function ChangeVideo() {
     const { fileName } = useContext(fileNameContext)
-    const currentFile = useContext(fileUploadContext)
 
     const [isOpen, setIsOpen] = useState(false)
 
@@ -25,14 +24,8 @@ function ChangeVideo({ setCaptureImages, captureImagesRef, setIsIntervalActive }
     }, [])
 
     const confirmChange = useCallback(() => {
-        currentFile.setFile(null)
-        setCaptureImages([])
-        setIsIntervalActive(true)
-        captureImagesRef.current.forEach((url) => {
-            URL.revokeObjectURL(url)
-        })
+        sendEvent('upload:cancel-upload-file')
         closeModal()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     return (
         <div className={cx('change-video')}>
@@ -49,7 +42,9 @@ function ChangeVideo({ setCaptureImages, captureImagesRef, setIsIntervalActive }
                     closeModal={closeModal}
                     title="Replace this video?"
                     description="Caption and video settings will still be saved."
-                    allow="Change"
+                    allowTitle="Change"
+                    cancelTitle="Cancel"
+                    vertical={true}
                     onAllow={confirmChange}
                 />
             )}

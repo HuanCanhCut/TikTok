@@ -10,7 +10,7 @@ import ChangeVideo from './ChangeVideo'
 
 const cx = classNames.bind(style)
 
-function MobilePreview({ setCaptureImages, captureImagesRef, setIsIntervalActive }) {
+function MobilePreview() {
     return (
         <div className={cx('wrapper')}>
             <div className={cx('mobile-container')}>
@@ -26,11 +26,7 @@ function MobilePreview({ setCaptureImages, captureImagesRef, setIsIntervalActive
                 <Image src={images.appTab} className={cx('app-tab')}></Image>
                 <VideoPreview />
             </div>
-            <ChangeVideo
-                setCaptureImages={setCaptureImages}
-                captureImagesRef={captureImagesRef}
-                setIsIntervalActive={setIsIntervalActive}
-            ></ChangeVideo>
+            <ChangeVideo></ChangeVideo>
         </div>
     )
 }

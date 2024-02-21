@@ -64,7 +64,7 @@ function Search() {
                         <PopperWrapper>
                             <h4 className={cx('search-title')}>Account</h4>
                             {searchResult.map((result) => {
-                                return <AccountItem key={result.id} data={result} to={`/user/${result.nickname}`} />
+                                return <AccountItem key={result.id} data={result} to={`/user/@${result.nickname}`} />
                             })}
                         </PopperWrapper>
                     </div>

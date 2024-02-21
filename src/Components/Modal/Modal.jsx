@@ -8,7 +8,16 @@ import Button from '../Button'
 
 const cx = classNames.bind(style)
 
-function Modal({ isOpen, closeModal, title, description, allow = 'Allow', onAllow = () => {} }) {
+function Modal({
+    isOpen,
+    closeModal,
+    title,
+    description,
+    allowTitle = 'Allow',
+    cancelTitle = 'Cancel',
+    vertical = false,
+    onAllow = () => {},
+}) {
     return (
         <ReactModal
             isOpen={isOpen}
@@ -28,12 +37,16 @@ function Modal({ isOpen, closeModal, title, description, allow = 'Allow', onAllo
                         <h2 className={cx('title')}>{title}</h2>
                         <p className={cx('description')}>{description}</p>
                     </div>
-                    <div className={cx('actions')}>
-                        <Button className={cx('action-btn')} rounded onClick={closeModal}>
-                            Cancel
+                    <div
+                        className={cx('actions', {
+                            directionButton: vertical,
+                        })}
+                    >
+                        <Button className={cx('action-btn', 'cancel')} roundedOutline onClick={closeModal}>
+                            {cancelTitle}
                         </Button>
                         <Button className={cx('action-btn', 'allow')} primary onClick={onAllow}>
-                            {allow}
+                            {allowTitle}
                         </Button>
                     </div>
                 </div>

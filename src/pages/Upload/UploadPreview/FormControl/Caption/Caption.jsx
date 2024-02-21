@@ -37,6 +37,7 @@ function Caption() {
     useEffect(() => {
         inputRef.current.addEventListener('input', (e) => {
             setFileName(e.target.value)
+            file.description = e.target.value
         })
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fileName])
@@ -53,6 +54,7 @@ function Caption() {
         inputElement.focus()
         inputElement.setRangeText(value, start, end, 'end')
         setFileName(inputElement.value)
+        file.description = inputElement.value
     }
 
     const addHashTag = () => {
@@ -79,10 +81,12 @@ function Caption() {
 
             try {
                 const response = await userServices.getFollowingAccounts(page, accessToken)
-                setTotalPage(response.meta.pagination.total_pages)
-                setFollowingAccounts((prev) => {
-                    return [...prev, ...response.data]
-                })
+                if (response) {
+                    setTotalPage(response.meta.pagination.total_pages)
+                    setFollowingAccounts((prev) => {
+                        return [...prev, ...response.data]
+                    })
+                }
             } catch (error) {
                 console.log(error)
             } finally {
@@ -154,6 +158,7 @@ function Caption() {
                         value={file ? fileName : ''}
                         onChange={(e) => {
                             setFileName(e.target.value)
+                            file.description = e.target.value
                         }}
                         maxLength={maxLength}
                         type="text"

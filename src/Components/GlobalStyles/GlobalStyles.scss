@@ -39,6 +39,7 @@
     --box-shadow-12: rgba(0, 0, 0, 0.12);
     --text-color: rgb(22, 24, 35);
     --hashtag-color: rgb(43, 93, 185);
+    --rounded-outline-hover-color: rgba(245, 245, 245, 1);
 }
 
 .App[data-darkmode='true'] {
@@ -63,6 +64,7 @@
     --box-shadow-12: rgba(255, 255, 255, 0.12);
     --text-color: rgba(255, 255, 255, 0.9);
     --hashtag-color: rgb(143, 190, 233);
+    --rounded-outline-hover-color: rgb(10, 10, 10, 1);
 }
 
 html {

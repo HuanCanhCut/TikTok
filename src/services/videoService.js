@@ -39,3 +39,16 @@ export const unLikeVideo = async ({ videoID, accessToken = '' }) => {
         console.log(error)
     }
 }
+
+export const uploadVideo = async ({ formData, accessToken = '', onUploadProgress }) => {
+    try {
+        return await request.post('videos', formData, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+            onUploadProgress,
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}

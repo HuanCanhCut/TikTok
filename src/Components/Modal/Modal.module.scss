@@ -1,5 +1,5 @@
 .wrapper {
-    padding: 24px 32px;
+    padding: 24px 40px;
     max-width: 400px;
 }
 
@@ -9,8 +9,8 @@
 
 .title {
     line-height: 24px;
-    font-size: 2rem;
-    font-weight: 600;
+    font-size: 2.4rem;
+    font-weight: 700;
     color: rgba(22, 24, 35);
 }
 
@@ -21,7 +21,8 @@
     line-height: 18px;
     word-break: break-word;
     text-align: center;
-    color: rgba(22, 24, 35, 0.5);
+    color: rgba(22, 24, 35, 0.75);
+    font-weight: 500;
 }
 
 .actions {
@@ -29,11 +30,20 @@
     display: flex;
     justify-content: space-between;
     gap: 16px;
+
+    &.directionButton {
+        flex-direction: column-reverse;
+        align-items: center;
+        .action-btn {
+            width: 100%;
+        }
+    }
 }
 
 .action-btn {
     width: 160px;
     height: 48px;
+
     &.allow {
         display: flex;
         align-items: center;

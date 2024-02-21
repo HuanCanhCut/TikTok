@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import classNames from 'classnames/bind'
-import { createContext, useState, useEffect } from 'react'
+import { createContext, useState, useEffect, memo } from 'react'
 import style from './UploadPreview.module.scss'
 import Header from './Header'
 import Preview from './Preview'
@@ -43,4 +43,4 @@ UploadPreview.propTypes = {
     file: PropTypes.object,
 }
 
-export default UploadPreview
+export default memo(UploadPreview)

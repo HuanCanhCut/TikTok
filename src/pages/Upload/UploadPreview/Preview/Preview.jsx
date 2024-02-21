@@ -6,10 +6,10 @@ import MobilePreview from '../MobilePreview'
 import UploadDrop from '../../UploadDrop'
 import { fileUploadContext } from '../../Upload'
 import FormControl from '../FormControl'
+import { listentEvent } from '~/helpers/event'
 
 const cx = classNames.bind(style)
 
-const durationFinished = 3
 const slideQuantity = 8
 
 function Preview() {
@@ -18,6 +18,18 @@ function Preview() {
     const [videoDuration, setVideoDuration] = useState()
     const [captureImages, setCaptureImages] = useState([])
     const [isIntervalActive, setIsIntervalActive] = useState(true)
+
+    useEffect(() => {
+        const remove = listentEvent('upload:cancel-upload-file', () => {
+            currentFile.setFile(null)
+            setCaptureImages([])
+            setIsIntervalActive(true)
+            captureImagesRef.current.forEach((url) => {
+                URL.revokeObjectURL(url)
+            })
+        })
+        return remove
+    }, [currentFile])
 
     const canvasRef = useRef(null)
     const captureImagesRef = useRef(captureImages)
@@ -57,6 +69,8 @@ function Preview() {
         if (currentFile.file) {
             const handleSpeedVideo = (e) => {
                 if (e.target.duration) {
+                    const durationFinished = e.target.duration / 16 || 3
+
                     // playbackRate rate limit is 16
                     e.target.playbackRate = Math.min(16, e.target.duration / durationFinished)
                 }
@@ -75,17 +89,22 @@ function Preview() {
     }, [captureImages.length])
 
     useEffect(() => {
-        if (isIntervalActive) {
-            intervalRef.current = setInterval(() => {
-                //readyState === 4 : the data is enough to be transmitted to the final medium without interruption.
-                if (videoCaptureRef.current && videoCaptureRef.current.readyState === 4) {
-                    handleCapture()
+        if (videoDuration) {
+            const durationFinished = videoDuration / 16 || 3
+            if (isIntervalActive) {
+                const handleCaptureImage = () => {
+                    //readyState === 4 : the data is enough to be transmitted to the final medium without interruption.
+                    if (videoCaptureRef.current && videoCaptureRef.current.readyState === 4) {
+                        handleCapture()
+                    }
                 }
-            }, (durationFinished / slideQuantity) * 1000)
-        }
 
-        return () => {
-            clearInterval(intervalRef.current)
+                intervalRef.current = setInterval(handleCaptureImage, (durationFinished / slideQuantity) * 1000)
+            }
+
+            return () => {
+                clearInterval(intervalRef.current)
+            }
         }
     }, [isIntervalActive, videoDuration, captureImages, currentFile.file])
 
@@ -99,7 +118,7 @@ function Preview() {
                         autoPlay
                         muted
                         ref={videoCaptureRef}
-                        style={{ width: '0px' }}
+                        style={{ width: '10px', opacity: 0, position: 'absolute', pointerEvents: 'none' }}
                         onLoadedData={(e) => {
                             setVideoDuration(e.target.duration)
                         }}
@@ -113,11 +132,7 @@ function Preview() {
             <div className={cx('body')}>
                 {captureImages.length === slideQuantity ? (
                     currentFile.file ? (
-                        <MobilePreview
-                            setCaptureImages={setCaptureImages}
-                            captureImagesRef={captureImagesRef}
-                            setIsIntervalActive={setIsIntervalActive}
-                        />
+                        <MobilePreview />
                     ) : (
                         <UploadDrop small setFile={currentFile.setFile} />
                     )

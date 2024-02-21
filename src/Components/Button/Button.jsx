@@ -20,6 +20,7 @@ function Button(
         disable = false,
         rounded = false,
         login = false,
+        roundedOutline = false,
         className,
         leftIcon,
         children,
@@ -54,7 +55,6 @@ function Button(
 
     const classes = cx('wrapper', {
         [className]: className,
-        darkMode: useDarkMode(),
         primary,
         outline,
         small,
@@ -62,6 +62,8 @@ function Button(
         text,
         disable,
         rounded,
+        roundedOutline,
+        darkMode: useDarkMode(),
     })
 
     return (

@@ -1,9 +1,9 @@
 .wrapper {
     min-width: 100px;
     font-size: 1.6rem;
-    padding: 9px 16px;
+    padding: 10px 16px;
     border-radius: 2px;
-    font-weight: 700;
+    font-weight: 600;
     font-family: ProximaNova, sans-serif;
     cursor: pointer;
     border: 1px solid transparent;
@@ -13,8 +13,7 @@
     transition: all 0.1s linear;
 
     &.disable {
-        pointer-events: none;
-        opacity: 0.6;
+        opacity: 0.8;
         user-select: none;
     }
 }
@@ -91,8 +90,32 @@
 }
 
 .disable {
-    border-radius: 10px;
-    padding: 12px 0;
+    border-radius: 2px;
+    padding: 14px 0;
     margin-left: 0;
-    background-color: #f1f1f2;
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    cursor: no-drop;
+}
+
+.roundedOutline {
+    border-color: rgba(22, 24, 35, 0.12);
+    color: rgba(22, 24, 35, 1);
+    background-color: transparent;
+    &:hover {
+        background-color: rgba(245, 245, 245, 1);
+        border-color: rgba(22, 24, 35, 0.2);
+    }
+}
+
+.wrapper {
+    &.darkMode {
+        &.roundedOutline {
+            border-color: rgba(255, 255, 255, 0.12);
+            color: rgba(255, 255, 255, 0.9);
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.03);
+            }
+        }
+    }
 }

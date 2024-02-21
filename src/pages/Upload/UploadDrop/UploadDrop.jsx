@@ -5,18 +5,11 @@ import { useRef, useEffect } from 'react'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { UploadVideo } from '~/Components/Icons'
+import { sendEvent } from '~/helpers/event'
 
 const cx = classNames.bind(style)
 
-function UploadDrop({
-    setFile,
-    className,
-    small = false,
-    loading = false,
-    captureImages,
-    setCaptureImages,
-    captureImagesRef,
-}) {
+function UploadDrop({ setFile, className, small = false, loading = false, captureImages }) {
     const inputRef = useRef()
     const progressRef = useRef(null)
     const progressValueRef = useRef(null)
@@ -64,7 +57,7 @@ function UploadDrop({
         } else {
             const fileType = Array.from(e.dataTransfer.files)[0].type
             if (fileType === 'video/mp4' || fileType === 'video/webm') {
-                setFile(Array.from(e.dataTransfer.files)[0])
+                setFile(e.dataTransfer.files[0])
             } else {
                 showToast('Unsupported file. Use Mp4 or WebM instead.')
             }
@@ -84,7 +77,7 @@ function UploadDrop({
     const handleChoseFile = (e) => {
         const fileType = Array.from(e.target.files)[0].type
         if (fileType === 'video/mp4' || fileType === 'video/webm') {
-            setFile(Array.from(e.target.files)[0])
+            setFile(e.target.files[0])
         } else {
             showToast('Unsupported file. Use Mp4 or WebM instead.')
             inputRef.current.value = null
@@ -99,13 +92,9 @@ function UploadDrop({
 
     const handleCancel = () => {
         // when click cancel button
+
         if (loading) {
-            setFile(null)
-            setCaptureImages([])
-            captureImagesRef.current.forEach((url) => {
-                URL.revokeObjectURL(url)
-            })
-            return
+            sendEvent('upload:cancel-upload-file')
         }
     }
 

@@ -49,11 +49,11 @@ function Video({ type }) {
     }, [])
 
     useEffect(() => {
-        ;(async () => {
+        const getVideos = async () => {
             try {
                 const response = await videoService.getVideo({
                     type,
-                    page: page,
+                    page: 1,
                     accessToken,
                 })
 
@@ -71,7 +71,8 @@ function Video({ type }) {
             } catch (error) {
                 console.log(error)
             }
-        })()
+        }
+        getVideos()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page])
 
