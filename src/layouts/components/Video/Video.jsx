@@ -53,7 +53,7 @@ function Video({ type }) {
             try {
                 const response = await videoService.getVideo({
                     type,
-                    page: 1,
+                    page: page,
                     accessToken,
                 })
 

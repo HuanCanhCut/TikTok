@@ -59,6 +59,7 @@ function Caption() {
 
     const addHashTag = () => {
         updateFileName('#')
+        console.log(fileName)
     }
 
     const tagAccount = () => {
