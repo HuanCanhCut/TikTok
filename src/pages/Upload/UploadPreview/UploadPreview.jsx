@@ -16,6 +16,12 @@ function UploadPreview({ file }) {
         if (file) {
             setFileName(file.name)
         }
+
+        return () => {
+            if (file) {
+                URL.revokeObjectURL(file.preview)
+            }
+        }
     }, [file])
 
     if (file) {

@@ -81,13 +81,15 @@ function Caption() {
             setApiCalling(true)
 
             try {
-                const response = await userServices.getFollowingAccounts(page, accessToken)
-                if (response) {
-                    setTotalPage(response.meta.pagination.total_pages)
-                    setFollowingAccounts((prev) => {
-                        return [...prev, ...response.data]
-                    })
-                }
+                requestIdleCallback(async () => {
+                    const response = await userServices.getFollowingAccounts(page, accessToken)
+                    if (response) {
+                        setTotalPage(response.meta.pagination.total_pages)
+                        setFollowingAccounts((prev) => {
+                            return [...prev, ...response.data]
+                        })
+                    }
+                })
             } catch (error) {
                 console.log(error)
             } finally {
