@@ -58,12 +58,17 @@
     line-height: 2.2rem;
 }
 
-.hashtag {
-    color: var(--hashtag-color);
+.hight-light {
+    color: var(--hashtag-color) !important;
     cursor: 'pointer';
     font-weight: 700;
-    margin: 0 3px;
     cursor: pointer;
+
+    &.tag-account {
+        line-height: 22px;
+        color: var(--hashtag-color);
+    }
+
     &:hover {
         text-decoration: underline;
     }

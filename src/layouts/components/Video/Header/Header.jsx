@@ -19,34 +19,6 @@ const cx = classNames.bind(style)
 function Header({ data }) {
     const [highlightedDescription, setHighlightedDescription] = useState('')
 
-    useEffect(() => {
-        if (data.description.includes('#')) {
-            const hashTag = data.description.split(' ')
-            // eslint-disable-next-line array-callback-return
-            const highlightedHashtag = hashTag.map((item, index) => {
-                if (item.startsWith('#')) {
-                    return <p key={index} className={cx('hashtag')}>{`${item}`}</p>
-                } else {
-                    const chars = item.split('')
-                    if (chars.includes('#')) {
-                        const hashTagIndex = chars.indexOf('#')
-                        const hashTag = chars.slice(0, hashTagIndex)
-                        hashTag.map((item, index) => {
-                            return <p key={index} className={cx('hashtag')}>{`${item}`}</p>
-                        })
-                    } else {
-                        return <p key={index}>{item}</p>
-                    }
-                }
-            })
-            setHighlightedDescription(highlightedHashtag)
-        } else {
-            setHighlightedDescription(data.description)
-        }
-    }, [data.description])
-
-    const dataUser = data.user
-
     const springConfig = { damping: 15, stiffness: 300 }
     const initialScale = 0.5
     const opacity = useSpring(springConfig)
@@ -61,6 +33,57 @@ function Header({ data }) {
             </motion.div>
         )
     }
+
+    useEffect(() => {
+        if (
+            data.description.includes('#') ||
+            data.description.includes('http://') ||
+            data.description.includes('https://')
+        ) {
+            const hashTag = data.description.split(' ')
+            // eslint-disable-next-line array-callback-return
+            const highlightedHashtag = hashTag.map((item, index) => {
+                if (item.startsWith('http://') || item.startsWith('https://')) {
+                    return (
+                        <a
+                            href={item}
+                            style={{ lineHeight: '22.3px', fontWeight: 700 }}
+                            className={cx('hight-light')}
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            {item}
+                        </a>
+                    )
+                }
+                if (item.startsWith('#') || item.startsWith('@')) {
+                    return item.startsWith('@') ? (
+                        <Link
+                            to={`/user/@${data.user.nickname}`}
+                            style={{ marginRight: '4px' }}
+                            key={index}
+                            className={cx('hight-light', 'tag-account')}
+                        >
+                            {item}
+                        </Link>
+                    ) : (
+                        <p style={{ marginRight: '4px' }} key={index} className={cx('hight-light')}>
+                            {item}
+                        </p>
+                    )
+                } else {
+                    return (
+                        <p style={{ marginRight: '4px' }} key={index}>
+                            {item}
+                        </p>
+                    )
+                }
+            })
+            setHighlightedDescription(highlightedHashtag)
+        } else {
+            setHighlightedDescription(data.description)
+        }
+    }, [data.description, data.user.nickname])
 
     const handleMount = () => {
         scale.set(1)
@@ -90,18 +113,18 @@ function Header({ data }) {
                 render={renderPreview}
                 appendTo={document.body}
             >
-                <Link to={`/user/@${dataUser.nickname}`}>
-                    <Image className={cx('avatar')} src={dataUser.avatar} alt="" />
+                <Link to={`/user/@${data.user.nickname}`}>
+                    <Image className={cx('avatar')} src={data.user.avatar} alt="" />
                 </Link>
             </Tippy>
             <div className={cx('body')}>
-                <Link to={`/user/@${dataUser.nickname}`} className={cx('user-info')}>
+                <Link to={`/user/@${data.user.nickname}`} className={cx('user-info')}>
                     <h3 className={cx('nick-name')}>
-                        {dataUser.nickname}
-                        {dataUser.tick && <BlueTick />}
+                        {data.user.nickname}
+                        {data.user.tick && <BlueTick />}
                     </h3>
 
-                    <h4 className={cx('full-name')}>{`${dataUser.first_name} ${dataUser.last_name}`}</h4>
+                    <h4 className={cx('full-name')}>{`${data.user.first_name} ${data.user.last_name}`}</h4>
                 </Link>
                 <div className={cx('description')}>{highlightedDescription}</div>
                 {data.music && (
