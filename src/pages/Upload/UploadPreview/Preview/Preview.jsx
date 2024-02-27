@@ -10,6 +10,7 @@ import { listentEvent } from '~/helpers/event'
 
 const cx = classNames.bind(style)
 
+let durationFinished = 3
 const slideQuantity = 8
 
 function Preview() {
@@ -52,6 +53,19 @@ function Preview() {
         }
     }
 
+    const handlePlayVideo = (e) => {
+        if (currentFile.file) {
+            if (e.target.duration / 16 > durationFinished) {
+                durationFinished = e.target.duration / 16
+            }
+
+            if (e.target.duration) {
+                // playbackRate rate limit is 16
+                e.target.playbackRate = Math.min(16, e.target.duration / durationFinished)
+            }
+        }
+    }
+
     useEffect(() => {
         captureImagesRef.current = captureImages
     }, [captureImages])
@@ -66,23 +80,6 @@ function Preview() {
     }, [])
 
     useEffect(() => {
-        if (currentFile.file) {
-            const handleSpeedVideo = (e) => {
-                if (e.target.duration) {
-                    const durationFinished = e.target.duration / 16 || 3
-
-                    // playbackRate rate limit is 16
-                    e.target.playbackRate = Math.min(16, e.target.duration / durationFinished)
-                }
-            }
-
-            if (videoCaptureRef.current) {
-                videoCaptureRef.current.addEventListener('play', handleSpeedVideo)
-            }
-        }
-    }, [videoCaptureRef, currentFile.file])
-
-    useEffect(() => {
         if (captureImages.length >= slideQuantity) {
             setIsIntervalActive(false)
         }
@@ -90,23 +87,23 @@ function Preview() {
 
     useEffect(() => {
         if (videoDuration) {
-            const durationFinished = videoDuration / 16 || 3
+            if (videoDuration / 16 > durationFinished) {
+                durationFinished = videoDuration / 16
+            }
             if (isIntervalActive) {
-                const handleCaptureImage = () => {
+                intervalRef.current = setInterval(() => {
                     //readyState === 4 : the data is enough to be transmitted to the final medium without interruption.
-                    if (videoCaptureRef.current && videoCaptureRef.current.readyState === 4) {
+                    if (videoCaptureRef.current) {
                         handleCapture()
                     }
-                }
-
-                intervalRef.current = setInterval(handleCaptureImage, (durationFinished / slideQuantity) * 1000)
+                }, (durationFinished / slideQuantity) * 1000)
             }
 
             return () => {
                 clearInterval(intervalRef.current)
             }
         }
-    }, [isIntervalActive, videoDuration, captureImages, currentFile.file])
+    }, [isIntervalActive, captureImages, currentFile.file, videoDuration])
 
     return (
         <div className={cx('wrapper')}>
@@ -118,9 +115,12 @@ function Preview() {
                         autoPlay
                         muted
                         ref={videoCaptureRef}
-                        style={{ width: '10px', opacity: 0, position: 'absolute', pointerEvents: 'none' }}
+                        style={{ width: '0px', opacity: 0, position: 'absolute', pointerEvents: 'none' }}
                         onLoadedData={(e) => {
                             setVideoDuration(e.target.duration)
+                        }}
+                        onPlay={(e) => {
+                            handlePlayVideo(e)
                         }}
                     ></video>
                 </>
