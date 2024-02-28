@@ -92,7 +92,6 @@ function Preview() {
             }
             if (isIntervalActive) {
                 intervalRef.current = setInterval(() => {
-                    //readyState === 4 : the data is enough to be transmitted to the final medium without interruption.
                     if (videoCaptureRef.current) {
                         handleCapture()
                     }

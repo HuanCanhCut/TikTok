@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCommentDots, faHeart, faShare } from '@fortawesome/free-solid-svg-icons'
-import { useContext, useState, useEffect, useRef } from 'react'
+import { useContext, useState, useEffect, useRef, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { actions } from '~/redux'
 import { removeDuplicate } from '~/hooks/removeDuplicate'
@@ -30,40 +30,40 @@ function VideoAction({ data, videoRef }) {
 
     const [isCallingApi, setIsCallingApi] = useState(false)
 
-    const handleLikeVideo = async (id) => {
-        try {
-            const response = await videoService.likeVideo({
-                videoID: id || data.id,
-                accessToken,
-            })
-
-            removeDuplicate(temporaryUnLikeList, response.data.id)
-            if (response) {
-                if (!temporaryUnLikeList.includes(response.data.id)) {
-                    dispatch(actions.temporaryLiked(response.data.id))
+    const handleLikeVideo = useCallback(
+        async (id) => {
+            removeDuplicate(temporaryUnLikeList, id)
+            if (id) {
+                if (!temporaryUnLikeList.includes(id)) {
+                    dispatch(actions.temporaryLiked(id))
                 }
             }
 
-            return response
-        } catch (error) {
-            console.log(error)
-        } finally {
-            setIsCallingApi(false)
-        }
-    }
+            try {
+                return await videoService.likeVideo({
+                    videoID: id || data.id,
+                    accessToken,
+                })
+            } catch (error) {
+                console.log(error)
+            } finally {
+                setIsCallingApi(false)
+            }
+        },
+        [accessToken, data.id, dispatch, temporaryUnLikeList]
+    )
 
     const handleUnLikeVideo = async (id) => {
+        if (id) {
+            removeDuplicate(temporaryLikeList, id)
+            dispatch(actions.temporaryUnLiked(id))
+        }
+
         try {
-            const response = await videoService.unLikeVideo({
+            return await videoService.unLikeVideo({
                 videoID: id || data.id,
                 accessToken,
             })
-
-            if (response) {
-                removeDuplicate(temporaryLikeList, response.data.id)
-                dispatch(actions.temporaryUnLiked(response.data.id))
-            }
-            return response
         } catch (error) {
             console.log(error)
         } finally {
@@ -84,19 +84,19 @@ function VideoAction({ data, videoRef }) {
 
         if (data.is_liked || temporaryLikeList.includes(data.id)) {
             if (temporaryUnLikeList.includes(data.id)) {
-                handleLikeVideo()
+                handleLikeVideo(data.id)
             } else {
-                handleUnLikeVideo(videoRef.current.dataid)
+                handleUnLikeVideo(data.id)
             }
         } else {
-            handleLikeVideo()
+            handleLikeVideo(data.id)
         }
     }
 
     useEffect(() => {
         const handleKeyDown = (e) => {
-            switch (e.which) {
-                case 76:
+            switch (e.key) {
+                case 'l':
                     if (isVisible) {
                         handleToggleLike(videoRef.current.dataset.index)
                     }
@@ -123,6 +123,14 @@ function VideoAction({ data, videoRef }) {
     }
 
     const likes_count = () => {
+        if (data.is_liked && !temporaryUnLikeList.includes(data.id)) {
+            return data.likes_count
+        }
+
+        if (data.is_liked && temporaryUnLikeList.includes(data.id)) {
+            return data.likes_count - 1
+        }
+
         if (temporaryLikeList.includes(data.id)) {
             return data.likes_count + 1
         } else {
