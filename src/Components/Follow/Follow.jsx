@@ -23,6 +23,12 @@ function Follow({ data }) {
             return
         }
 
+        // khi follow thì sẽ xóa id của người vừa được follow ra khỏi danh sách unFollowed temporary
+        removeDuplicate(temporaryUnFollowedList, data.id)
+        if (!temporaryUnFollowedList.includes(data.id)) {
+            dispatch(actions.temporaryFollowed(data.id))
+        }
+
         setIsCallingApi(true)
 
         try {
@@ -31,20 +37,10 @@ function Follow({ data }) {
                 return
             }
 
-            const response = await followAnUser({
+            return await followAnUser({
                 userId: data.id,
                 accessToken,
             })
-
-            // khi follow thì sẽ xóa id của người vừa được follow ra khỏi danh sách unFollowed temporary
-            if (response) {
-                removeDuplicate(temporaryUnFollowedList, response.data.id)
-                if (!temporaryUnFollowedList.includes(response.data.id)) {
-                    dispatch(actions.temporaryFollowed(response.data.id))
-                }
-            }
-
-            return response
         } catch (error) {
             console.log(error)
         } finally {
@@ -57,19 +53,17 @@ function Follow({ data }) {
             return
         }
 
+        // khi unFollow thì sẽ xóa id của người vừa được unFollow ra khỏi danh sách Followed temporary
+        removeDuplicate(temporaryFollowedList, data.id)
+        dispatch(actions.temporaryUnFollowed(data.id))
+
         setIsCallingApi(true)
 
         try {
-            const response = await unFollowUser({
+            return await unFollowUser({
                 userId: data.id,
                 accessToken,
             })
-
-            // khi unFollow thì sẽ xóa id của người vừa được unFollow ra khỏi danh sách Followed temporary
-            if (response) {
-                removeDuplicate(temporaryFollowedList, response.data.id)
-                dispatch(actions.temporaryUnFollowed(response.data.id))
-            }
         } catch (error) {
             console.log(error)
         } finally {

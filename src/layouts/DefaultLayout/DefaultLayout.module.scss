@@ -24,6 +24,25 @@
     flex: 1;
 }
 
+.go-to-top {
+    position: fixed;
+    bottom: -40px;
+    right: 20px;
+    width: 32px;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary);
+    border-radius: 50%;
+    transition: 0.3s all ease-in-out;
+    cursor: pointer;
+
+    &.open {
+        bottom: 15px;
+    }
+}
+
 .wrapper {
     &.darkMode {
         background-color: #121212;

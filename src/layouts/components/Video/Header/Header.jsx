@@ -5,7 +5,6 @@ import Tippy from '@tippyjs/react/headless'
 import { useSpring, motion } from 'framer-motion'
 import { faMusic } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useEffect, useState } from 'react'
 
 import style from './Header.module.scss'
 import Image from '~/Components/Images/Image'
@@ -17,8 +16,6 @@ import Follow from '~/Components/Follow'
 const cx = classNames.bind(style)
 
 function Header({ data }) {
-    const [highlightedDescription, setHighlightedDescription] = useState('')
-
     const springConfig = { damping: 15, stiffness: 300 }
     const initialScale = 0.5
     const opacity = useSpring(springConfig)
@@ -34,7 +31,7 @@ function Header({ data }) {
         )
     }
 
-    useEffect(() => {
+    const hightLightHashtag = () => {
         if (
             data.description.includes('#') ||
             data.description.includes('http://') ||
@@ -79,11 +76,13 @@ function Header({ data }) {
                     )
                 }
             })
-            setHighlightedDescription(highlightedHashtag)
+            // setHighlightedDescription(highlightedHashtag)
+            return highlightedHashtag
         } else {
-            setHighlightedDescription(data.description)
+            // setHighlightedDescription(data.description)
+            return data.description
         }
-    }, [data.description, data.user.nickname])
+    }
 
     const handleMount = () => {
         scale.set(1)
@@ -126,7 +125,7 @@ function Header({ data }) {
 
                     <h4 className={cx('full-name')}>{`${data.user.first_name} ${data.user.last_name}`}</h4>
                 </Link>
-                <div className={cx('description')}>{highlightedDescription}</div>
+                <div className={cx('description')}>{hightLightHashtag()}</div>
                 {data.music && (
                     <p className={cx('music-name')}>
                         <FontAwesomeIcon icon={faMusic} className={cx('music-icon')} />

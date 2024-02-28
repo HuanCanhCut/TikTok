@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCommentDots, faHeart, faShare } from '@fortawesome/free-solid-svg-icons'
-import { useContext, useState, useEffect, useRef, useCallback } from 'react'
+import { useContext, useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { actions } from '~/redux'
 import { removeDuplicate } from '~/hooks/removeDuplicate'
@@ -30,28 +30,25 @@ function VideoAction({ data, videoRef }) {
 
     const [isCallingApi, setIsCallingApi] = useState(false)
 
-    const handleLikeVideo = useCallback(
-        async (id) => {
-            removeDuplicate(temporaryUnLikeList, id)
-            if (id) {
-                if (!temporaryUnLikeList.includes(id)) {
-                    dispatch(actions.temporaryLiked(id))
-                }
+    const handleLikeVideo = async (id) => {
+        removeDuplicate(temporaryUnLikeList, id)
+        if (id) {
+            if (!temporaryUnLikeList.includes(id)) {
+                dispatch(actions.temporaryLiked(id))
             }
+        }
 
-            try {
-                return await videoService.likeVideo({
-                    videoID: id || data.id,
-                    accessToken,
-                })
-            } catch (error) {
-                console.log(error)
-            } finally {
-                setIsCallingApi(false)
-            }
-        },
-        [accessToken, data.id, dispatch, temporaryUnLikeList]
-    )
+        try {
+            return await videoService.likeVideo({
+                videoID: id || data.id,
+                accessToken,
+            })
+        } catch (error) {
+            console.log(error)
+        } finally {
+            setIsCallingApi(false)
+        }
+    }
 
     const handleUnLikeVideo = async (id) => {
         if (id) {
