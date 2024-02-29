@@ -2,6 +2,7 @@
     padding: 40px 32px;
     position: relative;
     width: 400px;
+    color: var(--text-color);
 }
 
 .header {
@@ -17,12 +18,13 @@
     width: 24px;
     height: 24px;
     border-radius: 50%;
-    background-color: rgba(22, 24, 35, 0.03);
+    color: var(--text-color);
+    background-color: var(--text-color-opacity-04);
     cursor: pointer;
 }
 
 .close-icon {
-    color: rgba(22, 24, 35, 1);
+    color: var(--text-color);
     font-size: 1.8rem;
 }
 
@@ -36,7 +38,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-top: 0.4px solid rgba(22, 24, 35, 0.12);
+    border-top: 0.4px solid var(--text-color-opacity-02);
+}
+
+.shortcuts-item:last-child {
+    border-bottom: 0.4px solid var(--text-color-opacity-12);
 }
 
 .icon-wrapper {
@@ -44,31 +50,5 @@
     align-items: center;
     .left-icon {
         padding: 0 8px;
-    }
-}
-
-.shortcuts-item:last-child {
-    border-bottom: 0.4px solid rgba(22, 24, 35, 0.12);
-}
-
-.wrapper {
-    &.darkMode {
-        color: #fff;
-        .close {
-            background-color: rgba(255, 255, 255, 0.04);
-            color: #fff;
-        }
-
-        .close-icon {
-            color: rgba(255, 255, 255, 1);
-        }
-
-        .shortcuts-item {
-            border-top: 0.4px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .shortcuts-item:last-child {
-            border-bottom: 0.4px solid rgba(255, 255, 255, 0.12);
-        }
     }
 }

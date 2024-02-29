@@ -12,13 +12,17 @@
     height: calc(100vh - var(--default-layout-header-height));
     padding: 20px 0px 26px 8px;
     overflow-y: overlay;
+    &::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background-color: rgba(22, 24, 35, 0.08) !important;
+    }
 }
 
 .wrapper {
     &.darkMode {
         .container::-webkit-scrollbar-thumb {
             border-radius: 4px;
-            background-color: rgba(255, 255, 255, 0.08);
+            background-color: rgba(171, 171, 171, 0.08) !important;
         }
     }
 }

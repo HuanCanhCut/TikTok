@@ -35,11 +35,7 @@ function Login() {
     }, [currentUser, accessToken, navigate])
 
     return (
-        <div
-            className={cx('wrapper', {
-                darkMode: useDarkMode(),
-            })}
-        >
+        <div className={cx('wrapper')}>
             <Link to={config.routes.home} className={cx('logo')}>
                 <img src={darkMode ? images.lightLogo : images.darkLogo} alt="Logo" />
             </Link>

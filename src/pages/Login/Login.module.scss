@@ -3,9 +3,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    &.darkMode {
-        background-color: var(--default-layout-background);
-    }
+    background-color: var(--default-layout-background);
     position: relative;
 }
 

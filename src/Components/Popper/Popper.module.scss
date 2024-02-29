@@ -2,7 +2,7 @@
     width: 100%;
     padding: 4px 0;
     background-color: #fff;
-    box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 12px;
+    box-shadow: var(--text-color-opacity-12) 0px 2px 12px;
     border-radius: 8px;
     max-height: min(100vh - 96px - 60px, 760px);
     max-width: 800px;
@@ -10,13 +10,12 @@
     flex-direction: column;
     align-items: flex-start;
     color: var(--text-color);
-    border: 1px solid rgba(169, 169, 169, 0.61);
+    border: 1px solid rgba(169, 169, 169, 0.45);
 }
 
 .wrapper {
     &.darkMode {
         background-color: rgba(37, 37, 37);
-        box-shadow: rgba(255, 255, 255, 0.12) 0px 2px 12px;
-        border: 1px solid rgba(64, 64, 64, 0.54);
+        border: 1px solid rgba(64, 64, 64, 0.45);
     }
 }

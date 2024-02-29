@@ -3,7 +3,6 @@ import classNames from 'classnames/bind'
 import style from './Modal.module.scss'
 import ReactModal from 'react-modal'
 import { Wrapper as PopperWrapper } from '../Popper'
-import useDarkMode from '~/hooks/useDarkMode'
 import Button from '../Button'
 
 const cx = classNames.bind(style)
@@ -27,11 +26,7 @@ function Modal({
             className={'modal'}
         >
             <PopperWrapper>
-                <div
-                    className={cx('wrapper', {
-                        darkMode: useDarkMode(),
-                    })}
-                >
+                <div className={cx('wrapper')}>
                     <div className={cx('header')}>
                         {/* eslint-disable-next-line jsx-a11y/heading-has-content */}
                         <h2 className={cx('title')}>{title}</h2>

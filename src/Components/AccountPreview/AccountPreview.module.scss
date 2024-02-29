@@ -1,6 +1,7 @@
 .preview {
     width: 320px;
     padding: 20px;
+    color: var(--text-color);
 }
 
 .header {
@@ -69,21 +70,5 @@
         font-weight: 600;
         margin-right: 8px;
         color: var(--text-color-secondary);
-    }
-}
-
-.preview {
-    &.darkMode {
-        color: rgba(255, 255, 255, 0.9);
-
-        .analytics {
-            .value {
-                color: rgba(255, 255, 255, 0.9);
-            }
-
-            span {
-                color: rgba(255, 255, 255, 0.75);
-            }
-        }
     }
 }

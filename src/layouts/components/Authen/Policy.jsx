@@ -1,5 +1,5 @@
-import style from './Login.module.scss'
 import classNames from 'classnames/bind'
+import style from './Auth.module.scss'
 import { memo } from 'react'
 
 const cx = classNames.bind(style)

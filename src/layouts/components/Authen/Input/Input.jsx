@@ -4,7 +4,6 @@ import React from 'react'
 import { faEyeSlash, faEye } from '@fortawesome/free-regular-svg-icons'
 import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import useDarkMode from '~/hooks/useDarkMode'
 
 const cx = classNames.bind(style)
 
@@ -12,11 +11,7 @@ function Input({ ...props } = {}) {
     const [hidePassword, setHidePassword] = useState(true)
 
     return (
-        <div
-            className={cx({
-                darkMode: useDarkMode(),
-            })}
-        >
+        <>
             <input
                 type="text"
                 className={cx('email')}
@@ -58,7 +53,7 @@ function Input({ ...props } = {}) {
                     </span>
                 )}
             </div>
-        </div>
+        </>
     )
 }
 

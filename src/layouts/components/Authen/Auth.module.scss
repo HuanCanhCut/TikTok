@@ -8,15 +8,15 @@
     transform: translate(-50%, -50%);
     border-radius: 10px;
     z-index: 99;
-    background-color: #ffffff;
+    background-color: var(--background-login-modal);
     text-align: center;
-    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.05);
+    box-shadow: 5px 5px 20px var(--text-color-opacity-05);
     transition: all 0.1s ease-in-out;
     position: fixed;
 }
 
 .close {
-    color: rgba(22, 24, 35, 0.75);
+    color: var(--text-color-secondary);
     width: 35px;
     height: 35px;
     cursor: pointer;
@@ -33,7 +33,7 @@
 }
 
 .title {
-    color: var(--text-dark-color);
+    color: var(--text-color);
 }
 
 .header {
@@ -53,7 +53,7 @@
 }
 
 .forgot-password {
-    color: rgba(22, 24, 35, 0.5);
+    color: var(--text-color-tertiary);
     width: 100%;
     justify-content: flex-start;
     font-size: 1.2rem;
@@ -63,7 +63,7 @@
     cursor: pointer;
     &:hover {
         text-decoration: underline;
-        color: rgba(22, 24, 35, 0.8);
+        color: var(--text-color-secondary);
     }
 }
 
@@ -110,11 +110,11 @@
 .separator-line {
     flex: 1;
     height: 1px;
-    background-color: rgba(22, 24, 35, 0.12);
+    background-color: var(--text-color-opacity-12);
 }
 
 .separator-content {
-    color: rgba(22, 24, 35, 0.5);
+    color: var(--text-color-tertiary);
     padding: 0 8px;
     margin: 12px 0;
     font-size: 1.3rem;
@@ -131,8 +131,8 @@
 }
 
 .footer {
-    color: var(--text-dark-color);
-    border-top: 0.5px solid rgba(22, 24, 35, 0.12);
+    color: var(--text-color);
+    border-top: 0.5px solid var(--text-color-opacity-12);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -148,39 +148,5 @@
     cursor: pointer;
     &:hover {
         text-decoration: underline;
-    }
-}
-
-.wrapper {
-    &.darkMode {
-        background-color: #252525;
-        box-shadow: 5px 5px 20px rgba(255, 255, 255, 0.05);
-        .close {
-            color: rgba(255, 255, 255, 0.75);
-        }
-
-        .title {
-            color: var(--text-light-color);
-        }
-
-        .forgot-password {
-            color: rgba(255, 255, 255, 0.5);
-            &:hover {
-                color: rgba(255, 255, 255, 0.7);
-            }
-        }
-
-        .footer {
-            color: var(--text-light-color);
-            border-top: 0.5px solid rgba(255, 255, 255, 0.12);
-        }
-
-        .separator-line {
-            background-color: rgba(255, 255, 255, 0.12);
-        }
-
-        .separator-content {
-            color: rgba(255, 255, 255, 0.5);
-        }
     }
 }

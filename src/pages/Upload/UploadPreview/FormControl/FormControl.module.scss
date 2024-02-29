@@ -110,6 +110,7 @@
         position: absolute;
         font-weight: 500;
         font-size: 1.4rem;
+        color: var(--text-color);
     }
 }
 
@@ -125,25 +126,12 @@
         font-size: 1.6rem;
         font-weight: 600;
         line-height: 22px;
-        color: rgba(22, 24, 35, 0.9);
+        color: var(--text-color);
     }
 
     .description {
         margin-top: 10px;
-        color: rgba(22, 24, 35, 0.75);
+        color: var(--text-color-secondary);
         font-size: 1.4rem;
-    }
-    &.darkMode {
-        .uploading {
-            color: #fff;
-        }
-
-        .description {
-            color: rgba(245, 245, 245, 0.75);
-        }
-
-        .loading-value {
-            color: rgba(255, 255, 255, 0.9);
-        }
     }
 }

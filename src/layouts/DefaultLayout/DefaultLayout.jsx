@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react'
 import Header from '~/layouts/components/Header'
 import SideBar from '../components/SlideBar'
 import style from './DefaultLayout.module.scss'
-import useDarkMode from '~/hooks/useDarkMode'
 import { GoToTop } from '~/Components/Icons'
 
 const cx = classNames.bind(style)
@@ -35,11 +34,7 @@ function DefaultLayout({ children }) {
     }
 
     return (
-        <div
-            className={cx('wrapper', {
-                darkMode: useDarkMode(),
-            })}
-        >
+        <div className={cx('wrapper')}>
             <Header />
             <SideBar />
             <div className={cx('container')}>

@@ -63,6 +63,11 @@
     box-shadow: rgba(34, 90, 89, 0.2) 2px 0px 20px -20px, rgba(34, 90, 89, 0.2) 0px 8px 20px -2px,
         rgba(34, 90, 89, 0.2) 0px 0px 20px -20px;
     background-color: var(--default-layout-background);
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background-color: var(--text-color-opacity-08) !important;
+    }
 }
 
 .following-title {
@@ -71,25 +76,4 @@
     font-weight: 400;
     color: var(--text-color-tertiary);
     padding-left: 2rem;
-}
-
-.wrapper {
-    &.darkMode {
-        .tag-friend {
-            &::-webkit-scrollbar {
-                border-radius: 0;
-                width: 6px;
-            }
-
-            &::-webkit-scrollbar-thumb {
-                border-radius: 4px;
-                background-color: rgba(255, 255, 255, 0.06);
-            }
-
-            &::-webkit-scrollbar-track {
-                border-radius: 0;
-                background-color: rgba(0, 0, 0, 0);
-            }
-        }
-    }
 }

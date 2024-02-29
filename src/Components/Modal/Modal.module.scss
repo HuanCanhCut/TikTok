@@ -11,7 +11,7 @@
     line-height: 24px;
     font-size: 2.4rem;
     font-weight: 700;
-    color: rgba(22, 24, 35);
+    color: var(--text-color);
 }
 
 .description {
@@ -21,7 +21,7 @@
     line-height: 18px;
     word-break: break-word;
     text-align: center;
-    color: rgba(22, 24, 35, 0.75);
+    color: var(--text-color-secondary);
     font-weight: 500;
 }
 
@@ -43,23 +43,9 @@
 .action-btn {
     width: 160px;
     height: 48px;
-
+    color: var(--text-color);
     &.allow {
         display: flex;
         align-items: center;
-    }
-}
-
-.wrapper {
-    &.darkMode {
-        .title {
-            color: #fff;
-        }
-        .description {
-            color: rgba(255, 255, 255, 0.5);
-        }
-        .action-btn {
-            color: #fff;
-        }
     }
 }

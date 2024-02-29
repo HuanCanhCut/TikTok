@@ -5,7 +5,6 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons'
 
 import { Wrapper as PopperWrapper } from '~/Components/Popper'
 import style from './KeyboardShorcuts.module.scss'
-import useDarkMode from '~/hooks/useDarkMode'
 import { LKeyboard, MKeyboard, ArrowUp, ArrowDown } from '~/Components/Icons'
 
 const cx = classNames.bind(style)
@@ -31,11 +30,7 @@ const shortcutsItems = [
 
 function KeyboardShortcuts({ onClose }) {
     return (
-        <PopperWrapper
-            className={cx('wrapper', {
-                darkMode: useDarkMode(),
-            })}
-        >
+        <PopperWrapper className={cx('wrapper')}>
             <div className={cx('header')}>
                 <h2>Keyboard Shortcuts</h2>
             </div>

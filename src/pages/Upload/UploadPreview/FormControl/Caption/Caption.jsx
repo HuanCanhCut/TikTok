@@ -1,7 +1,6 @@
 import classNames from 'classnames/bind'
 import style from './Caption.module.scss'
 import { useContext, useRef, useEffect, useState, useCallback, memo } from 'react'
-import useDarkMode from '~/hooks/useDarkMode'
 import Tippy from '@tippyjs/react/headless'
 
 import { currentUserData } from '~/App'
@@ -125,9 +124,7 @@ function Caption() {
 
     return (
         <div
-            className={cx('wrapper', {
-                darkMode: useDarkMode(),
-            })}
+            className={cx('wrapper')}
             onKeyDown={(e) => {
                 handleKeyDown(e)
             }}

@@ -1,11 +1,11 @@
 .login-with {
     width: 100%;
     padding: 14px;
-    background-color: rgba(22, 24, 35, 0.1);
+    background-color: var(--text-color-opacity-10);
     border-radius: 10px;
     font-size: 1.6rem;
     font-weight: 600;
-    color: var(--text-dark-color);
+    color: var(--text-color);
     position: relative;
     cursor: no-drop;
 }
@@ -24,16 +24,5 @@
     display: flex;
     justify-content: center;
     padding: 8px 0;
-    color: var(--text-dark-color);
-}
-
-.darkMode {
-    .login-with {
-        background-color: rgba(255, 255, 255, 0.15);
-        color: var(--text-light-color);
-    }
-
-    .more {
-        color: var(--text-light-color);
-    }
+    color: var(--text-color);
 }

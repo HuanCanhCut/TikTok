@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind'
-import style from './Login.module.scss'
+import style from './Auth.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { memo, useRef } from 'react'
@@ -14,7 +14,6 @@ import LoginWith from './LoginWith/LoginWith'
 import Policy from './Policy'
 import Input from './Input'
 import config from '~/config'
-import useDarkMode from '~/hooks/useDarkMode'
 
 const cx = classNames.bind(style)
 
@@ -76,12 +75,7 @@ function Authen() {
                 exit={{ opacity: 0, y: '-100%' }}
                 transition={{ duration: 0.1 }}
             >
-                <div
-                    className={cx('wrapper', {
-                        darkMode: useDarkMode(),
-                    })}
-                    onKeyDown={handleKeyDown}
-                >
+                <div className={cx('wrapper')} onKeyDown={handleKeyDown}>
                     <button
                         className={cx('close')}
                         onClick={() => {

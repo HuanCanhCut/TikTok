@@ -10,7 +10,12 @@ import useDarkMode from './hooks/useDarkMode'
 export const currentUserData = createContext()
 
 function App() {
+    const darkMode = useDarkMode()
     const authUser = JSON.parse(localStorage.getItem('user'))
+
+    useEffect(() => {
+        document.documentElement.setAttribute('data-darkmode', darkMode)
+    }, [darkMode])
 
     useEffect(() => {
         const handleUnload = () => {
@@ -28,7 +33,7 @@ function App() {
     return (
         <currentUserData.Provider value={authUser}>
             <Router>
-                <div className="App" data-darkmode={useDarkMode()}>
+                <div className="App">
                     <Routes>
                         {allRoutes.map((route, index) => {
                             const Page = route.component

@@ -6,17 +6,12 @@ import { Link } from 'react-router-dom'
 
 import BlueTick from '~/Components/BlueTick/BlueTick'
 import Image from '~/Components/Images'
-import useDarkMode from '~/hooks/useDarkMode'
 
 const cx = classNames.bind(style)
 
 function AccountPreview({ data }) {
     return (
-        <div
-            className={cx('preview', {
-                darkMode: useDarkMode(),
-            })}
-        >
+        <div className={cx('preview')}>
             <header className={cx('header')}>
                 <Link to={`/user/@${data.nickname}`}>
                     <Image className={cx('avatar')} src={data.avatar} alt="" />

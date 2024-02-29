@@ -3,7 +3,6 @@ import style from './FormControl.module.scss'
 import { useContext } from 'react'
 import { useState, useReducer, useCallback, useRef } from 'react'
 import * as action from './Actions'
-import useDarkMode from '~/hooks/useDarkMode'
 import ReactModal from 'react-modal'
 import { sendEvent } from '~/helpers/event'
 
@@ -84,7 +83,6 @@ const reducer = (state, action) => {
 }
 
 function FormControl({ captureImages, slideQuantity }) {
-    const darkMode = useDarkMode
     const videoRef = useRef()
     const progressRef = useRef()
     const progressValueRef = useRef()
@@ -277,11 +275,7 @@ function FormControl({ captureImages, slideQuantity }) {
                         ariaHideApp={false}
                         className={'modal'}
                     >
-                        <PopperWrapper
-                            className={cx('popper-wrapper', {
-                                darkMode: darkMode,
-                            })}
-                        >
+                        <PopperWrapper className={cx('popper-wrapper')}>
                             <div className={cx('loading-wrapper')}>
                                 <svg viewBox="0 0 100 100" size="64" className={cx('loading')}>
                                     <circle className={cx('circle')} cx={50} cy={50} r={46.875}></circle>
