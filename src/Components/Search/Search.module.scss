@@ -56,6 +56,10 @@
     color: var(--text-color-opacity-34);
 }
 
+.clear {
+    cursor: pointer;
+}
+
 .loading {
     animation: spinner 0.8s infinite;
 }

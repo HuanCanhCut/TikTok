@@ -13,7 +13,8 @@
     background-color: var(--text-color-opacity-12);
     transition: background-color 0.15s linear;
     transition: color 0.15s ease-in-out;
-    &.isLike[type='like'] {
+
+    &.isLike[data-type='like'] {
         color: var(--primary);
     }
 
