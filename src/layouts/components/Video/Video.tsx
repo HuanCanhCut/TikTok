@@ -9,6 +9,7 @@ import Header from './Header'
 import VideoItem from '~/Components/VideoItem'
 import AccountLoading from '~/Components/AccountLoading'
 import { VideoModal } from '~/modal/modal'
+import { listentEvent } from '~/helpers/event'
 
 const cx = classNames.bind(style)
 
@@ -31,6 +32,8 @@ const Video: React.FC<Props> = ({ type }) => {
         return Math.floor(Math.random() * TOTAL_PAGES_VIDEO)
     })
 
+    const [videosIsVisible, setVideosIsVisible] = useState<HTMLVideoElement[]>([])
+
     const [pageIndexes, setPageIndexes] = useState<number[]>(
         JSON.parse(localStorage.getItem('pageVideoIndexes')!) ?? []
     )
@@ -39,6 +42,46 @@ const Video: React.FC<Props> = ({ type }) => {
     const scrollToIndex = (index: number) => {
         virtuosoRef.current && virtuosoRef.current.scrollToIndex({ index: index, align: 'center', behavior: 'smooth' })
     }
+
+    useEffect(() => {
+        const remove = listentEvent({
+            eventName: 'video:video-isvisible',
+            handler: ({ detail }) => {
+                setVideosIsVisible((prev: HTMLVideoElement[]) => {
+                    return [...prev, detail]
+                })
+            },
+        })
+
+        return remove
+    }, [])
+
+    useEffect(() => {
+        if (videosIsVisible.length >= 2) {
+            videosIsVisible.forEach((video: HTMLVideoElement) => {
+                video.pause()
+            })
+
+            const playVideo = async () => {
+                try {
+                    videosIsVisible[videosIsVisible.length - 1].currentTime = 0
+                    await videosIsVisible[videosIsVisible.length - 1].play()
+                } catch (e) {}
+            }
+            playVideo()
+        } else {
+            videosIsVisible.forEach((video: HTMLVideoElement) => {
+                video.pause()
+            })
+            const playVideo = async () => {
+                try {
+                    videosIsVisible[0].currentTime = 0
+                    await videosIsVisible[0].play()
+                } catch (e) {}
+            }
+            playVideo()
+        }
+    }, [videosIsVisible])
 
     const handleScroll = () => {
         if (window.scrollY + window.innerHeight >= document.body.offsetHeight) {

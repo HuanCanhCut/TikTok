@@ -140,7 +140,7 @@ function Caption() {
         >
             <div className={cx('caption')}>
                 <span className={cx('caption-title')}>{showAccounts ? '@Friends' : 'Caption'}</span>
-                <span className={cx('caption-length')}>{`${fileName.length} / ${maxLength}`}</span>
+                <span className={cx('caption-length')}>{`${fileName.fileName.length} / ${maxLength}`}</span>
             </div>
             <Tippy
                 interactive

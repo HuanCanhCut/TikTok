@@ -12,6 +12,7 @@ import { Muted, UnMuted } from '../Icons'
 import VideoAction from './VideoAction'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { UserModal } from '~/modal/modal'
+import { sendEvent } from '~/helpers/event'
 
 const cx = classNames.bind(style)
 
@@ -36,7 +37,11 @@ export interface VideoListModal {
     meta: Video
 }
 
-const VideoItem = ({ video }: { video: VideoListModal }) => {
+interface Props {
+    video: VideoListModal
+}
+
+const VideoItem: React.FC<Props> = ({ video }) => {
     const dispatch = useDispatch()
     const mutedVideos = useSelector(mutedVideo)
     const videoRef = useRef<HTMLVideoElement | null>(null)
@@ -46,21 +51,18 @@ const VideoItem = ({ video }: { video: VideoListModal }) => {
     const resolutionY = video.meta.video.resolution_y
     const videoSize = resolutionX > resolutionY ? 'row' : 'column'
 
-    const options = { root: null, rootMargin: '0px', threshold: 0.93 }
+    const options = { root: null, rootMargin: '0px', threshold: 0.5 }
     const isVisible = useElementOnScreen(options, videoRef)
 
     useEffect(() => {
-        const playVideo = async () => {
-            if (isVisible && videoRef.current) {
-                try {
-                    videoRef.current.currentTime = 0
-                    await videoRef.current.play()
-                } catch (e) {}
-            } else {
-                videoRef.current && videoRef.current.pause()
+        if (isVisible && videoRef.current) {
+            sendEvent({ eventName: 'video:video-isvisible', detail: videoRef.current })
+        } else {
+            if (!videoRef.current?.paused) {
+                videoRef.current?.pause()
             }
         }
-        playVideo()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isVisible])
 
     const handleTogglePlay = () => {
