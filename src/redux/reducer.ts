@@ -9,7 +9,6 @@ export interface InitState {
     temporaryLiked: number[]
     temporaryUnLiked: number[]
     mutedVideos: boolean
-    openAuth: boolean
 }
 
 const initState: InitState = {
@@ -23,7 +22,6 @@ const initState: InitState = {
     temporaryUnLiked: [],
 
     mutedVideos: false,
-    openAuth: false,
 }
 
 function reducer(state = initState, action: any) {
@@ -59,11 +57,6 @@ function reducer(state = initState, action: any) {
             return {
                 ...state,
                 mutedVideos: action.payload,
-            }
-        case 'open-auth':
-            return {
-                ...state,
-                openAuth: action.payload,
             }
 
         default:

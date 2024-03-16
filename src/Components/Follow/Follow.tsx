@@ -9,6 +9,7 @@ import { currentUserData } from '~/App'
 import { temporaryFollowed, temporaryUnFollowed } from '~/redux/selectors'
 import { actions } from '~/redux'
 import { UserModal } from '~/modal/modal'
+import { sendEvent } from '~/helpers/event'
 
 interface Meta {
     [key: string]: string
@@ -43,7 +44,7 @@ const Follow = ({ data }: { data: UserModal }) => {
 
         try {
             if (!accessToken && !currentUser) {
-                dispatch(actions.openAuth(true))
+                sendEvent({ eventName: 'auth:open-auth-modal', detail: true })
                 return
             }
 

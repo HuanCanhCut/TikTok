@@ -4,12 +4,12 @@ import { currentUserData } from '~/App'
 import Authen from '~/layouts/components/Authen'
 import { useEffect, useContext } from 'react'
 import { useDispatch } from 'react-redux'
-import { actions } from '~/redux'
 import useDarkMode from '~/hooks/useDarkMode'
 import { useNavigate } from 'react-router-dom'
 import config from '~/config'
 import { Link } from 'react-router-dom'
 import images from '~/assets/images'
+import { sendEvent } from '~/helpers/event'
 
 const cx = classNames.bind(style)
 
@@ -21,10 +21,10 @@ const Login: React.FC = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(actions.openAuth(true))
+        sendEvent({ eventName: 'auth:open-auth-modal', detail: true })
 
         return () => {
-            dispatch(actions.openAuth(false))
+            sendEvent({ eventName: 'auth:open-auth-modal', detail: false })
         }
     }, [dispatch])
 

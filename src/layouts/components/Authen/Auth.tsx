@@ -4,8 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { memo, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useDispatch } from 'react-redux'
-import { actions } from '~/redux'
 
 import { useState } from 'react'
 import { login, signUp as authSignUp } from '~/services/authService'
@@ -17,13 +15,12 @@ import config from '~/config'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { keyboardKey } from '@testing-library/user-event'
 import { AxiosResponse } from 'axios'
+import { sendEvent } from '~/helpers/event'
 
 const cx = classNames.bind(style)
 
 function Authen() {
     const buttonRef = useRef<HTMLButtonElement>(null)
-
-    const dispatch = useDispatch()
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -95,7 +92,7 @@ function Authen() {
                     <button
                         className={cx('close')}
                         onClick={() => {
-                            dispatch(actions.openAuth(false))
+                            sendEvent({ eventName: 'auth:open-auth-modal', detail: false })
                         }}
                     >
                         <FontAwesomeIcon className={cx('close-icon')} icon={faXmark as IconProp} />

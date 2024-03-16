@@ -14,12 +14,10 @@ import {
 import Tippy from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css'
 import { Link } from 'react-router-dom'
-import { useContext, useState, memo } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useContext, useState, memo, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import { themeSelector } from '~/redux/selectors'
 import Modal from 'react-modal'
-import { actions } from '~/redux'
-import { openAuth } from '~/redux/selectors'
 
 import Authen from '../Authen'
 import { currentUserData } from '~/App'
@@ -35,6 +33,7 @@ import KeyboardShortcuts from './KeyboardShorcuts'
 import * as authService from '~/services/authService'
 import { useNavigate } from 'react-router-dom'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
+import { listentEvent } from '~/helpers/event'
 
 const cx = classNames.bind(style)
 
@@ -75,18 +74,26 @@ const MENU_ITEM = [
 
 function Header() {
     const navigate = useNavigate()
-    const dispatch = useDispatch()
     const currentUser = useContext(currentUserData)
     const profile = currentUser && currentUser.data.nickname
     const [shortcutsIsOpen, setShortcutsIsOpen] = useState(false)
     const darkMode = useSelector(themeSelector)
-    const isOpenAuth = useSelector(openAuth)
+    const [isOpenAuthModal, setIsOpenAuthModal] = useState(false)
+
+    useEffect(() => {
+        const remove = listentEvent({
+            eventName: 'auth:open-auth-modal',
+            handler: ({ detail: isOpen }) => {
+                setIsOpenAuthModal(isOpen)
+            },
+        })
+
+        return remove
+    }, [])
 
     const openKeyboardShortCuts = () => {
         setShortcutsIsOpen(true)
     }
-
-    const modalIsOpen = useSelector(openAuth)
 
     const closeKeyboardShortCuts = () => {
         setShortcutsIsOpen(false)
@@ -183,7 +190,7 @@ function Header() {
                                 rounded
                                 leftIcon={<FontAwesomeIcon icon={faPlus as IconProp} />}
                                 onClick={() => {
-                                    dispatch(actions.openAuth(true))
+                                    setIsOpenAuthModal(true)
                                 }}
                                 className={cx('upload')}
                             >
@@ -192,7 +199,7 @@ function Header() {
                             <Button
                                 primary
                                 onClick={() => {
-                                    dispatch(actions.openAuth(true))
+                                    setIsOpenAuthModal(true)
                                 }}
                             >
                                 Log In
@@ -212,11 +219,11 @@ function Header() {
                 </div>
             </div>
 
-            {isOpenAuth && (
+            {isOpenAuthModal && (
                 <Modal
-                    isOpen={modalIsOpen}
+                    isOpen={isOpenAuthModal}
                     onRequestClose={() => {
-                        dispatch(actions.openAuth(false))
+                        setIsOpenAuthModal(false)
                     }}
                     overlayClassName={'overlay'}
                     ariaHideApp={false}

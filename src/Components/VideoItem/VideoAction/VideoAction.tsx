@@ -15,6 +15,7 @@ import style from './VideoAction.module.scss'
 import VideoActionItem from './VideoActionItem'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { VideoListModal } from '../VideoItem'
+import { sendEvent } from '~/helpers/event'
 
 const cx = classNames.bind(style)
 
@@ -76,7 +77,7 @@ const VideoAction: React.FC<Props> = ({ data, videoRef }) => {
 
     const handleToggleLike = () => {
         if (!currentUser || !accessToken) {
-            dispatch(actions.openAuth(true))
+            sendEvent({ eventName: 'auth:open-auth-modal', detail: true })
             return
         }
         if (isCallingApi) {

@@ -1,14 +1,11 @@
 import classNames from 'classnames/bind'
 import style from './FrameLoginSidebar.module.scss'
 import Button from '~/Components/Button'
-import { useDispatch } from 'react-redux'
-import { actions } from '~/redux'
+import { sendEvent } from '~/helpers/event'
 
 const cx = classNames.bind(style)
 
 function FrameLoginSidebar() {
-    const dispatch = useDispatch()
-
     return (
         <div className={cx('wrapper')}>
             <p className={cx('title')}>Log in to follow creators, like videos, and view comments.</p>
@@ -16,7 +13,7 @@ function FrameLoginSidebar() {
                 outline
                 className={cx('login')}
                 onClick={() => {
-                    dispatch(actions.openAuth(true))
+                    sendEvent({ eventName: 'auth:open-auth-modal', detail: true })
                 }}
             >
                 Login
