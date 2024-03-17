@@ -24,9 +24,12 @@ interface UploadVideo {
 export const getVideo = async ({ type = 'for-you', page, accessToken = '' }: GetVideo) => {
     try {
         return await request.get('videos', {
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            },
+            headers:
+                type !== 'for-you'
+                    ? {
+                          Authorization: `Bearer ${accessToken}`,
+                      }
+                    : {},
             params: {
                 type,
                 page,

@@ -16,6 +16,18 @@ const DefaultLayout: React.FC<Props> = ({ children }) => {
     const [goToTop, setGoToTop] = useState(false)
 
     useEffect(() => {
+        const handleUnload = () => {
+            localStorage.removeItem('pageVideoIndexes')
+        }
+
+        window.addEventListener('beforeunload', handleUnload)
+
+        return () => {
+            window.removeEventListener('beforeunload', handleUnload)
+        }
+    }, [])
+
+    useEffect(() => {
         const handleScroll = (e: any) => {
             const scrollTop = e.target.scrollTop || window.scrollY
 

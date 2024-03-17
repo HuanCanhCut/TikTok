@@ -2,10 +2,12 @@ import classNames from 'classnames/bind'
 import style from './PreviewInfo.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useContext, memo } from 'react'
-import { currentUserData } from '~/App'
 import { faMusic } from '@fortawesome/free-solid-svg-icons'
 import { fileNameContext } from '../../UploadPreview'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
+import { useSelector } from 'react-redux'
+import { authCurrentUser } from '~/redux/selectors'
+import { UserModal } from '~/modal/modal'
 
 const cx = classNames.bind(style)
 
@@ -15,11 +17,11 @@ interface Props {
 
 const PreviewInfo: React.FC<Props> = ({ isPlay }) => {
     const fileNameModal = useContext(fileNameContext)
-    const currentUser = useContext(currentUserData)
+    const currentUser: UserModal = useSelector(authCurrentUser)
 
     return (
         <div className={cx('wrapper')}>
-            <span className={cx('user-name')}>{`@ ${currentUser.data.first_name} ${currentUser.data.last_name}`}</span>
+            <span className={cx('user-name')}>{`@ ${currentUser.first_name} ${currentUser.last_name}`}</span>
             <span className={cx('description')}>{fileNameModal?.fileName}</span>
             <div className={cx('music-container')}>
                 <span className={cx('music-icon')}>
@@ -32,7 +34,7 @@ const PreviewInfo: React.FC<Props> = ({ isPlay }) => {
                             'marquee-paused': !isPlay,
                         })}
                     >
-                        {`${currentUser.data.first_name} ${currentUser.data.last_name} Original sound -- `}
+                        {`${currentUser.first_name} ${currentUser.last_name} Original sound -- `}
                     </span>
                     <span
                         className={cx('marquee', {
@@ -40,7 +42,7 @@ const PreviewInfo: React.FC<Props> = ({ isPlay }) => {
                             'marquee-paused': !isPlay,
                         })}
                     >
-                        {`${currentUser.data.first_name} ${currentUser.data.last_name} Original sound`}
+                        {`${currentUser.first_name} ${currentUser.last_name} Original sound`}
                     </span>
                 </div>
             </div>

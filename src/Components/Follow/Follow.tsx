@@ -1,24 +1,14 @@
 import Button from '../Button'
-import { useContext, memo, useState } from 'react'
+import { memo, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { removeDuplicate } from '~/project/services'
 
 import { followAnUser, unFollowUser } from '~/services/userService'
-import { currentUserData } from '~/App'
-import { temporaryFollowed, temporaryUnFollowed } from '~/redux/selectors'
+import { authCurrentUser, temporaryFollowed, temporaryUnFollowed } from '~/redux/selectors'
 import { actions } from '~/redux'
 import { UserModal } from '~/modal/modal'
 import { sendEvent } from '~/helpers/event'
-
-interface Meta {
-    [key: string]: string
-}
-
-interface responseModal {
-    data: UserModal
-    meta: Meta
-}
 
 const Follow = ({ data }: { data: UserModal }) => {
     const dispatch = useDispatch()
@@ -26,10 +16,14 @@ const Follow = ({ data }: { data: UserModal }) => {
     const temporaryUnFollowedList: number[] = useSelector(temporaryUnFollowed)
     const [isCallingApi, setIsCallingApi] = useState(false)
 
-    const currentUser: responseModal = useContext(currentUserData)
-    const accessToken: string = currentUser && currentUser.meta.token
+    const currentUser: UserModal = useSelector(authCurrentUser)
+    const accessToken: string = JSON.parse(localStorage.getItem('token')!)
 
     const handleFollow = async () => {
+        if (!accessToken || !currentUser) {
+            sendEvent({ eventName: 'auth:open-auth-modal', detail: true })
+            return
+        }
         if (isCallingApi) {
             return
         }
@@ -43,11 +37,6 @@ const Follow = ({ data }: { data: UserModal }) => {
         setIsCallingApi(true)
 
         try {
-            if (!accessToken && !currentUser) {
-                sendEvent({ eventName: 'auth:open-auth-modal', detail: true })
-                return
-            }
-
             return await followAnUser({
                 userId: data.id,
                 accessToken,
@@ -60,6 +49,11 @@ const Follow = ({ data }: { data: UserModal }) => {
     }
 
     const handleUnFollow = async () => {
+        if (!accessToken || !currentUser) {
+            sendEvent({ eventName: 'auth:open-auth-modal', detail: true })
+            return
+        }
+
         if (isCallingApi) {
             return
         }
@@ -85,7 +79,7 @@ const Follow = ({ data }: { data: UserModal }) => {
     return (
         <>
             {currentUser || accessToken ? (
-                data.id !== currentUser.data.id && (
+                data.id !== currentUser.id && (
                     <>
                         {data.is_followed || temporaryFollowedList.includes(data.id) ? (
                             temporaryUnFollowedList.includes(data.id) ? (

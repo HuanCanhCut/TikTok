@@ -40,3 +40,17 @@ export const temporaryUnLiked = (payload: number) => {
         payload,
     }
 }
+
+export const currentUser = (payload: any) => {
+    return {
+        type: 'auth',
+        payload,
+    }
+}
+
+export const logOut = (payload: any) => {
+    return {
+        type: 'log-out',
+        payload,
+    }
+}

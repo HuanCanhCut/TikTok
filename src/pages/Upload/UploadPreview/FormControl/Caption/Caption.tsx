@@ -3,7 +3,6 @@ import style from './Caption.module.scss'
 import { useContext, useRef, useEffect, useState, useCallback, memo } from 'react'
 import Tippy from '@tippyjs/react/headless'
 
-import { currentUserData } from '~/App'
 import { fileNameContext } from '../../UploadPreview'
 import { fileUploadContext } from '~/pages/Upload/Upload'
 import { HashTag, Tag } from '~/Components/Icons'
@@ -20,13 +19,12 @@ const cx = classNames.bind(style)
 const maxLength = 2200
 
 function Caption() {
-    const currentUser = useContext(currentUserData)
     const fileName: any = useContext(fileNameContext)
     const { file }: any = useContext(fileUploadContext)
 
     const inputRef: any = useRef(null)
     const scrollItemRef = useRef<HTMLDivElement>(null)
-    const accessToken = currentUser && currentUser.meta.token
+    const accessToken = JSON.parse(localStorage.getItem('token')!)
 
     const [page, setPage] = useState(1)
     const [followingAccounts, setFollowingAccounts] = useState<UserModal[]>([])

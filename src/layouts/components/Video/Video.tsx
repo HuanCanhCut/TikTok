@@ -1,8 +1,7 @@
 import classNames from 'classnames/bind'
-import { memo, useEffect, useRef, useContext, useState } from 'react'
+import { memo, useEffect, useRef, useState } from 'react'
 import { Virtuoso } from 'react-virtuoso'
 
-import { currentUserData } from '~/App'
 import * as videoService from '~/services/videoService'
 import style from './Video.module.scss'
 import Header from './Header'
@@ -22,8 +21,7 @@ const TOTAL_PAGES_KEY = 'totalVideoPages'
 let TOTAL_PAGES_VIDEO: number = JSON.parse(localStorage.getItem(TOTAL_PAGES_KEY)!)
 
 const Video: React.FC<Props> = ({ type }) => {
-    const currentUser = useContext(currentUserData)
-    const accessToken = currentUser && currentUser.meta.token
+    const accessToken = JSON.parse(localStorage.getItem('token')!)
 
     const virtuosoRef = useRef<any>(null)
 

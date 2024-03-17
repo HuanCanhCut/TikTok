@@ -14,12 +14,14 @@ import Input from './Input'
 import config from '~/config'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { keyboardKey } from '@testing-library/user-event'
-import { AxiosResponse } from 'axios'
 import { sendEvent } from '~/helpers/event'
+import { useDispatch } from 'react-redux'
+import { actions } from '~/redux'
 
 const cx = classNames.bind(style)
 
 function Authen() {
+    const dispatch = useDispatch()
     const buttonRef = useRef<HTMLButtonElement>(null)
 
     const [email, setEmail] = useState('')
@@ -36,18 +38,21 @@ function Authen() {
 
     const callApi = async (option: string) => {
         setLoading(true)
-        let response: AxiosResponse
+        let response: any
 
         if (option === 'signUp') {
             response = await authSignUp({ email, password })
         } else {
             response = await login({ email, password })
+            if (response) {
+                dispatch(actions.currentUser(response.data))
+            }
         }
 
         setLoading(false)
         if (response) {
             setIsValid(false)
-            setLocalStorage('user', response)
+            setLocalStorage('token', response.meta.token)
         } else {
             setIsValid(true)
         }

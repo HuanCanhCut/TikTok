@@ -1,9 +1,4 @@
-interface Theme {
-    darkMode: boolean
-}
-
 export interface InitState {
-    theme: Theme
     temporaryFollowed: number[]
     temporaryUnFollowed: number[]
     temporaryLiked: number[]
@@ -12,9 +7,6 @@ export interface InitState {
 }
 
 const initState: InitState = {
-    theme: {
-        darkMode: false,
-    },
     temporaryFollowed: [],
     temporaryUnFollowed: [],
 
@@ -24,15 +16,8 @@ const initState: InitState = {
     mutedVideos: false,
 }
 
-function reducer(state = initState, action: any) {
+const tempReducer = (state = initState, action: any) => {
     switch (action.type) {
-        case 'dark-mode':
-            return {
-                ...state,
-                theme: {
-                    darkMode: action.payload,
-                },
-            }
         case 'temporary-followed':
             return {
                 ...state,
@@ -53,15 +38,9 @@ function reducer(state = initState, action: any) {
                 ...state,
                 temporaryUnLiked: [...state.temporaryUnLiked, action.payload],
             }
-        case 'muted-video':
-            return {
-                ...state,
-                mutedVideos: action.payload,
-            }
-
         default:
             return state
     }
 }
 
-export default reducer
+export default tempReducer

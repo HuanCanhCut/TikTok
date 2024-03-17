@@ -14,9 +14,11 @@ import Cover from './Cover'
 import { fileUploadContext } from '../../Upload'
 import Button from '~/Components/Button'
 import Modal from '~/Components/Modal'
-import { currentUserData } from '~/App'
 import { uploadVideo } from '~/services/videoService'
 import { Wrapper as PopperWrapper } from '~/Components/Popper'
+import { useSelector } from 'react-redux'
+import { authCurrentUser } from '~/redux/selectors'
+import { UserModal } from '~/modal/modal'
 
 const cx = classNames.bind(style)
 
@@ -104,8 +106,8 @@ const FormControl: React.FC<Props> = ({ captureImages, slideQuantity }) => {
 
     const { file }: any = useContext(fileUploadContext)
 
-    const currentUser = useContext(currentUserData)
-    const accessToken = currentUser && currentUser.meta.token
+    const currentUser: UserModal = useSelector(authCurrentUser)
+    const accessToken = JSON.parse(localStorage.getItem('token')!)
 
     const [isOpen, setIsOpen] = useState(false)
     const [isOpenUploading, setIsOpenUploading] = useState(false)
@@ -154,8 +156,8 @@ const FormControl: React.FC<Props> = ({ captureImages, slideQuantity }) => {
 
             const thumbnailTime: string = Math.round(videoRef.current.thumbnailTime()).toString()
             const backgroundMusic =
-                currentUser.data.first_name || currentUser.data.last_name
-                    ? `Nhạc nền - ${currentUser.data.first_name} ${currentUser.data.last_name}`
+                currentUser.first_name || currentUser.last_name
+                    ? `Nhạc nền - ${currentUser.first_name} ${currentUser.last_name}`
                     : 'Âm thanh gốc'
 
             formData.append('upload_file', file)

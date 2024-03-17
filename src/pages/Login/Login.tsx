@@ -1,22 +1,23 @@
 import classNames from 'classnames/bind'
 import style from './Login.module.scss'
-import { currentUserData } from '~/App'
 import Authen from '~/layouts/components/Authen'
-import { useEffect, useContext } from 'react'
-import { useDispatch } from 'react-redux'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import useDarkMode from '~/hooks/useDarkMode'
 import { useNavigate } from 'react-router-dom'
 import config from '~/config'
 import { Link } from 'react-router-dom'
 import images from '~/assets/images'
 import { sendEvent } from '~/helpers/event'
+import { UserModal } from '~/modal/modal'
+import { authCurrentUser } from '~/redux/selectors'
 
 const cx = classNames.bind(style)
 
 const Login: React.FC = () => {
     const darkMode = useDarkMode()
-    const currentUser = useContext(currentUserData)
-    const accessToken = currentUser && currentUser.meta.token
+    const currentUser: UserModal = useSelector(authCurrentUser)
+    const accessToken = JSON.parse(localStorage.getItem('token')!)
     const navigate = useNavigate()
     const dispatch = useDispatch()
 

@@ -3,15 +3,18 @@ import GlobalStyle from './Components/GlobalStyles'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { Provider } from 'react-redux'
-import store from './redux/store'
+import store, { persistor } from './redux/store'
 import { ToastContainer } from 'react-toastify'
+import { PersistGate } from 'redux-persist/integration/react'
 
-const root = ReactDOM.createRoot(document.getElementById('root'))
+const root = ReactDOM.createRoot(document.getElementById('root')!)
 root.render(
     // <React.StrictMode>
     <GlobalStyle>
         <Provider store={store}>
-            <App />
+            <PersistGate loading={null} persistor={persistor}>
+                <App />
+            </PersistGate>
         </Provider>
         <ToastContainer />
     </GlobalStyle>

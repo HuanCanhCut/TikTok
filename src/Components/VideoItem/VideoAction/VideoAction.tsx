@@ -1,16 +1,15 @@
 import classNames from 'classnames/bind'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCommentDots, faHeart, faShare } from '@fortawesome/free-solid-svg-icons'
-import { useContext, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { actions } from '~/redux'
 import { removeDuplicate } from '~/project/services'
 import useElementOnScreen from '~/hooks/useElementOnScreen'
 
 import { FavoriteVideo } from '~/Components/Icons'
-import { temporaryLiked, temporaryUnLiked } from '~/redux/selectors'
+import { authCurrentUser, temporaryLiked, temporaryUnLiked } from '~/redux/selectors'
 import * as videoService from '~/services/videoService'
-import { currentUserData } from '~/App'
 import style from './VideoAction.module.scss'
 import VideoActionItem from './VideoActionItem'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
@@ -25,8 +24,8 @@ interface Props {
 }
 
 const VideoAction: React.FC<Props> = ({ data, videoRef }) => {
-    const currentUser = useContext(currentUserData)
-    const accessToken = currentUser && currentUser.meta.token
+    const currentUser = useSelector(authCurrentUser)
+    const accessToken = JSON.parse(localStorage.getItem('token')!)
 
     const options = { root: null, rootMargin: '0px', threshold: 0.93 }
     const isVisible = useElementOnScreen(options, videoRef)

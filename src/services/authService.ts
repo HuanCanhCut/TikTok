@@ -40,3 +40,13 @@ export const logout = async ({ accessToken }: { accessToken: string }) => {
         console.log(error)
     }
 }
+
+export const getCurrentUser = async ({ accessToken }: { accessToken: string }) => {
+    try {
+        return await request.get('auth/me', {
+            headers: { Authorization: `Bearer ${accessToken}` },
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}

@@ -14,13 +14,12 @@ import {
 import Tippy from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css'
 import { Link } from 'react-router-dom'
-import { useContext, useState, memo, useEffect } from 'react'
-import { useSelector } from 'react-redux'
-import { themeSelector } from '~/redux/selectors'
+import { useState, memo, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { authCurrentUser, themeSelector } from '~/redux/selectors'
 import Modal from 'react-modal'
 
 import Authen from '../Authen'
-import { currentUserData } from '~/App'
 import config from '~/config'
 import Button from '~/Components/Button'
 import Menu from '~/Components/Popper/Menu'
@@ -34,6 +33,8 @@ import * as authService from '~/services/authService'
 import { useNavigate } from 'react-router-dom'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { listentEvent } from '~/helpers/event'
+import { actions } from '~/redux'
+import { UserModal } from '~/modal/modal'
 
 const cx = classNames.bind(style)
 
@@ -73,9 +74,10 @@ const MENU_ITEM = [
 ]
 
 function Header() {
+    const dispatch = useDispatch()
     const navigate = useNavigate()
-    const currentUser = useContext(currentUserData)
-    const profile = currentUser && currentUser.data.nickname
+    const currentUser: UserModal = useSelector(authCurrentUser)
+    const profile = currentUser && currentUser.nickname
     const [shortcutsIsOpen, setShortcutsIsOpen] = useState(false)
     const darkMode = useSelector(themeSelector)
     const [isOpenAuthModal, setIsOpenAuthModal] = useState(false)
@@ -102,9 +104,12 @@ function Header() {
     const handleLogOut = async () => {
         try {
             await authService.logout({
-                accessToken: currentUser.meta.token,
+                accessToken: JSON.parse(localStorage.getItem('token')!),
             })
             localStorage.removeItem('user')
+            localStorage.removeItem('token')
+            dispatch(actions.logOut(null))
+
             navigate(config.routes.home)
             window.location.reload()
         } catch (error) {
@@ -209,7 +214,7 @@ function Header() {
 
                     <Menu items={currentUser ? userMenu : MENU_ITEM} onChange={handleMenuChange}>
                         {currentUser ? (
-                            <Image className={cx('user-avatar')} src={currentUser.data.avatar} alt="avatar" />
+                            <Image className={cx('user-avatar')} src={currentUser.avatar} alt="avatar" />
                         ) : (
                             <button className={cx('more-btn')}>
                                 <FontAwesomeIcon icon={faEllipsisVertical as IconProp}></FontAwesomeIcon>

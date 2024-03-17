@@ -1,25 +1,27 @@
-import { InitState } from './reducer'
-
-export const themeSelector = (state: InitState) => {
-    return state.theme.darkMode
+export const themeSelector = (state: any) => {
+    return state.project.theme.darkMode
 }
 
-export const temporaryFollowed = (state: InitState) => {
-    return state.temporaryFollowed
+export const temporaryFollowed = (state: any) => {
+    return state.temp.temporaryFollowed
 }
 
-export const temporaryUnFollowed = (state: InitState) => {
-    return state.temporaryUnFollowed
+export const temporaryUnFollowed = (state: any) => {
+    return state.temp.temporaryUnFollowed
 }
 
-export const temporaryLiked = (state: InitState) => {
-    return state.temporaryLiked
+export const temporaryLiked = (state: any) => {
+    return state.temp.temporaryLiked
 }
 
-export const temporaryUnLiked = (state: InitState) => {
-    return state.temporaryUnLiked
+export const temporaryUnLiked = (state: any) => {
+    return state.temp.temporaryUnLiked
 }
 
-export const mutedVideo = (state: InitState) => {
-    return state.mutedVideos
+export const mutedVideo = (state: any) => {
+    return state.project.mutedVideos
+}
+
+export const authCurrentUser = (state: any) => {
+    return state.auth.currentUser
 }

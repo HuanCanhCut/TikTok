@@ -1,5 +1,4 @@
 import classNames from 'classnames/bind'
-import { useContext } from 'react'
 import { memo } from 'react'
 
 import styles from './Sidebar.module.scss'
@@ -16,14 +15,14 @@ import SuggestedAccount from './SuggestedAccounts/SuggesteAccounts'
 import FrameLoginSidebar from './FrameLoginSidebar'
 import FooterSidebar from './FooterSidebar'
 import config from '~/config'
-import { currentUserData } from '~/App'
 import useDarkMode from '~/hooks/useDarkMode'
+import { useSelector } from 'react-redux'
+import { authCurrentUser } from '~/redux/selectors'
 
 const cx = classNames.bind(styles)
 
 function Sidebar() {
-    const currentUser = useContext(currentUserData)
-
+    const currentUser = useSelector(authCurrentUser)
     return (
         <aside
             className={cx('wrapper', {
