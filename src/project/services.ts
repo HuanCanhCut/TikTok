@@ -13,7 +13,7 @@ export const removeDuplicate = (duplicateStore: number[], duplicateValue: number
 }
 
 export const showToast = ({ message }: { message: string }) => {
-    return toast.error(message, {
+    return toast.success(message, {
         className: 'custom-toast',
         position: 'top-center',
         autoClose: 2500,

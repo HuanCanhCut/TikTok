@@ -36,6 +36,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { listentEvent } from '~/helpers/event'
 import { actions } from '~/redux'
 import { UserModal } from '~/modal/modal'
+import { showToast } from '~/project/services'
 
 const cx = classNames.bind(style)
 
@@ -83,6 +84,7 @@ function Header() {
     const navigate = useNavigate()
 
     const currentUser: UserModal = useSelector(authCurrentUser)
+
     const profile = currentUser && currentUser.nickname
     const [shortcutsIsOpen, setShortcutsIsOpen] = useState(false)
     const darkMode = useSelector(themeSelector)
@@ -112,12 +114,10 @@ function Header() {
             await authService.logout({
                 accessToken: JSON.parse(localStorage.getItem('token')!),
             })
-            localStorage.removeItem('user')
             localStorage.removeItem('token')
             dispatch(actions.logOut(null))
-
             navigate(config.routes.home)
-            window.location.reload()
+            showToast({ message: 'Log out success' })
         } catch (error) {
             console.log(error)
         }
@@ -211,6 +211,9 @@ function Header() {
                                     </button>
                                 </Tippy>
                             </div>
+                            <Menu items={userMenu} onChange={handleMenuChange}>
+                                <Image className={cx('user-avatar')} src={currentUser.avatar} alt="avatar" />
+                            </Menu>
                         </>
                     ) : (
                         <>
@@ -232,18 +235,13 @@ function Header() {
                             >
                                 {t('header.login')}
                             </Button>
+                            <Menu items={MENU_ITEM} onChange={handleMenuChange}>
+                                <button className={cx('more-btn')}>
+                                    <FontAwesomeIcon icon={faEllipsisVertical as IconProp}></FontAwesomeIcon>
+                                </button>
+                            </Menu>
                         </>
                     )}
-
-                    <Menu items={currentUser ? userMenu : MENU_ITEM} onChange={handleMenuChange}>
-                        {currentUser ? (
-                            <Image className={cx('user-avatar')} src={currentUser.avatar} alt="avatar" />
-                        ) : (
-                            <button className={cx('more-btn')}>
-                                <FontAwesomeIcon icon={faEllipsisVertical as IconProp}></FontAwesomeIcon>
-                            </button>
-                        )}
-                    </Menu>
                 </div>
             </div>
 

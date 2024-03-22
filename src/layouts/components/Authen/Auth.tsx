@@ -17,6 +17,7 @@ import { keyboardKey } from '@testing-library/user-event'
 import { sendEvent } from '~/helpers/event'
 import { useDispatch } from 'react-redux'
 import { actions } from '~/redux'
+import { showToast } from '~/project/services'
 
 const cx = classNames.bind(style)
 
@@ -34,7 +35,8 @@ function Authen() {
 
     const setLocalStorage = (key: string, value: any) => {
         const Action = localStorage.setItem(key, JSON.stringify(value))
-        window.location.reload()
+        sendEvent({ eventName: 'auth:open-auth-modal', detail: false })
+        showToast({ message: 'Login success' })
         return Action
     }
 

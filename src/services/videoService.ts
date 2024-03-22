@@ -1,5 +1,5 @@
 import * as request from '~/utils/httpRequest'
-import { showErrorToast } from './showToast'
+import { showToast } from '~/project/services'
 import { AxiosProgressEvent } from 'axios'
 
 interface GetVideo {
@@ -34,7 +34,7 @@ export const getVideo = async ({ type = 'for-you', page, accessToken = '' }: Get
         })
     } catch (error: any) {
         console.log(error)
-        showErrorToast(error.message)
+        showToast(error.message)
     }
 }
 
