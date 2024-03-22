@@ -108,36 +108,38 @@ const Header: React.FC<Props> = ({ data }) => {
 
     return (
         <div className={cx('wrapper')}>
-            <Tippy
-                animation={true}
-                interactive
-                placement="bottom-start"
-                delay={[600, 200]}
-                onMount={handleMount}
-                onHide={handleHide}
-                render={renderPreview}
-                appendTo={document.body}
-            >
-                <Link to={`/user/@${data.user.nickname}`}>
-                    <Image className={cx('avatar')} src={data.user.avatar} alt="" />
-                </Link>
-            </Tippy>
-            <div className={cx('body')}>
-                <Link to={`/user/@${data.user.nickname}`} className={cx('user-info')}>
-                    <h3 className={cx('nick-name')}>
-                        {data.user.nickname}
-                        {data.user.tick && <BlueTick />}
-                    </h3>
+            <div className={cx('header-left')}>
+                <Tippy
+                    animation={true}
+                    interactive
+                    placement="bottom-start"
+                    delay={[600, 200]}
+                    onMount={handleMount}
+                    onHide={handleHide}
+                    render={renderPreview}
+                    appendTo={document.body}
+                >
+                    <Link to={`/user/@${data.user.nickname}`}>
+                        <Image className={cx('avatar')} src={data.user.avatar} alt="" />
+                    </Link>
+                </Tippy>
+                <div className={cx('body')}>
+                    <Link to={`/user/@${data.user.nickname}`} className={cx('user-info')}>
+                        <h3 className={cx('nick-name')}>
+                            {data.user.nickname}
+                            {data.user.tick && <BlueTick />}
+                        </h3>
 
-                    <h4 className={cx('full-name')}>{`${data.user.first_name} ${data.user.last_name}`}</h4>
-                </Link>
-                <div className={cx('description')}>{hightLightHashtag()}</div>
-                {data.music && (
-                    <p className={cx('music-name')}>
-                        <FontAwesomeIcon icon={faMusic as IconProp} className={cx('music-icon')} />
-                        {data.music}
-                    </p>
-                )}
+                        <h4 className={cx('full-name')}>{`${data.user.first_name} ${data.user.last_name}`}</h4>
+                    </Link>
+                    <div className={cx('description')}>{hightLightHashtag()}</div>
+                    {data.music && (
+                        <p className={cx('music-name')}>
+                            <FontAwesomeIcon icon={faMusic as IconProp} className={cx('music-icon')} />
+                            {data.music}
+                        </p>
+                    )}
+                </div>
             </div>
             <Follow data={data.user} />
         </div>

@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { actions } from '~/redux'
 import { removeDuplicate } from '~/project/services'
 import useElementOnScreen from '~/hooks/useElementOnScreen'
+import { useTranslation } from 'react-i18next'
 
 import { FavoriteVideo } from '~/Components/Icons'
 import { authCurrentUser, temporaryLiked, temporaryUnLiked } from '~/redux/selectors'
@@ -24,6 +25,8 @@ interface Props {
 }
 
 const VideoAction: React.FC<Props> = ({ data, videoRef }) => {
+    const { t } = useTranslation()
+
     const currentUser = useSelector(authCurrentUser)
     const accessToken = JSON.parse(localStorage.getItem('token')!)
 
@@ -157,13 +160,12 @@ const VideoAction: React.FC<Props> = ({ data, videoRef }) => {
             type: 'favorite',
             value: 0,
             icon: <FavoriteVideo />,
-            toolTip: `The API dose not support favorite videos`,
+            toolTip: t('videos.the API dose not support favorite videos'),
         },
         {
             type: 'share',
             value: data.shares_count,
             icon: <FontAwesomeIcon icon={faShare as IconProp} />,
-            toolTip: `The API dose not support share videos`,
         },
     ]
 

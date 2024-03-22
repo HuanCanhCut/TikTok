@@ -2,6 +2,7 @@ import classNames from 'classnames/bind'
 import style from './Caption.module.scss'
 import { useContext, useRef, useEffect, useState, useCallback, memo } from 'react'
 import Tippy from '@tippyjs/react/headless'
+import { useTranslation } from 'react-i18next'
 
 import { fileNameContext } from '../../UploadPreview'
 import { fileUploadContext } from '~/pages/Upload/Upload'
@@ -19,10 +20,11 @@ const cx = classNames.bind(style)
 const maxLength = 2200
 
 function Caption() {
+    const { t } = useTranslation()
     const fileName: any = useContext(fileNameContext)
     const { file }: any = useContext(fileUploadContext)
 
-    const inputRef: any = useRef(null)
+    const inputRef = useRef<HTMLVideoElement | null>(null)
     const scrollItemRef = useRef<HTMLDivElement>(null)
     const accessToken = JSON.parse(localStorage.getItem('token')!)
 
@@ -37,7 +39,9 @@ function Caption() {
         if (inputRef.current) {
             inputRef.current.addEventListener('input', (e: any) => {
                 fileName?.setFileName(e.target.value)
-                file.description = e.target.value
+                requestIdleCallback(() => {
+                    file.description = e.target.value.toString()
+                })
             })
         }
 
@@ -50,7 +54,7 @@ function Caption() {
         }
 
         if (inputRef.current) {
-            const inputElement: HTMLInputElement = inputRef.current
+            const inputElement: any = inputRef.current
             const start = inputElement.selectionStart
             const end = inputElement.selectionEnd
 
@@ -58,7 +62,7 @@ function Caption() {
 
             start && end && inputElement.setRangeText(value, start, end, 'end')
             fileName.setFileName(inputElement.value)
-            file.description = inputElement.value
+            file.description = inputElement.value.toString()
         }
     }
 
@@ -137,7 +141,9 @@ function Caption() {
             }}
         >
             <div className={cx('caption')}>
-                <span className={cx('caption-title')}>{showAccounts ? '@Friends' : 'Caption'}</span>
+                <span className={cx('caption-title')}>
+                    {showAccounts ? `@${t('upload.preview.friends')}` : t('upload.preview.caption')}
+                </span>
                 <span className={cx('caption-length')}>{`${fileName.fileName.length} / ${maxLength}`}</span>
             </div>
             <Tippy
@@ -150,7 +156,7 @@ function Caption() {
                     <div className={cx('tag-friend-wrapper')} tabIndex={-1} {...attrs}>
                         <div className={cx('tag-friend')} onScroll={handleScroll}>
                             <div ref={scrollItemRef}>
-                                <span className={cx('following-title')}>Following</span>
+                                <span className={cx('following-title')}>{t('upload.preview.following')}</span>
                                 {followingAccounts.map((account, index) => (
                                     <AccountItem data={account} key={index} onClick={handleTagFriend} />
                                 ))}
@@ -165,7 +171,7 @@ function Caption() {
                         value={file ? fileName.fileName : ''}
                         onChange={(e) => {
                             fileName.setFileName(e.target.value)
-                            file.description = e.target.value
+                            file.description = e.target.value.toString()
                         }}
                         maxLength={maxLength}
                         type="text"

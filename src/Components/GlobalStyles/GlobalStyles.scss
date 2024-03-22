@@ -108,7 +108,7 @@ html {
 
 body {
     font-size: 1.6rem;
-    font-family: ProximaNova, sans-serif;
+    font-family: TiktokFont, sans-serif;
     line-height: 1.5;
     text-rendering: optimizeSpeed;
     background-color: var(--default-layout-background);
@@ -146,7 +146,7 @@ input,
     outline: none;
     border: none;
     background-color: transparent;
-    font-family: ProximaNova, sans-serif;
+    font-family: TiktokFont, sans-serif;
 }
 
 a[href] {
@@ -156,41 +156,34 @@ a[href] {
 }
 
 // font emmbeded
-
 @font-face {
-    font-family: ProximaNova;
-    src: url('/assets/fonts/Proxima-Nova-Regular.woff2');
+    font-family: TiktokFont;
+    src: url('/assets/fonts/TikTokFont-Regular.woff2');
     font-weight: 400;
 }
 
 @font-face {
-    font-family: ProximaNova;
-    src: url('/assets/fonts/Proxima-Nova-Regular.woff2');
+    font-family: TiktokFont;
+    src: url('/assets/fonts/TikTokFont-Regular.woff2');
     font-weight: 500;
 }
 
 @font-face {
-    font-family: ProximaNova;
-    src: url('/assets/fonts/ProximaNova-Semibold.woff2');
+    font-family: TiktokFont;
+    src: url('/assets/fonts/TikTokFont-Semibold.woff2');
     font-weight: 600;
 }
 
 @font-face {
-    font-family: ProximaNova;
-    src: url('/assets/fonts/Proxima-Nova-Bold.woff');
+    font-family: TiktokFont;
+    src: url('/assets/fonts/TikTokFont-Bold.woff2');
     font-weight: 700;
 }
 
 @font-face {
-    font-family: ProximaNova;
-    src: url('/assets/fonts/Proxima-Nova-Bold.woff');
-    font-weight: 800;
-}
-
-@font-face {
-    font-family: SofiaPro;
-    src: url('/assets/fonts/sofiapro-bold.woff');
-    font-weight: 700;
+    font-family: TiktokDisplayFont;
+    src: url('/assets/fonts/TikTokFont-Semibold.woff2');
+    font-weight: 600;
 }
 
 .overlay {
@@ -224,7 +217,7 @@ a[href] {
     line-height: 1.5 !important;
     min-height: auto !important;
     padding: 8px 40px !important;
-    font-family: ProximaNova !important;
+    font-family: TiktokFont !important;
     font-weight: 600 !important;
 }
 

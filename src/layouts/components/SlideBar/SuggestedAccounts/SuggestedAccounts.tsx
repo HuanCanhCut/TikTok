@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import classNames from 'classnames/bind'
+import { useTranslation } from 'react-i18next'
 
 import style from './SuggestedAccounts.module.scss'
 import AccountItem from './AccountItem'
@@ -17,6 +18,7 @@ interface Props {
 }
 
 const SuggestedAccounts: React.FC<Props> = ({ label }) => {
+    const { t } = useTranslation()
     const [suggestedUser, setSuggestedUser] = useState<UserModal[]>([])
     const [page, setPage] = useState(1)
     const [loading, setLoading] = useState(true)
@@ -68,7 +70,7 @@ const SuggestedAccounts: React.FC<Props> = ({ label }) => {
             {loading && <AccountLoading />}
 
             <p className={cx('see-more')} onClick={onSeeMore}>
-                See more
+                {t('sidebar.see more')}
             </p>
         </div>
     )

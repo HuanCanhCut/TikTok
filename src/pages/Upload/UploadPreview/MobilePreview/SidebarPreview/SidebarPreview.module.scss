@@ -27,6 +27,10 @@
     height: 40px;
     border: 8px solid rgba(38, 33, 33, 0.75);
     border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    overflow: hidden;
     animation: rotateAnimation 6s linear infinite;
 }
 

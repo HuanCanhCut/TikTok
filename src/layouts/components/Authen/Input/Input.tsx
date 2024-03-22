@@ -1,6 +1,8 @@
 import classNames from 'classnames/bind'
 import style from './Input.module.scss'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
+
 import { faEyeSlash, faEye } from '@fortawesome/free-regular-svg-icons'
 import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -16,6 +18,7 @@ interface Props {
 }
 
 const Input: React.FC<Props> = ({ email, setEmail, password, setPassword }) => {
+    const { t } = useTranslation()
     const [hidePassword, setHidePassword] = useState(true)
 
     return (
@@ -34,7 +37,7 @@ const Input: React.FC<Props> = ({ email, setEmail, password, setPassword }) => {
                 <input
                     type={hidePassword ? 'password' : 'text'}
                     className={cx('password')}
-                    placeholder="Password"
+                    placeholder={t('auth.password')}
                     value={password}
                     onChange={(e) => {
                         setPassword(e.target.value)
@@ -42,7 +45,7 @@ const Input: React.FC<Props> = ({ email, setEmail, password, setPassword }) => {
                 />
                 {hidePassword && (
                     <span
-                        className={cx('hide-password')}
+                        className={cx('hide-password', 'eye-icon')}
                         onClick={() => {
                             setHidePassword(false)
                         }}
@@ -52,7 +55,7 @@ const Input: React.FC<Props> = ({ email, setEmail, password, setPassword }) => {
                 )}
                 {!hidePassword && (
                     <span
-                        className={cx('display-password')}
+                        className={cx('display-password', 'eye-icon')}
                         onClick={() => {
                             setHidePassword(true)
                         }}

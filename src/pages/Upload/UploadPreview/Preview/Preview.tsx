@@ -1,6 +1,7 @@
 import classNames from 'classnames/bind'
 import style from './Preview.module.scss'
 import { useContext, memo, useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import MobilePreview from '../MobilePreview'
 import UploadDrop from '../../UploadDrop'
@@ -14,6 +15,8 @@ let durationFinished = 3
 const slideQuantity = 8
 
 function Preview() {
+    const { t } = useTranslation()
+
     const currentFile: FileContextModal | null = useContext(fileUploadContext)
 
     const [videoDuration, setVideoDuration] = useState()
@@ -132,8 +135,8 @@ function Preview() {
                 </>
             )}
             <header>
-                <h1 className={cx('heading')}>Upload video</h1>
-                <span className={cx('title')}>Post a video to your account</span>
+                <h1 className={cx('heading')}>{t('upload.preview.upload video')}</h1>
+                <span className={cx('title')}>{t('upload.preview.post a video to your account')}</span>
             </header>
             <div className={cx('body')}>
                 {captureImages.length === slideQuantity ? (
@@ -153,5 +156,4 @@ function Preview() {
     )
 }
 
-// Use memo to avoid re-rendering every time the file name is changed
 export default memo(Preview)

@@ -2,20 +2,24 @@ import classNames from 'classnames/bind'
 import style from './PreviewInfo.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useContext, memo } from 'react'
+import { useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
+
 import { faMusic } from '@fortawesome/free-solid-svg-icons'
 import { fileNameContext } from '../../UploadPreview'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
-import { useSelector } from 'react-redux'
 import { authCurrentUser } from '~/redux/selectors'
 import { UserModal } from '~/modal/modal'
 
 const cx = classNames.bind(style)
 
 interface Props {
-    isPlay: boolean
+    isPlay: boolean | null
 }
 
 const PreviewInfo: React.FC<Props> = ({ isPlay }) => {
+    const { t } = useTranslation()
+
     const fileNameModal = useContext(fileNameContext)
     const currentUser: UserModal = useSelector(authCurrentUser)
 
@@ -34,7 +38,7 @@ const PreviewInfo: React.FC<Props> = ({ isPlay }) => {
                             'marquee-paused': !isPlay,
                         })}
                     >
-                        {`${currentUser.first_name} ${currentUser.last_name} Original sound -- `}
+                        {`${currentUser.first_name} ${currentUser.last_name} ${t('upload.preview.original sound')} -- `}
                     </span>
                     <span
                         className={cx('marquee', {
@@ -42,7 +46,7 @@ const PreviewInfo: React.FC<Props> = ({ isPlay }) => {
                             'marquee-paused': !isPlay,
                         })}
                     >
-                        {`${currentUser.first_name} ${currentUser.last_name} Original sound`}
+                        {`${currentUser.first_name} ${currentUser.last_name} ${t('upload.preview.original sound')}`}
                     </span>
                 </div>
             </div>

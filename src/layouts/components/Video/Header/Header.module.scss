@@ -2,6 +2,13 @@
     width: 100%;
     flex: 1;
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-left {
+    display: flex;
+    max-width: 70%;
     align-items: center;
 }
 
@@ -14,7 +21,7 @@
 
 .body {
     margin-left: 12px;
-    max-width: 75%;
+    max-width: 65%;
 }
 
 .user-info {

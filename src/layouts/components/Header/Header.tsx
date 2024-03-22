@@ -18,6 +18,7 @@ import { useState, memo, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { authCurrentUser, themeSelector } from '~/redux/selectors'
 import Modal from 'react-modal'
+import { useTranslation } from 'react-i18next'
 
 import Authen from '../Authen'
 import config from '~/config'
@@ -41,17 +42,19 @@ const cx = classNames.bind(style)
 const MENU_ITEM = [
     {
         icon: <FontAwesomeIcon icon={faEarthAsia as IconProp} />,
-        title: 'English',
+        title: 'Current language',
         children: {
             title: 'Language',
             data: [
                 {
+                    type: 'lang',
                     code: 'en',
                     title: 'English',
                 },
                 {
-                    code: 'vn',
-                    title: 'Tiếng Việt',
+                    type: 'lang',
+                    code: 'vi',
+                    title: 'vietnamese',
                 },
             ],
         },
@@ -74,8 +77,11 @@ const MENU_ITEM = [
 ]
 
 function Header() {
+    const { t, i18n } = useTranslation()
+
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
     const currentUser: UserModal = useSelector(authCurrentUser)
     const profile = currentUser && currentUser.nickname
     const [shortcutsIsOpen, setShortcutsIsOpen] = useState(false)
@@ -120,7 +126,7 @@ function Header() {
     const userMenu = [
         {
             icon: <FontAwesomeIcon icon={faUser as IconProp} />,
-            title: 'View frofile',
+            title: 'View profile',
             to: `/user/@${profile}`,
         },
         {
@@ -138,13 +144,30 @@ function Header() {
         },
     ]
 
-    const handleMenuChange = (menuItem: { type: string; title: string; to?: string; separate?: boolean }) => {
+    const handleSetLanguage = (locale: string) => {
+        const currentLanguage = JSON.parse(localStorage.getItem('currentLanguage')!)
+        if (currentLanguage !== locale) {
+            i18n.changeLanguage(locale)
+            localStorage.setItem('currentLanguage', JSON.stringify(locale))
+        }
+    }
+
+    const handleMenuChange = (menuItem: {
+        type: string
+        title: string
+        to?: string
+        separate?: boolean
+        code?: string
+    }) => {
         switch (menuItem.type) {
             case 'keyboard-shortcuts':
                 openKeyboardShortCuts()
                 break
             case 'log-out':
                 handleLogOut()
+                break
+            case 'lang':
+                menuItem.code && handleSetLanguage(menuItem.code)
                 break
             default:
                 break
@@ -171,18 +194,18 @@ function Header() {
                                 rounded
                                 leftIcon={<FontAwesomeIcon icon={faPlus as IconProp} />}
                             >
-                                Upload
+                                {t('header.upload')}
                             </Button>
                             {/* Using a wrapper <div> or <span> tag around the reference element solves this by creating a new parentNode context*/}
                             <div>
-                                <Tippy delay={[0, 50]} content="Messages" interactive>
+                                <Tippy delay={[0, 50]} content={t('header.message')} interactive>
                                     <button className={cx('action-btn')}>
                                         <MessageIcon />
                                     </button>
                                 </Tippy>
                             </div>
                             <div>
-                                <Tippy delay={[0, 50]} content="Mail Box" interactive>
+                                <Tippy delay={[0, 50]} content={t('header.mail box')} interactive>
                                     <button className={cx('action-btn')}>
                                         <InboxIcon />
                                     </button>
@@ -199,7 +222,7 @@ function Header() {
                                 }}
                                 className={cx('upload')}
                             >
-                                Upload
+                                {t('header.upload')}
                             </Button>
                             <Button
                                 primary
@@ -207,7 +230,7 @@ function Header() {
                                     setIsOpenAuthModal(true)
                                 }}
                             >
-                                Log In
+                                {t('header.login')}
                             </Button>
                         </>
                     )}

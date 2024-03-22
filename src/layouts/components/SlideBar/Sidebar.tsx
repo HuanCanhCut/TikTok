@@ -1,5 +1,6 @@
 import classNames from 'classnames/bind'
 import { memo } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import styles from './Sidebar.module.scss'
 import Menu, { MenuItem } from './Menu'
@@ -11,7 +12,7 @@ import {
     LiveIcon,
     LiveActiveIcon,
 } from '~/Components/Icons'
-import SuggestedAccount from './SuggestedAccounts/SuggesteAccounts'
+import SuggestedAccount from './SuggestedAccounts/SuggestedAccounts'
 import FrameLoginSidebar from './FrameLoginSidebar'
 import FooterSidebar from './FooterSidebar'
 import config from '~/config'
@@ -22,6 +23,7 @@ import { authCurrentUser } from '~/redux/selectors'
 const cx = classNames.bind(styles)
 
 function Sidebar() {
+    const { t } = useTranslation()
     const currentUser = useSelector(authCurrentUser)
     return (
         <aside
@@ -32,13 +34,13 @@ function Sidebar() {
             <div className={cx('container')}>
                 <Menu>
                     <MenuItem
-                        title="For You"
+                        title={t('sidebar.for you')}
                         to={config.routes.home}
                         icon={<HomeIcon />}
                         activeIcon={<HomeActiveIcon />}
                     />
                     <MenuItem
-                        title="Following"
+                        title={t('sidebar.following')}
                         to={config.routes.following}
                         icon={<UserGroupIcon />}
                         activeIcon={<UserGroupActiveIcon />}
@@ -50,7 +52,7 @@ function Sidebar() {
                         activeIcon={<LiveActiveIcon />}
                     />
                 </Menu>
-                {currentUser ? <SuggestedAccount label="Suggested Accounts" /> : <FrameLoginSidebar />}
+                {currentUser ? <SuggestedAccount label={t('sidebar.suggested accounts')} /> : <FrameLoginSidebar />}
                 <FooterSidebar />
             </div>
         </aside>

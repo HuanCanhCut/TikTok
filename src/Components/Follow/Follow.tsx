@@ -3,6 +3,7 @@ import { memo, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { removeDuplicate } from '~/project/services'
+import { useTranslation } from 'react-i18next'
 
 import { followAnUser, unFollowUser } from '~/services/userService'
 import { authCurrentUser, temporaryFollowed, temporaryUnFollowed } from '~/redux/selectors'
@@ -11,6 +12,7 @@ import { UserModal } from '~/modal/modal'
 import { sendEvent } from '~/helpers/event'
 
 const Follow = ({ data }: { data: UserModal }) => {
+    const { t } = useTranslation()
     const dispatch = useDispatch()
     let temporaryFollowedList: number[] = useSelector(temporaryFollowed)
     const temporaryUnFollowedList: number[] = useSelector(temporaryUnFollowed)
@@ -84,16 +86,16 @@ const Follow = ({ data }: { data: UserModal }) => {
                         {data.is_followed || temporaryFollowedList.includes(data.id) ? (
                             temporaryUnFollowedList.includes(data.id) ? (
                                 <Button outline onClick={handleFollow}>
-                                    Follow
+                                    {t('videos.follow')}
                                 </Button>
                             ) : (
                                 <Button rounded onClick={handleUnFollow}>
-                                    Following
+                                    {t('videos.following')}
                                 </Button>
                             )
                         ) : (
                             <Button outline onClick={handleFollow}>
-                                Follow
+                                {t('videos.follow')}
                             </Button>
                         )}
                     </>
@@ -101,7 +103,7 @@ const Follow = ({ data }: { data: UserModal }) => {
             ) : (
                 <>
                     <Button outline onClick={handleFollow}>
-                        Follow
+                        {t('videos.follow')}
                     </Button>
                 </>
             )}

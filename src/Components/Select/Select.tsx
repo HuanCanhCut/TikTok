@@ -1,6 +1,7 @@
 import classNames from 'classnames/bind'
 import style from './Select.module.scss'
 import { motion } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
 import { useState, useEffect, memo, KeyboardEvent } from 'react'
 import { ArrowDownSelect } from '../Icons'
 
@@ -22,6 +23,7 @@ interface Props {
 }
 
 const Select: React.FC<Props> = ({ options, value, handleSetValue }) => {
+    const { t } = useTranslation()
     const [isOpen, setIsOpen] = useState(false)
 
     const handleSelected = (item: string) => {
@@ -64,7 +66,7 @@ const Select: React.FC<Props> = ({ options, value, handleSetValue }) => {
             }}
         >
             <motion.button onClick={() => setIsOpen(!isOpen)} className={cx('person-can-watch-btn')} id="btn-select">
-                {value}
+                {t(`upload.preview.${value.toLowerCase()}`)}
                 <motion.div
                     variants={{
                         open: { rotate: 180 },
@@ -113,7 +115,7 @@ const Select: React.FC<Props> = ({ options, value, handleSetValue }) => {
                                 handleSelected(item)
                             }}
                         >
-                            {item}
+                            {t(`upload.preview.${item.toLowerCase()}`)}
                         </motion.li>
                     )
                 })}

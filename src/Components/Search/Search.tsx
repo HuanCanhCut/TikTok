@@ -3,6 +3,7 @@ import { useEffect, useState, useRef, memo } from 'react'
 import { faCircleXmark, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
+import { useTranslation } from 'react-i18next'
 
 import * as searchService from '~/services/searchService'
 import { Wrapper as PopperWrapper } from '~/Components/Popper'
@@ -16,6 +17,7 @@ import { UserModal } from '~/modal/modal'
 const cx = classNames.bind(style)
 
 function Search() {
+    const { t } = useTranslation()
     const [searchValue, setSearchValue] = useState<string>('')
     const [searchResult, setSearchResult] = useState<Array<UserModal>>([])
     const [showResult, setShowResult] = useState(true)
@@ -64,7 +66,7 @@ function Search() {
                 render={(attrs) => (
                     <div className={cx('search-result')} tabIndex={-1} {...attrs}>
                         <PopperWrapper>
-                            <h4 className={cx('search-title')}>Account</h4>
+                            <h4 className={cx('search-title')}>{t('header.account')}</h4>
                             {searchResult.map((result) => {
                                 return <AccountItem key={result.id} data={result} to={`/user/@${result.nickname}`} />
                             })}
@@ -76,7 +78,7 @@ function Search() {
                 <div className={cx('search')}>
                     <input
                         ref={inputRef}
-                        placeholder="Search account and videos"
+                        placeholder={t('header.search placeholder')}
                         spellCheck={false}
                         value={searchValue}
                         onChange={(e) => {

@@ -1,6 +1,7 @@
 import classNames from 'classnames/bind'
 import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 
 import Button from '~/Components/Button'
 import SwitchButton from '~/Components/SwitchButton'
@@ -24,6 +25,7 @@ interface Props {
 }
 
 const MenuItem: React.FC<Props> = ({ data, onClick }) => {
+    const { t } = useTranslation()
     const [isOn, setIsOn] = useState(JSON.parse(localStorage.getItem('darkMode')!) || false)
 
     const dispatch = useDispatch()
@@ -43,7 +45,7 @@ const MenuItem: React.FC<Props> = ({ data, onClick }) => {
 
     return (
         <Button className={classes} to={data.to} leftIcon={data.icon} onClick={onClick}>
-            {data.title}
+            {t(`header.${data.title.toLowerCase()}`)}
             {data.switch && <SwitchButton isOn={isOn} onClick={handleToggleDarkMode} className={cx('switch-btn')} />}
         </Button>
     )

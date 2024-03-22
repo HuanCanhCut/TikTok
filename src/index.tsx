@@ -6,6 +6,7 @@ import { Provider } from 'react-redux'
 import store, { persistor } from './redux/store'
 import { ToastContainer } from 'react-toastify'
 import { PersistGate } from 'redux-persist/integration/react'
+import '~/i18n/i18n'
 
 const root = ReactDOM.createRoot(document.getElementById('root')!)
 root.render(

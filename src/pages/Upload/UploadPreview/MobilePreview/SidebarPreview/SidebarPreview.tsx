@@ -9,7 +9,7 @@ import { authCurrentUser } from '~/redux/selectors'
 const cx = classNames.bind(style)
 
 interface Props {
-    isPlay: boolean
+    isPlay: boolean | null
 }
 
 const SidebarPreview: React.FC<Props> = ({ isPlay }) => {

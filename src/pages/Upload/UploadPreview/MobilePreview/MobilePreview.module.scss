@@ -30,6 +30,8 @@
 }
 
 .mobile-page-layout {
+    max-width: 100%;
+    padding: 0 8px;
     width: 100%;
     position: absolute;
     top: 2.8rem;
@@ -38,6 +40,7 @@
     justify-content: space-around;
     align-items: center;
     z-index: 7;
+    -webkit-user-select: none;
     user-select: none;
 }
 

@@ -1,6 +1,8 @@
 import style from './UploadDrop.module.scss'
 import classNames from 'classnames/bind'
 import React, { useRef, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+
 import { UploadVideo } from '~/Components/Icons'
 import { sendEvent } from '~/helpers/event'
 import { showToast } from '~/project/services'
@@ -16,6 +18,8 @@ interface Props {
 }
 
 const UploadDrop: React.FC<Props> = ({ setFile, className, small = false, loading = false, captureImages }) => {
+    const { t } = useTranslation()
+
     const inputRef = useRef<HTMLInputElement>(null)
     const progressRef: any = useRef<SVGCircleElement>(null)
     const progressValueRef = useRef<HTMLDivElement>(null)
@@ -45,13 +49,13 @@ const UploadDrop: React.FC<Props> = ({ setFile, className, small = false, loadin
 
     const handleSetFile = (e: any) => {
         if (Array.from(e.dataTransfer.files).length > 1) {
-            showToast({ message: 'Please select only one file.' })
+            showToast({ message: t('upload.drop.select only file') })
         } else {
             const fileType = e.dataTransfer.files[0].type
             if (fileType === 'video/mp4' || fileType === 'video/webm') {
                 setFile(e.dataTransfer.files[0])
             } else {
-                showToast({ message: 'Unsupported file. Use Mp4 or WebM instead.' })
+                showToast({ message: t('upload.drop.unsupported file') })
             }
         }
     }
@@ -71,7 +75,7 @@ const UploadDrop: React.FC<Props> = ({ setFile, className, small = false, loadin
         if (fileType === 'video/mp4' || fileType === 'video/webm') {
             setFile(e.target.files[0])
         } else {
-            showToast({ message: 'Unsupported file. Use Mp4 or WebM instead.' })
+            showToast({ message: t('upload.drop.unsupported file') })
         }
     }
 
@@ -121,13 +125,13 @@ const UploadDrop: React.FC<Props> = ({ setFile, className, small = false, loadin
                     ) : (
                         <>
                             <UploadVideo className={cx('upload-icon')} />
-                            <span className={cx('title')}>Select video to upload</span>
-                            <span className={cx('drag-video')}>Or drag and drop video</span>
+                            <span className={cx('title')}>{t('upload.drop.select video to upload')}</span>
+                            <span className={cx('drag-video')}>{t('upload.drop.or drag and drop video')}</span>
                             <div className={cx('video-info')}>
-                                <span>MP4 or WebM</span>
-                                <span>720x1280 resolution or higher</span>
-                                <span>Up to 10 minutes</span>
-                                <span>Less than 10GB</span>
+                                <span>{t('upload.drop.mp4 or webm')}</span>
+                                <span>{t('upload.drop.resolution or higher')}</span>
+                                <span>{t('upload.drop.up to 10 minutes')}</span>
+                                <span>{t('upload.drop.less than 10GB')}</span>
                             </div>
 
                             <input
@@ -142,7 +146,7 @@ const UploadDrop: React.FC<Props> = ({ setFile, className, small = false, loadin
                         </>
                     )}
                     <div onClick={handleCancel} className={cx('upload-button')}>
-                        {loading ? 'Cancel' : 'Select file'}
+                        {loading ? t('upload.drop.cancel') : t('upload.drop.select file')}
                     </div>
                 </div>
             </div>

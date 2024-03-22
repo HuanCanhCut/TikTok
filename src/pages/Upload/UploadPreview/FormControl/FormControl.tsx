@@ -5,6 +5,7 @@ import { useState, useReducer, useCallback, useRef } from 'react'
 import * as action from './Actions'
 import ReactModal from 'react-modal'
 import { sendEvent } from '~/helpers/event'
+import { useTranslation } from 'react-i18next'
 
 import Select from '~/Components/Select'
 import { CheckboxTick } from '~/Components/Icons'
@@ -100,6 +101,7 @@ interface VideoRef {
 }
 
 const FormControl: React.FC<Props> = ({ captureImages, slideQuantity }) => {
+    const { t } = useTranslation()
     const videoRef: any = useRef<VideoRef>(null)
     const progressRef: any = useRef(null)
     const progressValueRef: any = useRef(null)
@@ -234,11 +236,13 @@ const FormControl: React.FC<Props> = ({ captureImages, slideQuantity }) => {
 
             <div className={cx('allow-wrapper')}>
                 <div className={cx('person-can-watch')}>
-                    <p style={{ display: 'inline-block', fontWeight: 600 }}>Who can watch this video</p>
+                    <p style={{ display: 'inline-block', fontWeight: 600 }}>
+                        {t('upload.preview.who can watch this video')}
+                    </p>
                     <Select options={personCanWatchOptions} handleSetValue={handleSelected} value={personCanWatch} />
                 </div>
                 <div className={cx('allow-user-to')}>
-                    <p style={{ display: 'inline-block', fontWeight: 600 }}>Allow user to:</p>
+                    <p style={{ display: 'inline-block', fontWeight: 600 }}>{t('upload.preview.allow user to')}</p>
                     <div className={cx('allow-menu')}>
                         {allowUser.map((item: AllowUser, index: number) => {
                             return (
@@ -260,7 +264,7 @@ const FormControl: React.FC<Props> = ({ captureImages, slideQuantity }) => {
                                             <CheckboxTick width="12" height="12" className={cx('checkbox-icon')} />
                                         )}
                                     </div>
-                                    <span>{item.title}</span>
+                                    <span>{t(`upload.preview.${item.title.toLocaleLowerCase()}`)}</span>
                                 </div>
                             )
                         })}
@@ -276,21 +280,22 @@ const FormControl: React.FC<Props> = ({ captureImages, slideQuantity }) => {
                         toolTip={item.type === 'schedule'}
                         message={item.message}
                         className=""
+                        type={item.type}
                     />
                 )
             })}
             <>
                 <div className={cx('upload-btn-wrapper')}>
                     <Button roundedOutline large onClick={openModal}>
-                        Discard
+                        {t('upload.preview.discard')}
                     </Button>
                     {captureImages.length === 8 ? (
                         <Button primary large onClick={handlePostVideo}>
-                            Post
+                            {t('upload.preview.post')}
                         </Button>
                     ) : (
                         <Button disable large>
-                            Post
+                            {t('upload.preview.post')}
                         </Button>
                     )}
                 </div>
@@ -299,10 +304,10 @@ const FormControl: React.FC<Props> = ({ captureImages, slideQuantity }) => {
                     <Modal
                         isOpen={isOpen}
                         closeModal={closeModal}
-                        title={modal.title}
-                        description={modal.description}
-                        allowTitle={modal.allowTitle}
-                        cancelTitle={modal.cancelTitle}
+                        title={t(`upload.preview.${modal.title.toLocaleLowerCase()}`)}
+                        description={t(`upload.preview.${modal.description.toLocaleLowerCase()}`)}
+                        allowTitle={t(`upload.preview.${modal.allowTitle.toLocaleLowerCase()}`)}
+                        cancelTitle={t(`upload.preview.${modal.cancelTitle.toLocaleLowerCase()}`)}
                         vertical={true}
                         onAllow={handleDiscard}
                     />
@@ -331,9 +336,9 @@ const FormControl: React.FC<Props> = ({ captureImages, slideQuantity }) => {
                                     0%
                                 </div>
                             </div>
-                            <p className={cx('uploading')}>Uploading...</p>
+                            <p className={cx('uploading')}>{t('upload.preview.uploading')}</p>
                             <p className={cx('description')}>
-                                Leaving the page dose not interrupt the posting progress
+                                {t('upload.preview.leaving the page dose not interrupt the posting progress')}
                             </p>
                         </PopperWrapper>
                     </ReactModal>

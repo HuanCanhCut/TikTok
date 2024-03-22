@@ -1,5 +1,6 @@
 import classNames from 'classnames/bind'
 import { useContext } from 'react'
+import { useTranslation } from 'react-i18next'
 import style from './EditCard.module.scss'
 import Button from '~/Components/Button'
 import { Cut } from '~/Components/Icons'
@@ -8,6 +9,8 @@ import { fileNameContext } from '../../UploadPreview'
 const cx = classNames.bind(style)
 
 function EditCard() {
+    const { t } = useTranslation()
+
     const fileName = useContext(fileNameContext)
 
     return (
@@ -22,7 +25,7 @@ function EditCard() {
                 </div>
             </div>
             <Button primary leftIcon={<Cut />} className={cx('edit-video')}>
-                Edit video
+                {t('upload.preview.edit video')}
             </Button>
         </div>
     )

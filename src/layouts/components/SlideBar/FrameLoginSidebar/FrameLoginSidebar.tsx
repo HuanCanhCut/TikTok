@@ -1,14 +1,17 @@
 import classNames from 'classnames/bind'
 import style from './FrameLoginSidebar.module.scss'
+import { useTranslation } from 'react-i18next'
 import Button from '~/Components/Button'
 import { sendEvent } from '~/helpers/event'
 
 const cx = classNames.bind(style)
 
 function FrameLoginSidebar() {
+    const { t } = useTranslation()
+
     return (
         <div className={cx('wrapper')}>
-            <p className={cx('title')}>Log in to follow creators, like videos, and view comments.</p>
+            <p className={cx('title')}>{t('sidebar.frame login title')}</p>
             <Button
                 outline
                 className={cx('login')}
@@ -16,7 +19,7 @@ function FrameLoginSidebar() {
                     sendEvent({ eventName: 'auth:open-auth-modal', detail: true })
                 }}
             >
-                Login
+                {t('sidebar.login')}
             </Button>
         </div>
     )

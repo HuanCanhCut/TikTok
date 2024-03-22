@@ -1,6 +1,8 @@
 import classNames from 'classnames/bind'
 import style from './FooterSidebar.module.scss'
 import { memo } from 'react'
+import { useTranslation } from 'react-i18next'
+
 import Button from '~/Components/Button'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHurricane } from '@fortawesome/free-solid-svg-icons'
@@ -9,27 +11,28 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core'
 
 const cx = classNames.bind(style)
 
-const contact = [
-    'About',
-    'Newsroom',
-    'Contact',
-    'Careers',
-    'TikTok for Good',
-    'Advertise',
-    'Developers',
-    'Transparency',
-    'TikTok Rewards',
-    'TikTok Embeds',
-    'Help',
-    'Safety',
-    'Terms',
-    'Privacy',
-    'Creator',
-    'PortalCommunity',
-    'Guidelines',
-]
-
 function FooterSidebar() {
+    const { t } = useTranslation()
+
+    const contact = [
+        t('sidebar.about'),
+        t('sidebar.newsroom'),
+        t('sidebar.contact'),
+        t('sidebar.careers'),
+        t('sidebar.tikTok for Good'),
+        t('sidebar.advertise'),
+        t('sidebar.developers'),
+        t('sidebar.transparency'),
+        t('sidebar.tikTok Rewards'),
+        t('sidebar.tikTok Embeds'),
+        t('sidebar.help'),
+        t('sidebar.safety'),
+        t('sidebar.terms'),
+        t('sidebar.privacy'),
+        t('sidebar.creator portal'),
+        t('sidebar.community guidelines'),
+    ]
+
     const date = new Date()
     const Year = date.getFullYear()
 
@@ -46,7 +49,7 @@ function FooterSidebar() {
                     )
                 }}
             >
-                Create effects
+                {t('sidebar.create effects')}
             </Button>
 
             <ul className={cx('contact')}>

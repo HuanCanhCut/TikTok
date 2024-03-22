@@ -2,6 +2,7 @@ import classNames from 'classnames/bind'
 import style from './AccountPreview.module.scss'
 import Follow from '../Follow'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 import BlueTick from '~/Components/BlueTick/BlueTick'
 import Image from '~/Components/Images'
@@ -14,6 +15,8 @@ interface Props {
 }
 
 function AccountPreview({ data }: Props) {
+    const { t } = useTranslation()
+
     return (
         <div className={cx('preview')}>
             <header className={cx('header')}>
@@ -36,7 +39,7 @@ function AccountPreview({ data }: Props) {
                     <strong className={cx('value')}>{data.followings_count}</strong>
                     <span>Followers</span>
                     <strong className={cx('value')}>{data.followers_count}</strong>
-                    <span>Likes</span>
+                    <span>{t('preview.likes')}</span>
                 </p>
             </div>
         </div>

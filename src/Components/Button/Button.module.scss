@@ -4,13 +4,12 @@
     padding: 10px 16px;
     border-radius: 2px;
     font-weight: 600;
-    font-family: ProximaNova, sans-serif;
     cursor: pointer;
     border: 1px solid transparent;
     background-color: rgba(255, 255, 255, 0.08);
     margin: 0 8px;
     color: var(--text-color);
-    transition: all 0.1s linear;
+    transition: background 0.1s linear;
 
     &.disable {
         opacity: 0.8;

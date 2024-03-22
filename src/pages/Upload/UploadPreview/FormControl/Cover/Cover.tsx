@@ -1,6 +1,7 @@
 import classNames from 'classnames/bind'
 import style from './Cover.module.scss'
 import { useRef, useContext, forwardRef, useImperativeHandle } from 'react'
+import { useTranslation } from 'react-i18next'
 import Tippy from '@tippyjs/react'
 import useDarkMode from '~/hooks/useDarkMode'
 import { motion } from 'framer-motion'
@@ -20,6 +21,7 @@ interface getThumbNail {
 }
 
 const Cover = forwardRef<getThumbNail, Props>(({ captureImages, slideQuantity }, ref) => {
+    const { t } = useTranslation()
     const { file }: any = useContext(fileUploadContext)
 
     const sliderRef = useRef<HTMLDivElement>(null)
@@ -75,12 +77,8 @@ const Cover = forwardRef<getThumbNail, Props>(({ captureImages, slideQuantity },
     return (
         <div>
             <div className={cx('cover')}>
-                <span className={cx('title')}>Cover</span>
-                <Tippy
-                    content={`Select a cover or upload one from your device. An engaging cover can effectively capture viewers’ interest.`}
-                    placement="bottom-start"
-                    interactive
-                >
+                <span>{t('upload.preview.cover')}</span>
+                <Tippy content={t(`upload.preview.cover tooltip`)} placement="bottom-start" interactive>
                     <div className={cx('circle-icon')}>
                         <CircleInfo />
                     </div>

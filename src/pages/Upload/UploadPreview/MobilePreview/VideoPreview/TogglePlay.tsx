@@ -15,7 +15,7 @@ interface Props {
 }
 
 const TogglePlay: React.FC<Props> = ({ videoRefCurrent }) => {
-    const [isPlaying, setIsPlaying] = useState(videoRefCurrent && videoRefCurrent.paused)
+    const [isPlaying, setIsPlaying] = useState<boolean | null>(videoRefCurrent && videoRefCurrent.paused)
 
     const handlePauseVideo = useCallback(() => {
         videoRefCurrent && videoRefCurrent.pause()
@@ -50,12 +50,10 @@ const TogglePlay: React.FC<Props> = ({ videoRefCurrent }) => {
                     <FontAwesomeIcon icon={faPlay as IconProp} className={cx('play-icon')} />
                 )}
             </div>
-            {isPlaying !== null && (
-                <>
-                    <PreviewInfo isPlay={isPlaying} />
-                    <SidebarPreview isPlay={isPlaying} />
-                </>
-            )}
+            <>
+                <PreviewInfo isPlay={isPlaying} />
+                <SidebarPreview isPlay={isPlaying} />
+            </>
         </>
     )
 }
