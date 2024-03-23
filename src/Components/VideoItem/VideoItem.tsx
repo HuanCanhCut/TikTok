@@ -73,6 +73,30 @@ const VideoItem: React.FC<Props> = ({ video }) => {
     }
 
     useEffect(() => {
+        const handleVisibilityChange = () => {
+            if (document.visibilityState) {
+                switch (document.visibilityState) {
+                    case 'hidden':
+                        videoRef.current && isVisible && videoRef.current.pause()
+                        console.log(videoRef.current)
+                        break
+                    case 'visible':
+                        videoRef.current && isVisible && videoRef.current.play()
+
+                        break
+                    default:
+                        break
+                }
+            }
+        }
+        document.addEventListener('visibilitychange', handleVisibilityChange)
+
+        return () => {
+            document.removeEventListener('visibilitychange', handleVisibilityChange)
+        }
+    }, [isVisible])
+
+    useEffect(() => {
         const remove = listentEvent({
             eventName: 'auth:open-auth-modal',
             handler: ({ detail }) => {
