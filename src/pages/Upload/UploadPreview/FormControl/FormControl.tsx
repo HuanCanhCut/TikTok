@@ -300,18 +300,16 @@ const FormControl: React.FC<Props> = ({ captureImages, slideQuantity }) => {
                     )}
                 </div>
 
-                {isOpen && (
-                    <Modal
-                        isOpen={isOpen}
-                        closeModal={closeModal}
-                        title={t(`upload.preview.${modal.title.toLocaleLowerCase()}`)}
-                        description={t(`upload.preview.${modal.description.toLocaleLowerCase()}`)}
-                        allowTitle={t(`upload.preview.${modal.allowTitle.toLocaleLowerCase()}`)}
-                        cancelTitle={t(`upload.preview.${modal.cancelTitle.toLocaleLowerCase()}`)}
-                        vertical={true}
-                        onAllow={handleDiscard}
-                    />
-                )}
+                <Modal
+                    isOpen={isOpen}
+                    closeModal={closeModal}
+                    title={t(`upload.preview.${modal.title.toLocaleLowerCase()}`)}
+                    description={t(`upload.preview.${modal.description.toLocaleLowerCase()}`)}
+                    allowTitle={t(`upload.preview.${modal.allowTitle.toLocaleLowerCase()}`)}
+                    cancelTitle={t(`upload.preview.${modal.cancelTitle.toLocaleLowerCase()}`)}
+                    vertical={true}
+                    onAllow={handleDiscard}
+                />
 
                 {isOpenUploading && (
                     <ReactModal

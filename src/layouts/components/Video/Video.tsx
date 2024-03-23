@@ -103,7 +103,7 @@ const Video: React.FC<Props> = ({ type }) => {
             try {
                 const response = await videoService.getVideo({
                     type,
-                    page: 1,
+                    page: 34,
                     accessToken,
                 })
 

@@ -12,7 +12,7 @@ import { Muted, UnMuted } from '../Icons'
 import VideoAction from './VideoAction'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { UserModal } from '~/modal/modal'
-import { sendEvent } from '~/helpers/event'
+import { listentEvent, sendEvent } from '~/helpers/event'
 
 const cx = classNames.bind(style)
 
@@ -46,6 +46,7 @@ const VideoItem: React.FC<Props> = ({ video }) => {
     const mutedVideos = useSelector(mutedVideo)
     const videoRef = useRef<HTMLVideoElement | null>(null)
     const [playing, setPlaying] = useState(false)
+    const [authIsOpen, setAuthIsOpen] = useState(false)
 
     const resolutionX = video.meta.video.resolution_x
     const resolutionY = video.meta.video.resolution_y
@@ -71,6 +72,17 @@ const VideoItem: React.FC<Props> = ({ video }) => {
         }
     }
 
+    useEffect(() => {
+        const remove = listentEvent({
+            eventName: 'auth:open-auth-modal',
+            handler: ({ detail }) => {
+                setAuthIsOpen(detail)
+            },
+        })
+
+        return remove
+    }, [])
+
     const handleToggleMuted = useCallback(() => {
         dispatch(actions.mutedVideo(!mutedVideos))
     }, [dispatch, mutedVideos])
@@ -79,7 +91,9 @@ const VideoItem: React.FC<Props> = ({ video }) => {
         const handleKeyDown = (e: KeyboardEvent) => {
             switch (e.which) {
                 case 77:
-                    handleToggleMuted()
+                    if (!authIsOpen) {
+                        handleToggleMuted()
+                    }
                     break
                 default:
                     break
@@ -91,7 +105,7 @@ const VideoItem: React.FC<Props> = ({ video }) => {
         return () => {
             window.removeEventListener('keydown', handleKeyDown)
         }
-    }, [handleToggleMuted, mutedVideos])
+    }, [handleToggleMuted, mutedVideos, authIsOpen])
 
     const handleEnded = () => {
         videoRef.current && videoRef.current.play()

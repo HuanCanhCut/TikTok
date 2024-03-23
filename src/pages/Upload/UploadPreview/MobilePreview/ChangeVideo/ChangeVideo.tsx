@@ -39,18 +39,16 @@ function ChangeVideo() {
             <Button text className={cx('change-video-btn')} onClick={openModal}>
                 {t('upload.preview.change video')}
             </Button>
-            {isOpen && (
-                <Modal
-                    isOpen={isOpen}
-                    closeModal={closeModal}
-                    title={t('upload.preview.replace this video')}
-                    description={t('upload.preview.change video description')}
-                    allowTitle={t('upload.preview.change')}
-                    cancelTitle={t('upload.preview.cancel')}
-                    vertical={true}
-                    onAllow={confirmChange}
-                />
-            )}
+            <Modal
+                isOpen={isOpen}
+                closeModal={closeModal}
+                title={t('upload.preview.replace this video')}
+                description={t('upload.preview.change video description')}
+                allowTitle={t('upload.preview.change')}
+                cancelTitle={t('upload.preview.cancel')}
+                vertical={true}
+                onAllow={confirmChange}
+            />
         </div>
     )
 }

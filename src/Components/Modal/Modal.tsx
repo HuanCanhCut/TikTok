@@ -34,6 +34,7 @@ const Modal: React.FC<Props> = ({
             overlayClassName={'overlay'}
             ariaHideApp={false}
             className={'modal'}
+            closeTimeoutMS={200}
         >
             <PopperWrapper>
                 <div className={cx('wrapper')}>

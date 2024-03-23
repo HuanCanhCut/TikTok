@@ -33,7 +33,7 @@ import KeyboardShortcuts from './KeyboardShorcuts'
 import * as authService from '~/services/authService'
 import { useNavigate } from 'react-router-dom'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
-import { listentEvent } from '~/helpers/event'
+import { listentEvent, sendEvent } from '~/helpers/event'
 import { actions } from '~/redux'
 import { UserModal } from '~/modal/modal'
 import { showToast } from '~/project/services'
@@ -100,6 +100,10 @@ function Header() {
 
         return remove
     }, [])
+
+    useEffect(() => {
+        sendEvent({ eventName: 'auth:open-auth-modal', detail: isOpenAuthModal })
+    }, [isOpenAuthModal])
 
     const openKeyboardShortCuts = () => {
         setShortcutsIsOpen(true)
@@ -246,31 +250,29 @@ function Header() {
                 </div>
             </div>
 
-            {isOpenAuthModal && (
-                <Modal
-                    isOpen={isOpenAuthModal}
-                    onRequestClose={() => {
-                        setIsOpenAuthModal(false)
-                    }}
-                    overlayClassName={'overlay'}
-                    ariaHideApp={false}
-                    className={'modal'}
-                >
-                    <Authen />
-                </Modal>
-            )}
+            <Modal
+                isOpen={isOpenAuthModal}
+                onRequestClose={() => {
+                    setIsOpenAuthModal(false)
+                }}
+                overlayClassName={'overlay'}
+                ariaHideApp={false}
+                className={'modal'}
+                closeTimeoutMS={200}
+            >
+                <Authen />
+            </Modal>
 
-            {shortcutsIsOpen && (
-                <Modal
-                    isOpen={shortcutsIsOpen}
-                    onRequestClose={closeKeyboardShortCuts}
-                    overlayClassName={cx('overlay')}
-                    ariaHideApp={false}
-                    className={cx('modal')}
-                >
-                    <KeyboardShortcuts onClose={closeKeyboardModal} />
-                </Modal>
-            )}
+            <Modal
+                isOpen={shortcutsIsOpen}
+                onRequestClose={closeKeyboardShortCuts}
+                overlayClassName={cx('overlay')}
+                ariaHideApp={false}
+                className={cx('modal')}
+                closeTimeoutMS={200}
+            >
+                <KeyboardShortcuts onClose={closeKeyboardModal} />
+            </Modal>
         </header>
     )
 }
