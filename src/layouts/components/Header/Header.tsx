@@ -110,14 +110,15 @@ function Header() {
     }
 
     const handleLogOut = async () => {
+        navigate(config.routes.home)
         try {
             await authService.logout({
                 accessToken: JSON.parse(localStorage.getItem('token')!),
             })
             localStorage.removeItem('token')
             dispatch(actions.logOut(null))
-            navigate(config.routes.home)
             showToast({ message: 'Log out success' })
+            window.location.reload()
         } catch (error) {
             console.log(error)
         }

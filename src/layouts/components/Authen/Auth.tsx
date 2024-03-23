@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind'
 import style from './Auth.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faXmark, faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { memo, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
@@ -18,6 +18,7 @@ import { sendEvent } from '~/helpers/event'
 import { useDispatch } from 'react-redux'
 import { actions } from '~/redux'
 import { showToast } from '~/project/services'
+import Loading from '~/Components/Loading'
 
 const cx = classNames.bind(style)
 
@@ -57,6 +58,7 @@ function Authen() {
         if (response) {
             setIsValid(false)
             setLocalStorage('token', response.meta.token)
+            window.location.reload()
         } else {
             setIsValid(true)
         }
@@ -130,7 +132,7 @@ function Authen() {
                             className={cx('login-btn')}
                         >
                             {loading || <span className={cx('login')}>{t('auth.login')}</span>}
-                            {loading && <FontAwesomeIcon icon={faSpinner as IconProp} className={cx('loading')} />}
+                            {loading && <Loading />}
                         </Button>
 
                         <div className={cx('separator')}>

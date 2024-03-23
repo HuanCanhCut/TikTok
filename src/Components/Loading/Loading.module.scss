@@ -1,0 +1,55 @@
+.tiktok-spinner {
+    position: relative;
+    width: 2.8rem;
+    height: 1.4rem;
+    z-index: 10;
+}
+
+.ball {
+    position: absolute;
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: 50%;
+    mix-blend-mode: multiply;
+    &.red {
+        left: 0;
+        background-color: #f71375;
+        animation: 0.7s red-move ease-in-out infinite;
+    }
+
+    &.blue {
+        right: 0;
+        background-color: #37f7f6;
+        animation: 0.7s blue-move ease-in-out infinite;
+    }
+}
+
+@keyframes blue-move {
+    25% {
+        transform: scale(0.7);
+    }
+    50% {
+        right: 1.3rem;
+    }
+    75% {
+        transform: scale(1.2);
+    }
+    100% {
+        right: 0;
+    }
+}
+
+@keyframes red-move {
+    25% {
+        transform: scale(1.2);
+    }
+    50% {
+        left: 1.3rem;
+    }
+    75% {
+        transform: scale(0.7);
+    }
+    100% {
+        left: 0;
+    }
+}
