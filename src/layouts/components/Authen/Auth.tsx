@@ -2,7 +2,7 @@ import classNames from 'classnames/bind'
 import style from './Auth.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
-import { memo, useRef } from 'react'
+import { KeyboardEvent, memo, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 
@@ -13,7 +13,6 @@ import LoginWith from './LoginWith/LoginWith'
 import Input from './Input'
 import config from '~/config'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
-import { keyboardKey } from '@testing-library/user-event'
 import { sendEvent } from '~/helpers/event'
 import { useDispatch } from 'react-redux'
 import { actions } from '~/redux'
@@ -75,7 +74,7 @@ function Authen() {
         }
     }
 
-    const handleKeyDown = (e: keyboardKey) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
         switch (e.key) {
             case 'Enter':
                 buttonRef.current && buttonRef.current.click()
@@ -97,12 +96,7 @@ function Authen() {
                 exit={{ opacity: 0, y: '-100%' }}
                 transition={{ duration: 0.1 }}
             >
-                <div
-                    className={cx('wrapper')}
-                    onKeyDown={(e) => {
-                        handleKeyDown(e)
-                    }}
-                >
+                <div className={cx('wrapper')} onKeyDown={handleKeyDown}>
                     <button
                         className={cx('close')}
                         onClick={() => {

@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind'
 import style from './Caption.module.scss'
-import { useContext, useRef, useEffect, useState, useCallback, memo } from 'react'
+import { useContext, useRef, useEffect, useState, useCallback, memo, KeyboardEvent } from 'react'
 import Tippy from '@tippyjs/react/headless'
 import { useTranslation } from 'react-i18next'
 
@@ -123,7 +123,7 @@ function Caption() {
         }
     }
 
-    const handleKeyDown = (e: any) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
         switch (e.key) {
             case 'Escape':
                 setShowAccounts(false)
@@ -134,12 +134,7 @@ function Caption() {
     }
 
     return (
-        <div
-            className={cx('wrapper')}
-            onKeyDown={(e) => {
-                handleKeyDown(e)
-            }}
-        >
+        <div className={cx('wrapper')} onKeyDown={handleKeyDown}>
             <div className={cx('caption')}>
                 <span className={cx('caption-title')}>
                     {showAccounts ? `@${t('upload.preview.friends')}` : t('upload.preview.caption')}
