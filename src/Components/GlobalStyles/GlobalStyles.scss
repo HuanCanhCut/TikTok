@@ -203,7 +203,7 @@ a[href] {
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 10px;
-    z-index: 9999999;
+    z-index: 999;
 }
 
 .Toastify__toast-container {
@@ -220,6 +220,7 @@ a[href] {
     padding: 8px 40px !important;
     font-family: TiktokFont !important;
     font-weight: 600 !important;
+    z-index: 9999999999;
 }
 
 .Toastify__toast-body {

@@ -1,8 +1,9 @@
 .wrapper {
     width: 520px;
     padding-top: 20px;
-    padding-bottom: 60px;
-    max-height: calc(100vh - var(--default-layout-header-height) * 2);
+    padding-bottom: 4px;
+    min-height: calc(100vh - var(--default-layout-header-height) * 2);
+    max-height: 100vh;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -134,8 +135,8 @@
     justify-content: center;
     font-weight: 600;
     height: 64px;
-    position: absolute;
-    bottom: 0;
+    // position: absolute;
+    // bottom: 0;
     width: 100%;
 }
 

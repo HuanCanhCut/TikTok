@@ -3,7 +3,7 @@ import { showToast } from '~/project/services'
 import { AxiosProgressEvent } from 'axios'
 
 interface GetVideo {
-    type: string
+    type?: string
     page: number
     accessToken: string
 }
@@ -21,7 +21,7 @@ interface UploadVideo {
     onError: () => void
 }
 
-export const getVideo = async ({ type = 'for-you', page, accessToken = '' }: GetVideo) => {
+export const getVideos = async ({ type = 'for-you', page, accessToken = '' }: GetVideo) => {
     try {
         return await request.get('videos', {
             headers: {

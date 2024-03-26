@@ -18,9 +18,10 @@ const cx = classNames.bind(style)
 
 interface Props {
     data: VideoModal
+    type: string
 }
 
-const Header: React.FC<Props> = ({ data }) => {
+const Header: React.FC<Props> = ({ data, type }) => {
     const springConfig: any = { damping: 15, stiffness: 300 }
     const initialScale = 0.5
     const opacity = useSpring(springConfig)
@@ -141,7 +142,7 @@ const Header: React.FC<Props> = ({ data }) => {
                     )}
                 </div>
             </div>
-            <Follow data={data.user} />
+            {type !== 'following' && <Follow data={data.user} />}
         </div>
     )
 }

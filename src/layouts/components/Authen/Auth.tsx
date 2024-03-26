@@ -17,7 +17,7 @@ import { keyboardKey } from '@testing-library/user-event'
 import { sendEvent } from '~/helpers/event'
 import { useDispatch } from 'react-redux'
 import { actions } from '~/redux'
-import { showToast } from '~/project/services'
+
 import Loading from '~/Components/Loading'
 
 const cx = classNames.bind(style)
@@ -37,7 +37,6 @@ function Authen() {
     const setLocalStorage = (key: string, value: any) => {
         const Action = localStorage.setItem(key, JSON.stringify(value))
         sendEvent({ eventName: 'auth:open-auth-modal', detail: false })
-        showToast({ message: 'Login success' })
         return Action
     }
 
@@ -45,22 +44,26 @@ function Authen() {
         setLoading(true)
         let response: any
 
-        if (option === 'signUp') {
-            response = await authSignUp({ email, password })
-        } else {
-            response = await login({ email, password })
-            if (response) {
-                dispatch(actions.currentUser(response.data))
+        try {
+            if (option === 'signUp') {
+                response = await authSignUp({ email, password })
+            } else {
+                response = await login({ email, password })
+                if (response) {
+                    dispatch(actions.currentUser(response.data))
+                }
             }
-        }
 
-        setLoading(false)
-        if (response) {
-            setIsValid(false)
-            setLocalStorage('token', response.meta.token)
-            window.location.reload()
-        } else {
-            setIsValid(true)
+            setLoading(false)
+            if (response) {
+                setIsValid(false)
+                setLocalStorage('token', response.meta.token)
+                window.location.reload()
+            } else {
+                setIsValid(true)
+            }
+        } catch (error) {
+            console.log(error)
         }
     }
 

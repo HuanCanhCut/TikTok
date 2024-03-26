@@ -2,7 +2,7 @@ export interface UserModal {
     id: number
     first_name?: string
     last_name?: string
-    nickname?: string
+    nickname: string
     avatar?: string
     gender: string
     bio?: string

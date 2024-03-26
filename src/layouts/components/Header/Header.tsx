@@ -36,7 +36,6 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { listentEvent, sendEvent } from '~/helpers/event'
 import { actions } from '~/redux'
 import { UserModal } from '~/modal/modal'
-import { showToast } from '~/project/services'
 
 const cx = classNames.bind(style)
 
@@ -121,7 +120,6 @@ function Header() {
             })
             localStorage.removeItem('token')
             dispatch(actions.logOut(null))
-            showToast({ message: 'Log out success' })
             window.location.reload()
         } catch (error) {
             console.log(error)
@@ -216,9 +214,6 @@ function Header() {
                                     </button>
                                 </Tippy>
                             </div>
-                            <Menu items={userMenu} onChange={handleMenuChange}>
-                                <Image className={cx('user-avatar')} src={currentUser.avatar} alt="avatar" />
-                            </Menu>
                         </>
                     ) : (
                         <>
@@ -240,13 +235,17 @@ function Header() {
                             >
                                 {t('header.login')}
                             </Button>
-                            <Menu items={MENU_ITEM} onChange={handleMenuChange}>
-                                <button className={cx('more-btn')}>
-                                    <FontAwesomeIcon icon={faEllipsisVertical as IconProp}></FontAwesomeIcon>
-                                </button>
-                            </Menu>
                         </>
                     )}
+                    <Menu items={currentUser ? userMenu : MENU_ITEM} onChange={handleMenuChange}>
+                        {currentUser ? (
+                            <Image className={cx('user-avatar')} src={currentUser.avatar} alt="avatar" />
+                        ) : (
+                            <button className={cx('more-btn')}>
+                                <FontAwesomeIcon icon={faEllipsisVertical as IconProp}></FontAwesomeIcon>
+                            </button>
+                        )}
+                    </Menu>
                 </div>
             </div>
 

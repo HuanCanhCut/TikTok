@@ -57,7 +57,7 @@ const VideoItem: React.FC<Props> = ({ video }) => {
 
     useEffect(() => {
         if (isVisible && videoRef.current) {
-            sendEvent({ eventName: 'video:video-isvisible', detail: videoRef.current })
+            sendEvent({ eventName: 'video:video-is-visible', detail: videoRef.current })
         } else {
             if (!videoRef.current?.paused) {
                 videoRef.current?.pause()
@@ -66,9 +66,11 @@ const VideoItem: React.FC<Props> = ({ video }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isVisible])
 
-    const handleTogglePlay = () => {
+    const handleTogglePlay = async () => {
         if (videoRef.current) {
-            playing ? videoRef.current.pause() : videoRef.current.play()
+            try {
+                playing ? videoRef.current.pause() : await videoRef.current.play()
+            } catch (e) {}
         }
     }
 
@@ -77,12 +79,14 @@ const VideoItem: React.FC<Props> = ({ video }) => {
             if (document.visibilityState) {
                 switch (document.visibilityState) {
                     case 'hidden':
-                        videoRef.current && isVisible && videoRef.current.pause()
-                        console.log(videoRef.current)
+                        try {
+                            videoRef.current && isVisible && !videoRef.current.paused && videoRef.current.pause()
+                        } catch (error) {}
                         break
                     case 'visible':
-                        videoRef.current && isVisible && videoRef.current.play()
-
+                        try {
+                            videoRef.current && isVisible && videoRef.current.paused && videoRef.current.play()
+                        } catch (error) {}
                         break
                     default:
                         break

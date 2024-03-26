@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind'
-import { memo, useEffect, useRef, useState } from 'react'
+import { memo, useCallback, useEffect, useRef, useState } from 'react'
 import { Virtuoso } from 'react-virtuoso'
 
 import * as videoService from '~/services/videoService'
@@ -18,14 +18,14 @@ interface Props {
 
 const TOTAL_PAGES_KEY = 'totalVideoPages'
 
-let TOTAL_PAGES_VIDEO: number = JSON.parse(localStorage.getItem(TOTAL_PAGES_KEY)!)
-
 const Video: React.FC<Props> = ({ type }) => {
+    let TOTAL_PAGES_VIDEO: number = JSON.parse(localStorage.getItem(TOTAL_PAGES_KEY)!) || 0
     const accessToken = JSON.parse(localStorage.getItem('token')!)
 
     const virtuosoRef = useRef<any>(null)
 
     const [videos, setVideos] = useState<VideoModal[]>([])
+
     const [page, setPage] = useState(() => {
         return Math.floor(Math.random() * TOTAL_PAGES_VIDEO)
     })
@@ -43,7 +43,7 @@ const Video: React.FC<Props> = ({ type }) => {
 
     useEffect(() => {
         const remove = listentEvent({
-            eventName: 'video:video-isvisible',
+            eventName: 'video:video-is-visible',
             handler: ({ detail }) => {
                 setVideosIsVisible((prev: HTMLVideoElement[]) => {
                     return [...prev, detail]
@@ -101,7 +101,7 @@ const Video: React.FC<Props> = ({ type }) => {
     useEffect(() => {
         const getVideos = async () => {
             try {
-                const response = await videoService.getVideo({
+                const response = await videoService.getVideos({
                     type,
                     page,
                     accessToken,
@@ -128,8 +128,8 @@ const Video: React.FC<Props> = ({ type }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page])
 
-    useEffect(() => {
-        const handleKeyDown = (e: KeyboardEvent) => {
+    const handleKeyDown = useCallback(
+        (e: KeyboardEvent) => {
             if (e.key === 'ArrowDown' && focusedIndex < videos.length - 1) {
                 e.preventDefault()
                 const nextIndex = focusedIndex + 1
@@ -147,8 +147,11 @@ const Video: React.FC<Props> = ({ type }) => {
             if (e.key === 'End' || e.key === 'Home' || e.which === 33 || e.which === 34) {
                 e.preventDefault()
             }
-        }
+        },
+        [focusedIndex, videos.length]
+    )
 
+    useEffect(() => {
         window.addEventListener('keydown', handleKeyDown)
 
         return () => {
@@ -156,6 +159,19 @@ const Video: React.FC<Props> = ({ type }) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [focusedIndex, videos.length])
+
+    useEffect(() => {
+        const remove = listentEvent({
+            eventName: 'auth:open-auth-modal',
+            handler: ({ detail: authModalIsOpen }) => {
+                if (authModalIsOpen) {
+                    window.removeEventListener('keydown', handleKeyDown)
+                }
+            },
+        })
+
+        return remove
+    }, [handleKeyDown])
 
     return (
         <Virtuoso
@@ -172,7 +188,7 @@ const Video: React.FC<Props> = ({ type }) => {
             itemContent={(index, item) => {
                 return (
                     <div className={cx('video-content')}>
-                        <Header data={item} />
+                        <Header data={item} type={type} />
                         <VideoItem video={item} />
                     </div>
                 )

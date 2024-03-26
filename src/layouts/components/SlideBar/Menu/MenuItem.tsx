@@ -9,9 +9,20 @@ interface Props {
     to: To
     title: string
     activeIcon: React.ReactNode
+    type?: string
 }
 
-const MenuItem: React.FC<Props> = ({ icon, to, title, activeIcon }) => {
+const MenuItem: React.FC<Props> = ({ icon, to, title, activeIcon, type }) => {
+    const handleChose = (type: string | undefined) => {
+        switch (type) {
+            case 'following':
+                localStorage.removeItem('totalVideoPages')
+                break
+            default:
+                break
+        }
+    }
+
     return (
         <NavLink
             className={(nav) => {
@@ -20,6 +31,9 @@ const MenuItem: React.FC<Props> = ({ icon, to, title, activeIcon }) => {
                 })
             }}
             to={to}
+            onClick={() => {
+                handleChose(type)
+            }}
         >
             <span className={cx('icon')}>{icon}</span>
             <span className={cx('active-icon')}>{activeIcon}</span>

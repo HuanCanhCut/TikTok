@@ -25,6 +25,7 @@ const cx = classNames.bind(styles)
 function Sidebar() {
     const { t } = useTranslation()
     const currentUser = useSelector(authCurrentUser)
+
     return (
         <aside
             className={cx('wrapper', {
@@ -44,6 +45,7 @@ function Sidebar() {
                         to={config.routes.following}
                         icon={<UserGroupIcon />}
                         activeIcon={<UserGroupActiveIcon />}
+                        type="following"
                     />
                     <MenuItem
                         title="LIVE"

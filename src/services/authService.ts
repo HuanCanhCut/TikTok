@@ -1,3 +1,4 @@
+import { showToast } from '~/project/services'
 import * as request from '~/utils/httpRequest'
 
 interface Login extends SignUp {}
@@ -15,8 +16,11 @@ export const signUp = async ({ email, password, type = 'email' }: SignUp) => {
             email,
             password,
         })
-    } catch (error) {
+    } catch (error: any) {
         console.log(error)
+        if (error.response.status === 409) {
+            showToast({ message: 'Tài khoản đã tồn tại' })
+        }
     }
 }
 
