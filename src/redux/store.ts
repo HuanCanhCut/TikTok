@@ -11,7 +11,7 @@ const persistConfig = {
     whitelist: ['auth'],
 }
 
-const rootReducer = combineReducers({
+const rootReducer: any = combineReducers({
     auth: authReducer,
     temp: tempReducer,
     project: projectReducer,

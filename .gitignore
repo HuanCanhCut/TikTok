@@ -10,7 +10,6 @@
 
 # testing
 /coverage
-/jsoncrack
 # production
 /build
 .prettierrc

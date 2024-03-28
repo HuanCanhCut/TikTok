@@ -70,7 +70,7 @@ const AccountItem: React.FC<Props> = ({ data }) => {
                         <Image className={cx('avatar')} src={data.avatar} alt="" />
                         <div className={cx('account-info')}>
                             <p className={cx('nickname')}>
-                                <strong>{data.nickname}</strong>
+                                <span>{data.nickname}</span>
                                 <span className={cx('icon')}>
                                     {data.tick && <FontAwesomeIcon icon={faCheckCircle as IconProp} />}
                                 </span>

@@ -178,6 +178,7 @@ const Video: React.FC<Props> = ({ type }) => {
             ref={virtuosoRef}
             data={videos}
             useWindowScroll
+            increaseViewportBy={{ top: 800, bottom: 300 }}
             endReached={() => {
                 setPage(() => {
                     do {

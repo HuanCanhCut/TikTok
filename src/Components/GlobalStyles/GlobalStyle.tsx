@@ -1,6 +1,6 @@
 import './GlobalStyles.scss'
 
-function GlobalStyle({ children }: { children: React.ReactNode }) {
+function GlobalStyle({ children }: { children: any }) {
     return children
 }
 

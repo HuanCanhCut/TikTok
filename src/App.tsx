@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { allRoutes } from '~/routes'
 import { DefaultLayout } from './layouts'
 import { useEffect } from 'react'
+import './index.css'
 
 import './Components/GlobalStyles/GlobalStyles.scss'
 import useDarkMode from './hooks/useDarkMode'
