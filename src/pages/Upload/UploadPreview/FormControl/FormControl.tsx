@@ -20,6 +20,7 @@ import { Wrapper as PopperWrapper } from '~/Components/Popper'
 import { useSelector } from 'react-redux'
 import { authCurrentUser } from '~/redux/selectors'
 import { UserModal } from '~/modal/modal'
+import Discard from '../Discard'
 
 const cx = classNames.bind(style)
 
@@ -125,12 +126,6 @@ const FormControl: React.FC<Props> = ({ captureImages, slideQuantity }) => {
     }
 
     const openModal = useCallback(() => {
-        modal = {
-            title: 'Discard this post?',
-            description: 'The video and all edits will be discarded.',
-            allowTitle: 'Discard',
-            cancelTitle: 'Continue Editing',
-        }
         setIsOpen(true)
     }, [])
 
@@ -139,6 +134,7 @@ const FormControl: React.FC<Props> = ({ captureImages, slideQuantity }) => {
     }, [])
 
     const handleDiscard = useCallback(() => {
+        console.log('abc')
         if (file) {
             sendEvent({ eventName: 'upload:cancel-upload-file' })
         }
@@ -300,16 +296,9 @@ const FormControl: React.FC<Props> = ({ captureImages, slideQuantity }) => {
                     )}
                 </div>
 
-                <Modal
-                    isOpen={isOpen}
-                    closeModal={closeModal}
-                    title={t(`upload.preview.${modal.title.toLocaleLowerCase()}`)}
-                    description={t(`upload.preview.${modal.description.toLocaleLowerCase()}`)}
-                    allowTitle={t(`upload.preview.${modal.allowTitle.toLocaleLowerCase()}`)}
-                    cancelTitle={t(`upload.preview.${modal.cancelTitle.toLocaleLowerCase()}`)}
-                    vertical={true}
-                    onAllow={handleDiscard}
-                />
+                <Modal isOpen={isOpen} closeModal={closeModal}>
+                    <Discard modal={modal} handleDiscard={handleDiscard} closeModal={closeModal} />
+                </Modal>
 
                 {isOpenUploading && (
                     <ReactModal

@@ -11,7 +11,6 @@ import { login, signUp as authSignUp } from '~/services/authService'
 import Button from '~/Components/Button'
 import LoginWith from './LoginWith/LoginWith'
 import Input from './Input'
-import config from '~/config'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { sendEvent } from '~/helpers/event'
 import { useDispatch } from 'react-redux'
@@ -121,13 +120,7 @@ function Authen() {
 
                         <span className={cx('forgot-password')}>{t('auth.forgot password')}</span>
 
-                        <Button
-                            ref={buttonRef}
-                            to={config.routes.home}
-                            primary
-                            onClick={handleSubmitLogin}
-                            className={cx('login-btn')}
-                        >
+                        <Button ref={buttonRef} primary onClick={handleSubmitLogin} className={cx('login-btn')}>
                             {loading || <span className={cx('login')}>{t('auth.login')}</span>}
                             {loading && <Loading />}
                         </Button>

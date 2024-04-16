@@ -121,6 +121,34 @@
             "leaving the page dose not interrupt the posting progress": "Rời khỏi trang không làm gián đoạn tiến trình đăng"
         }
     },
+    "profile": {
+        "edit profile": "Chỉnh sửa hồ sơ",
+        "embed": "Nhúng",
+        "share to facebook": "Chia sẻ lên Facebook",
+        "share to whats app": "Chia sẻ qua WhatsApp",
+        "share to twitter": "Chia sẻ lên Twitter",
+        "copy link": "Sao chép liên kết",
+        "share to linkedln": "Chia sẻ lên LinkedIn",
+        "share to reddit": "Chia sẻ lên Reddit",
+        "share to telegram": "Chia sẻ qua Telegram",
+        "share to email": "Chia sẻ qua Email",
+        "share to line": "Chia sẻ qua Line",
+        "share to pinterest": "Chia sẻ lên Pinterest",
+        "copy successfully": "Copy thành công",
+        "copy failed": "Copy thất bại",
+        "send message": "Gửi tin nhắn",
+        "report": "Báo cáo",
+        "block": "Chặn",
+        "message": "Tin nhắn",
+        "following": "Đang Follow",
+        "followers": "Follower",
+        "suggested": "Được đề xuất",
+        "like": "Thích",
+        "private follow list": "Danh sách follow của người này ở chế độ riêng tư",
+        "private follower list": "Danh sách follower của người này ở chế độ riêng tư",
+        "followers list is currently hidden": "Danh sách followers cuả người này hiện đang bị ẩn",
+        "following list is currently hidden": "Danh sách following của người này hiện đang bị ẩn"
+    },
     "preview": {
         "likes": "Thích"
     }

@@ -1,81 +1,58 @@
 import Button from '../Button'
+import classNames from 'classnames/bind'
+import style from './Following.module.scss'
 import { memo, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
-import { removeDuplicate } from '~/project/services'
 import { useTranslation } from 'react-i18next'
 
-import { followAnUser, unFollowUser } from '~/services/userService'
+import { handleFollowAnUser, handleUnFollowAnUser } from '~/project/services'
 import { authCurrentUser, temporaryFollowed, temporaryUnFollowed } from '~/redux/selectors'
-import { actions } from '~/redux'
 import { UserModal } from '~/modal/modal'
-import { sendEvent } from '~/helpers/event'
 
-const Follow = ({ data }: { data: UserModal }) => {
+interface Props {
+    data: UserModal
+    className?: any
+}
+
+const cx = classNames.bind(style)
+
+const Follow = ({ data, className }: Props) => {
     const { t } = useTranslation()
     const dispatch = useDispatch()
-    let temporaryFollowedList: number[] = useSelector(temporaryFollowed)
+    const temporaryFollowedList: number[] = useSelector(temporaryFollowed)
     const temporaryUnFollowedList: number[] = useSelector(temporaryUnFollowed)
     const [isCallingApi, setIsCallingApi] = useState(false)
+
+    const classes = cx({
+        [className]: className,
+    })
 
     const currentUser: UserModal = useSelector(authCurrentUser)
     const accessToken: string = JSON.parse(localStorage.getItem('token')!)
 
     const handleFollow = async () => {
-        if (!accessToken || !currentUser) {
-            sendEvent({ eventName: 'auth:open-auth-modal', detail: true })
-            return
-        }
-        if (isCallingApi) {
-            return
-        }
-
-        // khi follow thì sẽ xóa id của người vừa được follow ra khỏi danh sách unFollowed temporary
-        removeDuplicate(temporaryUnFollowedList, data.id)
-        if (!temporaryUnFollowedList.includes(data.id)) {
-            dispatch(actions.temporaryFollowed(data.id))
-        }
-
-        setIsCallingApi(true)
-
-        try {
-            return await followAnUser({
-                userId: data.id,
-                accessToken,
-            })
-        } catch (error) {
-            console.log(error)
-        } finally {
-            setIsCallingApi(false)
-        }
+        handleFollowAnUser({
+            accessToken,
+            isCallingApi,
+            temporaryUnFollowedList: temporaryUnFollowedList,
+            user: data,
+            dispatch: dispatch,
+            currentUser: currentUser,
+            setIsCallingApi,
+        })
     }
 
     const handleUnFollow = async () => {
-        if (!accessToken || !currentUser) {
-            sendEvent({ eventName: 'auth:open-auth-modal', detail: true })
-            return
-        }
-
-        if (isCallingApi) {
-            return
-        }
-
-        // khi unFollow thì sẽ xóa id của người vừa được unFollow ra khỏi danh sách Followed temporary
-        removeDuplicate(temporaryFollowedList, data.id)
-        dispatch(actions.temporaryUnFollowed(data.id))
-
-        setIsCallingApi(true)
-
-        try {
-            return await unFollowUser({
-                userId: data.id,
-                accessToken,
-            })
-        } catch (error) {
-            console.log(error)
-        } finally {
-            setIsCallingApi(false)
-        }
+        handleUnFollowAnUser({
+            accessToken,
+            isCallingApi,
+            temporaryFollowedList: temporaryFollowedList,
+            user: data,
+            dispatch: dispatch,
+            currentUser: currentUser,
+            setIsCallingApi,
+        })
     }
 
     return (
@@ -85,16 +62,16 @@ const Follow = ({ data }: { data: UserModal }) => {
                     <>
                         {data.is_followed || temporaryFollowedList.includes(data.id) ? (
                             temporaryUnFollowedList.includes(data.id) ? (
-                                <Button outline onClick={handleFollow}>
+                                <Button outline onClick={handleFollow} className={classes}>
                                     {t('videos.follow')}
                                 </Button>
                             ) : (
-                                <Button rounded onClick={handleUnFollow}>
+                                <Button rounded onClick={handleUnFollow} className={classes}>
                                     {t('videos.following')}
                                 </Button>
                             )
                         ) : (
-                            <Button outline onClick={handleFollow}>
+                            <Button outline onClick={handleFollow} className={classes}>
                                 {t('videos.follow')}
                             </Button>
                         )}
@@ -102,7 +79,7 @@ const Follow = ({ data }: { data: UserModal }) => {
                 )
             ) : (
                 <>
-                    <Button outline onClick={handleFollow}>
+                    <Button outline onClick={handleFollow} className={classes}>
                         {t('videos.follow')}
                     </Button>
                 </>

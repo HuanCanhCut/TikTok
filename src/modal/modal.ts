@@ -12,8 +12,8 @@ export interface UserModal {
     social_email?: string
     tick: boolean
     date_of_birth: Date
-    followings_count?: number | null
-    followers_count?: number | null
+    followings_count: number
+    followers_count: number
     likes_count?: number
     website_url?: string
     facebook_url?: string

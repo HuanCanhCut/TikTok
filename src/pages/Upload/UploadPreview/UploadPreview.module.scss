@@ -5,3 +5,50 @@
     max-width: var(--max-layout-upload-width);
     align-content: start;
 }
+
+.discard-wrapper {
+    padding: 24px 30px;
+    max-width: 450px;
+}
+
+.header {
+    text-align: center;
+}
+
+.title {
+    line-height: 24px;
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+.description {
+    margin-top: 10px;
+    color: var(--text-color-secondary);
+    font-size: 1.4rem;
+}
+
+.actions {
+    margin-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+
+    &.directionButton {
+        flex-direction: column-reverse;
+        align-items: center;
+        .action-btn {
+            width: 100%;
+        }
+    }
+}
+
+.action-btn {
+    min-width: 160px;
+    height: 48px;
+    color: var(--text-color);
+    &.allow {
+        display: flex;
+        align-items: center;
+    }
+}

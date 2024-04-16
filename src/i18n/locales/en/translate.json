@@ -106,7 +106,7 @@
             "post": "Post",
             "change": "Change",
             "change video": "Chang video",
-            "cancel": "Calcel",
+            "cancel": "Cancel",
             "replace this video": "Replace this video?",
             "change video description": "Caption and video settings will still be saved.",
             "original sound": "Original sound",
@@ -120,6 +120,35 @@
             "uploading": "Uploading...",
             "leaving the page dose not interrupt the posting progress": "Leaving the page dose not interrupt the posting progress"
         }
+    },
+
+    "profile": {
+        "edit profile": "Edit profile",
+        "embed": "Embed",
+        "share to facebook": "Share to Facebook",
+        "share to whats app": "Share to WhatsApp",
+        "share to twitter": "Share to Twitter",
+        "copy link": "Copy link",
+        "share to linkedln": "Share to Linkedln",
+        "share to reddit": "Share to Reddit",
+        "share to telegram": "Share to Telegram",
+        "share to email": "Share to Email",
+        "share to line": "Share to Line",
+        "share to pinterest": "Share to Pinterest",
+        "copy successfully": "Copy successfully",
+        "copy failed": "Copy failed",
+        "send message": "Send message",
+        "report": "Report",
+        "block": "Block",
+        "message": "Message",
+        "following": "Following",
+        "followers": "Follower",
+        "suggested": "Suggested",
+        "like": "Like",
+        "private follow list": "This account’s following list is private",
+        "private follower list": "This account's follower list is private",
+        "followers list is currently hidden": "This account's follower list is currently hidden",
+        "following list is currently hidden": "This account's following list is currently hidden"
     },
     "preview": {
         "likes": "Likes"

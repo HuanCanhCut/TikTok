@@ -8,8 +8,16 @@ import BlueTick from '~/Components/BlueTick/BlueTick'
 import Button from '~/Components/Button'
 import Modal from '~/Components/Modal'
 import { sendEvent } from '~/helpers/event'
+import Discard from '../../Discard'
 
 const cx = classNames.bind(style)
+
+const modal = {
+    title: 'replace this video',
+    description: 'change video description',
+    allowTitle: 'change',
+    cancelTitle: 'cancel',
+}
 
 function ChangeVideo() {
     const { t } = useTranslation()
@@ -39,7 +47,7 @@ function ChangeVideo() {
             <Button text className={cx('change-video-btn')} onClick={openModal}>
                 {t('upload.preview.change video')}
             </Button>
-            <Modal
+            {/* <Modal
                 isOpen={isOpen}
                 closeModal={closeModal}
                 title={t('upload.preview.replace this video')}
@@ -48,7 +56,11 @@ function ChangeVideo() {
                 cancelTitle={t('upload.preview.cancel')}
                 vertical={true}
                 onAllow={confirmChange}
-            />
+            /> */}
+
+            <Modal isOpen={isOpen} closeModal={closeModal}>
+                <Discard modal={modal} handleDiscard={confirmChange} closeModal={closeModal} vertical={true} />
+            </Modal>
         </div>
     )
 }

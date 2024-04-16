@@ -1,0 +1,44 @@
+.wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 6px 16px;
+    cursor: pointer;
+    transition: 0.1s linear all;
+    border-radius: 5px;
+    &:hover {
+        background-color: var(--text-color-opacity-03);
+    }
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.Info {
+    flex: 1;
+    margin-left: 12px;
+}
+
+.name {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--text-color-secondary);
+    display: flex;
+    align-items: center;
+}
+
+.username {
+    margin-top: 2px;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-color-tertiary);
+}
+
+.follow-btn {
+    padding: 8px 0;
+    border-radius: 4px;
+}

@@ -8,7 +8,7 @@ interface GetVideo {
     accessToken: string
 }
 
-interface LikeVideo {
+interface VideoProps {
     videoID: number
     accessToken: string
 }
@@ -38,7 +38,7 @@ export const getVideos = async ({ type = 'for-you', page, accessToken = '' }: Ge
     }
 }
 
-export const likeVideo = async ({ videoID, accessToken = '' }: LikeVideo) => {
+export const likeVideo = async ({ videoID, accessToken = '' }: VideoProps) => {
     try {
         return await request.post(`videos/${videoID}/like`, [], {
             headers: {
@@ -50,7 +50,7 @@ export const likeVideo = async ({ videoID, accessToken = '' }: LikeVideo) => {
     }
 }
 
-export const unLikeVideo = async ({ videoID, accessToken = '' }: LikeVideo) => {
+export const unLikeVideo = async ({ videoID, accessToken = '' }: VideoProps) => {
     try {
         return await request.post(`videos/${videoID}/unlike`, [], {
             headers: {

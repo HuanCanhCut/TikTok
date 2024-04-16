@@ -2,7 +2,7 @@ import classNames from 'classnames/bind'
 import style from './Following.module.scss'
 import { useSelector } from 'react-redux'
 import { authCurrentUser } from '~/redux/selectors'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, memo } from 'react'
 import { VideoModal } from '~/modal/modal'
 import { getVideos } from '~/services/videoService'
 import AccountItem from './AccountItem'
@@ -96,4 +96,4 @@ const Following: React.FC = () => {
     )
 }
 
-export default Following
+export default memo(Following)
