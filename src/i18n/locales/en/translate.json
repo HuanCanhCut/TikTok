@@ -148,7 +148,15 @@
         "private follow list": "This account’s following list is private",
         "private follower list": "This account's follower list is private",
         "followers list is currently hidden": "This account's follower list is currently hidden",
-        "following list is currently hidden": "This account's following list is currently hidden"
+        "following list is currently hidden": "This account's following list is currently hidden",
+        "editprofile": {
+            "profile image": "Profile image",
+            "tiktok id description": "Usernames can only contain letters, numbers, underscores, and periods. Changing your username will also change your profile link.",
+            "name description": "Your nickname can only be changed once every 7 days.",
+            "cancel": "Cancel",
+            "save": "Save",
+            "profile has been updated": "Profile has been updated"
+        }
     },
     "preview": {
         "likes": "Likes"

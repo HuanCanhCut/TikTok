@@ -147,7 +147,15 @@
         "private follow list": "Danh sách follow của người này ở chế độ riêng tư",
         "private follower list": "Danh sách follower của người này ở chế độ riêng tư",
         "followers list is currently hidden": "Danh sách followers cuả người này hiện đang bị ẩn",
-        "following list is currently hidden": "Danh sách following của người này hiện đang bị ẩn"
+        "following list is currently hidden": "Danh sách following của người này hiện đang bị ẩn",
+        "editprofile": {
+            "profile image": "Ảnh hồ sơ",
+            "tiktok id description": "TikTok ID chỉ có thể bao gồm chữ cái, chữ số, dấu gạch dưới và dấu chấm. Khi thay đổi TikTok ID, liên kết hồ sơ của bạn cũng sẽ thay đổi.",
+            "name description": "Bạn chỉ có thể thay đổi biệt danh 7 ngày một lần.",
+            "cancel": "Hủy bỏ",
+            "save": "Save",
+            "profile has been updated": "Hồ sơ đã được cập nhật"
+        }
     },
     "preview": {
         "likes": "Thích"

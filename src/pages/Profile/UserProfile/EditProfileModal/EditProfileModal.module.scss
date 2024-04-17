@@ -1,0 +1,136 @@
+.wrapper {
+    padding: 12px 0;
+    width: 700px;
+    max-height: 100vh;
+    overflow: overlay;
+}
+
+.header {
+    display: flex;
+    padding: 0 24px 12px 24px;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 0.5px solid var(--text-color-opacity-20);
+
+    h1 {
+        font-size: 24px;
+        font-weight: 600;
+    }
+
+    .close-modal {
+        font-size: 24px;
+        cursor: pointer;
+    }
+}
+
+.body {
+    padding: 24px;
+
+    .label {
+        font-weight: 600;
+    }
+
+    .profile-image {
+        // 50px = image width / 2
+        width: calc(50% + 50px);
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 16px;
+
+        .label {
+            flex: 1;
+            text-wrap: nowrap;
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: center;
+            position: relative;
+
+            .image {
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                object-fit: cover;
+                cursor: pointer;
+            }
+
+            .chose-image {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                border: 0.5px solid var(--text-color-opacity-20);
+                background-color: var(--default-layout-background);
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                font-size: 1.3rem;
+                color: var(--text-color-secondary);
+            }
+        }
+    }
+
+    .field {
+        padding: 20px 0;
+        border-top: 0.5px solid var(--text-color-opacity-20);
+        // border-bottom: 0.5px solid var(--text-color-opacity-20);
+        display: flex;
+
+        .label-container {
+            width: 120px;
+        }
+
+        .input-container {
+            width: 360px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+
+            > * {
+                width: 100%;
+            }
+
+            .input-field {
+                width: 360px;
+                border-radius: 4px;
+                background: var(--text-color-opacity-12);
+                caret-color: var(--primay);
+                font-size: 1.6rem;
+                color: var(--text-color);
+                line-height: 24px;
+                outline: none;
+                border: none;
+                box-sizing: border-box;
+                padding: 7px 8px;
+                resize: none;
+                font-weight: 400;
+
+                &.input-field-textarea {
+                    height: 100px;
+                    font-family: TiktokFont, sans-serif;
+                }
+            }
+
+            .preview,
+            .description {
+                font-size: 1.2rem;
+                color: var(--text-color-secondary);
+            }
+        }
+    }
+}
+
+.action {
+    width: 100%;
+    padding: 0 24px;
+    padding-top: 16px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    border-top: 0.5px solid var(--text-color-opacity-20);
+}

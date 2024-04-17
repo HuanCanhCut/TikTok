@@ -75,3 +75,24 @@ export const unFollowUser = async ({ userId, accessToken }: FollowAnUser) => {
         console.log(error)
     }
 }
+
+export const updateCurrentUser = async ({
+    accessToken,
+    formData,
+    _method = 'PATCH',
+}: {
+    accessToken: string
+    formData: FormData
+    _method?: string
+}) => {
+    try {
+        return await request.post('auth/me', formData, {
+            headers: { Authorization: `Bearer ${accessToken}` },
+            params: {
+                _method,
+            },
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}

@@ -20,14 +20,16 @@ interface Tabs {
     statistical?: number
 }
 
-const Statistical = ({ userProfile }: { userProfile: UserModal }) => {
+const Statistical = ({ userProfile, currentUser }: { userProfile: UserModal; currentUser: UserModal }) => {
     const accessToken = JSON.parse(localStorage.getItem('token')!)
 
     const { t } = useTranslation()
     const [isOpen, setIsOpen] = useState(false)
     const [type, setType] = useState<'following' | 'follower' | 'suggested'>('following')
     const [suggestedUser, setSuggestedUser] = useState<UserModal[] | []>([])
+    const [followingList, setFollowingList] = useState<UserModal[] | []>([])
     const [page, setPage] = useState(1)
+    const [followingPage, setFollowingPage] = useState(1)
 
     const tabs: Tabs[] = useMemo(() => {
         return [
@@ -102,6 +104,23 @@ const Statistical = ({ userProfile }: { userProfile: UserModal }) => {
         }
     }
 
+    useEffect(() => {
+        if (currentUser.id === userProfile.id) {
+            const getFollowingAccount = async () => {
+                try {
+                    const response = await userServices.getFollowingAccounts({ page: followingPage, accessToken })
+                    setFollowingList((prev) => {
+                        return [...prev, ...response.data]
+                    })
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+
+            getFollowingAccount()
+        }
+    }, [accessToken, currentUser, followingPage, userProfile])
+
     const renderModal = useCallback(() => {
         return (
             <div className={cx('modal-wrapper')}>
@@ -131,11 +150,17 @@ const Statistical = ({ userProfile }: { userProfile: UserModal }) => {
                 </header>
                 <div className={cx('content')} onScroll={handleScroll}>
                     {type === 'suggested' ? (
-                        <>
-                            {suggestedUser.map((item, index) => {
+                        suggestedUser.map((item, index) => {
+                            return <AccountItem data={item} key={index} />
+                        })
+                    ) : currentUser.id === userProfile.id ? (
+                        type === 'follower' ? (
+                            <h1>API does not support viewing followers</h1>
+                        ) : (
+                            followingList.map((item, index) => {
                                 return <AccountItem data={item} key={index} />
-                            })}
-                        </>
+                            })
+                        )
                     ) : (
                         <div className={cx('private-content')}>
                             <Lock width="72px" height="72px" />
@@ -158,39 +183,44 @@ const Statistical = ({ userProfile }: { userProfile: UserModal }) => {
     }, [handleCloseModal, suggestedUser, t, tabs, type, userProfile.nickname])
 
     return (
-        <div className={cx('statistical')}>
-            <Modal isOpen={isOpen} closeModal={handleCloseModal}>
-                {renderModal()}
-            </Modal>
-            <div className={cx('statistical-item')}>
-                <strong>{userProfile.followings_count}</strong>
-                <span
-                    className={cx('following')}
-                    data-type="following"
-                    onClick={(e: any) => {
-                        handleOpenModal(e)
-                    }}
-                >
-                    {t('profile.following')}
-                </span>
+        <>
+            <div className={cx('statistical')}>
+                <Modal isOpen={isOpen} closeModal={handleCloseModal}>
+                    {renderModal()}
+                </Modal>
+                <div className={cx('statistical-item')}>
+                    <strong>{userProfile.followings_count}</strong>
+                    <span
+                        className={cx('following')}
+                        data-type="following"
+                        onClick={(e: any) => {
+                            handleOpenModal(e)
+                        }}
+                    >
+                        {t('profile.following')}
+                    </span>
+                </div>
+                <div className={cx('statistical-item')}>
+                    <strong>{userProfile.followers_count}</strong>
+                    <span
+                        className={cx('follower')}
+                        data-type="follower"
+                        onClick={(e: any) => {
+                            handleOpenModal(e)
+                        }}
+                    >
+                        {t('profile.followers')}
+                    </span>
+                </div>
+                <div className={cx('statistical-item')}>
+                    <strong>{userProfile.likes_count}</strong>
+                    <span>{t('profile.like')}</span>
+                </div>
             </div>
-            <div className={cx('statistical-item')}>
-                <strong>{userProfile.followers_count}</strong>
-                <span
-                    className={cx('follower')}
-                    data-type="follower"
-                    onClick={(e: any) => {
-                        handleOpenModal(e)
-                    }}
-                >
-                    {t('profile.followers')}
-                </span>
+            <div className={cx('bio')}>
+                <h2>{userProfile.bio}</h2>
             </div>
-            <div className={cx('statistical-item')}>
-                <strong>{userProfile.likes_count}</strong>
-                <span>{t('profile.like')}</span>
-            </div>
-        </div>
+        </>
     )
 }
 

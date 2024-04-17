@@ -26,18 +26,20 @@ import {
     WhatsAppIcon,
 } from '~/Components/Icons'
 import PopperEffect from '~/Components/PopperEffect'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { faFlag } from '@fortawesome/free-regular-svg-icons'
 import { useDispatch, useSelector } from 'react-redux'
-import { temporaryFollowed, temporaryUnFollowed } from '~/redux/selectors'
+import { authCurrentUser, temporaryFollowed, temporaryUnFollowed } from '~/redux/selectors'
 import Tippy from '@tippyjs/react'
 import Statistical from './Statistical'
+import EditProfileModal from './EditProfileModal'
+import Modal from '~/Components/Modal'
+import { FileUploadModal } from '~/pages/Upload/Upload'
 
 const cx = classNames.bind(style)
 
 interface Props {
     userProfile: UserModal
-    currentUser: UserModal
 }
 
 interface ShareType {
@@ -119,12 +121,17 @@ let shareMore: ShareType[] = [
     },
 ]
 
-const UserProfile: React.FC<Props> = ({ userProfile, currentUser }) => {
+const UserProfile: React.FC<Props> = ({ userProfile }) => {
     const dispatch = useDispatch()
+
+    const currentUser = useSelector(authCurrentUser)
+
     const { t } = useTranslation()
 
     const [hideSeeMore, setHideSeeMore] = useState(false)
     const [isCallingApi, setIsCallingApi] = useState(false)
+    const [isOpenEditProfile, setIsOpenEditProfile] = useState(false)
+    const [file, setFile] = useState<FileUploadModal>()
 
     const temporaryUnFollowedList: number[] = useSelector(temporaryUnFollowed)
     const temporaryFollowedList: number[] = useSelector(temporaryFollowed)
@@ -149,6 +156,14 @@ const UserProfile: React.FC<Props> = ({ userProfile, currentUser }) => {
         },
         [t]
     )
+
+    const handleOpenEditProfile = () => {
+        setIsOpenEditProfile(true)
+    }
+
+    const handleCloseModal = useCallback(() => {
+        setIsOpenEditProfile(false)
+    }, [])
 
     const renderShare = useCallback(
         (onHide?: boolean) => {
@@ -234,6 +249,12 @@ const UserProfile: React.FC<Props> = ({ userProfile, currentUser }) => {
         })
     }, [accessToken, currentUser, dispatch, isCallingApi, temporaryFollowedList, userProfile])
 
+    useEffect(() => {
+        return () => {
+            file && URL.revokeObjectURL(file.preview)
+        }
+    }, [file, userProfile])
+
     return (
         <>
             <div className={cx('wrapper')}>
@@ -242,13 +263,24 @@ const UserProfile: React.FC<Props> = ({ userProfile, currentUser }) => {
                     <h1 className={cx('username')}>{userProfile.nickname}</h1>
                     <h2 className={cx('fullname')}>{`${userProfile.first_name} ${userProfile.last_name}`}</h2>
                     {userProfile.id === currentUser?.id ? (
-                        <Button
-                            rounded
-                            leftIcon={<FontAwesomeIcon icon={faPenToSquare as IconProp} />}
-                            className={cx('edit-profile-btn')}
-                        >
-                            {t('profile.edit profile')}
-                        </Button>
+                        <>
+                            <Modal isOpen={isOpenEditProfile} closeModal={handleCloseModal}>
+                                <EditProfileModal
+                                    currentUser={currentUser}
+                                    setProfileIsOpen={setIsOpenEditProfile}
+                                    file={file}
+                                    setFile={setFile}
+                                />
+                            </Modal>
+                            <Button
+                                rounded
+                                leftIcon={<FontAwesomeIcon icon={faPenToSquare as IconProp} />}
+                                className={cx('edit-profile-btn')}
+                                onClick={handleOpenEditProfile}
+                            >
+                                {t('profile.edit profile')}
+                            </Button>
+                        </>
                     ) : (
                         <div className={cx('follow-container')}>
                             {userProfile.is_followed || temporaryFollowedList.includes(userProfile.id) ? (
@@ -295,7 +327,7 @@ const UserProfile: React.FC<Props> = ({ userProfile, currentUser }) => {
                     </PopperEffect>
                 </div>
             </div>
-            {userProfile && <Statistical userProfile={userProfile} />}
+            {userProfile && <Statistical userProfile={userProfile} currentUser={currentUser} />}
         </>
     )
 }

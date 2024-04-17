@@ -6,7 +6,7 @@ import style from './Image.module.scss'
 interface Props {
     src?: string
     alt?: string
-    className: string
+    className?: string
     fallback?: string
 }
 

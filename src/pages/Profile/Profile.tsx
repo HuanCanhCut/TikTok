@@ -2,10 +2,8 @@ import classNames from 'classnames/bind'
 import style from './Profile.module.scss'
 import { memo, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import { useSelector } from 'react-redux'
 
 import UserProfile from './UserProfile'
-import { authCurrentUser } from '~/redux/selectors'
 import { getAnUser } from '~/services/userService'
 import { UserModal } from '~/modal/modal'
 import Loading from '~/Components/Loading'
@@ -15,7 +13,6 @@ const cx = classNames.bind(style)
 const Profile: React.FC = () => {
     const { pathname } = useLocation()
     const [userProfile, setUserProfile] = useState<UserModal | null>(null)
-    const currentUser = useSelector(authCurrentUser)
     const accessToken = JSON.parse(localStorage.getItem('token')!)
 
     useEffect(() => {
@@ -36,7 +33,7 @@ const Profile: React.FC = () => {
     return (
         <div className={cx('wrapper')}>
             {userProfile ? (
-                <UserProfile currentUser={currentUser} userProfile={userProfile} />
+                <UserProfile userProfile={userProfile} />
             ) : (
                 <div className={cx('loading-container')}>
                     <Loading />

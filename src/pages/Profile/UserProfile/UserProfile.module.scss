@@ -223,7 +223,7 @@
         padding: 10px 20px;
         flex: 1;
         overflow: overlay;
-        max-height: 498px;
+        max-height: 560px;
 
         .private-content {
             width: 100%;
@@ -235,5 +235,16 @@
             justify-content: center;
             align-items: center;
         }
+    }
+}
+
+.bio {
+    margin-top: 8px;
+
+    h2 {
+        white-space: pre-wrap;
+        line-height: 21px;
+        font-size: 1.6rem;
+        font-weight: 400;
     }
 }
