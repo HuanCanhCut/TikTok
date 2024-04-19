@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind'
 import style from './UserProfile.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { useTranslation } from 'react-i18next'
@@ -10,7 +10,7 @@ import { UserModal } from '~/modal/modal'
 import Modal from '~/Components/Modal'
 import { Lock } from '~/Components/Icons'
 import * as userServices from '~/services/userService'
-import AccountItem from './AccountItem'
+import AccountItem from '~/Components/AccountItem'
 
 const cx = classNames.bind(style)
 
@@ -22,8 +22,13 @@ interface Tabs {
 
 const Statistical = ({ userProfile, currentUser }: { userProfile: UserModal; currentUser: UserModal }) => {
     const accessToken = JSON.parse(localStorage.getItem('token')!)
-
     const { t } = useTranslation()
+
+    const totalFollowingPage = useRef(0)
+
+    const suggestedRef = useRef<HTMLDivElement | null>(null)
+    const followingRef = useRef<HTMLDivElement | null>(null)
+
     const [isOpen, setIsOpen] = useState(false)
     const [type, setType] = useState<'following' | 'follower' | 'suggested'>('following')
     const [suggestedUser, setSuggestedUser] = useState<UserModal[] | []>([])
@@ -91,6 +96,37 @@ const Statistical = ({ userProfile, currentUser }: { userProfile: UserModal; cur
     }, [accessToken, page])
 
     useEffect(() => {
+        const handleGetFollowingAccounts = async () => {
+            try {
+                const response = await userServices.getFollowingAccounts({
+                    page: followingPage,
+                    accessToken,
+                })
+
+                setFollowingList((prev) => {
+                    return [...prev, ...response.data]
+                })
+
+                console.log(response)
+
+                totalFollowingPage.current = response.meta.pagination.total_pages
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        handleGetFollowingAccounts()
+    }, [accessToken, followingPage])
+
+    useEffect(() => {
+        const minUsersSuggested = 8
+        if (followingList.length < minUsersSuggested && userProfile.followings_count > minUsersSuggested) {
+            setFollowingPage(followingPage + 1)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [followingList.length])
+
+    useEffect(() => {
         const minUsersSuggested = 8
         if (suggestedUser.length < minUsersSuggested) {
             setPage(page + 1)
@@ -99,27 +135,20 @@ const Statistical = ({ userProfile, currentUser }: { userProfile: UserModal; cur
     }, [suggestedUser.length])
 
     const handleScroll = (e: any) => {
-        if (e.target.scrollTop + e.target.offsetHeight >= e.target.offsetHeight) {
-            setPage(page + 1)
+        const content = type === 'suggested' ? suggestedRef.current : followingRef.current
+
+        if (!content) {
+            return
+        }
+
+        if (e.target.scrollTop + e.target.offsetHeight >= content.offsetHeight) {
+            if (type === 'suggested') {
+                setPage(page + 1)
+            } else {
+                totalFollowingPage.current > followingPage && setFollowingPage(followingPage + 1)
+            }
         }
     }
-
-    useEffect(() => {
-        if (currentUser.id === userProfile.id) {
-            const getFollowingAccount = async () => {
-                try {
-                    const response = await userServices.getFollowingAccounts({ page: followingPage, accessToken })
-                    setFollowingList((prev) => {
-                        return [...prev, ...response.data]
-                    })
-                } catch (error) {
-                    console.log(error)
-                }
-            }
-
-            getFollowingAccount()
-        }
-    }, [accessToken, currentUser, followingPage, userProfile])
 
     const renderModal = useCallback(() => {
         return (
@@ -150,16 +179,34 @@ const Statistical = ({ userProfile, currentUser }: { userProfile: UserModal; cur
                 </header>
                 <div className={cx('content')} onScroll={handleScroll}>
                     {type === 'suggested' ? (
-                        suggestedUser.map((item, index) => {
-                            return <AccountItem data={item} key={index} />
-                        })
+                        <div ref={suggestedRef}>
+                            {suggestedUser.map((item, index) => {
+                                return (
+                                    <AccountItem
+                                        to={`/user/@${item.nickname}`}
+                                        data={item}
+                                        key={index}
+                                        followBtn={true}
+                                    />
+                                )
+                            })}
+                        </div>
                     ) : currentUser.id === userProfile.id ? (
                         type === 'follower' ? (
                             <h1>API does not support viewing followers</h1>
                         ) : (
-                            followingList.map((item, index) => {
-                                return <AccountItem data={item} key={index} />
-                            })
+                            <div ref={followingRef}>
+                                {followingList.map((item, index) => {
+                                    return (
+                                        <AccountItem
+                                            to={`/user/@${item.nickname}`}
+                                            data={item}
+                                            key={index}
+                                            followBtn={true}
+                                        />
+                                    )
+                                })}
+                            </div>
                         )
                     ) : (
                         <div className={cx('private-content')}>
@@ -180,7 +227,7 @@ const Statistical = ({ userProfile, currentUser }: { userProfile: UserModal; cur
             </div>
         )
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [handleCloseModal, suggestedUser, t, tabs, type, userProfile.nickname])
+    }, [handleCloseModal, suggestedUser, t, tabs, type, userProfile.nickname, followingList])
 
     return (
         <>

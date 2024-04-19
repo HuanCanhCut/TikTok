@@ -86,7 +86,7 @@ export const updateCurrentUser = async ({
     _method?: string
 }) => {
     try {
-        return await request.post('auth/me', formData, {
+        return await request.post('auth/me?', formData, {
             headers: { Authorization: `Bearer ${accessToken}` },
             params: {
                 _method,

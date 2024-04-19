@@ -154,7 +154,8 @@
             "name description": "Bạn chỉ có thể thay đổi biệt danh 7 ngày một lần.",
             "cancel": "Hủy bỏ",
             "save": "Save",
-            "profile has been updated": "Hồ sơ đã được cập nhật"
+            "profile has been updated": "Hồ sơ đã được cập nhật",
+            "api don't support": "Api không hỗ trợ"
         }
     },
     "preview": {

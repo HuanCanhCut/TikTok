@@ -5,16 +5,18 @@ import Images from '~/Components/Images'
 import BlueTick from '../BlueTick/BlueTick'
 import { memo } from 'react'
 import { UserModal } from '~/modal/modal'
+import Follow from '../Follow'
 
 const cx = classNames.bind(style)
 
 type Props = {
     data: UserModal
     to?: To
+    followBtn?: boolean
     onClick?: (nickname: string) => void
 }
 
-function AccountItem({ data, to, onClick = () => {}, ...passProps }: Props) {
+function AccountItem({ data, to, followBtn = false, onClick = () => {}, ...passProps }: Props) {
     let Component: string | typeof Link = 'div'
 
     const props: LinkProps = {
@@ -42,6 +44,7 @@ function AccountItem({ data, to, onClick = () => {}, ...passProps }: Props) {
                 </h4>
                 <span className={cx('username')}>{data.nickname}</span>
             </div>
+            {followBtn && <Follow data={data} className={cx('follow-btn')} />}
         </Component>
     )
 }

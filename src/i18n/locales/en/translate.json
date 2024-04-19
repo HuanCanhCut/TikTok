@@ -155,7 +155,8 @@
             "name description": "Your nickname can only be changed once every 7 days.",
             "cancel": "Cancel",
             "save": "Save",
-            "profile has been updated": "Profile has been updated"
+            "profile has been updated": "Profile has been updated",
+            "api don't support": "Api don't support"
         }
     },
     "preview": {
