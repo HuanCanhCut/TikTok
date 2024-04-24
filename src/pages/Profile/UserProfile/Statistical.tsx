@@ -107,8 +107,6 @@ const Statistical = ({ userProfile, currentUser }: { userProfile: UserModal; cur
                     return [...prev, ...response.data]
                 })
 
-                console.log(response)
-
                 totalFollowingPage.current = response.meta.pagination.total_pages
             } catch (error) {
                 console.log(error)
@@ -183,6 +181,7 @@ const Statistical = ({ userProfile, currentUser }: { userProfile: UserModal; cur
                             {suggestedUser.map((item, index) => {
                                 return (
                                     <AccountItem
+                                        className={cx('account-item')}
                                         to={`/user/@${item.nickname}`}
                                         data={item}
                                         key={index}
@@ -193,12 +192,13 @@ const Statistical = ({ userProfile, currentUser }: { userProfile: UserModal; cur
                         </div>
                     ) : currentUser.id === userProfile.id ? (
                         type === 'follower' ? (
-                            <h1>API does not support viewing followers</h1>
+                            <h1>{t(`profile.editprofile.api don't support`)}</h1>
                         ) : (
                             <div ref={followingRef}>
                                 {followingList.map((item, index) => {
                                     return (
                                         <AccountItem
+                                            className={cx('account-item')}
                                             to={`/user/@${item.nickname}`}
                                             data={item}
                                             key={index}

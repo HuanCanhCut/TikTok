@@ -13,6 +13,7 @@ import VideoAction from './VideoAction'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { UserModal } from '~/modal/modal'
 import { listentEvent, sendEvent } from '~/helpers/event'
+import { documentIsVisible } from '~/project/services'
 
 const cx = classNames.bind(style)
 
@@ -75,29 +76,9 @@ const VideoItem: React.FC<Props> = ({ video }) => {
     }
 
     useEffect(() => {
-        const handleVisibilityChange = () => {
-            if (document.visibilityState) {
-                switch (document.visibilityState) {
-                    case 'hidden':
-                        try {
-                            videoRef.current && isVisible && !videoRef.current.paused && videoRef.current.pause()
-                        } catch (error) {}
-                        break
-                    case 'visible':
-                        try {
-                            videoRef.current && isVisible && videoRef.current.paused && videoRef.current.play()
-                        } catch (error) {}
-                        break
-                    default:
-                        break
-                }
-            }
-        }
-        document.addEventListener('visibilitychange', handleVisibilityChange)
+        const remove = videoRef.current ? documentIsVisible(videoRef.current, isVisible) : () => {}
 
-        return () => {
-            document.removeEventListener('visibilitychange', handleVisibilityChange)
-        }
+        return remove
     }, [isVisible])
 
     useEffect(() => {

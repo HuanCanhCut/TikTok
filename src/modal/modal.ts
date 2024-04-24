@@ -25,6 +25,7 @@ export interface UserModal {
     is_liked: boolean
     is_followed: boolean
     updated_at: Date
+    videos?: VideoModal[]
 }
 
 interface Resolution {

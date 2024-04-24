@@ -7,6 +7,7 @@ import UserProfile from './UserProfile'
 import { getAnUser } from '~/services/userService'
 import { UserModal } from '~/modal/modal'
 import Loading from '~/Components/Loading'
+import UserVideo from './UserVideo'
 
 const cx = classNames.bind(style)
 
@@ -33,7 +34,10 @@ const Profile: React.FC = () => {
     return (
         <div className={cx('wrapper')}>
             {userProfile ? (
-                <UserProfile userProfile={userProfile} />
+                <>
+                    <UserProfile userProfile={userProfile} />
+                    <UserVideo userProfile={userProfile} />
+                </>
             ) : (
                 <div className={cx('loading-container')}>
                     <Loading />

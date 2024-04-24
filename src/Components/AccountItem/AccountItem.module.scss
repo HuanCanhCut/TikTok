@@ -1,14 +1,20 @@
 .wrapper {
     width: 100%;
+    transition: 0.1s linear all;
     display: flex;
     align-items: center;
-    padding: 6px 16px;
+    justify-content: space-between;
+    padding: 8px 16px;
     cursor: pointer;
-    transition: 0.1s linear all;
     border-radius: 5px;
     &:hover {
         background-color: var(--text-color-opacity-03);
     }
+}
+
+.account-wrapper {
+    display: flex;
+    align-items: center;
 }
 
 .avatar {
@@ -39,6 +45,6 @@
 }
 
 .follow-btn {
-    padding: 8px 0;
+    padding: 8px;
     border-radius: 4px;
 }

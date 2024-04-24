@@ -144,10 +144,17 @@
         "followers": "Follower",
         "suggested": "Được đề xuất",
         "like": "Thích",
+        "liked": "Đã thích",
+        "videos": "Videos",
         "private follow list": "Danh sách follow của người này ở chế độ riêng tư",
         "private follower list": "Danh sách follower của người này ở chế độ riêng tư",
         "followers list is currently hidden": "Danh sách followers cuả người này hiện đang bị ẩn",
         "following list is currently hidden": "Danh sách following của người này hiện đang bị ẩn",
+        "upload your first video": "Tải lên video đầu tiên của bạn",
+        "your videos will appear here": "Video của bạn sẽ xuất hiện tại đây",
+        "this user's liked videos are private": "Video đã thích của người này ở trạng thái riêng tư",
+        "videos liked by": "Các videos được thích bởi",
+        "are currently hidden": "hiện đang ẩn",
         "editprofile": {
             "profile image": "Ảnh hồ sơ",
             "tiktok id description": "TikTok ID chỉ có thể bao gồm chữ cái, chữ số, dấu gạch dưới và dấu chấm. Khi thay đổi TikTok ID, liên kết hồ sơ của bạn cũng sẽ thay đổi.",
@@ -155,7 +162,7 @@
             "cancel": "Hủy bỏ",
             "save": "Save",
             "profile has been updated": "Hồ sơ đã được cập nhật",
-            "api don't support": "Api không hỗ trợ"
+            "api don't support": "Api không hỗ trợ xem followers"
         }
     },
     "preview": {

@@ -127,3 +127,27 @@ export const handleUnFollowAnUser = async ({
         setIsCallingApi(false)
     }
 }
+
+export const documentIsVisible = (video: HTMLVideoElement, isVisible = true) => {
+    const handleVisibilityChange = () => {
+        switch (document.visibilityState) {
+            case 'hidden':
+                try {
+                    video && isVisible && !video.paused && video.pause()
+                } catch (error) {}
+                break
+            case 'visible':
+                try {
+                    video && isVisible && video.paused && video.play()
+                } catch (error) {}
+                break
+            default:
+                break
+        }
+    }
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+
+    return () => {
+        document.removeEventListener('visibilitychange', handleVisibilityChange)
+    }
+}

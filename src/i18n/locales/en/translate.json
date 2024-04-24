@@ -145,10 +145,17 @@
         "followers": "Follower",
         "suggested": "Suggested",
         "like": "Like",
+        "liked": "Liked",
+        "videos": "Videos",
         "private follow list": "This account’s following list is private",
         "private follower list": "This account's follower list is private",
         "followers list is currently hidden": "This account's follower list is currently hidden",
         "following list is currently hidden": "This account's following list is currently hidden",
+        "upload your first video": "Upload your first video",
+        "your videos will appear here": "Your videos will appear here",
+        "this user's liked videos are private": "This user's liked videos are private",
+        "videos liked by": "Videos liked by",
+        "are currently hidden": "are currently hidden",
         "editprofile": {
             "profile image": "Profile image",
             "tiktok id description": "Usernames can only contain letters, numbers, underscores, and periods. Changing your username will also change your profile link.",
@@ -156,7 +163,7 @@
             "cancel": "Cancel",
             "save": "Save",
             "profile has been updated": "Profile has been updated",
-            "api don't support": "Api don't support"
+            "api don't support": "Api don't support viewing followers"
         }
     },
     "preview": {
