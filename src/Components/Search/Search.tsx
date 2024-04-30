@@ -16,7 +16,11 @@ import { UserModal } from '~/modal/modal'
 
 const cx = classNames.bind(style)
 
-function Search() {
+interface Props {
+    className?: string
+}
+
+const Search: React.FC<Props> = ({ className = '' }) => {
     const { t } = useTranslation()
     const [searchValue, setSearchValue] = useState<string>('')
     const [searchResult, setSearchResult] = useState<Array<UserModal>>([])
@@ -26,6 +30,10 @@ function Search() {
     const debounceValue = useDebounce(searchValue, 500)
 
     const inputRef = useRef<HTMLInputElement | null>(null)
+
+    const classes = cx('search', {
+        [className]: className,
+    })
 
     useEffect(() => {
         if (!debounceValue.trim()) {
@@ -75,7 +83,7 @@ function Search() {
                 )}
                 onClickOutside={handleHideResult}
             >
-                <div className={cx('search')}>
+                <div className={classes}>
                     <input
                         ref={inputRef}
                         placeholder={t('header.search placeholder')}

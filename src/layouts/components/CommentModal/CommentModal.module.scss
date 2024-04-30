@@ -5,29 +5,36 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 0, 0, 1);
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .close-modal {
     position: absolute;
     top: 20px;
     left: 20px;
-    width: 34px;
-    height: 34px;
+    width: 40px;
+    height: 40px;
+
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    font-size: 2rem;
+    font-size: 2.4rem;
     font-weight: 700;
     background-color: var(--text-color-opacity-12);
     color: var(--text-color);
     cursor: pointer;
     z-index: 10;
+
+    &:hover {
+        opacity: 0.7;
+    }
 }
 
-.video-container {
+.video-wrapper {
     flex: 1;
+    height: 100vh;
+    position: relative;
 }
 
 .video-container,
@@ -39,10 +46,116 @@
     flex-basis: 544px;
 }
 
-.video-overlay {
+.thumb-overlay {
     width: 100%;
     height: 100%;
     object-fit: cover;
     filter: blur(30px);
     opacity: 0.6;
+}
+
+.thumb-overlay,
+.video-container {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    left: 0;
+}
+
+.video-container {
+    display: flex;
+    min-width: 600px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.switch-video {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.video {
+    max-width: 100%;
+
+    .col {
+        object-fit: cover;
+        height: 100%;
+    }
+
+    .row {
+        object-fit: contain;
+    }
+}
+
+.toggle-play {
+    font-size: 10rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-color);
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.search {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-color: var(--text-color-tertiary);
+
+    &:focus-within {
+        border-color: var(--text-color-tertiary);
+    }
+}
+
+.next-video,
+.prev-video {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--text-color-opacity-12);
+    font-size: 1.8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-color);
+    cursor: pointer;
+    &:hover {
+        opacity: 0.7;
+    }
+}
+
+.next-video {
+    rotate: 90deg;
+}
+
+.prev-video {
+    rotate: 90deg;
+}
+
+.mute-video {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 25px;
+    right: 20px;
+    border-radius: 50%;
+    background-color: var(--text-color-opacity-12);
+    cursor: pointer;
+    &:hover {
+        opacity: 0.7;
+    }
 }

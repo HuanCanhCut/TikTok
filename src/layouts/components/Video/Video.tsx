@@ -1,6 +1,7 @@
 import classNames from 'classnames/bind'
-import { memo, useCallback, useEffect, useRef, useState } from 'react'
+import { MutableRefObject, memo, useCallback, useEffect, useRef, useState } from 'react'
 import { Virtuoso } from 'react-virtuoso'
+import ReactModal from 'react-modal'
 
 import * as videoService from '~/services/videoService'
 import style from './Video.module.scss'
@@ -8,7 +9,11 @@ import Header from './Header'
 import VideoItem from '~/Components/VideoItem'
 import AccountLoading from '~/Components/AccountLoading'
 import { VideoModal } from '~/modal/modal'
-import { listentEvent } from '~/helpers/event'
+import { listentEvent, sendEvent } from '~/helpers/event'
+import { useDispatch, useSelector } from 'react-redux'
+import { commentModalOpen } from '~/redux/selectors'
+import CommentModal from '../CommentModal'
+import { actions } from '~/redux'
 
 const cx = classNames.bind(style)
 
@@ -16,22 +21,33 @@ interface Props {
     type: string
 }
 
+interface ImperativeHandle {
+    PLAY: () => void
+    PAUSE: () => void
+    PAUSED: () => boolean | undefined
+    SETCURRENTTIME: (currentTime: number) => void
+    GETCURRENTTIME: () => number
+    GETCURRENTVIDEOMODAL: () => VideoModal | undefined
+}
+
 const TOTAL_PAGES_KEY = 'totalVideoPages'
 
 const Video: React.FC<Props> = ({ type }) => {
+    const dispatch = useDispatch()
     let TOTAL_PAGES_VIDEO: number = JSON.parse(localStorage.getItem(TOTAL_PAGES_KEY)!) || 0
     const accessToken = JSON.parse(localStorage.getItem('token')!)
 
     const virtuosoRef = useRef<any>(null)
+    const commentModalIsOpen = useSelector(commentModalOpen)
 
     const [videos, setVideos] = useState<VideoModal[]>([])
+    const [currentVideo, setCurrentVideo] = useState<VideoModal | null>(null)
+    const videoRef = useRef<ImperativeHandle | null>(null)
 
     const [page, setPage] = useState(() => {
         return Math.floor(Math.random() * TOTAL_PAGES_VIDEO)
     })
-
     const [videosIsVisible, setVideosIsVisible] = useState<HTMLVideoElement[]>([])
-
     const [pageIndexes, setPageIndexes] = useState<number[]>(
         JSON.parse(localStorage.getItem('pageVideoIndexes')!) ?? []
     )
@@ -40,6 +56,17 @@ const Video: React.FC<Props> = ({ type }) => {
     const scrollToIndex = (index: number) => {
         virtuosoRef.current && virtuosoRef.current.scrollToIndex({ index: index, align: 'center', behavior: 'smooth' })
     }
+
+    useEffect(() => {
+        const remove = listentEvent({
+            eventName: 'comment:open-comment-modal',
+            handler({ detail }) {
+                setCurrentVideo(detail)
+            },
+        })
+
+        return remove
+    }, [])
 
     useEffect(() => {
         const remove = listentEvent({
@@ -128,27 +155,35 @@ const Video: React.FC<Props> = ({ type }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page])
 
+    const handleScrollNextVideo = useCallback(() => {
+        const nextIndex = focusedIndex + 1
+        setFocusedIndex(nextIndex)
+        scrollToIndex(nextIndex)
+    }, [focusedIndex])
+
+    const handleScrollPrevVideo = useCallback(() => {
+        const prevIndex = focusedIndex - 1
+        setFocusedIndex(prevIndex)
+        scrollToIndex(prevIndex)
+    }, [focusedIndex])
+
     const handleKeyDown = useCallback(
         (e: KeyboardEvent) => {
             if (e.key === 'ArrowDown' && focusedIndex < videos.length - 1) {
                 e.preventDefault()
-                const nextIndex = focusedIndex + 1
-                setFocusedIndex(nextIndex)
-                scrollToIndex(nextIndex)
+                handleScrollNextVideo()
             }
 
             if (e.key === 'ArrowUp' && focusedIndex !== 0) {
                 e.preventDefault()
-                const prevIndex = focusedIndex - 1
-                setFocusedIndex(prevIndex)
-                scrollToIndex(prevIndex)
+                handleScrollPrevVideo()
             }
 
             if (e.key === 'End' || e.key === 'Home' || e.which === 33 || e.which === 34) {
                 e.preventDefault()
             }
         },
-        [focusedIndex, videos.length]
+        [focusedIndex, handleScrollNextVideo, handleScrollPrevVideo, videos.length]
     )
 
     useEffect(() => {
@@ -173,33 +208,65 @@ const Video: React.FC<Props> = ({ type }) => {
         return remove
     }, [handleKeyDown])
 
+    const handleCloseCommnetModal = (videoModalRef: MutableRefObject<HTMLVideoElement | null>) => {
+        dispatch(actions.commentModalOpen(false))
+        if (videoRef.current) {
+            const currentTimeVideoModal = videoModalRef.current?.currentTime || 0
+            videoRef.current.SETCURRENTTIME(currentTimeVideoModal)
+            // videoRef.current.PLAY()
+        }
+    }
+
     return (
-        <Virtuoso
-            ref={virtuosoRef}
-            data={videos}
-            useWindowScroll
-            increaseViewportBy={{ top: 800, bottom: 300 }}
-            endReached={() => {
-                setPage(() => {
-                    do {
-                        return Math.floor(Math.random() * TOTAL_PAGES_VIDEO)
-                    } while (pageIndexes.includes(Math.floor(Math.random() * TOTAL_PAGES_VIDEO)))
-                })
-            }}
-            itemContent={(index, item) => {
-                return (
-                    <div className={cx('video-content')}>
-                        <Header data={item} type={type} />
-                        <VideoItem video={item} videoList={videos} />
-                    </div>
-                )
-            }}
-            components={{
-                Footer: () => {
-                    return <AccountLoading big />
-                },
-            }}
-        />
+        <>
+            {currentVideo && (
+                <ReactModal
+                    isOpen={commentModalIsOpen}
+                    onRequestClose={handleCloseCommnetModal}
+                    overlayClassName={'overlay'}
+                    ariaHideApp={false}
+                    className={'modal'}
+                    closeTimeoutMS={200}
+                    shouldEscapeClose={false}
+                    onEscapeKeyDown={(event: KeyboardEvent) => event.stopPropagation()}
+                >
+                    <CommentModal
+                        video={currentVideo}
+                        videoList={videos}
+                        closeCommentModal={handleCloseCommnetModal}
+                        currentTime={videoRef.current?.GETCURRENTTIME() || 0}
+                        scrollNextVideo={handleScrollNextVideo}
+                        scrollPrevVideo={handleScrollPrevVideo}
+                    />
+                </ReactModal>
+            )}
+            <Virtuoso
+                ref={virtuosoRef}
+                data={videos}
+                useWindowScroll
+                increaseViewportBy={{ top: 800, bottom: 300 }}
+                endReached={() => {
+                    setPage(() => {
+                        do {
+                            return Math.floor(Math.random() * TOTAL_PAGES_VIDEO)
+                        } while (pageIndexes.includes(Math.floor(Math.random() * TOTAL_PAGES_VIDEO)))
+                    })
+                }}
+                itemContent={(index, item) => {
+                    return (
+                        <div className={cx('video-content')}>
+                            <Header data={item} type={type} />
+                            <VideoItem video={item} ref={videoRef} videos={videos} setFocusedIndex={setFocusedIndex} />
+                        </div>
+                    )
+                }}
+                components={{
+                    Footer: () => {
+                        return <AccountLoading big />
+                    },
+                }}
+            />
+        </>
     )
 }
 

@@ -1,8 +1,9 @@
 import classNames from 'classnames/bind'
-import { memo, useRef, useState, useEffect, useCallback } from 'react'
+import { memo, useRef, useState, useEffect, useCallback, useImperativeHandle, Dispatch, SetStateAction } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPause, faPlay } from '@fortawesome/free-solid-svg-icons'
 import { useDispatch, useSelector } from 'react-redux'
+import { forwardRef } from 'react'
 
 import { commentModalOpen, mutedVideo } from '~/redux/selectors'
 import { actions } from '~/redux'
@@ -17,12 +18,20 @@ import { VideoModal } from '~/modal/modal'
 
 const cx = classNames.bind(style)
 
+interface ImperativeHandle {
+    PLAY: () => void
+    PAUSE: () => void
+    PAUSED: () => boolean | undefined
+    SETCURRENTTIME: (currentTime: number) => void
+    GETCURRENTTIME: () => number
+}
 interface Props {
     video: VideoModal
-    videoList: VideoModal[]
+    videos: VideoModal[]
+    setFocusedIndex: Dispatch<SetStateAction<number>>
 }
 
-const VideoItem: React.FC<Props> = ({ video, videoList }) => {
+const VideoItem = forwardRef<ImperativeHandle, Props>(({ video, videos, setFocusedIndex }, ref) => {
     const dispatch = useDispatch()
     const mutedVideos = useSelector(mutedVideo)
     const commentModalIsOpen = useSelector(commentModalOpen)
@@ -37,8 +46,49 @@ const VideoItem: React.FC<Props> = ({ video, videoList }) => {
     const options = { root: null, rootMargin: '0px', threshold: 0.5 }
     const isVisible = useElementOnScreen(options, videoRef)
 
+    useImperativeHandle<ImperativeHandle, ImperativeHandle>(ref, () => ({
+        PLAY: async () => {
+            if (isVisible) {
+                try {
+                    videoRef.current?.play()
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+        },
+        PAUSE: () => {
+            if (isVisible) {
+                videoRef.current?.pause()
+            }
+        },
+        PAUSED: () => {
+            if (isVisible) {
+                return videoRef.current?.paused
+            }
+        },
+        SETCURRENTTIME: (currentTime: number) => {
+            if (videoRef.current) {
+                videoRef.current.currentTime = currentTime
+            }
+        },
+        GETCURRENTTIME: () => {
+            if (videoRef.current) {
+                return videoRef.current?.currentTime
+            }
+
+            return 0
+        },
+    }))
+
     useEffect(() => {
-        if (isVisible && videoRef.current) {
+        if (isVisible) {
+            const videoIndex = videos.findIndex((item) => item.id === video.id)
+            setFocusedIndex(videoIndex)
+        }
+    }, [isVisible, setFocusedIndex, video.id, videos])
+
+    useEffect(() => {
+        if (isVisible && videoRef.current && !commentModalIsOpen) {
             sendEvent({ eventName: 'video:video-is-visible', detail: videoRef.current })
         } else {
             if (!videoRef.current?.paused) {
@@ -144,10 +194,10 @@ const VideoItem: React.FC<Props> = ({ video, videoList }) => {
                     </button>
                 </div>
 
-                <VideoAction video={video} videoRef={videoRef} videoList={videoList} />
+                <VideoAction video={video} videoRef={videoRef} />
             </div>
         </div>
     )
-}
+})
 
 export default memo(VideoItem)

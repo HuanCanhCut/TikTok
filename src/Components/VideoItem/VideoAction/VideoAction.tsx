@@ -4,30 +4,27 @@ import { faCommentDots, faHeart, faShare } from '@fortawesome/free-solid-svg-ico
 import { useState, useEffect, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
-import ReactModal from 'react-modal'
 
 import { removeDuplicate } from '~/project/services'
 import useElementOnScreen from '~/hooks/useElementOnScreen'
 import { actions } from '~/redux'
 import { FavoriteVideo } from '~/Components/Icons'
-import { authCurrentUser, commentModalOpen, temporaryLiked, temporaryUnLiked } from '~/redux/selectors'
+import { authCurrentUser, temporaryLiked, temporaryUnLiked } from '~/redux/selectors'
 import * as videoService from '~/services/videoService'
 import style from './VideoAction.module.scss'
 import VideoActionItem from './VideoActionItem'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { sendEvent } from '~/helpers/event'
 import { VideoModal } from '~/modal/modal'
-import CommentModal from '~/layouts/components/CommentModal'
 
 const cx = classNames.bind(style)
 
 interface Props {
     video: VideoModal
-    videoList: VideoModal[]
     videoRef: React.MutableRefObject<HTMLVideoElement | null>
 }
 
-const VideoAction: React.FC<Props> = ({ video, videoRef, videoList }) => {
+const VideoAction: React.FC<Props> = ({ video, videoRef }) => {
     const { t } = useTranslation()
 
     const currentUser = useSelector(authCurrentUser)
@@ -39,10 +36,8 @@ const VideoAction: React.FC<Props> = ({ video, videoRef, videoList }) => {
     const dispatch = useDispatch()
     const temporaryLikeList = useSelector(temporaryLiked)
     const temporaryUnLikeList = useSelector(temporaryUnLiked)
-    const commentModalIsOpen = useSelector(commentModalOpen)
 
     const [isCallingApi, setIsCallingApi] = useState(false)
-    const [currentVideo, setCurrentVideo] = useState<VideoModal | null>(null)
 
     const handleLikeVideo = useCallback(
         async (id: number) => {
@@ -140,8 +135,9 @@ const VideoAction: React.FC<Props> = ({ video, videoRef, videoList }) => {
     }, [handleToggleLike, isVisible])
 
     const handleOpenCommentModal = (video: VideoModal) => {
-        setCurrentVideo(video)
+        sendEvent({ eventName: 'comment:open-comment-modal', detail: video })
         dispatch(actions.commentModalOpen(true))
+
         !videoRef.current?.paused && videoRef.current?.pause()
     }
 
@@ -199,26 +195,8 @@ const VideoAction: React.FC<Props> = ({ video, videoRef, videoList }) => {
         },
     ]
 
-    const handleCloseCommnetModal = () => {
-        dispatch(actions.commentModalOpen(false))
-    }
-
     return (
         <div className={cx('wrapper')}>
-            {currentVideo && (
-                <ReactModal
-                    isOpen={commentModalIsOpen}
-                    onRequestClose={handleCloseCommnetModal}
-                    overlayClassName={'overlay'}
-                    ariaHideApp={false}
-                    className={'modal'}
-                    closeTimeoutMS={200}
-                    shouldEscapeClose={false}
-                >
-                    <CommentModal video={video} videoList={videoList} videoRef={videoRef} />
-                </ReactModal>
-            )}
-
             {items.map((item, index) => {
                 return <VideoActionItem key={index} item={item} video={video} onChose={handleChose} />
             })}
