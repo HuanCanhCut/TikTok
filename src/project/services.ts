@@ -128,7 +128,7 @@ export const handleUnFollowAnUser = async ({
     }
 }
 
-export const documentIsVisible = (video: HTMLVideoElement, isVisible = true) => {
+export const documentIsVisible = (video: HTMLVideoElement, isVisible = true, commentModalIsOpen = false) => {
     const handleVisibilityChange = () => {
         switch (document.visibilityState) {
             case 'hidden':
@@ -138,7 +138,7 @@ export const documentIsVisible = (video: HTMLVideoElement, isVisible = true) => 
                 break
             case 'visible':
                 try {
-                    video && isVisible && video.paused && video.play()
+                    video && isVisible && !commentModalIsOpen && video.paused && video.play()
                 } catch (error) {}
                 break
             default:

@@ -103,6 +103,10 @@ const Statistical = ({ userProfile, currentUser }: { userProfile: UserModal; cur
                     accessToken,
                 })
 
+                if (!response) {
+                    return
+                }
+
                 setFollowingList((prev) => {
                     return [...prev, ...response.data]
                 })
@@ -190,7 +194,7 @@ const Statistical = ({ userProfile, currentUser }: { userProfile: UserModal; cur
                                 )
                             })}
                         </div>
-                    ) : currentUser.id === userProfile.id ? (
+                    ) : currentUser?.id === userProfile.id ? (
                         type === 'follower' ? (
                             <h1>{t(`profile.editprofile.api don't support`)}</h1>
                         ) : (

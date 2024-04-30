@@ -190,7 +190,7 @@ const Video: React.FC<Props> = ({ type }) => {
                 return (
                     <div className={cx('video-content')}>
                         <Header data={item} type={type} />
-                        <VideoItem video={item} />
+                        <VideoItem video={item} videoList={videos} />
                     </div>
                 )
             }}

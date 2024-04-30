@@ -146,6 +146,7 @@ const UserVideo: React.FC<Props> = ({ userProfile }) => {
                                         <video
                                             ref={videoRef}
                                             src={item.file_url}
+                                            muted
                                             className={cx('video')}
                                             onMouseOver={handleHoverVideo}
                                         ></video>

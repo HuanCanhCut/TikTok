@@ -5,6 +5,7 @@ interface Theme {
 interface InitState {
     theme: Theme
     mutedVideos: boolean
+    commentModalOpen: boolean
 }
 
 const initialState: InitState = {
@@ -12,6 +13,7 @@ const initialState: InitState = {
         darkMode: false,
     },
     mutedVideos: false,
+    commentModalOpen: false,
 }
 
 const projectReducer = (state = initialState, action: any) => {
@@ -28,6 +30,11 @@ const projectReducer = (state = initialState, action: any) => {
             return {
                 ...state,
                 mutedVideos: action.payload,
+            }
+        case 'open-comment-modal':
+            return {
+                ...state,
+                commentModalOpen: action.payload,
             }
         default:
             return state

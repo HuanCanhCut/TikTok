@@ -1,5 +1,6 @@
 import { HeaderOnly } from '~/layouts'
 import Home from '~/pages/Home'
+import Comment from '~/pages/Comment'
 import Following from '~/pages/Following'
 import Profile from '~/pages/Profile'
 import Upload from '~/pages/Upload'
@@ -14,6 +15,10 @@ const allRoutes = [
     {
         path: config.routes.home,
         component: Home,
+    },
+    {
+        path: config.routes.comment,
+        component: Comment,
     },
     {
         path: config.routes.login,

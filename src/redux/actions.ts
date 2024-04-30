@@ -54,3 +54,10 @@ export const logOut = (payload: any) => {
         payload,
     }
 }
+
+export const commentModalOpen = (payload: boolean) => {
+    return {
+        type: 'open-comment-modal',
+        payload,
+    }
+}

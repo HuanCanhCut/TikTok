@@ -1,30 +1,33 @@
 import classNames from 'classnames/bind'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCommentDots, faHeart, faShare } from '@fortawesome/free-solid-svg-icons'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { actions } from '~/redux'
+import { useTranslation } from 'react-i18next'
+import ReactModal from 'react-modal'
+
 import { removeDuplicate } from '~/project/services'
 import useElementOnScreen from '~/hooks/useElementOnScreen'
-import { useTranslation } from 'react-i18next'
-
+import { actions } from '~/redux'
 import { FavoriteVideo } from '~/Components/Icons'
-import { authCurrentUser, temporaryLiked, temporaryUnLiked } from '~/redux/selectors'
+import { authCurrentUser, commentModalOpen, temporaryLiked, temporaryUnLiked } from '~/redux/selectors'
 import * as videoService from '~/services/videoService'
 import style from './VideoAction.module.scss'
 import VideoActionItem from './VideoActionItem'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
-import { VideoListModal } from '../VideoItem'
 import { sendEvent } from '~/helpers/event'
+import { VideoModal } from '~/modal/modal'
+import CommentModal from '~/layouts/components/CommentModal'
 
 const cx = classNames.bind(style)
 
 interface Props {
-    data: VideoListModal
+    video: VideoModal
+    videoList: VideoModal[]
     videoRef: React.MutableRefObject<HTMLVideoElement | null>
 }
 
-const VideoAction: React.FC<Props> = ({ data, videoRef }) => {
+const VideoAction: React.FC<Props> = ({ video, videoRef, videoList }) => {
     const { t } = useTranslation()
 
     const currentUser = useSelector(authCurrentUser)
@@ -36,48 +39,56 @@ const VideoAction: React.FC<Props> = ({ data, videoRef }) => {
     const dispatch = useDispatch()
     const temporaryLikeList = useSelector(temporaryLiked)
     const temporaryUnLikeList = useSelector(temporaryUnLiked)
+    const commentModalIsOpen = useSelector(commentModalOpen)
 
     const [isCallingApi, setIsCallingApi] = useState(false)
+    const [currentVideo, setCurrentVideo] = useState<VideoModal | null>(null)
 
-    const handleLikeVideo = async (id: number) => {
-        removeDuplicate(temporaryUnLikeList, id)
-        if (id) {
-            if (!temporaryUnLikeList.includes(id)) {
-                dispatch(actions.temporaryLiked(id))
+    const handleLikeVideo = useCallback(
+        async (id: number) => {
+            removeDuplicate(temporaryUnLikeList, id)
+            if (id) {
+                if (!temporaryUnLikeList.includes(id)) {
+                    dispatch(actions.temporaryLiked(id))
+                }
             }
-        }
 
-        try {
-            return await videoService.likeVideo({
-                videoID: id || data.id,
-                accessToken,
-            })
-        } catch (error) {
-            console.log(error)
-        } finally {
-            setIsCallingApi(false)
-        }
-    }
+            try {
+                return await videoService.likeVideo({
+                    videoID: id || video.id,
+                    accessToken,
+                })
+            } catch (error) {
+                console.log(error)
+            } finally {
+                setIsCallingApi(false)
+            }
+        },
+        [accessToken, dispatch, temporaryUnLikeList, video.id]
+    )
 
-    const handleUnLikeVideo = async (id: number) => {
-        if (id) {
-            removeDuplicate(temporaryLikeList, id)
-            dispatch(actions.temporaryUnLiked(id))
-        }
+    const handleUnLikeVideo = useCallback(
+        async (id: number) => {
+            if (id) {
+                removeDuplicate(temporaryLikeList, id)
+                dispatch(actions.temporaryUnLiked(id))
+            }
 
-        try {
-            return await videoService.unLikeVideo({
-                videoID: id || data.id,
-                accessToken,
-            })
-        } catch (error) {
-            console.log(error)
-        } finally {
-            setIsCallingApi(false)
-        }
-    }
+            try {
+                return await videoService.unLikeVideo({
+                    videoID: id || video.id,
+                    accessToken,
+                })
+            } catch (error) {
+                console.log(error)
+            } finally {
+                setIsCallingApi(false)
+            }
+        },
+        [accessToken, dispatch, temporaryLikeList, video.id]
+    )
 
-    const handleToggleLike = () => {
+    const handleToggleLike = useCallback(() => {
         if (!currentUser || !accessToken) {
             sendEvent({ eventName: 'auth:open-auth-modal', detail: true })
             return
@@ -88,16 +99,26 @@ const VideoAction: React.FC<Props> = ({ data, videoRef }) => {
 
         setIsCallingApi(true)
 
-        if (data.is_liked || temporaryLikeList.includes(data.id)) {
-            if (temporaryUnLikeList.includes(data.id)) {
-                handleLikeVideo(data.id)
+        if (video.is_liked || temporaryLikeList.includes(video.id)) {
+            if (temporaryUnLikeList.includes(video.id)) {
+                handleLikeVideo(video.id)
             } else {
-                handleUnLikeVideo(data.id)
+                handleUnLikeVideo(video.id)
             }
         } else {
-            handleLikeVideo(data.id)
+            handleLikeVideo(video.id)
         }
-    }
+    }, [
+        accessToken,
+        currentUser,
+        handleLikeVideo,
+        handleUnLikeVideo,
+        isCallingApi,
+        temporaryLikeList,
+        temporaryUnLikeList,
+        video.id,
+        video.is_liked,
+    ])
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -116,12 +137,21 @@ const VideoAction: React.FC<Props> = ({ data, videoRef }) => {
         return () => {
             window.removeEventListener('keydown', handleKeyDown)
         }
-    })
+    }, [handleToggleLike, isVisible])
+
+    const handleOpenCommentModal = (video: VideoModal) => {
+        setCurrentVideo(video)
+        dispatch(actions.commentModalOpen(true))
+        !videoRef.current?.paused && videoRef.current?.pause()
+    }
 
     const handleChose = (type: string) => {
         switch (type) {
             case 'like':
                 handleToggleLike()
+                break
+            case 'comment':
+                handleOpenCommentModal(video)
                 break
             default:
                 break
@@ -129,18 +159,18 @@ const VideoAction: React.FC<Props> = ({ data, videoRef }) => {
     }
 
     const likes_count = () => {
-        if (data.is_liked && !temporaryUnLikeList.includes(data.id)) {
-            return data.likes_count
+        if (video.is_liked && !temporaryUnLikeList.includes(video.id)) {
+            return video.likes_count
         }
 
-        if (data.is_liked && temporaryUnLikeList.includes(data.id)) {
-            return data.likes_count - 1
+        if (video.is_liked && temporaryUnLikeList.includes(video.id)) {
+            return video.likes_count - 1
         }
 
-        if (temporaryLikeList.includes(data.id)) {
-            return data.likes_count + 1
+        if (temporaryLikeList.includes(video.id)) {
+            return video.likes_count + 1
         } else {
-            return data.likes_count
+            return video.likes_count
         }
     }
 
@@ -153,7 +183,7 @@ const VideoAction: React.FC<Props> = ({ data, videoRef }) => {
         },
         {
             type: 'comment',
-            value: data.comments_count,
+            value: video.comments_count,
             icon: <FontAwesomeIcon icon={faCommentDots as IconProp} />,
         },
         {
@@ -164,15 +194,33 @@ const VideoAction: React.FC<Props> = ({ data, videoRef }) => {
         },
         {
             type: 'share',
-            value: data.shares_count,
+            value: video.shares_count,
             icon: <FontAwesomeIcon icon={faShare as IconProp} />,
         },
     ]
 
+    const handleCloseCommnetModal = () => {
+        dispatch(actions.commentModalOpen(false))
+    }
+
     return (
         <div className={cx('wrapper')}>
+            {currentVideo && (
+                <ReactModal
+                    isOpen={commentModalIsOpen}
+                    onRequestClose={handleCloseCommnetModal}
+                    overlayClassName={'overlay'}
+                    ariaHideApp={false}
+                    className={'modal'}
+                    closeTimeoutMS={200}
+                    shouldEscapeClose={false}
+                >
+                    <CommentModal video={video} videoList={videoList} videoRef={videoRef} />
+                </ReactModal>
+            )}
+
             {items.map((item, index) => {
-                return <VideoActionItem key={index} item={item} data={data} onChose={handleChose} />
+                return <VideoActionItem key={index} item={item} video={video} onChose={handleChose} />
             })}
         </div>
     )

@@ -4,7 +4,7 @@ import { memo } from 'react'
 import Tippy from '@tippyjs/react'
 import { useSelector } from 'react-redux'
 import { temporaryLiked, temporaryUnLiked } from '~/redux/selectors'
-import { VideoListModal } from '../../VideoItem'
+import { VideoModal } from '~/modal/modal'
 
 const cx = classNames.bind(style)
 
@@ -19,18 +19,18 @@ interface Item {
 }
 
 interface Props {
-    data: VideoListModal
+    video: VideoModal
     item: Item
     onChose: (type: string) => void
 }
 
-const VideoActionItem: React.FC<Props> = ({ item, data, onChose = defaultFN }) => {
+const VideoActionItem: React.FC<Props> = ({ item, video, onChose = defaultFN }) => {
     const temporaryLikeList = useSelector(temporaryLiked)
     const temporaryUnLikeList = useSelector(temporaryUnLiked)
 
     const isLiked = () => {
-        if (data.is_liked || temporaryLikeList.includes(data.id)) {
-            if (temporaryUnLikeList.includes(data.id)) {
+        if (video.is_liked || temporaryLikeList.includes(video.id)) {
+            if (temporaryUnLikeList.includes(video.id)) {
                 return false
             }
             return true

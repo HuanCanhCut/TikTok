@@ -25,3 +25,7 @@ export const mutedVideo = (state: any) => {
 export const authCurrentUser = (state: any) => {
     return state.auth.currentUser
 }
+
+export const commentModalOpen = (state: any) => {
+    return state.project.commentModalOpen
+}

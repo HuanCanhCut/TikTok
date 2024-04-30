@@ -4,47 +4,28 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPause, faPlay } from '@fortawesome/free-solid-svg-icons'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { mutedVideo } from '~/redux/selectors'
+import { commentModalOpen, mutedVideo } from '~/redux/selectors'
 import { actions } from '~/redux'
 import style from './Video.module.scss'
 import useElementOnScreen from '~/hooks/useElementOnScreen'
 import { Muted, UnMuted } from '../Icons'
 import VideoAction from './VideoAction'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
-import { UserModal } from '~/modal/modal'
 import { listentEvent, sendEvent } from '~/helpers/event'
 import { documentIsVisible } from '~/project/services'
+import { VideoModal } from '~/modal/modal'
 
 const cx = classNames.bind(style)
 
-interface Resolution {
-    resolution_x: number
-    resolution_y: number
-}
-
-interface Video {
-    video: Resolution
-}
-
-export interface VideoListModal {
-    id: number
-    is_liked: boolean
-    likes_count: number
-    comments_count: number
-    shares_count: number
-    file_url: string
-    thumb_url: string
-    user: UserModal
-    meta: Video
-}
-
 interface Props {
-    video: VideoListModal
+    video: VideoModal
+    videoList: VideoModal[]
 }
 
-const VideoItem: React.FC<Props> = ({ video }) => {
+const VideoItem: React.FC<Props> = ({ video, videoList }) => {
     const dispatch = useDispatch()
     const mutedVideos = useSelector(mutedVideo)
+    const commentModalIsOpen = useSelector(commentModalOpen)
     const videoRef = useRef<HTMLVideoElement | null>(null)
     const [playing, setPlaying] = useState(false)
     const [authIsOpen, setAuthIsOpen] = useState(false)
@@ -76,10 +57,10 @@ const VideoItem: React.FC<Props> = ({ video }) => {
     }
 
     useEffect(() => {
-        const remove = videoRef.current ? documentIsVisible(videoRef.current, isVisible) : () => {}
+        const remove = videoRef.current ? documentIsVisible(videoRef.current, isVisible, commentModalIsOpen) : () => {}
 
         return remove
-    }, [isVisible])
+    }, [commentModalIsOpen, isVisible])
 
     useEffect(() => {
         const remove = listentEvent({
@@ -163,7 +144,7 @@ const VideoItem: React.FC<Props> = ({ video }) => {
                     </button>
                 </div>
 
-                <VideoAction data={video} videoRef={videoRef} />
+                <VideoAction video={video} videoRef={videoRef} videoList={videoList} />
             </div>
         </div>
     )
