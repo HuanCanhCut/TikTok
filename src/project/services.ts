@@ -132,14 +132,14 @@ export const documentIsVisible = (video: HTMLVideoElement, isVisible = true, com
     const handleVisibilityChange = () => {
         switch (document.visibilityState) {
             case 'hidden':
-                try {
-                    video && isVisible && !video.paused && video.pause()
-                } catch (error) {}
+                video && isVisible && !video.paused && video.pause()
                 break
             case 'visible':
-                try {
-                    video && isVisible && !commentModalIsOpen && video.paused && video.play()
-                } catch (error) {}
+                ;(async () => {
+                    try {
+                        video && isVisible && !commentModalIsOpen && video.paused && (await video.play())
+                    } catch (error) {}
+                })()
                 break
             default:
                 break

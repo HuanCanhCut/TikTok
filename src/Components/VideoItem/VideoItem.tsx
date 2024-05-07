@@ -88,14 +88,13 @@ const VideoItem = forwardRef<ImperativeHandle, Props>(({ video, videos, setFocus
     }, [isVisible, setFocusedIndex, video.id, videos])
 
     useEffect(() => {
-        if (isVisible && videoRef.current && !commentModalIsOpen) {
+        if (isVisible && videoRef.current) {
             sendEvent({ eventName: 'video:video-is-visible', detail: videoRef.current })
         } else {
             if (!videoRef.current?.paused) {
                 videoRef.current?.pause()
             }
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isVisible])
 
     const handleTogglePlay = async () => {

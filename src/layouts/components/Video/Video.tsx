@@ -9,7 +9,7 @@ import Header from './Header'
 import VideoItem from '~/Components/VideoItem'
 import AccountLoading from '~/Components/AccountLoading'
 import { VideoModal } from '~/modal/modal'
-import { listentEvent, sendEvent } from '~/helpers/event'
+import { listentEvent } from '~/helpers/event'
 import { useDispatch, useSelector } from 'react-redux'
 import { commentModalOpen } from '~/redux/selectors'
 import CommentModal from '../CommentModal'
@@ -81,32 +81,38 @@ const Video: React.FC<Props> = ({ type }) => {
         return remove
     }, [])
 
-    useEffect(() => {
-        if (videosIsVisible.length >= 2) {
-            videosIsVisible.forEach((video: HTMLVideoElement) => {
-                video.pause()
-            })
-
+    const handlePlayVideo = useCallback(
+        (videoModalRef?: MutableRefObject<HTMLVideoElement | null>) => {
             const playVideo = async () => {
                 try {
-                    videosIsVisible[videosIsVisible.length - 1].currentTime = 0
+                    videosIsVisible[videosIsVisible.length - 1].currentTime = videoModalRef
+                        ? videoModalRef.current?.currentTime || 0
+                        : 0
                     await videosIsVisible[videosIsVisible.length - 1].play()
                 } catch (e) {}
             }
-            playVideo()
-        } else {
-            videosIsVisible.forEach((video: HTMLVideoElement) => {
-                video.pause()
-            })
-            const playVideo = async () => {
-                try {
-                    videosIsVisible[0].currentTime = 0
-                    await videosIsVisible[0].play()
-                } catch (e) {}
+            if (videosIsVisible.length >= 2) {
+                videosIsVisible.forEach((video: HTMLVideoElement) => {
+                    video.pause()
+                })
+
+                playVideo()
+            } else {
+                videosIsVisible.forEach((video: HTMLVideoElement) => {
+                    video.pause()
+                })
+                playVideo()
             }
-            playVideo()
+        },
+        [videosIsVisible]
+    )
+
+    useEffect(() => {
+        if (!commentModalIsOpen) {
+            handlePlayVideo()
         }
-    }, [videosIsVisible])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [handlePlayVideo])
 
     const handleScroll = () => {
         if (window.scrollY + window.innerHeight >= document.body.offsetHeight) {
@@ -208,14 +214,28 @@ const Video: React.FC<Props> = ({ type }) => {
         return remove
     }, [handleKeyDown])
 
-    const handleCloseCommnetModal = (videoModalRef: MutableRefObject<HTMLVideoElement | null>) => {
-        dispatch(actions.commentModalOpen(false))
-        if (videoRef.current) {
-            const currentTimeVideoModal = videoModalRef.current?.currentTime || 0
-            videoRef.current.SETCURRENTTIME(currentTimeVideoModal)
-            // videoRef.current.PLAY()
-        }
-    }
+    useEffect(() => {
+        const remove = listentEvent({
+            eventName: 'comment:comment-modal-is-open',
+            handler: ({ detail: commentModalIsOpen }) => {
+                if (commentModalIsOpen) {
+                    window.removeEventListener('keydown', handleKeyDown)
+                }
+            },
+        })
+
+        return remove
+    }, [handleKeyDown])
+
+    const handleCloseCommnetModal = useCallback(
+        (videoModalRef: MutableRefObject<HTMLVideoElement | null>) => {
+            dispatch(actions.commentModalOpen(false))
+            if (videoRef.current) {
+                handlePlayVideo(videoModalRef)
+            }
+        },
+        [dispatch, handlePlayVideo]
+    )
 
     return (
         <>
@@ -227,8 +247,13 @@ const Video: React.FC<Props> = ({ type }) => {
                     ariaHideApp={false}
                     className={'modal'}
                     closeTimeoutMS={200}
-                    shouldEscapeClose={false}
-                    onEscapeKeyDown={(event: KeyboardEvent) => event.stopPropagation()}
+                    shouldCloseOnEsc={false}
+                    onKeyDown={(e: any) => {
+                        if (e.key === 'Escape') {
+                            e.preventDefault()
+                            e.stopPropagation()
+                        }
+                    }}
                 >
                     <CommentModal
                         video={currentVideo}
