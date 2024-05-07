@@ -17,6 +17,12 @@ const Profile: React.FC = () => {
     const accessToken = JSON.parse(localStorage.getItem('token')!)
 
     useEffect(() => {
+        if (userProfile) {
+            document.title = `${userProfile?.first_name} ${userProfile?.last_name} (@${userProfile.nickname}) | TikTok`
+        }
+    }, [userProfile])
+
+    useEffect(() => {
         try {
             const getUserProfile = async () => {
                 setUserProfile(null)

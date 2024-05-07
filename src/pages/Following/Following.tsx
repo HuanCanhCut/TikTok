@@ -31,6 +31,10 @@ const Following: React.FC = () => {
     }
 
     useEffect(() => {
+        document.title = 'Following - Watch videos from creators you follow | TikTok'
+    }, [])
+
+    useEffect(() => {
         const handleGetVideos = async () => {
             try {
                 if (!accessToken) {

@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind'
 import style from './Upload.module.scss'
-import { memo, useState, createContext } from 'react'
+import { memo, useState, createContext, useEffect } from 'react'
 import UploadDrop from './UploadDrop'
 import UploadPreview from './UploadPreview/UploadPreview'
 
@@ -23,6 +23,10 @@ export const fileUploadContext = createContext<FileContextModal | null>(null)
 
 function Upload() {
     const [file, setFile] = useState()
+
+    useEffect(() => {
+        document.title = 'TikTok Creator Center'
+    }, [])
 
     return (
         <div className={cx('wrapper')}>
