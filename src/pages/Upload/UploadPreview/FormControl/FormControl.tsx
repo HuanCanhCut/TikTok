@@ -134,7 +134,6 @@ const FormControl: React.FC<Props> = ({ captureImages, slideQuantity }) => {
     }, [])
 
     const handleDiscard = useCallback(() => {
-        console.log('abc')
         if (file) {
             sendEvent({ eventName: 'upload:cancel-upload-file' })
         }

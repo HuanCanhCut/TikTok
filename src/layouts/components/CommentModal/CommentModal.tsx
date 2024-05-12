@@ -5,12 +5,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { faChevronLeft, faChevronRight, faPlay, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { MutableRefObject, useEffect, useRef, useState, memo } from 'react'
+import { actions } from '~/redux'
+import { useDispatch, useSelector } from 'react-redux'
+
 import Search from '~/Components/Search'
 import { mutedVideo } from '~/redux/selectors'
-import { useDispatch, useSelector } from 'react-redux'
 import { Muted, UnMuted } from '~/Components/Icons'
 import { sendEvent } from '~/helpers/event'
-import { actions } from '~/redux'
+import Header from './Header'
 
 const cx = classNames.bind(style)
 
@@ -53,6 +55,10 @@ const CommentModal: React.FC<Props> = ({
     useEffect(() => {
         sendEvent({ eventName: 'comment:comment-modal-is-open', detail: true })
     }, [])
+
+    useEffect(() => {
+        window.history.replaceState({}, '', `@${video.user.nickname}/video/${video.uuid}`)
+    }, [video])
 
     useEffect(() => {
         isPlaying ? videoModalRef.current?.play() : videoModalRef.current?.pause()
@@ -150,7 +156,12 @@ const CommentModal: React.FC<Props> = ({
                     {isMutedVideo ? <Muted width="24" height="24" /> : <UnMuted width="24" height="24" />}
                 </button>
             </div>
-            <div className={cx('comment-container')}></div>
+            <div className={cx('comment-wrapper')}>
+                <div className={cx('comment-container')}>
+                    <Header currentVideo={currentVideo} />
+                </div>
+                <div className={cx('add-comment-container')}></div>
+            </div>
         </div>
     )
 }

@@ -26,7 +26,7 @@ html *::-webkit-scrollbar {
 html[data-darkmode='false'] {
     --default-layout-background: #fff;
     --background-upload: rgba(244, 244, 244);
-    --background-login-modal: rgba(255, 255, 255, 1);
+    --background-modal: rgba(255, 255, 255, 1);
     --text-color-opacity-02: rgba(22, 24, 35, 0.02);
     --text-color-opacity-03: rgba(22, 24, 35, 0.03);
     --text-color-opacity-04: rgba(22, 24, 35, 0.04);
@@ -62,7 +62,7 @@ html[data-darkmode='false'] {
 html[data-darkmode='true'] {
     --default-layout-background: #121212;
     --background-upload: rgb(22, 22, 22);
-    --background-login-modal: rgb(37, 37, 37);
+    --background-modal: rgb(37, 37, 37);
     --text-color-opacity-02: rgba(255, 255, 255, 0.02);
     --text-color-opacity-03: rgba(255, 255, 255, 0.03);
     --text-color-opacity-04: rgba(255, 255, 255, 0.04);

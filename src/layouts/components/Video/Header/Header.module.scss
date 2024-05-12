@@ -1,5 +1,5 @@
 .wrapper {
-    width: 100%;
+    max-width: 100%;
     flex: 1;
     display: flex;
     justify-content: space-between;
@@ -8,7 +8,8 @@
 
 .header-left {
     display: flex;
-    max-width: 70%;
+    flex: 1;
+    max-width: 100%;
     align-items: center;
 }
 
@@ -29,8 +30,6 @@
 }
 
 .nick-name {
-    // font-family: SofiaPro, 'sans-serif';
-    // font-weight: 400;
     font-size: 18px;
     line-height: 23px;
     display: inline-block;
@@ -51,34 +50,6 @@
 
 .check-icon {
     margin: 0 4px;
-}
-
-.description {
-    color: var(--text-color);
-    width: 1000px;
-    font-weight: 500;
-    max-width: 95%;
-    line-height: 20px;
-    font-size: 1.6rem;
-    display: flex;
-    flex-wrap: wrap;
-    line-height: 2.2rem;
-}
-
-.hight-light {
-    color: var(--hashtag-color) !important;
-    cursor: 'pointer';
-    font-weight: 700;
-    cursor: pointer;
-
-    &.tag-account {
-        line-height: 22px;
-        color: var(--hashtag-color);
-    }
-
-    &:hover {
-        text-decoration: underline;
-    }
 }
 
 .music-name {

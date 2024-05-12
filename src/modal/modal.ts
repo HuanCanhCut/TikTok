@@ -39,6 +39,7 @@ interface Video {
 
 export interface VideoModal {
     id: number
+    uuid: string
     user_id: number
     type: string
     thumb_url: string

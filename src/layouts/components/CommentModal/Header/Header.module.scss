@@ -1,0 +1,139 @@
+.comment-header {
+    padding: 24px 32px 0;
+}
+
+.user-profile {
+    padding: 16px;
+    border-radius: 10px;
+    background-color: var(--text-color-opacity-04);
+}
+
+.user-info-container {
+    display: flex;
+    align-items: center;
+
+    > :first-child {
+        flex: 1;
+    }
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    &:hover > .user-name > .nick-name {
+        text-decoration: underline;
+    }
+
+    cursor: pointer;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.user-name {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 8px;
+    color: var(--text-color);
+}
+
+.nick-name {
+    line-height: 24px;
+    font-size: 1.8rem;
+    font-weight: 700;
+    display: inline;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
+.full-name {
+    font-size: 1.4rem;
+    line-height: 18px;
+}
+
+.video-option-btn {
+    color: var(--text-color);
+    width: 40px;
+    height: 40px;
+    font-size: 1.8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.video-info {
+    padding: 16px 0 0;
+    max-width: 100%;
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.action-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.popper-wrapper {
+    border-radius: 4px;
+}
+
+.privacy-btn,
+.delete-video-btn {
+    text-align: left;
+    background-color: transparent;
+    margin: 0;
+
+    &:hover {
+        background-color: transparent !important;
+        color: var(--primary);
+    }
+}
+
+.delete-modal {
+    max-width: calc(100vw - 48px);
+    background-color: var(--background-modal);
+    border-radius: 10px;
+
+    .delete-title {
+        width: 332px;
+        padding: 36px 32px;
+        color: var(--text-color);
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 30px;
+    }
+
+    .delete-btn,
+    .cancel-btn {
+        width: 100%;
+        background-color: transparent;
+        margin: 0;
+        padding: 16px 0;
+        border-top: 1px solid var(--text-color-opacity-12);
+    }
+}
+
+.video-action-btn + .video-action-btn {
+    border-top: 1px solid var(--text-color-opacity-06);
+}
+
+.video-music {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .music-icon {
+        font-size: 1.2rem;
+        color: var(--text-color-secondary);
+    }
+}

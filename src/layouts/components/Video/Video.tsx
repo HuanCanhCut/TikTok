@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { commentModalOpen } from '~/redux/selectors'
 import CommentModal from '../CommentModal'
 import { actions } from '~/redux'
+import config from '~/config'
 
 const cx = classNames.bind(style)
 
@@ -81,26 +82,45 @@ const Video: React.FC<Props> = ({ type }) => {
         return remove
     }, [])
 
+    useEffect(() => {
+        const remove = listentEvent({
+            eventName: 'comment:delete-video',
+            handler: ({ detail: videoModal }) => {
+                // remove video from videos
+                const newVideoList: VideoModal[] = videos.filter((video: VideoModal) => video.id !== videoModal.id)
+
+                setVideos(newVideoList)
+            },
+        })
+
+        return remove
+    }, [videos])
+
     const handlePlayVideo = useCallback(
         (videoModalRef?: MutableRefObject<HTMLVideoElement | null>) => {
-            const playVideo = async () => {
-                try {
-                    videosIsVisible[videosIsVisible.length - 1].currentTime = videoModalRef
-                        ? videoModalRef.current?.currentTime || 0
-                        : 0
-                    await videosIsVisible[videosIsVisible.length - 1].play()
-                } catch (e) {}
-            }
             if (videosIsVisible.length >= 2) {
                 videosIsVisible.forEach((video: HTMLVideoElement) => {
                     video.pause()
                 })
 
+                const playVideo = async () => {
+                    try {
+                        videosIsVisible[videosIsVisible.length - 1].currentTime =
+                            videoModalRef?.current?.currentTime || 0
+                        await videosIsVisible[videosIsVisible.length - 1].play()
+                    } catch (e) {}
+                }
                 playVideo()
             } else {
                 videosIsVisible.forEach((video: HTMLVideoElement) => {
                     video.pause()
                 })
+                const playVideo = async () => {
+                    try {
+                        videosIsVisible[0].currentTime = videoModalRef?.current?.currentTime || 0
+                        await videosIsVisible[0].play()
+                    } catch (e) {}
+                }
                 playVideo()
             }
         },
@@ -111,8 +131,7 @@ const Video: React.FC<Props> = ({ type }) => {
         if (!commentModalIsOpen) {
             handlePlayVideo()
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [handlePlayVideo])
+    }, [commentModalIsOpen, handlePlayVideo])
 
     const handleScroll = () => {
         if (window.scrollY + window.innerHeight >= document.body.offsetHeight) {
@@ -136,7 +155,7 @@ const Video: React.FC<Props> = ({ type }) => {
             try {
                 const response = await videoService.getVideos({
                     type,
-                    page,
+                    page: 1,
                     accessToken,
                 })
 
@@ -229,12 +248,13 @@ const Video: React.FC<Props> = ({ type }) => {
 
     const handleCloseCommnetModal = useCallback(
         (videoModalRef: MutableRefObject<HTMLVideoElement | null>) => {
+            window.history.replaceState({}, '', `${config.routes.home}`)
             dispatch(actions.commentModalOpen(false))
             if (videoRef.current) {
-                handlePlayVideo(videoModalRef)
+                // handlePlayVideo(videoModalRef)
             }
         },
-        [dispatch, handlePlayVideo]
+        [dispatch]
     )
 
     return (
@@ -279,7 +299,7 @@ const Video: React.FC<Props> = ({ type }) => {
                 }}
                 itemContent={(index, item) => {
                     return (
-                        <div className={cx('video-content')}>
+                        <div className={cx('video-content')} key={index}>
                             <Header data={item} type={type} />
                             <VideoItem video={item} ref={videoRef} videos={videos} setFocusedIndex={setFocusedIndex} />
                         </div>

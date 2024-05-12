@@ -1,0 +1,26 @@
+.description {
+    color: var(--text-color);
+    font-weight: 500;
+    max-width: 95%;
+    line-height: 20px;
+    font-size: 1.6rem;
+    display: flex;
+    flex-wrap: wrap;
+    line-height: 2.2rem;
+}
+
+.hight-light {
+    color: var(--hashtag-color) !important;
+    cursor: 'pointer';
+    font-weight: 700;
+    cursor: pointer;
+
+    &.tag-account {
+        line-height: 22px;
+        color: var(--hashtag-color);
+    }
+
+    &:hover {
+        text-decoration: underline;
+    }
+}

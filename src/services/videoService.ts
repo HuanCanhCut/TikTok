@@ -86,3 +86,15 @@ export const uploadVideo = async ({
         onError()
     }
 }
+
+export const deleteVideo = async ({ videoID, accessToken = '' }: { videoID: number; accessToken: string }) => {
+    try {
+        return await request.deleteMethod(`videos/${videoID}`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
