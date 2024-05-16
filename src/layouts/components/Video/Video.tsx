@@ -128,10 +128,35 @@ const Video: React.FC<Props> = ({ type }) => {
     )
 
     useEffect(() => {
-        if (!commentModalIsOpen) {
-            handlePlayVideo()
+        if (commentModalIsOpen) {
+            return
         }
-    }, [commentModalIsOpen, handlePlayVideo])
+
+        if (videosIsVisible.length >= 2) {
+            videosIsVisible.forEach((video: HTMLVideoElement) => {
+                video.pause()
+            })
+
+            const playVideo = async () => {
+                try {
+                    videosIsVisible[videosIsVisible.length - 1].currentTime = 0
+                    await videosIsVisible[videosIsVisible.length - 1].play()
+                } catch (e) {}
+            }
+            playVideo()
+        } else {
+            videosIsVisible.forEach((video: HTMLVideoElement) => {
+                video.pause()
+            })
+            const playVideo = async () => {
+                try {
+                    videosIsVisible[0].currentTime = 0
+                    await videosIsVisible[0].play()
+                } catch (e) {}
+            }
+            playVideo()
+        }
+    }, [commentModalIsOpen, videosIsVisible])
 
     const handleScroll = () => {
         if (window.scrollY + window.innerHeight >= document.body.offsetHeight) {
@@ -233,28 +258,42 @@ const Video: React.FC<Props> = ({ type }) => {
         return remove
     }, [handleKeyDown])
 
-    useEffect(() => {
-        const remove = listentEvent({
-            eventName: 'comment:comment-modal-is-open',
-            handler: ({ detail: commentModalIsOpen }) => {
-                if (commentModalIsOpen) {
-                    window.removeEventListener('keydown', handleKeyDown)
-                }
-            },
-        })
-
-        return remove
-    }, [handleKeyDown])
-
     const handleCloseCommnetModal = useCallback(
         (videoModalRef: MutableRefObject<HTMLVideoElement | null>) => {
             window.history.replaceState({}, '', `${config.routes.home}`)
             dispatch(actions.commentModalOpen(false))
-            if (videoRef.current) {
-                // handlePlayVideo(videoModalRef)
+            if (videoModalRef.current) {
+                requestIdleCallback(() => {
+                    // handlePlayVideo(videoModalRef)
+                    if (videosIsVisible.length >= 2) {
+                        videosIsVisible.forEach((video: HTMLVideoElement) => {
+                            video.pause()
+                        })
+
+                        const playVideo = async () => {
+                            try {
+                                videosIsVisible[videosIsVisible.length - 1].currentTime =
+                                    videoModalRef?.current?.currentTime || 0
+                                await videosIsVisible[videosIsVisible.length - 1].play()
+                            } catch (e) {}
+                        }
+                        playVideo()
+                    } else {
+                        videosIsVisible.forEach((video: HTMLVideoElement) => {
+                            video.pause()
+                        })
+                        const playVideo = async () => {
+                            try {
+                                videosIsVisible[0].currentTime = videoModalRef?.current?.currentTime || 0
+                                await videosIsVisible[0].play()
+                            } catch (e) {}
+                        }
+                        playVideo()
+                    }
+                })
             }
         },
-        [dispatch]
+        [dispatch, videosIsVisible]
     )
 
     return (

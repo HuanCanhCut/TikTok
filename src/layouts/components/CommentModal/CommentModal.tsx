@@ -5,13 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { faChevronLeft, faChevronRight, faPlay, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { MutableRefObject, useEffect, useRef, useState, memo } from 'react'
-import { actions } from '~/redux'
-import { useDispatch, useSelector } from 'react-redux'
 
 import Search from '~/Components/Search'
-import { mutedVideo } from '~/redux/selectors'
 import { Muted, UnMuted } from '~/Components/Icons'
-import { sendEvent } from '~/helpers/event'
 import Header from './Header'
 
 const cx = classNames.bind(style)
@@ -33,14 +29,12 @@ const CommentModal: React.FC<Props> = ({
     scrollNextVideo,
     scrollPrevVideo,
 }) => {
-    const dispatch = useDispatch()
-
     const [currentVideo, setCurrentVideo] = useState(video)
     const [currentVideoIndex, setCurrentVideoIndex] = useState(() => {
         return videoList.findIndex((item) => item.id === video.id)
     })
     const [isPlaying, setIsPlaying] = useState(true)
-    const isMutedVideo = useSelector(mutedVideo)
+    const [muteVideo, setMuteVideo] = useState(false)
 
     const resolutionX = currentVideo.meta.video.resolution_x
     const resolutionY = currentVideo.meta.video.resolution_y
@@ -51,10 +45,6 @@ const CommentModal: React.FC<Props> = ({
     const handleTogglePlay = () => {
         setIsPlaying(!isPlaying)
     }
-
-    useEffect(() => {
-        sendEvent({ eventName: 'comment:comment-modal-is-open', detail: true })
-    }, [])
 
     useEffect(() => {
         window.history.replaceState({}, '', `@${video.user.nickname}/video/${video.uuid}`)
@@ -74,16 +64,22 @@ const CommentModal: React.FC<Props> = ({
         setCurrentVideo(videoList[currentVideoIndex])
     }, [currentVideoIndex, videoList])
 
-    const handleNextVideo = () => {
+    const handleNextVideo = (useKeyboard?: boolean) => {
+        if (currentVideoIndex === videoList.length - 1) {
+            return
+        }
         setCurrentVideoIndex((prev) => prev + 1)
         setIsPlaying(true)
-        scrollNextVideo && scrollNextVideo()
+        !useKeyboard && scrollNextVideo && scrollNextVideo()
     }
 
-    const handlePrevVideo = () => {
+    const handlePrevVideo = (useKeyboard?: boolean) => {
+        if (currentVideoIndex === 0) {
+            return
+        }
         setCurrentVideoIndex((prev) => prev - 1)
         setIsPlaying(true)
-        scrollPrevVideo && scrollPrevVideo()
+        !useKeyboard && scrollPrevVideo && scrollPrevVideo()
     }
 
     useEffect(() => {
@@ -93,10 +89,10 @@ const CommentModal: React.FC<Props> = ({
                     closeCommentModal(videoModalRef)
                     break
                 case 'ArrowDown':
-                    handleNextVideo()
+                    handleNextVideo(true)
                     break
                 case 'ArrowUp':
-                    handlePrevVideo()
+                    handlePrevVideo(true)
                     break
                 default:
                     break
@@ -111,7 +107,7 @@ const CommentModal: React.FC<Props> = ({
     }, [closeCommentModal])
 
     const handleMuteVideo = () => {
-        dispatch(actions.mutedVideo(!isMutedVideo))
+        setMuteVideo(!muteVideo)
     }
 
     return (
@@ -131,7 +127,7 @@ const CommentModal: React.FC<Props> = ({
                         ref={videoModalRef}
                         src={currentVideo.file_url}
                         className={cx('video', videoSize)}
-                        muted={isMutedVideo}
+                        muted={muteVideo}
                         autoPlay
                         onEnded={(e: any) => {
                             e.target.play()
@@ -142,18 +138,28 @@ const CommentModal: React.FC<Props> = ({
                 <div className={cx('toggle-play')}>{!isPlaying && <FontAwesomeIcon icon={faPlay} />}</div>
                 <div className={cx('switch-video')}>
                     {currentVideo.id !== videoList[0].id && (
-                        <button className={cx('prev-video')} onClick={handlePrevVideo}>
+                        <button
+                            className={cx('prev-video')}
+                            onClick={() => {
+                                handlePrevVideo(false)
+                            }}
+                        >
                             <FontAwesomeIcon icon={faChevronLeft as IconProp} />
                         </button>
                     )}
                     {currentVideo.id !== videoList[videoList.length - 1].id && (
-                        <button className={cx('next-video')} onClick={handleNextVideo}>
+                        <button
+                            className={cx('next-video')}
+                            onClick={() => {
+                                handleNextVideo(false)
+                            }}
+                        >
                             <FontAwesomeIcon icon={faChevronRight as IconProp} />
                         </button>
                     )}
                 </div>
                 <button className={cx('mute-video')} onClick={handleMuteVideo}>
-                    {isMutedVideo ? <Muted width="24" height="24" /> : <UnMuted width="24" height="24" />}
+                    {muteVideo ? <Muted width="24" height="24" /> : <UnMuted width="24" height="24" />}
                 </button>
             </div>
             <div className={cx('comment-wrapper')}>
