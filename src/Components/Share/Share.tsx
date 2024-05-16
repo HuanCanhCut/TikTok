@@ -84,9 +84,10 @@ const cx = classNames.bind(style)
 
 interface Props {
     children?: React.ReactNode
+    copyValue?: string
 }
 
-const Share: React.FC<Props> = ({ children }) => {
+const Share: React.FC<Props> = ({ children, copyValue = window.location.href }) => {
     const { t } = useTranslation()
     const [hideSeeMore, setHideSeeMore] = useState(false)
 
@@ -94,9 +95,8 @@ const Share: React.FC<Props> = ({ children }) => {
         (item: ShareType) => {
             switch (item.type) {
                 case 'copy link':
-                    const url = window.location.href
                     try {
-                        copyToClipboard(url)
+                        copyToClipboard(copyValue)
                         showToast({ message: t('profile.copy successfully') })
                     } catch (error) {
                         showToast({ message: t('profile.copy failed') })
@@ -106,7 +106,7 @@ const Share: React.FC<Props> = ({ children }) => {
                     break
             }
         },
-        [t]
+        [copyValue, t]
     )
     const renderShare = useCallback(
         (onHide?: boolean) => {

@@ -48,7 +48,7 @@ const VideoActionItem: React.FC<Props> = ({
                 ngậu lên. Tâm linh không đùa được đâu
              */}
             {item.type === 'share' ? (
-                <Share>
+                <Share copyValue={`${window.location.href}@${video.user.nickname}/video/${video.uuid}`}>
                     <div
                         style={{
                             cursor: item.disabled ? 'not-allowed' : 'pointer',
