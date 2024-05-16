@@ -168,6 +168,12 @@ const VideoItem = forwardRef<ImperativeHandle, Props>(({ video, videos, setFocus
                             setPlaying(false)
                         }}
                         onEnded={handleEnded}
+                        onClick={() => {
+                            sendEvent({ eventName: 'comment:open-comment-modal', detail: video })
+                            dispatch(actions.commentModalOpen(true))
+
+                            !videoRef.current?.paused && videoRef.current?.pause()
+                        }}
                     ></video>
                 ) : (
                     <img src={video.thumb_url} alt="" className={cx('video')} />

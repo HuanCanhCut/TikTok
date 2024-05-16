@@ -89,7 +89,7 @@
     gap: 12px;
     align-items: center;
 
-    .share-icon,
+    .share-btn,
     .ellipsis-icon {
         cursor: pointer;
     }
@@ -102,7 +102,6 @@
     overflow: hidden;
 
     .share-item {
-        // 50px of see more btn
         height: calc(100%);
         overflow: hidden;
     }

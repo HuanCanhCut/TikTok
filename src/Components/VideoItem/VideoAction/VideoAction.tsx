@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCommentDots, faHeart, faShare } from '@fortawesome/free-solid-svg-icons'
 import { useState, useEffect, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useTranslation } from 'react-i18next'
 
 import { removeDuplicate } from '~/project/services'
 import useElementOnScreen from '~/hooks/useElementOnScreen'
@@ -25,8 +24,6 @@ interface Props {
 }
 
 const VideoAction: React.FC<Props> = ({ video, videoRef }) => {
-    const { t } = useTranslation()
-
     const currentUser = useSelector(authCurrentUser)
     const accessToken = JSON.parse(localStorage.getItem('token')!)
 
@@ -134,25 +131,31 @@ const VideoAction: React.FC<Props> = ({ video, videoRef }) => {
         }
     }, [handleToggleLike, isVisible])
 
-    const handleOpenCommentModal = (video: VideoModal) => {
-        sendEvent({ eventName: 'comment:open-comment-modal', detail: video })
-        dispatch(actions.commentModalOpen(true))
+    const handleOpenCommentModal = useCallback(
+        (video: VideoModal) => {
+            sendEvent({ eventName: 'comment:open-comment-modal', detail: video })
+            dispatch(actions.commentModalOpen(true))
 
-        !videoRef.current?.paused && videoRef.current?.pause()
-    }
+            !videoRef.current?.paused && videoRef.current?.pause()
+        },
+        [dispatch, videoRef]
+    )
 
-    const handleChose = (type: string) => {
-        switch (type) {
-            case 'like':
-                handleToggleLike()
-                break
-            case 'comment':
-                handleOpenCommentModal(video)
-                break
-            default:
-                break
-        }
-    }
+    const handleChose = useCallback(
+        (type: string) => {
+            switch (type) {
+                case 'like':
+                    handleToggleLike()
+                    break
+                case 'comment':
+                    handleOpenCommentModal(video)
+                    break
+                default:
+                    break
+            }
+        },
+        [handleOpenCommentModal, handleToggleLike, video]
+    )
 
     const likes_count = () => {
         if (video.is_liked && !temporaryUnLikeList.includes(video.id)) {
@@ -186,7 +189,7 @@ const VideoAction: React.FC<Props> = ({ video, videoRef }) => {
             type: 'favorite',
             value: 0,
             icon: <FavoriteVideo />,
-            toolTip: t('videos.the API dose not support favorite videos'),
+            disabled: true,
         },
         {
             type: 'share',
@@ -198,7 +201,16 @@ const VideoAction: React.FC<Props> = ({ video, videoRef }) => {
     return (
         <div className={cx('wrapper')}>
             {items.map((item, index) => {
-                return <VideoActionItem key={index} item={item} video={video} onChose={handleChose} />
+                return (
+                    <VideoActionItem
+                        key={index}
+                        item={item}
+                        video={video}
+                        onChose={handleChose}
+                        temporaryLikeList={temporaryLikeList}
+                        temporaryUnLikeList={temporaryUnLikeList}
+                    />
+                )
             })}
         </div>
     )

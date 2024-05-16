@@ -1118,7 +1118,7 @@ export const CheckboxTick: React.FC<Props> = ({ width = '18', height = '19', cla
     )
 }
 
-export const Share: React.FC<Props> = ({ width = '24', height = '24', className }) => {
+export const ShareIcon: React.FC<Props> = ({ width = '24', height = '24', className }) => {
     return (
         <svg
             width={width}

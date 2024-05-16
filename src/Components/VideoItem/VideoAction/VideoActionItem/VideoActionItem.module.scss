@@ -14,10 +14,6 @@
     transition: background-color 0.15s linear;
     transition: color 0.15s ease-in-out;
 
-    &.isLike[data-type='like'] {
-        color: var(--primary);
-    }
-
     &:hover {
         background-color: var(--text-color-opacity-08);
     }

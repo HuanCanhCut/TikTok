@@ -55,8 +55,8 @@ const CommentModal: React.FC<Props> = ({
     }, [isPlaying])
 
     useEffect(() => {
-        if (videoModalRef.current) {
-            videoModalRef.current.currentTime = currentTime || 0
+        if (videoModalRef.current && currentTime) {
+            videoModalRef.current.currentTime = currentTime
         }
     }, [currentTime])
 
