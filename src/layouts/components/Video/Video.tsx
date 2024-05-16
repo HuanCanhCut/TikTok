@@ -105,8 +105,9 @@ const Video: React.FC<Props> = ({ type }) => {
 
                 const playVideo = async () => {
                     try {
-                        videosIsVisible[videosIsVisible.length - 1].currentTime =
-                            videoModalRef?.current?.currentTime || 0
+                        videosIsVisible[videosIsVisible.length - 1].currentTime = videoModalRef?.current
+                            ? videoModalRef?.current?.currentTime
+                            : 0
                         await videosIsVisible[videosIsVisible.length - 1].play()
                     } catch (e) {}
                 }
@@ -117,7 +118,9 @@ const Video: React.FC<Props> = ({ type }) => {
                 })
                 const playVideo = async () => {
                     try {
-                        videosIsVisible[0].currentTime = videoModalRef?.current?.currentTime || 0
+                        videosIsVisible[0].currentTime = videoModalRef?.current
+                            ? videoModalRef?.current?.currentTime
+                            : 0
                         await videosIsVisible[0].play()
                     } catch (e) {}
                 }
@@ -132,31 +135,8 @@ const Video: React.FC<Props> = ({ type }) => {
             return
         }
 
-        if (videosIsVisible.length >= 2) {
-            videosIsVisible.forEach((video: HTMLVideoElement) => {
-                video.pause()
-            })
-
-            const playVideo = async () => {
-                try {
-                    videosIsVisible[videosIsVisible.length - 1].currentTime = 0
-                    await videosIsVisible[videosIsVisible.length - 1].play()
-                } catch (e) {}
-            }
-            playVideo()
-        } else {
-            videosIsVisible.forEach((video: HTMLVideoElement) => {
-                video.pause()
-            })
-            const playVideo = async () => {
-                try {
-                    videosIsVisible[0].currentTime = 0
-                    await videosIsVisible[0].play()
-                } catch (e) {}
-            }
-            playVideo()
-        }
-    }, [commentModalIsOpen, videosIsVisible])
+        handlePlayVideo()
+    }, [commentModalIsOpen, handlePlayVideo])
 
     const handleScroll = () => {
         if (window.scrollY + window.innerHeight >= document.body.offsetHeight) {
@@ -180,7 +160,7 @@ const Video: React.FC<Props> = ({ type }) => {
             try {
                 const response = await videoService.getVideos({
                     type,
-                    page: 1,
+                    page,
                     accessToken,
                 })
 
@@ -264,36 +244,11 @@ const Video: React.FC<Props> = ({ type }) => {
             dispatch(actions.commentModalOpen(false))
             if (videoModalRef.current) {
                 requestIdleCallback(() => {
-                    // handlePlayVideo(videoModalRef)
-                    if (videosIsVisible.length >= 2) {
-                        videosIsVisible.forEach((video: HTMLVideoElement) => {
-                            video.pause()
-                        })
-
-                        const playVideo = async () => {
-                            try {
-                                videosIsVisible[videosIsVisible.length - 1].currentTime =
-                                    videoModalRef?.current?.currentTime || 0
-                                await videosIsVisible[videosIsVisible.length - 1].play()
-                            } catch (e) {}
-                        }
-                        playVideo()
-                    } else {
-                        videosIsVisible.forEach((video: HTMLVideoElement) => {
-                            video.pause()
-                        })
-                        const playVideo = async () => {
-                            try {
-                                videosIsVisible[0].currentTime = videoModalRef?.current?.currentTime || 0
-                                await videosIsVisible[0].play()
-                            } catch (e) {}
-                        }
-                        playVideo()
-                    }
+                    handlePlayVideo(videoModalRef)
                 })
             }
         },
-        [dispatch, videosIsVisible]
+        [dispatch, handlePlayVideo]
     )
 
     return (
