@@ -6,6 +6,7 @@ import { Wrapper as PopperWrapper } from '~/Components/Popper'
 import style from './KeyboardShorcuts.module.scss'
 import { LKeyboard, MKeyboard, ArrowUp, ArrowDown } from '~/Components/Icons'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
+import { useTranslation } from 'react-i18next'
 
 const cx = classNames.bind(style)
 
@@ -33,10 +34,11 @@ interface Props {
 }
 
 const KeyboardShortcuts: React.FC<Props> = ({ onClose }) => {
+    const { t } = useTranslation()
     return (
         <PopperWrapper className={cx('wrapper')}>
             <div className={cx('header')}>
-                <h2>Keyboard Shortcuts</h2>
+                <h2>{t('keyboard shortcuts.keyboard shortcuts')}</h2>
             </div>
             <button className={cx('close')} onClick={onClose}>
                 <FontAwesomeIcon className={cx('close-icon')} icon={faXmark as IconProp} />
@@ -46,7 +48,7 @@ const KeyboardShortcuts: React.FC<Props> = ({ onClose }) => {
                 {shortcutsItems.map((shortcutsItem, index) => {
                     return (
                         <div className={cx('shortcuts-item')} key={index}>
-                            <p>{shortcutsItem.title}</p>
+                            <p>{t(`keyboard shortcuts.${shortcutsItem.title.toLowerCase()}`)}</p>
                             <div className={cx('icon-wrapper')}>
                                 <p>{shortcutsItem.icon}</p>
                             </div>

@@ -173,7 +173,14 @@
         "delete video successfully": "Delete video successfully",
         "sorry, the API does not support this feature": "Sorry, the API does not support this feature."
     },
-    "preview": {
+    "account preview": {
         "likes": "Likes"
+    },
+    "keyboard shortcuts": {
+        "keyboard shortcuts": "Keyboard shortcuts",
+        "go to previous video": "Go to previous video",
+        "go to next video": "Go to next video",
+        "like video": "Like video",
+        "mute / unmute video": "Mute / unMute video"
     }
 }

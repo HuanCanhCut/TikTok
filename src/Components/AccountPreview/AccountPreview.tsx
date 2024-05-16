@@ -36,10 +36,14 @@ function AccountPreview({ data }: Props) {
                     </Link>
                 </div>
                 <p className={cx('analytics')}>
-                    <span className={cx('value')}>{data.followings_count}</span>
-                    <span>Followers</span>
-                    <span className={cx('value')}>{data.followers_count}</span>
-                    <span>{t('preview.likes')}</span>
+                    <div className={cx('analytics-item')}>
+                        <span className={cx('value')}>{data.followings_count}</span>
+                        <span className={cx('followers')}>Followers</span>
+                    </div>
+                    <div className={cx('analytics-item')}>
+                        <span className={cx('value')}>{data.followers_count}</span>
+                        <span className={cx('likes')}>{t('account preview.likes')}</span>
+                    </div>
                 </p>
             </div>
         </div>

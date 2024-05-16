@@ -60,15 +60,23 @@
 
 .analytics {
     flex: 1;
-    .value {
-        font-size: 1.6rem;
-        color: var(--text-color);
-    }
+    display: flex;
+    align-items: center;
+    gap: 16px;
 
-    span {
-        padding: 0 4px;
-        font-weight: 600;
-        margin-right: 8px;
-        color: var(--text-color-secondary);
+    .analytics-item {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+
+        .value {
+            font-size: 1.6rem;
+            color: var(--text-color);
+        }
+
+        .likes,
+        .followers {
+            color: var(--text-color-secondary);
+        }
     }
 }

@@ -172,7 +172,14 @@
         "delete video successfully": "Xóa video thành công",
         "sorry, the API does not support this feature": "Xin lỗi, API không hỗ trợ tính năng này."
     },
-    "preview": {
+    "account preview": {
         "likes": "Thích"
+    },
+    "keyboard shortcuts": {
+        "keyboard shortcuts": "Phím tắt trên bàn phím",
+        "go to previous video": "Đi tới video trước",
+        "go to next video": "Đi tới video tiếp theo",
+        "like video": "Thích video",
+        "mute / unmute video": "Tắt tiếng / Bật tiếng video"
     }
 }
