@@ -1,9 +1,12 @@
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import * as videoService from '~/services/videoService'
 import { sendEvent } from '~/helpers/event'
-import { UserModal } from '~/modal/modal'
+import { UserModal, VideoModal } from '~/modal/modal'
 import { actions } from '~/redux'
 import { followAnUser, unFollowUser } from '~/services/userService'
+import { Dispatch, UnknownAction } from 'redux'
+import { SetStateAction } from 'react'
 
 export const removeDuplicate = (duplicateStore: number[], duplicateValue: number) => {
     if (duplicateStore.includes(duplicateValue)) {
@@ -52,8 +55,8 @@ export const handleFollowAnUser = async ({
     isCallingApi: boolean
     temporaryUnFollowedList: number[]
     user: UserModal
-    dispatch: any
-    setIsCallingApi: any
+    dispatch: Dispatch<UnknownAction>
+    setIsCallingApi: React.Dispatch<SetStateAction<boolean>>
     accessToken: string
 }) => {
     if (!accessToken || !currentUser) {
@@ -97,7 +100,7 @@ export const handleUnFollowAnUser = async ({
     isCallingApi: boolean
     temporaryFollowedList: number[]
     user: UserModal
-    dispatch: any
+    dispatch: Dispatch<UnknownAction>
     setIsCallingApi: any
     accessToken: string
 }) => {
@@ -125,6 +128,72 @@ export const handleUnFollowAnUser = async ({
         console.log(error)
     } finally {
         setIsCallingApi(false)
+    }
+}
+
+export const likeVideo = async ({
+    dispatch,
+    temporaryUnLikeList,
+    video,
+    id,
+    accessToken,
+    setIsCallingApi,
+}: {
+    dispatch: Dispatch<UnknownAction>
+    temporaryUnLikeList: number[]
+    video: VideoModal
+    id: number
+    accessToken: string
+    setIsCallingApi?: React.Dispatch<React.SetStateAction<boolean>>
+}) => {
+    removeDuplicate(temporaryUnLikeList, id)
+    if (id) {
+        if (!temporaryUnLikeList.includes(id)) {
+            dispatch(actions.temporaryLiked(id))
+        }
+    }
+
+    try {
+        return await videoService.likeVideo({
+            videoID: id || video.id,
+            accessToken,
+        })
+    } catch (error) {
+        console.log(error)
+    } finally {
+        setIsCallingApi && setIsCallingApi(false)
+    }
+}
+
+export const unLikeVideo = async ({
+    dispatch,
+    temporaryLikeList,
+    video,
+    id,
+    accessToken,
+    setIsCallingApi,
+}: {
+    dispatch: Dispatch<UnknownAction>
+    temporaryLikeList: number[]
+    video: VideoModal
+    id: number
+    accessToken: string
+    setIsCallingApi?: React.Dispatch<React.SetStateAction<boolean>>
+}) => {
+    if (id) {
+        removeDuplicate(temporaryLikeList, id)
+        dispatch(actions.temporaryUnLiked(id))
+    }
+
+    try {
+        return await videoService.unLikeVideo({
+            videoID: id || video.id,
+            accessToken,
+        })
+    } catch (error) {
+        console.log(error)
+    } finally {
+        setIsCallingApi && setIsCallingApi(false)
     }
 }
 

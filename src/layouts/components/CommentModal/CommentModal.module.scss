@@ -14,7 +14,6 @@
     left: 20px;
     width: 40px;
     height: 40px;
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -22,7 +21,7 @@
     font-size: 2.4rem;
     font-weight: 700;
     background-color: var(--text-color-opacity-12);
-    color: var(--text-color);
+    color: #fff;
     cursor: pointer;
     z-index: 10;
 
@@ -36,6 +35,17 @@
     height: 100vh;
     position: relative;
     min-width: 600px;
+}
+
+.comment-wrapper {
+    flex-basis: 545px;
+    max-width: 545px;
+    background-color: var(--default-layout-background);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 2;
 }
 
 .video-container,
@@ -95,7 +105,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: var(--text-color);
+    color: #fff;
     cursor: pointer;
     position: absolute;
     top: 50%;
@@ -108,10 +118,22 @@
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
-    border-color: var(--text-color-tertiary);
+    border-color: rgba(255, 255, 255, 0.5);
+
+    input {
+        color: #fff;
+    }
+
+    > * {
+        color: #fff;
+
+        &:hover {
+            color: #fff;
+        }
+    }
 
     &:focus-within {
-        border-color: var(--text-color-tertiary);
+        border-color: rgba(255, 255, 255, 0.5);
     }
 }
 
@@ -120,12 +142,12 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: var(--text-color-opacity-12);
+    background-color: rgba(255, 255, 255, 0.12);
     font-size: 1.8rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: var(--text-color);
+    color: #fff;
     cursor: pointer;
     &:hover {
         opacity: 0.7;
@@ -155,16 +177,6 @@
     &:hover {
         opacity: 0.7;
     }
-}
-
-.comment-wrapper {
-    flex-basis: 544px;
-    background-color: #000;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 2;
 }
 
 .comment-container {

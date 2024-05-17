@@ -76,6 +76,22 @@
     display: flex;
     flex-direction: column;
     gap: 4px;
+
+    .description {
+        font-weight: 600;
+    }
+
+    .video-music {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 1.4rem;
+
+        .music-icon {
+            font-size: 1.2rem;
+            color: var(--text-color-secondary);
+        }
+    }
 }
 
 .action-wrapper {
@@ -127,13 +143,91 @@
     border-top: 1px solid var(--text-color-opacity-06);
 }
 
-.video-music {
+.video-options-container {
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+}
+
+.video-interaction-container {
+    width: 100%;
     display: flex;
     align-items: center;
-    gap: 8px;
+    justify-content: space-between;
+}
 
-    .music-icon {
-        font-size: 1.2rem;
+.video-interaction-item {
+    display: flex;
+    align-items: center;
+}
+
+.interaction-btn {
+    font-weight: 600;
+    font-size: 1.4rem;
+    color: var(--text-color-secondary);
+}
+
+.like-btn,
+.comment-btn {
+    cursor: default;
+}
+
+.like-btn {
+    cursor: pointer;
+
+    &.isLiked {
+        color: var(--primary);
+    }
+}
+
+.interaction-btn + .interaction-btn {
+    margin-left: 12px;
+}
+
+.share-video-options {
+    padding: 0 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .share-btn-icon {
+        cursor: pointer;
+    }
+}
+
+.share-icon {
+    color: var(--text-color);
+    cursor: pointer;
+}
+
+.copy-link {
+    color: var(--text-color);
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 5px;
+    background-color: var(--text-color-opacity-12);
+    padding-left: 8px;
+    flex-basis: 100%;
+
+    .link {
+        flex: 1;
+        font-size: 1.4rem;
         color: var(--text-color-secondary);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .copy-link-btn {
+        margin: 0;
+        padding-top: 6px;
+        padding-bottom: 6px;
+        background-color: var(--text-color-opacity-06);
     }
 }

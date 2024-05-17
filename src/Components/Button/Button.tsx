@@ -15,6 +15,7 @@ interface Props {
     text?: boolean
     disable?: boolean
     rounded?: boolean
+    iconBtn?: boolean
     login?: boolean
     roundedOutline?: boolean
     leftIcon?: React.ReactNode
@@ -36,6 +37,7 @@ const Button = forwardRef<HTMLAnchorElement | HTMLButtonElement, Props>(
             rounded = false,
             login = false,
             roundedOutline = false,
+            iconBtn = false,
             className,
             leftIcon,
             children,
@@ -64,6 +66,7 @@ const Button = forwardRef<HTMLAnchorElement | HTMLButtonElement, Props>(
             large,
             text,
             disable,
+            iconBtn,
             rounded,
             roundedOutline,
             darkMode: useDarkMode(),

@@ -170,7 +170,8 @@
         "delete": "Xóa",
         "are you sure you want to delete this video?": "Bạn có muôn xóa video này không?",
         "delete video successfully": "Xóa video thành công",
-        "sorry, the API does not support this feature": "Xin lỗi, API không hỗ trợ tính năng này."
+        "sorry, the API does not support this feature": "Xin lỗi, API không hỗ trợ tính năng này.",
+        "copy link": "Sao chép liên kết"
     },
     "account preview": {
         "likes": "Thích"

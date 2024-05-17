@@ -154,7 +154,7 @@ const Share: React.FC<Props> = ({ children, copyValue = window.location.href }) 
         [handleChoseOptions, hideSeeMore, t]
     )
     return (
-        <PopperEffect renderItem={renderShare} timeDelayClose={100} timeDelayOpen={400} hideOnClick={false}>
+        <PopperEffect renderItem={renderShare} timeDelayClose={200} timeDelayOpen={300} hideOnClick={false}>
             <div className={cx('share-btn')}>{children}</div>
         </PopperEffect>
     )

@@ -107,6 +107,17 @@
     }
 }
 
+.iconBtn {
+    min-width: 32px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    background-color: var(--text-color-opacity-12);
+    padding: 0;
+    &:hover {
+        background-color: var(--text-color-opacity-08);
+    }
+}
+
 .wrapper {
     &.darkMode {
         &.roundedOutline {

@@ -40,6 +40,23 @@ const VideoActionItem: React.FC<Props> = ({
         }
     }
 
+    const renderItem = (item: Item) => {
+        return (
+            <div
+                style={{
+                    color: isLiked() && item.type === 'like' ? 'var(--primary)' : '',
+                    cursor: item.disabled ? 'not-allowed' : 'pointer',
+                }}
+                className={cx('wrapper')}
+                onClick={() => {
+                    onChose(item.type)
+                }}
+            >
+                {item.icon}
+            </div>
+        )
+    }
+
     return (
         <>
             {/* 
@@ -49,31 +66,10 @@ const VideoActionItem: React.FC<Props> = ({
              */}
             {item.type === 'share' ? (
                 <Share copyValue={`${window.location.href}@${video.user.nickname}/video/${video.uuid}`}>
-                    <div
-                        style={{
-                            cursor: item.disabled ? 'not-allowed' : 'pointer',
-                        }}
-                        className={cx('wrapper')}
-                        onClick={() => {
-                            onChose(item.type)
-                        }}
-                    >
-                        {item.icon}
-                    </div>
+                    {renderItem(item)}
                 </Share>
             ) : (
-                <div
-                    style={{
-                        color: isLiked() && item.type === 'like' ? 'var(--primary)' : '',
-                        cursor: item.disabled ? 'not-allowed' : 'pointer',
-                    }}
-                    className={cx('wrapper')}
-                    onClick={() => {
-                        onChose(item.type)
-                    }}
-                >
-                    {item.icon}
-                </div>
+                renderItem(item)
             )}
             <strong className={cx('value')}>{item.value}</strong>
         </>

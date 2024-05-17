@@ -171,7 +171,8 @@
         "delete": "Delete",
         "are you sure you want to delete this video?": "Are you sure you want to delete this video?",
         "delete video successfully": "Delete video successfully",
-        "sorry, the API does not support this feature": "Sorry, the API does not support this feature."
+        "sorry, the API does not support this feature": "Sorry, the API does not support this feature.",
+        "copy link": "Copy link"
     },
     "account preview": {
         "likes": "Likes"

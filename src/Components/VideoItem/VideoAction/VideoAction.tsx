@@ -1,15 +1,14 @@
 import classNames from 'classnames/bind'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCommentDots, faHeart, faShare } from '@fortawesome/free-solid-svg-icons'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { removeDuplicate } from '~/project/services'
+import { likeVideo, unLikeVideo } from '~/project/services'
 import useElementOnScreen from '~/hooks/useElementOnScreen'
 import { actions } from '~/redux'
 import { FavoriteVideo } from '~/Components/Icons'
 import { authCurrentUser, temporaryLiked, temporaryUnLiked } from '~/redux/selectors'
-import * as videoService from '~/services/videoService'
 import style from './VideoAction.module.scss'
 import VideoActionItem from './VideoActionItem'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
@@ -31,53 +30,37 @@ const VideoAction: React.FC<Props> = ({ video, videoRef }) => {
     const isVisible = useElementOnScreen(options, videoRef)
 
     const dispatch = useDispatch()
-    const temporaryLikeList = useSelector(temporaryLiked)
-    const temporaryUnLikeList = useSelector(temporaryUnLiked)
+    const temporaryLikeList: number[] = useSelector(temporaryLiked)
+    const temporaryUnLikeList: number[] = useSelector(temporaryUnLiked)
 
     const [isCallingApi, setIsCallingApi] = useState(false)
 
     const handleLikeVideo = useCallback(
-        async (id: number) => {
-            removeDuplicate(temporaryUnLikeList, id)
-            if (id) {
-                if (!temporaryUnLikeList.includes(id)) {
-                    dispatch(actions.temporaryLiked(id))
-                }
-            }
-
-            try {
-                return await videoService.likeVideo({
-                    videoID: id || video.id,
-                    accessToken,
-                })
-            } catch (error) {
-                console.log(error)
-            } finally {
-                setIsCallingApi(false)
-            }
+        (id: number) => {
+            likeVideo({
+                id: id,
+                video: video,
+                accessToken,
+                dispatch,
+                temporaryUnLikeList,
+                setIsCallingApi,
+            })
         },
-        [accessToken, dispatch, temporaryUnLikeList, video.id]
+        [accessToken, dispatch, temporaryUnLikeList, video]
     )
 
     const handleUnLikeVideo = useCallback(
-        async (id: number) => {
-            if (id) {
-                removeDuplicate(temporaryLikeList, id)
-                dispatch(actions.temporaryUnLiked(id))
-            }
-
-            try {
-                return await videoService.unLikeVideo({
-                    videoID: id || video.id,
-                    accessToken,
-                })
-            } catch (error) {
-                console.log(error)
-            } finally {
-                setIsCallingApi(false)
-            }
+        (id: number) => {
+            unLikeVideo({
+                id: id,
+                video: video,
+                accessToken,
+                dispatch,
+                temporaryLikeList,
+                setIsCallingApi,
+            })
         },
-        [accessToken, dispatch, temporaryLikeList, video.id]
+        [accessToken, dispatch, temporaryLikeList, video]
     )
 
     const handleToggleLike = useCallback(() => {
@@ -157,7 +140,7 @@ const VideoAction: React.FC<Props> = ({ video, videoRef }) => {
         [handleOpenCommentModal, handleToggleLike, video]
     )
 
-    const likes_count = () => {
+    const likes_count = useCallback(() => {
         if (video.is_liked && !temporaryUnLikeList.includes(video.id)) {
             return video.likes_count
         }
@@ -171,32 +154,34 @@ const VideoAction: React.FC<Props> = ({ video, videoRef }) => {
         } else {
             return video.likes_count
         }
-    }
+    }, [temporaryLikeList, temporaryUnLikeList, video.id, video.is_liked, video.likes_count])
 
-    const items = [
-        {
-            type: 'like',
-            value: likes_count(),
-            icon: <FontAwesomeIcon icon={faHeart as IconProp} />,
-            disabled: isCallingApi,
-        },
-        {
-            type: 'comment',
-            value: video.comments_count,
-            icon: <FontAwesomeIcon icon={faCommentDots as IconProp} />,
-        },
-        {
-            type: 'favorite',
-            value: 0,
-            icon: <FavoriteVideo />,
-            disabled: true,
-        },
-        {
-            type: 'share',
-            value: video.shares_count,
-            icon: <FontAwesomeIcon icon={faShare as IconProp} />,
-        },
-    ]
+    const items = useMemo(() => {
+        return [
+            {
+                type: 'like',
+                value: likes_count(),
+                icon: <FontAwesomeIcon icon={faHeart as IconProp} />,
+                disabled: isCallingApi,
+            },
+            {
+                type: 'comment',
+                value: video.comments_count,
+                icon: <FontAwesomeIcon icon={faCommentDots as IconProp} />,
+            },
+            {
+                type: 'favorite',
+                value: 0,
+                icon: <FavoriteVideo />,
+                disabled: true,
+            },
+            {
+                type: 'share',
+                value: video.shares_count,
+                icon: <FontAwesomeIcon icon={faShare as IconProp} />,
+            },
+        ]
+    }, [isCallingApi, likes_count, video.comments_count, video.shares_count])
 
     return (
         <div className={cx('wrapper')}>

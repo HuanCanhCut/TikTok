@@ -6,11 +6,16 @@ import { UserModal } from '~/modal/modal'
 interface Props {
     description: string
     user: UserModal
+    className?: string
 }
 
 const cx = classNames.bind(styles)
 
-const HightLightDescription: React.FC<Props> = ({ description, user }) => {
+const HightLightDescription: React.FC<Props> = ({ description, user, className = '' }) => {
+    const classes = cx('description', {
+        [className]: className,
+    })
+
     const hightLightHashtag = () => {
         if (description.includes('#') || description.includes('http://') || description.includes('https://')) {
             const hashTag = description.split(' ')
@@ -59,7 +64,7 @@ const HightLightDescription: React.FC<Props> = ({ description, user }) => {
         }
     }
 
-    return <div className={cx('description')}>{hightLightHashtag()}</div>
+    return <div className={classes}>{hightLightHashtag()}</div>
 }
 
 export default HightLightDescription

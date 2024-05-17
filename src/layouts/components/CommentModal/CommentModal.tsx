@@ -51,7 +51,13 @@ const CommentModal: React.FC<Props> = ({
     }, [video])
 
     useEffect(() => {
-        isPlaying ? videoModalRef.current?.play() : videoModalRef.current?.pause()
+        try {
+            ;(async () => {
+                isPlaying ? await videoModalRef.current?.play() : videoModalRef.current?.pause()
+            })()
+        } catch (error) {
+            console.log(error)
+        }
     }, [isPlaying])
 
     useEffect(() => {

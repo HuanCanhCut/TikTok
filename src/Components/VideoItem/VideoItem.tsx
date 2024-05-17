@@ -50,7 +50,7 @@ const VideoItem = forwardRef<ImperativeHandle, Props>(({ video, videos, setFocus
         PLAY: async () => {
             if (isVisible) {
                 try {
-                    videoRef.current?.play()
+                    await videoRef.current?.play()
                 } catch (error) {
                     console.log(error)
                 }
