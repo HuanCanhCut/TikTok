@@ -2,13 +2,29 @@ import { useSpring } from 'framer-motion'
 import Tippy from '@tippyjs/react'
 import { motion } from 'framer-motion'
 import { Wrapper as PopperWrapper } from '~/Components/Popper'
-import React from 'react'
+import React, { memo } from 'react'
 
 interface Props {
     children: React.ReactNode
     timeDelayOpen?: number
     timeDelayClose?: number
     renderItem: (onHide?: boolean) => React.ReactNode
+    placement?:
+        | 'top'
+        | 'bottom'
+        | 'left'
+        | 'right'
+        | 'top-start'
+        | 'top-end'
+        | 'bottom-start'
+        | 'bottom-end'
+        | 'left-start'
+        | 'left-end'
+        | 'right-start'
+        | 'right-end'
+        | 'auto'
+        | 'auto-start'
+        | 'auto-end'
     offsetX?: number
     offsetY?: number
     hideOnClick?: boolean
@@ -19,6 +35,7 @@ const PopperEffect: React.FC<Props> = ({
     renderItem,
     timeDelayOpen = 0,
     timeDelayClose = 0,
+    placement = 'bottom-end',
     offsetX = 0,
     offsetY = 0,
     hideOnClick = false,
@@ -65,7 +82,7 @@ const PopperEffect: React.FC<Props> = ({
             delay={[timeDelayOpen, timeDelayClose]}
             offset={[offsetX, offsetY]}
             hideOnClick={hideOnClick}
-            placement="bottom-end"
+            placement={placement}
             render={render}
             onMount={onMount}
             onHide={onHide}
@@ -75,4 +92,4 @@ const PopperEffect: React.FC<Props> = ({
     )
 }
 
-export default PopperEffect
+export default memo(PopperEffect)

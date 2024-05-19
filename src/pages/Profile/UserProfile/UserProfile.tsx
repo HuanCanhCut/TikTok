@@ -21,6 +21,7 @@ import EditProfileModal from './EditProfileModal'
 import Modal from '~/Components/Modal'
 import { FileUploadModal } from '~/pages/Upload/Upload'
 import Share from '~/Components/Share/Share'
+import BlueTick from '~/Components/BlueTick/BlueTick'
 
 const cx = classNames.bind(style)
 
@@ -126,7 +127,14 @@ const UserProfile: React.FC<Props> = ({ userProfile }) => {
             <div className={cx('wrapper')}>
                 <Image src={userProfile.avatar} className={cx('avatar')} />
                 <div className={cx('title-container')}>
-                    <h1 className={cx('username')}>{userProfile.nickname}</h1>
+                    <div className={cx('username-container')}>
+                        <h1 className={cx('username')}>{userProfile.nickname} </h1>
+                        {userProfile.tick && (
+                            <span>
+                                <BlueTick className={cx('tick')} />
+                            </span>
+                        )}
+                    </div>
                     <h2 className={cx('fullname')}>{`${userProfile.first_name} ${userProfile.last_name}`}</h2>
                     {userProfile.id === currentUser?.id ? (
                         <>

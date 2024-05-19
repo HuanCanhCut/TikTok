@@ -19,15 +19,26 @@
 .title-container {
     margin-left: 20px;
 
-    .username {
-        font-weight: 700;
-        font-size: 30px;
-        line-height: 42px;
-        margin-bottom: 4px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        text-align: left;
-        word-break: break-word;
+    .username-container {
+        display: flex;
+        align-items: center;
+
+        .tick {
+            > * {
+                font-size: 1.8rem;
+            }
+        }
+
+        .username {
+            font-weight: 700;
+            font-size: 30px;
+            line-height: 42px;
+            margin-bottom: 4px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: left;
+            word-break: break-word;
+        }
     }
 
     .fullname {

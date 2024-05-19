@@ -1,0 +1,132 @@
+.wrapper {
+    width: 100%;
+}
+
+.tabs-container {
+    padding: 0 32px;
+    width: 100%;
+    margin-top: 14px;
+    border-bottom: 1px solid var(--text-color-opacity-10);
+}
+
+.tabs {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.tab-btn {
+    flex: 1;
+    margin: 0;
+    background-color: transparent;
+    color: var(--text-color-tertiary);
+
+    &.active {
+        color: var(--text-color);
+    }
+}
+
+.under-line {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 50%;
+    height: 2px;
+    background-color: var(--text-color);
+    transition: all 0.1s ease-in-out;
+}
+
+.account-container {
+    display: flex;
+    align-items: flex-start;
+    flex: 1;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.info {
+    flex: 1;
+    margin-left: 12px;
+    display: flex;
+    flex-direction: column;
+}
+
+.name {
+    font-size: 1.6rem;
+    font-weight: 600;
+    line-height: 21px;
+    color: var(--text-color-secondary);
+}
+
+.comment-value {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--text-color);
+    word-break: break-word;
+}
+
+.follow-btn {
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.comment-body {
+    padding: 0 32px;
+    margin-top: 24px;
+}
+
+.comment-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.date {
+    margin-top: 4px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--text-color-tertiary);
+}
+
+.comment-item {
+    display: flex;
+    align-items: center;
+
+    .commnet-options {
+        padding: 0 8px;
+        color: var(--text-color);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+
+        .more-options {
+            opacity: 0;
+            transition: all ease-in-out 0.08s;
+        }
+
+        .more-options,
+        .heart-icon {
+            cursor: pointer;
+        }
+
+        .like-count,
+        .heart-icon {
+            font-size: 1.4rem;
+            color: var(--text-color-tertiary);
+            font-weight: 500;
+        }
+    }
+
+    &:hover {
+        .more-options {
+            opacity: 1;
+        }
+    }
+}

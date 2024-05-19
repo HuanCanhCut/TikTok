@@ -1,0 +1,58 @@
+.action-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.popper-wrapper {
+    border-radius: 4px;
+}
+
+.privacy-btn,
+.delete-btn-modal {
+    text-align: left;
+    background-color: transparent;
+    margin: 0;
+
+    &:hover {
+        background-color: transparent !important;
+        color: var(--primary);
+    }
+}
+
+.delete-modal {
+    max-width: calc(100vw - 48px);
+    background-color: var(--background-modal);
+    border-radius: 10px;
+    text-align: center;
+
+    .delete-title {
+        width: 332px;
+        padding: 36px 32px;
+        color: var(--text-color);
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 30px;
+    }
+
+    .delete-btn,
+    .cancel-btn {
+        width: 100%;
+        background-color: transparent;
+        margin: 0;
+        padding: 16px 0;
+        border-top: 1px solid var(--text-color-opacity-12);
+
+        &:hover {
+            color: var(--primary);
+        }
+    }
+}
+
+.option-btn {
+    color: var(--text-color);
+    cursor: pointer;
+}
+
+.video-action-btn + .video-action-btn {
+    border-top: 1px solid var(--text-color-opacity-06);
+}

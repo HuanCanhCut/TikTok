@@ -56,3 +56,13 @@ export interface VideoModal {
     user: UserModal
     meta: Video
 }
+
+export interface CommentModal {
+    id: number
+    comment: string
+    likes_count: number
+    is_liked: boolean
+    created_at: any
+    updated_at: any
+    user: UserModal
+}

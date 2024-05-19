@@ -9,6 +9,7 @@ import { MutableRefObject, useEffect, useRef, useState, memo } from 'react'
 import Search from '~/Components/Search'
 import { Muted, UnMuted } from '~/Components/Icons'
 import Header from './Header'
+import CommentBody from './CommentBody'
 
 const cx = classNames.bind(style)
 
@@ -51,13 +52,13 @@ const CommentModal: React.FC<Props> = ({
     }, [video])
 
     useEffect(() => {
-        try {
-            ;(async () => {
+        ;(async () => {
+            try {
                 isPlaying ? await videoModalRef.current?.play() : videoModalRef.current?.pause()
-            })()
-        } catch (error) {
-            console.log(error)
-        }
+            } catch (error) {
+                console.log(error)
+            }
+        })()
     }, [isPlaying])
 
     useEffect(() => {
@@ -171,6 +172,7 @@ const CommentModal: React.FC<Props> = ({
             <div className={cx('comment-wrapper')}>
                 <div className={cx('comment-container')}>
                     <Header currentVideo={currentVideo} />
+                    <CommentBody currentVideo={currentVideo} />
                 </div>
                 <div className={cx('add-comment-container')}></div>
             </div>

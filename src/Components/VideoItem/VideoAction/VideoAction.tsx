@@ -116,12 +116,16 @@ const VideoAction: React.FC<Props> = ({ video, videoRef }) => {
 
     const handleOpenCommentModal = useCallback(
         (video: VideoModal) => {
+            if (!currentUser || !accessToken) {
+                sendEvent({ eventName: 'auth:open-auth-modal', detail: true })
+                return
+            }
             sendEvent({ eventName: 'comment:open-comment-modal', detail: video })
             dispatch(actions.commentModalOpen(true))
 
             !videoRef.current?.paused && videoRef.current?.pause()
         },
-        [dispatch, videoRef]
+        [accessToken, currentUser, dispatch, videoRef]
     )
 
     const handleChose = useCallback(

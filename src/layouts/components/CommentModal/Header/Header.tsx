@@ -1,13 +1,12 @@
 import classNames from 'classnames/bind'
 import style from './Header.module.scss'
-import { useState, memo, useCallback, useMemo } from 'react'
+import { memo, useCallback, useMemo } from 'react'
 import { Link } from 'react-router-dom'
-import { faComment, faEllipsis, faHeart, faMusic } from '@fortawesome/free-solid-svg-icons'
+import { faComment, faHeart, faMusic } from '@fortawesome/free-solid-svg-icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { authCurrentUser, temporaryLiked, temporaryUnLiked } from '~/redux/selectors'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useTranslation } from 'react-i18next'
-import ReactModal from 'react-modal'
 
 import * as videoService from '~/services/videoService'
 import PopperEffect from '~/Components/PopperEffect'
@@ -21,7 +20,9 @@ import { copyToClipboard, likeVideo, showToast, unLikeVideo } from '~/project/se
 import { sendEvent } from '~/helpers/event'
 import Tippy from '@tippyjs/react'
 import Share from '~/Components/Share/Share'
-import { EmbedIcon, FacebookIcon, ShareIcon, TwitterIcon, WhatsAppIcon } from '~/Components/Icons'
+import { Ellipsis, EmbedIcon, FacebookIcon, ShareIcon, TwitterIcon, WhatsAppIcon } from '~/Components/Icons'
+import BlueTick from '~/Components/BlueTick/BlueTick'
+import DeleteModal from '~/Components/DeleteModal'
 
 interface Props {
     currentVideo: VideoModal
@@ -38,14 +39,11 @@ const Header: React.FC<Props> = ({ currentVideo }) => {
     const temporaryLikeList: number[] = useSelector(temporaryLiked)
     const temporaryUnLikeList: number[] = useSelector(temporaryUnLiked)
 
-    const [deleteModalOpen, setDeleteModalOpen] = useState(false)
-
-    const renderAccountPreview = () => {
+    const renderAccountPreview = useCallback(() => {
         return <AccountPreview data={currentVideo.user} />
-    }
+    }, [currentVideo.user])
 
     const handleDeleteVideo = async () => {
-        setDeleteModalOpen(false)
         try {
             const response = await videoService.deleteVideo({
                 videoID: currentVideo.id,
@@ -61,31 +59,7 @@ const Header: React.FC<Props> = ({ currentVideo }) => {
         }
     }
 
-    const handleOpenDeleteModal = () => {
-        setDeleteModalOpen(true)
-    }
-
-    const renderVideoOptions = () => {
-        return (
-            <div className={cx('action-wrapper')}>
-                <Tippy content={t('comment.sorry, the API does not support this feature')}>
-                    <Button rounded className={cx('privacy-btn', 'video-action-btn')}>
-                        {t('comment.privacy settings')}
-                    </Button>
-                </Tippy>
-                <Button rounded className={cx('delete-video-btn', 'video-action-btn')} onClick={handleOpenDeleteModal}>
-                    {t('comment.delete')}
-                </Button>
-            </div>
-        )
-    }
-
     const handleToggleLike = () => {
-        if (!currentUser || !accessToken) {
-            sendEvent({ eventName: 'auth:open-auth-modal', detail: true })
-            return
-        }
-
         if (currentVideo.is_liked || temporaryLikeList.includes(currentVideo.id)) {
             if (temporaryUnLikeList.includes(currentVideo.id)) {
                 likeVideo({
@@ -182,29 +156,6 @@ const Header: React.FC<Props> = ({ currentVideo }) => {
 
     return (
         <header className={cx('comment-header')}>
-            <ReactModal
-                isOpen={deleteModalOpen}
-                onRequestClose={() => setDeleteModalOpen(false)}
-                className={'modal'}
-                ariaHideApp={false}
-                overlayClassName={cx('overlay')}
-                closeTimeoutMS={200}
-            >
-                <div className={cx('delete-modal')}>
-                    <p className={cx('delete-title')}>{t('comment.are you sure you want to delete this video?')}</p>
-                    <Button className={cx('delete-btn')} onClick={handleDeleteVideo}>
-                        Delete
-                    </Button>
-                    <Button
-                        className={cx('cancel-btn')}
-                        onClick={() => {
-                            setDeleteModalOpen(false)
-                        }}
-                    >
-                        Cancel
-                    </Button>
-                </div>
-            </ReactModal>
             <div className={cx('user-profile')}>
                 <div className={cx('user-info-container')}>
                     <PopperEffect
@@ -218,7 +169,9 @@ const Header: React.FC<Props> = ({ currentVideo }) => {
                         <Link to={`/user/@${currentVideo.user.nickname}`} className={cx('user-info')}>
                             <Image src={currentVideo.user.avatar} className={cx('user-avatar')} />
                             <div className={cx('user-name')}>
-                                <span className={cx('nick-name')}>{currentVideo.user.nickname}</span>
+                                <span className={cx('nick-name')}>
+                                    {currentVideo.user.nickname} {currentVideo.user.tick && <BlueTick />}
+                                </span>
                                 <span
                                     className={cx('full-name')}
                                 >{`${currentVideo.user.first_name} ${currentVideo.user.last_name}`}</span>
@@ -228,18 +181,13 @@ const Header: React.FC<Props> = ({ currentVideo }) => {
                     {currentUser?.id !== currentVideo.user.id ? (
                         <Follow data={currentVideo.user} />
                     ) : (
-                        <PopperEffect
-                            renderItem={renderVideoOptions}
-                            hideOnClick={false}
-                            timeDelayClose={200}
-                            timeDelayOpen={600}
-                            offsetX={0}
-                            offsetY={15}
+                        <DeleteModal
+                            handleDelete={handleDeleteVideo}
+                            firstOption="Privacy settings"
+                            title="Are you sure you want to delete this video?"
                         >
-                            <button className={cx('video-option-btn')}>
-                                <FontAwesomeIcon icon={faEllipsis} />
-                            </button>
-                        </PopperEffect>
+                            <Ellipsis />
+                        </DeleteModal>
                     )}
                 </div>
 
@@ -296,7 +244,7 @@ const Header: React.FC<Props> = ({ currentVideo }) => {
                 <div className={cx('copy-link')}>
                     <p
                         className={cx('link')}
-                    >{`${window.location.href}/@${currentVideo.user.nickname}/video/${currentVideo.uuid}`}</p>
+                    >{`${window.location.href}@${currentVideo.user.nickname}/video/${currentVideo.uuid}`}</p>
                     <Button rounded className={cx('copy-link-btn')} onClick={handleCopyLink}>
                         {t('comment.copy link')}
                     </Button>

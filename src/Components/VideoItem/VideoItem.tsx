@@ -5,7 +5,7 @@ import { faPause, faPlay } from '@fortawesome/free-solid-svg-icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { forwardRef } from 'react'
 
-import { commentModalOpen, mutedVideo } from '~/redux/selectors'
+import { authCurrentUser, commentModalOpen, mutedVideo } from '~/redux/selectors'
 import { actions } from '~/redux'
 import style from './Video.module.scss'
 import useElementOnScreen from '~/hooks/useElementOnScreen'
@@ -33,6 +33,9 @@ interface Props {
 
 const VideoItem = forwardRef<ImperativeHandle, Props>(({ video, videos, setFocusedIndex }, ref) => {
     const dispatch = useDispatch()
+    const currentUser = useSelector(authCurrentUser)
+    const accessToken = JSON.parse(localStorage.getItem('token')!)
+
     const mutedVideos = useSelector(mutedVideo)
     const commentModalIsOpen = useSelector(commentModalOpen)
     const videoRef = useRef<HTMLVideoElement | null>(null)
@@ -169,6 +172,10 @@ const VideoItem = forwardRef<ImperativeHandle, Props>(({ video, videos, setFocus
                         }}
                         onEnded={handleEnded}
                         onClick={() => {
+                            if (!currentUser || !accessToken) {
+                                sendEvent({ eventName: 'auth:open-auth-modal', detail: true })
+                                return
+                            }
                             sendEvent({ eventName: 'comment:open-comment-modal', detail: video })
                             dispatch(actions.commentModalOpen(true))
 
