@@ -10,6 +10,7 @@ import Search from '~/Components/Search'
 import { Muted, UnMuted } from '~/Components/Icons'
 import Header from './Header'
 import CommentBody from './CommentBody'
+import PostComment from './PostComment'
 
 const cx = classNames.bind(style)
 
@@ -42,6 +43,7 @@ const CommentModal: React.FC<Props> = ({
     const videoSize = resolutionX > resolutionY ? 'row' : 'column'
 
     const videoModalRef = useRef<HTMLVideoElement | null>(null)
+    const commentContainerRef = useRef<HTMLDivElement | null>(null)
 
     const handleTogglePlay = () => {
         setIsPlaying(!isPlaying)
@@ -55,9 +57,7 @@ const CommentModal: React.FC<Props> = ({
         ;(async () => {
             try {
                 isPlaying ? await videoModalRef.current?.play() : videoModalRef.current?.pause()
-            } catch (error) {
-                console.log(error)
-            }
+            } catch (error) {}
         })()
     }, [isPlaying])
 
@@ -170,11 +170,11 @@ const CommentModal: React.FC<Props> = ({
                 </button>
             </div>
             <div className={cx('comment-wrapper')}>
-                <div className={cx('comment-container')}>
+                <div className={cx('comment-container')} ref={commentContainerRef}>
                     <Header currentVideo={currentVideo} />
-                    <CommentBody currentVideo={currentVideo} />
+                    <CommentBody currentVideo={currentVideo} commentContainerRef={commentContainerRef} />
                 </div>
-                <div className={cx('add-comment-container')}></div>
+                <PostComment currentVideo={currentVideo} />
             </div>
         </div>
     )

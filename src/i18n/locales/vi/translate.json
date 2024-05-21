@@ -177,7 +177,10 @@
         "delete comment successfully": "Xóa bình luận thành công",
         "sorry, the API does not support this feature": "Xin lỗi, API không hỗ trợ tính năng này.",
         "copy link": "Sao chép liên kết",
-        "report": "Báo cáo"
+        "report": "Báo cáo",
+        "add a comment": "Thêm bình luận...",
+        "post": "Đăng",
+        "comment posted": "Đã đăng bình luận"
     },
     "account preview": {
         "likes": "Thích"

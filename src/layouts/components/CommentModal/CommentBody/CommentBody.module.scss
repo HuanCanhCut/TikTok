@@ -7,6 +7,9 @@
     width: 100%;
     margin-top: 14px;
     border-bottom: 1px solid var(--text-color-opacity-10);
+    position: sticky;
+    top: 0;
+    background-color: var(--default-layout-background);
 }
 
 .tabs {
@@ -79,6 +82,13 @@
 .comment-body {
     padding: 0 32px;
     margin-top: 24px;
+}
+
+.loading-container {
+    margin-top: 24px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .comment-list {

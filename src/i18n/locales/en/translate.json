@@ -178,7 +178,10 @@
         "delete comment successfully": "Delete comment successfully",
         "sorry, the API does not support this feature": "Sorry, the API does not support this feature.",
         "copy link": "Copy link",
-        "report": "Report"
+        "report": "Report",
+        "add a comment": "Add a comment...",
+        "post": "Post",
+        "comment posted": "Comment posted"
     },
     "account preview": {
         "likes": "Likes"

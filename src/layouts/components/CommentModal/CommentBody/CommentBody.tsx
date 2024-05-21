@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind'
 import style from './CommentBody.module.scss'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState, memo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Button from '~/Components/Button'
@@ -10,34 +10,46 @@ import AccountItem from './AccountItem'
 import { Ellipsis, HeartOutLine } from '~/Components/Icons'
 import DeleteModal from '~/Components/DeleteModal'
 import { showToast } from '~/project/services'
+import Loading from '~/Components/Loading'
+import { authCurrentUser } from '~/redux/selectors'
+import { useSelector } from 'react-redux'
+import { listentEvent } from '~/helpers/event'
 
 const cx = classNames.bind(style)
 
 interface Props {
     currentVideo: VideoModal
+    commentContainerRef: any
 }
 
-interface MetaComments {
-    pagination: {
-        total: number
-        count: number
-        per_page: number
-        current_page: number
-        total_pages: number
-        links: {}
-    }
-}
-
-const CommentBody: React.FC<Props> = ({ currentVideo }) => {
+const CommentBody: React.FC<Props> = ({ currentVideo, commentContainerRef }) => {
     const { t } = useTranslation()
+
+    const currentUser = useSelector(authCurrentUser)
 
     const [currentTab, setCurrentTab] = useState<'comments' | 'creator'>('comments')
     const [comments, setComments] = useState<CommentModal[]>([])
-    const [metaComments, setMetaComments] = useState<MetaComments>()
+    const [page, setPage] = useState(1)
+    const [loading, setLoading] = useState(true)
+    const [totalCommentPage, setTotalCommentPage] = useState<number>(page)
 
     const accessToken = JSON.parse(localStorage.getItem('token')!)
 
     const underLineRef = useRef<HTMLDivElement | null>(null)
+    const commentListRef = useRef<HTMLDivElement | null>(null)
+
+    useEffect(() => {
+        const remove = listentEvent({
+            eventName: 'comment:post-comment',
+            handler({ detail: comment }) {
+                setComments((prev) => {
+                    return [comment, ...prev]
+                })
+            },
+        })
+
+        return remove
+    }, [])
 
     useEffect(() => {
         const getComments = async () => {
@@ -45,6 +57,7 @@ const CommentBody: React.FC<Props> = ({ currentVideo }) => {
                 const response = await commentService.getComments({
                     videoID: currentVideo.id,
                     accessToken: accessToken,
+                    page,
                 })
 
                 if (response) {
@@ -52,18 +65,25 @@ const CommentBody: React.FC<Props> = ({ currentVideo }) => {
                         return [...prev, ...response.data]
                     })
 
-                    setMetaComments(response.meta)
+                    setTotalCommentPage(response.meta.pagination.total_pages)
                 }
             } catch (error) {
                 console.log(error)
+            } finally {
+                setLoading(false)
             }
         }
         getComments()
 
         return () => {
-            setComments([])
+            setLoading(true)
         }
-    }, [accessToken, currentVideo.id])
+    }, [accessToken, currentVideo.id, page])
+
+    useEffect(() => {
+        setComments([])
+        setPage(1)
+    }, [currentVideo.id])
 
     useEffect(() => {
         if (underLineRef.current) {
@@ -127,7 +147,7 @@ const CommentBody: React.FC<Props> = ({ currentVideo }) => {
                     <div className={cx('under-line')} ref={underLineRef}></div>
                 </div>
             </div>
-            <div className={cx('comment-body')}>
+            <div className={cx('comment-body')} ref={commentListRef}>
                 {currentTab === 'comments' && (
                     <div className={cx('comment-list')}>
                         {comments.map((comment: CommentModal, index) => (
@@ -141,10 +161,13 @@ const CommentBody: React.FC<Props> = ({ currentVideo }) => {
                                         }}
                                         firstOption="Report"
                                         title="Are you sure you want to delete this comment?"
+                                        deleteBtn={comment.user.id === currentUser.id}
                                     >
                                         <Ellipsis className={cx('more-options')} width="20" height="20" />
                                     </DeleteModal>
-                                    <HeartOutLine className={cx('heart-icon')} />
+                                    <span>
+                                        <HeartOutLine className={cx('heart-icon')} />
+                                    </span>
                                     <span className={cx('like-count')}>{comment.likes_count}</span>
                                 </div>
                             </div>
@@ -152,9 +175,9 @@ const CommentBody: React.FC<Props> = ({ currentVideo }) => {
                     </div>
                 )}
                 {currentTab === 'creator' && <div className={cx('creator-list')}>video</div>}
+                <div className={cx('loading-container')}>{loading && <Loading />}</div>
             </div>
         </div>
     )
 }
-
-export default CommentBody
+export default memo(CommentBody)

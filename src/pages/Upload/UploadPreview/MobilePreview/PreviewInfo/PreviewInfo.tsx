@@ -34,7 +34,6 @@ const PreviewInfo: React.FC<Props> = ({ isPlay }) => {
                 <div className={cx('marquee-container')}>
                     <span
                         className={cx('marquee', {
-                            // stop marquee animation
                             'marquee-paused': !isPlay,
                         })}
                     >
@@ -42,7 +41,6 @@ const PreviewInfo: React.FC<Props> = ({ isPlay }) => {
                     </span>
                     <span
                         className={cx('marquee', {
-                            // stop marquee animation
                             'marquee-paused': !isPlay,
                         })}
                     >

@@ -14,9 +14,10 @@ interface Props {
     handleDelete: () => void
     children: React.ReactNode
     title: string
+    deleteBtn?: boolean
 }
 
-const DeleteModal: React.FC<Props> = ({ children, handleDelete, firstOption, title }) => {
+const DeleteModal: React.FC<Props> = ({ children, handleDelete, firstOption, title, deleteBtn }) => {
     const { t } = useTranslation()
     const [deleteModalOpen, setDeleteModalOpen] = useState(false)
 
@@ -28,18 +29,20 @@ const DeleteModal: React.FC<Props> = ({ children, handleDelete, firstOption, tit
                         {t(`comment.${firstOption.toLowerCase()}`)}
                     </Button>
                 </Tippy>
-                <Button
-                    rounded
-                    className={cx('delete-btn-modal', 'video-action-btn')}
-                    onClick={() => {
-                        setDeleteModalOpen(true)
-                    }}
-                >
-                    {t('comment.delete')}
-                </Button>
+                {deleteBtn && (
+                    <Button
+                        rounded
+                        className={cx('delete-btn-modal', 'video-action-btn')}
+                        onClick={() => {
+                            setDeleteModalOpen(true)
+                        }}
+                    >
+                        {t('comment.delete')}
+                    </Button>
+                )}
             </div>
         )
-    }, [firstOption, t])
+    }, [deleteBtn, firstOption, t])
 
     return (
         <>
