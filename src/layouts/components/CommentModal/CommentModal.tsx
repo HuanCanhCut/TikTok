@@ -12,6 +12,7 @@ import Header from './Header'
 import CommentBody from './CommentBody'
 import PostComment from './PostComment'
 import { sendEvent } from '~/helpers/event'
+import Button from '~/Components/Button'
 
 const cx = classNames.bind(style)
 
@@ -38,6 +39,7 @@ const CommentModal: React.FC<Props> = ({
     })
     const [isPlaying, setIsPlaying] = useState(true)
     const [muteVideo, setMuteVideo] = useState(false)
+    const [backToTop, setBackToTop] = useState(false)
 
     const resolutionX = currentVideo.meta.video.resolution_x
     const resolutionY = currentVideo.meta.video.resolution_y
@@ -45,6 +47,7 @@ const CommentModal: React.FC<Props> = ({
 
     const videoModalRef = useRef<HTMLVideoElement | null>(null)
     const commentContainerRef = useRef<HTMLDivElement | null>(null)
+    const scrollTopRef = useRef<HTMLDivElement | null>(null)
 
     const handleTogglePlay = () => {
         setIsPlaying(!isPlaying)
@@ -123,10 +126,19 @@ const CommentModal: React.FC<Props> = ({
             return
         }
 
+        setBackToTop(e.target.scrollTop > 20)
+
         // add more 1 px when scrolling down
         if (e.target.scrollTop + e.target.offsetHeight + 1 >= commentContainerRef.current.offsetHeight) {
             sendEvent({ eventName: 'comment:load-more-comment' })
         }
+    }
+
+    const handleBackToTop = () => {
+        scrollTopRef.current?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+        })
     }
 
     return (
@@ -184,9 +196,15 @@ const CommentModal: React.FC<Props> = ({
             <div className={cx('comment-wrapper')}>
                 <div className={cx('comment-container')} onScroll={handleScroll}>
                     <div ref={commentContainerRef}>
+                        <div className={cx('scroll-top')} ref={scrollTopRef}></div>
                         <Header currentVideo={currentVideo} />
                         <CommentBody currentVideo={currentVideo} />
                     </div>
+                    {backToTop && (
+                        <Button rounded className={cx('back-to-top')} onClick={handleBackToTop}>
+                            Back to top
+                        </Button>
+                    )}
                 </div>
                 <PostComment currentVideo={currentVideo} />
             </div>

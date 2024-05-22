@@ -45,6 +45,7 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    position: relative;
     z-index: 2;
 }
 
@@ -183,6 +184,14 @@
     flex: 1;
     width: 100%;
     overflow-y: overlay;
+
+    .back-to-top {
+        position: absolute;
+        bottom: 105px;
+        right: 20px;
+        background-color: var(--background-modal);
+        border-radius: 50px;
+    }
 }
 
 .add-comment-container {
