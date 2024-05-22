@@ -19,10 +19,9 @@ const cx = classNames.bind(style)
 
 interface Props {
     currentVideo: VideoModal
-    commentContainerRef: any
 }
 
-const CommentBody: React.FC<Props> = ({ currentVideo, commentContainerRef }) => {
+const CommentBody: React.FC<Props> = ({ currentVideo }) => {
     const { t } = useTranslation()
 
     const currentUser = useSelector(authCurrentUser)
@@ -31,12 +30,12 @@ const CommentBody: React.FC<Props> = ({ currentVideo, commentContainerRef }) => 
     const [comments, setComments] = useState<CommentModal[]>([])
     const [page, setPage] = useState(1)
     const [loading, setLoading] = useState(true)
-    const [totalCommentPage, setTotalCommentPage] = useState<number>(page)
 
     const accessToken = JSON.parse(localStorage.getItem('token')!)
 
     const underLineRef = useRef<HTMLDivElement | null>(null)
     const commentListRef = useRef<HTMLDivElement | null>(null)
+    const totalCommentPage = useRef<number>(0)
 
     useEffect(() => {
         const remove = listentEvent({
@@ -52,6 +51,19 @@ const CommentBody: React.FC<Props> = ({ currentVideo, commentContainerRef }) => 
     }, [])
 
     useEffect(() => {
+        const remove = listentEvent({
+            eventName: 'comment:load-more-comment',
+            handler() {
+                if (totalCommentPage.current > page) {
+                    setPage(page + 1)
+                }
+            },
+        })
+
+        return remove
+    }, [page])
+
+    useEffect(() => {
         const getComments = async () => {
             try {
                 const response = await commentService.getComments({
@@ -65,7 +77,7 @@ const CommentBody: React.FC<Props> = ({ currentVideo, commentContainerRef }) => 
                         return [...prev, ...response.data]
                     })
 
-                    setTotalCommentPage(response.meta.pagination.total_pages)
+                    totalCommentPage.current = response.meta.pagination.total_pages
                 }
             } catch (error) {
                 console.log(error)
@@ -162,6 +174,8 @@ const CommentBody: React.FC<Props> = ({ currentVideo, commentContainerRef }) => 
                                         firstOption="Report"
                                         title="Are you sure you want to delete this comment?"
                                         deleteBtn={comment.user.id === currentUser.id}
+                                        timeDelayOpen={300}
+                                        timeDelayClose={100}
                                     >
                                         <Ellipsis className={cx('more-options')} width="20" height="20" />
                                     </DeleteModal>
@@ -175,7 +189,11 @@ const CommentBody: React.FC<Props> = ({ currentVideo, commentContainerRef }) => 
                     </div>
                 )}
                 {currentTab === 'creator' && <div className={cx('creator-list')}>video</div>}
-                <div className={cx('loading-container')}>{loading && <Loading />}</div>
+                {loading && (
+                    <div className={cx('loading-container')}>
+                        <Loading />
+                    </div>
+                )}
             </div>
         </div>
     )

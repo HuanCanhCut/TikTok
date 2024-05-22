@@ -15,9 +15,19 @@ interface Props {
     children: React.ReactNode
     title: string
     deleteBtn?: boolean
+    timeDelayOpen?: number
+    timeDelayClose?: number
 }
 
-const DeleteModal: React.FC<Props> = ({ children, handleDelete, firstOption, title, deleteBtn }) => {
+const DeleteModal: React.FC<Props> = ({
+    children,
+    handleDelete,
+    firstOption,
+    title,
+    deleteBtn,
+    timeDelayOpen,
+    timeDelayClose,
+}) => {
     const { t } = useTranslation()
     const [deleteModalOpen, setDeleteModalOpen] = useState(false)
 
@@ -78,8 +88,8 @@ const DeleteModal: React.FC<Props> = ({ children, handleDelete, firstOption, tit
             <PopperEffect
                 renderItem={renderOptions}
                 hideOnClick={false}
-                timeDelayClose={200}
-                timeDelayOpen={600}
+                timeDelayClose={timeDelayClose}
+                timeDelayOpen={timeDelayOpen}
                 offsetX={0}
                 offsetY={15}
             >

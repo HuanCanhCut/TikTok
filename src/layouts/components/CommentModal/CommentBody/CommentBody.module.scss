@@ -72,6 +72,7 @@
     font-weight: 600;
     color: var(--text-color);
     word-break: break-word;
+    white-space: pre-wrap;
 }
 
 .follow-btn {
@@ -94,7 +95,7 @@
 .comment-list {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 12px;
 }
 
 .date {

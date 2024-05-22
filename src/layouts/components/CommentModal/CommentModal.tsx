@@ -11,6 +11,7 @@ import { Muted, UnMuted } from '~/Components/Icons'
 import Header from './Header'
 import CommentBody from './CommentBody'
 import PostComment from './PostComment'
+import { sendEvent } from '~/helpers/event'
 
 const cx = classNames.bind(style)
 
@@ -117,6 +118,17 @@ const CommentModal: React.FC<Props> = ({
         setMuteVideo(!muteVideo)
     }
 
+    const handleScroll = (e: any) => {
+        if (!commentContainerRef.current) {
+            return
+        }
+
+        // add more 1 px when scrolling down
+        if (e.target.scrollTop + e.target.offsetHeight + 1 >= commentContainerRef.current.offsetHeight) {
+            sendEvent({ eventName: 'comment:load-more-comment' })
+        }
+    }
+
     return (
         <div className={cx('wrapper')}>
             <button
@@ -170,9 +182,11 @@ const CommentModal: React.FC<Props> = ({
                 </button>
             </div>
             <div className={cx('comment-wrapper')}>
-                <div className={cx('comment-container')} ref={commentContainerRef}>
-                    <Header currentVideo={currentVideo} />
-                    <CommentBody currentVideo={currentVideo} commentContainerRef={commentContainerRef} />
+                <div className={cx('comment-container')} onScroll={handleScroll}>
+                    <div ref={commentContainerRef}>
+                        <Header currentVideo={currentVideo} />
+                        <CommentBody currentVideo={currentVideo} />
+                    </div>
                 </div>
                 <PostComment currentVideo={currentVideo} />
             </div>

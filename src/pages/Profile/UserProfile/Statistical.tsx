@@ -152,10 +152,6 @@ const Statistical = ({ userProfile, currentUser }: { userProfile: UserModal; cur
         }
     }
 
-    useEffect(() => {
-        console.log(page)
-    }, [page])
-
     const renderModal = useCallback(() => {
         return (
             <div className={cx('modal-wrapper')}>
