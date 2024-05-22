@@ -182,7 +182,8 @@
         "add a comment": "Add a comment...",
         "post": "Post",
         "comment posted": "Comment posted",
-        "comment disabled": "This creator has turned off comments"
+        "comment disabled": "This creator has turned off comments",
+        "creator": "Creator"
     },
     "account preview": {
         "likes": "Likes"

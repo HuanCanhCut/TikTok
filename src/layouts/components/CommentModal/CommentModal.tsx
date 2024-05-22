@@ -206,7 +206,7 @@ const CommentModal: React.FC<Props> = ({
                         </Button>
                     )}
                 </div>
-                <PostComment currentVideo={currentVideo} />
+                {currentVideo.allows.includes('comment') && <PostComment currentVideo={currentVideo} />}
             </div>
         </div>
     )

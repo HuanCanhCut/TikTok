@@ -65,6 +65,12 @@
     font-weight: 600;
     line-height: 21px;
     color: var(--text-color-secondary);
+
+    .creator {
+        color: var(--primary);
+        margin-left: 6px;
+        font-size: 1.5rem;
+    }
 }
 
 .comment-value {

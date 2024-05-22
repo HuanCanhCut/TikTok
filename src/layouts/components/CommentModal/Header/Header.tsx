@@ -185,6 +185,7 @@ const Header: React.FC<Props> = ({ currentVideo }) => {
                             handleDelete={handleDeleteVideo}
                             firstOption="Privacy settings"
                             title="Are you sure you want to delete this video?"
+                            deleteBtn
                             timeDelayOpen={600}
                             timeDelayClose={100}
                         >
