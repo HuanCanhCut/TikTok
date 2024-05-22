@@ -180,7 +180,8 @@
         "report": "Báo cáo",
         "add a comment": "Thêm bình luận...",
         "post": "Đăng",
-        "comment posted": "Đã đăng bình luận"
+        "comment posted": "Đã đăng bình luận",
+        "comment disabled": "Nhà sáng tạo này đã tắt bình luận"
     },
     "account preview": {
         "likes": "Thích"

@@ -181,7 +181,8 @@
         "report": "Report",
         "add a comment": "Add a comment...",
         "post": "Post",
-        "comment posted": "Comment posted"
+        "comment posted": "Comment posted",
+        "comment disabled": "This creator has turned off comments"
     },
     "account preview": {
         "likes": "Likes"

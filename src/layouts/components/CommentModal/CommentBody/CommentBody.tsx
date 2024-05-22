@@ -7,7 +7,7 @@ import Button from '~/Components/Button'
 import { CommentModal, VideoModal } from '~/modal/modal'
 import * as commentService from '~/services/commentService'
 import AccountItem from './AccountItem'
-import { Ellipsis, HeartOutLine } from '~/Components/Icons'
+import { Ellipsis, HeartOutLine, Lock } from '~/Components/Icons'
 import DeleteModal from '~/Components/DeleteModal'
 import { showToast } from '~/project/services'
 import Loading from '~/Components/Loading'
@@ -65,6 +65,10 @@ const CommentBody: React.FC<Props> = ({ currentVideo }) => {
 
     useEffect(() => {
         const getComments = async () => {
+            if (!currentVideo.allows.includes('comment')) {
+                return
+            }
+
             try {
                 const response = await commentService.getComments({
                     videoID: currentVideo.id,
@@ -90,7 +94,7 @@ const CommentBody: React.FC<Props> = ({ currentVideo }) => {
         return () => {
             setLoading(true)
         }
-    }, [accessToken, currentVideo.id, page])
+    }, [accessToken, currentVideo.allows, currentVideo.id, page])
 
     useEffect(() => {
         setComments([])
@@ -162,34 +166,41 @@ const CommentBody: React.FC<Props> = ({ currentVideo }) => {
             <div className={cx('comment-body')} ref={commentListRef}>
                 {currentTab === 'comments' && (
                     <div className={cx('comment-list')}>
-                        {comments.map((comment: CommentModal, index) => (
-                            <div key={index} className={cx('comment-item')}>
-                                <AccountItem comment={comment} />
+                        {currentVideo.allows.includes('comment') ? (
+                            comments.map((comment: CommentModal, index) => (
+                                <div key={index} className={cx('comment-item')}>
+                                    <AccountItem comment={comment} />
 
-                                <div className={cx('commnet-options')}>
-                                    <DeleteModal
-                                        handleDelete={() => {
-                                            handleDeleteComment(comment)
-                                        }}
-                                        firstOption="Report"
-                                        title="Are you sure you want to delete this comment?"
-                                        deleteBtn={comment.user.id === currentUser.id}
-                                        timeDelayOpen={300}
-                                        timeDelayClose={100}
-                                    >
-                                        <Ellipsis className={cx('more-options')} width="20" height="20" />
-                                    </DeleteModal>
-                                    <span>
-                                        <HeartOutLine className={cx('heart-icon')} />
-                                    </span>
-                                    <span className={cx('like-count')}>{comment.likes_count}</span>
+                                    <div className={cx('commnet-options')}>
+                                        <DeleteModal
+                                            handleDelete={() => {
+                                                handleDeleteComment(comment)
+                                            }}
+                                            firstOption="Report"
+                                            title="Are you sure you want to delete this comment?"
+                                            deleteBtn={comment.user.id === currentUser.id}
+                                            timeDelayOpen={300}
+                                            timeDelayClose={100}
+                                        >
+                                            <Ellipsis className={cx('more-options')} width="20" height="20" />
+                                        </DeleteModal>
+                                        <span>
+                                            <HeartOutLine className={cx('heart-icon')} />
+                                        </span>
+                                        <span className={cx('like-count')}>{comment.likes_count}</span>
+                                    </div>
                                 </div>
+                            ))
+                        ) : (
+                            <div className={cx('comment-disable')}>
+                                <Lock width="70" height="70" className={cx('lock-icon')} />
+                                <span>{t('comment.comment disabled')}</span>
                             </div>
-                        ))}
+                        )}
                     </div>
                 )}
                 {currentTab === 'creator' && <div className={cx('creator-list')}>video</div>}
-                {loading && (
+                {loading && currentVideo.allows.includes('comment') && (
                     <div className={cx('loading-container')}>
                         <Loading />
                     </div>

@@ -98,6 +98,26 @@
     gap: 12px;
 }
 
+.comment-disable {
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    margin-top: 40px;
+
+    .lock-icon {
+        color: var(--text-color-tertiary);
+    }
+
+    span {
+        margin-top: 8px;
+        color: var(--text-color-secondary);
+        font-size: 1.8rem;
+    }
+}
+
 .date {
     margin-top: 4px;
     font-size: 1.2rem;
