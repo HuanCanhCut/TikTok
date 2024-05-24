@@ -35,6 +35,7 @@ const PostComment: React.FC<Props> = ({ currentVideo }) => {
                 setCommentValue('')
                 requestIdleCallback(() => {
                     sendEvent({ eventName: 'comment:post-comment', detail: response.data })
+                    sendEvent({ eventName: 'comment:load-comments-count', detail: 'add' })
                 })
                 showToast({ message: t('comment.comment posted') })
             }

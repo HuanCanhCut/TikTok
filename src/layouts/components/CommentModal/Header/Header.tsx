@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind'
 import style from './Header.module.scss'
-import { memo, useCallback, useMemo } from 'react'
+import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { faComment, faHeart, faMusic } from '@fortawesome/free-solid-svg-icons'
 import { useDispatch, useSelector } from 'react-redux'
@@ -17,7 +17,7 @@ import AccountPreview from '~/Components/AccountPreview'
 import { VideoModal } from '~/modal/modal'
 import Button from '~/Components/Button'
 import { copyToClipboard, likeVideo, showToast, unLikeVideo } from '~/project/services'
-import { sendEvent } from '~/helpers/event'
+import { listentEvent, sendEvent } from '~/helpers/event'
 import Tippy from '@tippyjs/react'
 import Share from '~/Components/Share/Share'
 import { Ellipsis, EmbedIcon, FacebookIcon, ShareIcon, TwitterIcon, WhatsAppIcon } from '~/Components/Icons'
@@ -32,12 +32,15 @@ const cx = classNames.bind(style)
 
 const Header: React.FC<Props> = ({ currentVideo }) => {
     const dispatch = useDispatch()
-
     const { t } = useTranslation()
-    const currentUser = useSelector(authCurrentUser)
+
     const accessToken = JSON.parse(localStorage.getItem('token')!)
+
+    const currentUser = useSelector(authCurrentUser)
     const temporaryLikeList: number[] = useSelector(temporaryLiked)
     const temporaryUnLikeList: number[] = useSelector(temporaryUnLiked)
+
+    const [commentsCount, setCommentsCount] = useState(currentVideo.comments_count)
 
     const renderAccountPreview = useCallback(() => {
         return <AccountPreview data={currentVideo.user} />
@@ -58,6 +61,28 @@ const Header: React.FC<Props> = ({ currentVideo }) => {
             console.log(error)
         }
     }
+
+    useEffect(() => {
+        const remove = listentEvent({
+            eventName: 'comment:load-comments-count',
+            handler({ detail: type }) {
+                switch (type) {
+                    case 'add': {
+                        setCommentsCount((prev) => prev + 1)
+                        break
+                    }
+                    case 'sub': {
+                        setCommentsCount((prev) => prev - 1)
+                        break
+                    }
+                    default:
+                        break
+                }
+            },
+        })
+
+        return remove
+    }, [])
 
     const handleToggleLike = () => {
         if (currentVideo.is_liked || temporaryLikeList.includes(currentVideo.id)) {
@@ -221,13 +246,13 @@ const Header: React.FC<Props> = ({ currentVideo }) => {
                             >
                                 <FontAwesomeIcon icon={faHeart} />
                             </Button>
-                            {likes_count()}
+                            <span>{likes_count()}</span>
                         </div>
                         <div className={cx('interaction-btn')}>
                             <Button iconBtn className={cx('comment-btn')}>
                                 <FontAwesomeIcon icon={faComment} />
                             </Button>
-                            {currentVideo.comments_count}
+                            <span>{commentsCount}</span>
                         </div>
                     </div>
 

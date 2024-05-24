@@ -13,7 +13,7 @@ import { showToast } from '~/project/services'
 import Loading from '~/Components/Loading'
 import { authCurrentUser } from '~/redux/selectors'
 import { useSelector } from 'react-redux'
-import { listentEvent } from '~/helpers/event'
+import { listentEvent, sendEvent } from '~/helpers/event'
 
 const cx = classNames.bind(style)
 
@@ -137,6 +137,7 @@ const CommentBody: React.FC<Props> = ({ currentVideo }) => {
 
                     const newComments = comments.filter((item) => item.id !== comment.id)
                     setComments(newComments)
+                    sendEvent({ eventName: 'comment:load-comments-count', detail: 'sub' })
                 }
             } catch (error) {
                 console.log(error)
