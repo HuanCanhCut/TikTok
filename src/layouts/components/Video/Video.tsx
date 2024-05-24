@@ -1,7 +1,6 @@
 import classNames from 'classnames/bind'
 import { MutableRefObject, memo, useCallback, useEffect, useRef, useState } from 'react'
 import { Virtuoso } from 'react-virtuoso'
-import ReactModal from 'react-modal'
 
 import * as videoService from '~/services/videoService'
 import style from './Video.module.scss'
@@ -160,7 +159,7 @@ const Video: React.FC<Props> = ({ type }) => {
             try {
                 const response = await videoService.getVideos({
                     type,
-                    page: 1,
+                    page,
                     accessToken,
                 })
 
@@ -238,7 +237,7 @@ const Video: React.FC<Props> = ({ type }) => {
         return remove
     }, [handleKeyDown])
 
-    const handleCloseCommnetModal = useCallback(
+    const handleCloseCommentModal = useCallback(
         (videoModalRef: MutableRefObject<HTMLVideoElement | null>) => {
             window.history.replaceState({}, '', `${config.routes.home}`)
             dispatch(actions.commentModalOpen(false))
@@ -254,30 +253,15 @@ const Video: React.FC<Props> = ({ type }) => {
     return (
         <>
             {currentVideo && (
-                <ReactModal
+                <CommentModal
                     isOpen={commentModalIsOpen}
-                    onRequestClose={handleCloseCommnetModal}
-                    overlayClassName={'overlay'}
-                    ariaHideApp={false}
-                    className={'modal'}
-                    closeTimeoutMS={200}
-                    shouldCloseOnEsc={false}
-                    onKeyDown={(e: any) => {
-                        if (e.key === 'Escape') {
-                            e.preventDefault()
-                            e.stopPropagation()
-                        }
-                    }}
-                >
-                    <CommentModal
-                        video={currentVideo}
-                        videoList={videos}
-                        closeCommentModal={handleCloseCommnetModal}
-                        currentTime={videoRef.current?.GETCURRENTTIME() || 0}
-                        scrollNextVideo={handleScrollNextVideo}
-                        scrollPrevVideo={handleScrollPrevVideo}
-                    />
-                </ReactModal>
+                    video={currentVideo}
+                    videoList={videos}
+                    closeCommentModal={handleCloseCommentModal}
+                    currentTime={videoRef.current?.GETCURRENTTIME() || 0}
+                    scrollNextVideo={handleScrollNextVideo}
+                    scrollPrevVideo={handleScrollPrevVideo}
+                />
             )}
             <Virtuoso
                 ref={virtuosoRef}

@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind'
 import style from './UserVideo.module.scss'
-import { useMemo, useState, memo, useRef, useEffect } from 'react'
+import { useMemo, useState, memo, useRef, useEffect, useCallback } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLock } from '@fortawesome/free-solid-svg-icons'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
@@ -8,6 +8,11 @@ import { useTranslation } from 'react-i18next'
 import { UserModal, VideoModal } from '~/modal/modal'
 import { Lock, User } from '~/Components/Icons'
 import { documentIsVisible } from '~/project/services'
+import { useDispatch, useSelector } from 'react-redux'
+import { commentModalOpen } from '~/redux/selectors'
+import { actions } from '~/redux'
+import CommentModal from '~/layouts/components/CommentModal'
+import { sendEvent } from '~/helpers/event'
 
 const cx = classNames.bind(style)
 
@@ -22,6 +27,7 @@ interface Props {
 }
 
 const UserVideo: React.FC<Props> = ({ userProfile }) => {
+    const dispatch = useDispatch()
     const { t } = useTranslation()
 
     const tabs: Tabs[] = useMemo(() => {
@@ -38,9 +44,13 @@ const UserVideo: React.FC<Props> = ({ userProfile }) => {
         ]
     }, [])
 
+    const commentModalIsOpen = useSelector(commentModalOpen)
+    const accessToken = JSON.parse(localStorage.getItem('token')!)
+
     const [currentTab, setCurrentTab] = useState(tabs[0].type)
     const [currentElementTab, setCurrentElementTab] = useState<HTMLDivElement | null>(null)
     const [playingVideo, setPlayingVideo] = useState<HTMLVideoElement | null>(null)
+    const [currentVideo, setCurrentVideo] = useState<VideoModal | null>(null)
 
     const lineRef = useRef<HTMLDivElement | null>(null)
     const firstTabRef = useRef<HTMLDivElement | null>(null)
@@ -103,8 +113,31 @@ const UserVideo: React.FC<Props> = ({ userProfile }) => {
         return remove
     }, [])
 
+    const handleOpenCommentModal = (video: VideoModal) => {
+        if (!accessToken) {
+            sendEvent({ eventName: 'auth:open-auth-modal', detail: true })
+            return
+        }
+        dispatch(actions.commentModalOpen(true))
+        setCurrentVideo(video)
+    }
+
+    const handleCloseCommentModal = useCallback(() => {
+        window.history.replaceState({}, '', `/user/@${userProfile.nickname}`)
+        dispatch(actions.commentModalOpen(false))
+        setCurrentVideo(null)
+    }, [dispatch, userProfile.nickname])
+
     return (
         <div className={cx('wrapper')}>
+            {currentVideo && (
+                <CommentModal
+                    video={currentVideo}
+                    videoList={userProfile.videos}
+                    isOpen={commentModalIsOpen}
+                    closeCommentModal={handleCloseCommentModal}
+                />
+            )}
             <div className={cx('tab-bar')}>
                 <div className={cx('tab-bar-container')}>
                     {tabs.map((item: Tabs, index) => {
@@ -140,17 +173,20 @@ const UserVideo: React.FC<Props> = ({ userProfile }) => {
                             </div>
                         )}
                         {userProfile.videos &&
-                            userProfile.videos.map((item: VideoModal) => {
+                            userProfile.videos.map((video: VideoModal) => {
                                 return (
-                                    <div key={item.id} className={cx('video-item')}>
+                                    <div key={video.id} className={cx('video-item')}>
                                         <video
                                             ref={videoRef}
-                                            src={item.file_url}
+                                            src={video.file_url}
                                             muted
                                             className={cx('video')}
                                             onMouseOver={handleHoverVideo}
+                                            onClick={() => {
+                                                handleOpenCommentModal(video)
+                                            }}
                                         ></video>
-                                        <span className={cx('video-description')}>{item.description}</span>
+                                        <span className={cx('video-description')}>{video.description}</span>
                                     </div>
                                 )
                             })}

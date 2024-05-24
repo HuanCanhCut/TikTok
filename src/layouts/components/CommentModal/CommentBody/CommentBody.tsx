@@ -169,7 +169,7 @@ const CommentBody: React.FC<Props> = ({ currentVideo }) => {
                         {currentVideo.allows.includes('comment') ? (
                             comments.map((comment: CommentModal, index) => (
                                 <div key={index} className={cx('comment-item')}>
-                                    <AccountItem comment={comment} />
+                                    <AccountItem comment={comment} currentVideo={currentVideo} />
 
                                     <div className={cx('commnet-options')}>
                                         <DeleteModal
