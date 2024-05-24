@@ -135,7 +135,7 @@
     display: flex;
     align-items: center;
 
-    .commnet-options {
+    .comment-options {
         padding: 0 8px;
         color: var(--text-color);
         display: flex;
@@ -151,6 +151,12 @@
         .more-options,
         .heart-icon {
             cursor: pointer;
+        }
+
+        .heart-icon {
+            &.liked {
+                color: var(--primary);
+            }
         }
 
         .like-count,

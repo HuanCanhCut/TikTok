@@ -1,19 +1,16 @@
 import classNames from 'classnames/bind'
 import style from './CommentBody.module.scss'
-import { useCallback, useEffect, useMemo, useRef, useState, memo } from 'react'
+import { useEffect, useMemo, useRef, useState, memo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Button from '~/Components/Button'
 import { CommentModal, VideoModal } from '~/modal/modal'
 import * as commentService from '~/services/commentService'
 import AccountItem from './AccountItem'
-import { Ellipsis, HeartOutLine, Lock } from '~/Components/Icons'
-import DeleteModal from '~/Components/DeleteModal'
-import { showToast } from '~/project/services'
+import { Lock } from '~/Components/Icons'
 import Loading from '~/Components/Loading'
-import { authCurrentUser } from '~/redux/selectors'
-import { useSelector } from 'react-redux'
-import { listentEvent, sendEvent } from '~/helpers/event'
+import { listentEvent } from '~/helpers/event'
+import Options from './Options'
 
 const cx = classNames.bind(style)
 
@@ -23,8 +20,6 @@ interface Props {
 
 const CommentBody: React.FC<Props> = ({ currentVideo }) => {
     const { t } = useTranslation()
-
-    const currentUser = useSelector(authCurrentUser)
 
     const [currentTab, setCurrentTab] = useState<'comments' | 'creator'>('comments')
     const [comments, setComments] = useState<CommentModal[]>([])
@@ -125,27 +120,6 @@ const CommentBody: React.FC<Props> = ({ currentVideo }) => {
         ]
     }, [t])
 
-    const handleDeleteComment = useCallback(
-        async (comment: CommentModal) => {
-            try {
-                const response = await commentService.deleteComment({
-                    commentID: comment.id,
-                    accessToken: accessToken,
-                })
-                if (response?.status === 200 || response?.status === 204) {
-                    showToast({ message: t('comment.delete comment successfully') })
-
-                    const newComments = comments.filter((item) => item.id !== comment.id)
-                    setComments(newComments)
-                    sendEvent({ eventName: 'comment:load-comments-count', detail: 'sub' })
-                }
-            } catch (error) {
-                console.log(error)
-            }
-        },
-        [accessToken, comments, t]
-    )
-
     return (
         <div className={cx('wrapper')}>
             <div className={cx('tabs-container')}>
@@ -171,25 +145,7 @@ const CommentBody: React.FC<Props> = ({ currentVideo }) => {
                             comments.map((comment: CommentModal, index) => (
                                 <div key={index} className={cx('comment-item')}>
                                     <AccountItem comment={comment} currentVideo={currentVideo} />
-
-                                    <div className={cx('commnet-options')}>
-                                        <DeleteModal
-                                            handleDelete={() => {
-                                                handleDeleteComment(comment)
-                                            }}
-                                            firstOption="Report"
-                                            title="Are you sure you want to delete this comment?"
-                                            deleteBtn={comment.user.id === currentUser.id}
-                                            timeDelayOpen={300}
-                                            timeDelayClose={100}
-                                        >
-                                            <Ellipsis className={cx('more-options')} width="20" height="20" />
-                                        </DeleteModal>
-                                        <span>
-                                            <HeartOutLine className={cx('heart-icon')} />
-                                        </span>
-                                        <span className={cx('like-count')}>{comment.likes_count}</span>
-                                    </div>
+                                    <Options comment={comment} comments={comments} setComments={setComments} />
                                 </div>
                             ))
                         ) : (
