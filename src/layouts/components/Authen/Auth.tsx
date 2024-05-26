@@ -121,7 +121,9 @@ function Authen() {
                         <span className={cx('forgot-password')}>{t('auth.forgot password')}</span>
 
                         <Button ref={buttonRef} primary onClick={handleSubmitLogin} className={cx('login-btn')}>
-                            {loading || <span className={cx('login')}>{t('auth.login')}</span>}
+                            {loading || (
+                                <span className={cx('login')}>{signUp ? t('auth.sign up') : t('auth.login')}</span>
+                            )}
                             {loading && <Loading />}
                         </Button>
 
