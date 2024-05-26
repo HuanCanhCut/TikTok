@@ -1,6 +1,7 @@
 import classNames from 'classnames/bind'
 import style from './UserVideo.module.scss'
 import { useMemo, useState, memo, useRef, useEffect, useCallback } from 'react'
+import ReactModal from 'react-modal'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLock } from '@fortawesome/free-solid-svg-icons'
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
@@ -131,12 +132,27 @@ const UserVideo: React.FC<Props> = ({ userProfile }) => {
     return (
         <div className={cx('wrapper')}>
             {currentVideo && (
-                <CommentModal
-                    video={currentVideo}
-                    videoList={userProfile.videos}
+                <ReactModal
                     isOpen={commentModalIsOpen}
-                    closeCommentModal={handleCloseCommentModal}
-                />
+                    onRequestClose={handleCloseCommentModal}
+                    overlayClassName={'overlay'}
+                    ariaHideApp={false}
+                    className={'modal'}
+                    closeTimeoutMS={200}
+                    shouldCloseOnEsc={false}
+                    onKeyDown={(e: any) => {
+                        if (e.key === 'Escape') {
+                            e.preventDefault()
+                            e.stopPropagation()
+                        }
+                    }}
+                >
+                    <CommentModal
+                        video={currentVideo}
+                        videoList={userProfile.videos}
+                        closeCommentModal={handleCloseCommentModal}
+                    />
+                </ReactModal>
             )}
             <div className={cx('tab-bar')}>
                 <div className={cx('tab-bar-container')}>

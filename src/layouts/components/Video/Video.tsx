@@ -1,6 +1,7 @@
 import classNames from 'classnames/bind'
 import { MutableRefObject, memo, useCallback, useEffect, useRef, useState } from 'react'
 import { Virtuoso } from 'react-virtuoso'
+import ReactModal from 'react-modal'
 
 import * as videoService from '~/services/videoService'
 import style from './Video.module.scss'
@@ -253,15 +254,30 @@ const Video: React.FC<Props> = ({ type }) => {
     return (
         <>
             {currentVideo && (
-                <CommentModal
+                <ReactModal
                     isOpen={commentModalIsOpen}
-                    video={currentVideo}
-                    videoList={videos}
-                    closeCommentModal={handleCloseCommentModal}
-                    currentTime={videoRef.current?.GETCURRENTTIME() || 0}
-                    scrollNextVideo={handleScrollNextVideo}
-                    scrollPrevVideo={handleScrollPrevVideo}
-                />
+                    onRequestClose={handleCloseCommentModal}
+                    overlayClassName={'overlay'}
+                    ariaHideApp={false}
+                    className={'modal'}
+                    closeTimeoutMS={200}
+                    shouldCloseOnEsc={false}
+                    onKeyDown={(e: any) => {
+                        if (e.key === 'Escape') {
+                            e.preventDefault()
+                            e.stopPropagation()
+                        }
+                    }}
+                >
+                    <CommentModal
+                        video={currentVideo}
+                        videoList={videos}
+                        closeCommentModal={handleCloseCommentModal}
+                        currentTime={videoRef.current?.GETCURRENTTIME() || 0}
+                        scrollNextVideo={handleScrollNextVideo}
+                        scrollPrevVideo={handleScrollPrevVideo}
+                    />
+                </ReactModal>
             )}
             <Virtuoso
                 ref={virtuosoRef}
