@@ -42,6 +42,11 @@ const VideoActionItem: React.FC<Props> = ({
 
     const renderItem = (item: Item) => {
         return (
+            /*  
+                Hãy để cái này là thẻ div, tâm linh lắm, nếu bạn thay đổi thành thẻ button thì
+                khi mở comment -> next/prev 1 vài video -> đóng comment thì sẽ thấy nó scroll loạn xì
+                ngậu lên. Tâm linh không đùa được đâu
+             */
             <div
                 style={{
                     color: isLiked() && item.type === 'like' ? 'var(--primary)' : '',
@@ -59,11 +64,6 @@ const VideoActionItem: React.FC<Props> = ({
 
     return (
         <>
-            {/* 
-                Hãy để cái này là thẻ div, tâm linh lắm, nếu bạn thay đổi thành thẻ button thì
-                khi mở comment -> next/prev 1 vài video -> đóng comment thì sẽ thấy nó scroll loạn xì
-                ngậu lên. Tâm linh không đùa được đâu
-             */}
             {item.type === 'share' ? (
                 <Share copyValue={`${window.location.href}@${video.user.nickname}/video/${video.uuid}`}>
                     {renderItem(item)}
