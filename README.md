@@ -1,3 +1,6 @@
+# Link Deploy: 
+[Tiktok-UI](https://tiktok-ui-4e01f.web.app/).
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
